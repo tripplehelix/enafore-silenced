@@ -19,3 +19,8 @@ jobs:
         cache: 'yarn'
     - run: yarn --production --pure-lockfile
     - run: yarn build
+    - run: tar cvf site.tar __sapper__/export/
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        path: site.tar
