@@ -2,7 +2,7 @@ import { auth, basename } from './utils.js'
 import { DEFAULT_TIMEOUT, get, post, WRITE_TIMEOUT } from '../_utils/ajax.js'
 
 export async function postStatus (instanceName, accessToken, text, inReplyToId, mediaIds,
-  sensitive, spoilerText, visibility, poll) {
+  sensitive, spoilerText, visibility, poll, contentType) {
   const url = `${basename(instanceName)}/api/v1/statuses`
 
   const body = {
@@ -12,7 +12,8 @@ export async function postStatus (instanceName, accessToken, text, inReplyToId, 
     sensitive: sensitive,
     spoiler_text: spoilerText,
     visibility: visibility,
-    poll: poll
+    poll: poll,
+    content_type: contentType
   }
 
   for (const key of Object.keys(body)) {

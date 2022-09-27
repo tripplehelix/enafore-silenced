@@ -185,7 +185,8 @@
       overLimit: ({ length, $maxStatusChars }) => length > $maxStatusChars,
       contentWarningShown: ({ composeData }) => composeData.contentWarningShown,
       contentWarning: ({ composeData }) => composeData.contentWarning || '',
-      sensitive: ({ composeData }) => !!composeData.sensitive
+      sensitive: ({ composeData }) => !!composeData.sensitive,
+      contentType: ({ composeData }) => composeData.contentType || 'text/plain'
     },
     transitions: {
       slide
@@ -219,7 +220,8 @@
           inReplyToUuid, // typical replies, using Pinafore-specific uuid
           inReplyToId, // delete-and-redraft replies, using standard id
           poll,
-          sensitive
+          sensitive,
+          contentType
         } = this.get()
         const mediaIds = media.map(_ => _.data.id)
         const mediaDescriptions = media.map(_ => _.description)
@@ -248,7 +250,7 @@
         /* no await */ postStatus(realm, text, inReplyTo, mediaIds,
           sensitive, contentWarning, postPrivacyKey,
           mediaDescriptions, inReplyToUuid, pollToPost,
-          mediaFocalPoints)
+          mediaFocalPoints, contentType)
       }
     }
   }
