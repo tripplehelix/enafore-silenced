@@ -32,7 +32,7 @@
     <IconButton
       className="compose-toolbar-button"
       label="Content Type"
-      href="#fa-globe"
+      href={contentTypeIcon}
       on:click="onContentTypeClick()"
     />
     <IconButton
@@ -97,7 +97,12 @@
     computed: {
       postPrivacyLabel: ({ postPrivacy }) => (
         formatIntl('intl.postPrivacyLabel', { label: postPrivacy.label })
-      )
+      ),
+      contentTypeIcon: ({ contentType }) => ({
+        "text/markdown": "#fa-markdown",
+        "text/html": "#fa-arrow-circle-down",
+        "text/plain": "#fa-file-text"
+      })
     },
     store: () => store,
     methods: {
