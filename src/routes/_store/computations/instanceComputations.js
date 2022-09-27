@@ -50,11 +50,10 @@ export function instanceComputations (store) {
 
     store.compute(
       'currentPostTypes',
-      ['currentInstance', 'loggedInInstances'],
-      (currentInstance, loggedInInstances) => {
-        let instance = loggedInInstances[currentInstance]
-        if(typeof instance.pleroma == "object") return instance.pleroma.metadata.post_formats
-        if(typeof instance.version == "string" && instance.version.includes("+glitch")) return ["text/plain", "text/markdown", "text/html"]
+      ['currentInstanceData'],
+      (currentInstanceData) => {
+        if(typeof currentInstanceData.pleroma == "object") return currentInstanceData.pleroma.metadata.post_formats
+        if(typeof currentInstanceData.version == "string" && currentInstanceData.version.includes("+glitch")) return ["text/plain", "text/markdown", "text/html"]
         return ["text/plain"]
       })
 
