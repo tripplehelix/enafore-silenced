@@ -31,6 +31,12 @@
     />
     <IconButton
       className="compose-toolbar-button"
+      label="Content Type"
+      href="#fa-globe"
+      on:click="onContentTypeClick()"
+    />
+    <IconButton
+      className="compose-toolbar-button"
       label="{intl.addContentWarning}"
       pressedLabel="{intl.removeContentWarning}"
       href="#fa-exclamation-triangle"
@@ -118,6 +124,12 @@
         const { realm } = this.get()
         const showPostPrivacyDialog = await importShowPostPrivacyDialog()
         showPostPrivacyDialog(realm)
+      },
+      async onContentTypeClick () {
+        console.log(this.get())
+        //const { realm } = this.get()
+        //const showContentTypeDialog = await importShowContentTypeDialog()
+        //showContentTypeDialog(realm)
       },
       onContentWarningClick () {
         const { realm } = this.get()

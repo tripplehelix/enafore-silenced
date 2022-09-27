@@ -58,5 +58,6 @@ export default [
   { id: 'fa-crosshairs', src: 'src/thirdparty/font-awesome-svg-png/white/svg/crosshairs.svg' },
   { id: 'fa-magic', src: 'src/thirdparty/font-awesome-svg-png/white/svg/magic.svg' },
   { id: 'fa-hashtag', src: 'src/thirdparty/font-awesome-svg-png/white/svg/hashtag.svg' },
-  { id: 'fa-bookmark', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bookmark.svg' }
+  { id: 'fa-bookmark', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bookmark.svg' },
+  { id: 'fa-code', src: 'src/thirdparty/font-awesome-svg-png/white/svg/code.svg' }
 ]
