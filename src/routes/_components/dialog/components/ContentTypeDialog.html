@@ -44,7 +44,7 @@
         return Object.keys(contentTypes).filter(e => e == "default" || $currentPostTypes.includes(e))
       },
       items: ({ contentType, contentTypes, allowedContentTypes }) => {
-        return allowedContentTypes.map(e => ({ ...contentTypes[e], key: e, selected: e === contentType || (e === "default" && !allowedContentTypes.includes(e)) }))
+        return allowedContentTypes.map(e => ({ ...contentTypes[e], key: e, selected: e === contentType || (e === "default" && !allowedContentTypes.includes(contentType)) }))
       }
     }
   }
