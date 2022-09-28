@@ -31,7 +31,7 @@
     <StatusCard {...params} />
   {/if}
   {#if showQuote && showContent}
-    <Status status={originalQuote} isQuote={true} />
+    <svelte:self status={originalQuote} isQuote={true} />
   {/if}
   {#if showMedia }
     <StatusMediaAttachments {...params} on:recalculateHeight />
