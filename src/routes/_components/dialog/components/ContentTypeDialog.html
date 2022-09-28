@@ -40,7 +40,7 @@
       contentType: ({ composeData }) => {
         return composeData.contentType
       },
-      items: ({ contentType, contentTypes, currentPostTypes }) => {
+      items: ({ contentType, contentTypes, $currentPostTypes }) => {
         return Object.entries(contentTypes).filter(e => e[0] == "default" || currentPostTypes.includes(e[0])).map(e => ({ ...e[1], key: e[0] }))
       }
     }
