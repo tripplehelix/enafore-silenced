@@ -39,8 +39,12 @@ export const KNOWN_CONTENT_TYPES = {
     icon: '#fa-arrow-circle-down'
   },
   "text/x.misskeymarkdown": {
-    label: 'Markdown',
+    label: 'Misskey Flavored Markdown',
     icon: '#misskey-logo'
+  },
+  "text/bbcode": {
+    label: 'BBCode',
+    icon: '#fa-bold'
   }
 }
 
