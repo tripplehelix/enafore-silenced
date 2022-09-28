@@ -31,6 +31,7 @@ jobs:
         cache: 'yarn'
     - run: yarn --production --pure-lockfile
     - run: yarn build
+    - run: cp __sapper__/export/service-worker-index.html __sapper__/export/404.html
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v1.0.4
       with:
