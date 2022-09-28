@@ -207,3 +207,7 @@ textarea {
 .inline-emoji {
   font-family: CountryFlagEmojiPolyfill, PinaforeEmoji, sans-serif;
 }
+
+.status-content .quote-inline {
+  display: none;
+}
