@@ -61,5 +61,7 @@ export default [
   { id: 'fa-bookmark', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bookmark.svg' },
   { id: 'fa-code', src: 'src/thirdparty/font-awesome-svg-png/white/svg/code.svg' },
   { id: 'fa-arrow-circle-down', src: 'src/thirdparty/font-awesome-svg-png/white/svg/arrow-circle-down.svg' },
-  { id: 'fa-file-text', src: 'src/thirdparty/font-awesome-svg-png/white/svg/file-text.svg' }
+  { id: 'fa-file-text', src: 'src/thirdparty/font-awesome-svg-png/white/svg/file-text.svg' },
+  { id: 'fa-file', src: 'src/thirdparty/font-awesome-svg-png/white/svg/file.svg' },
+  { id: 'misskey-logo', src: 'src/misskey.svg' }
 ]

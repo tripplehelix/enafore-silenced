@@ -101,8 +101,9 @@
       contentTypeIcon: ({ contentType }) => ({
         "text/markdown": "#fa-arrow-circle-down",
         "text/html": "#fa-code",
-        "text/plain": "#fa-file-text"
-      })[contentType] || "#fa-file-text"
+        "text/plain": "#fa-file-text",
+        "text/x.misskeymarkdown": "#misskey-logo"
+      })[contentType] || "#fa-file"
     },
     store: () => store,
     methods: {
@@ -131,8 +132,8 @@
         showPostPrivacyDialog(realm)
       },
       async onContentTypeClick () {
-        console.log(this.get())
-        //const { realm } = this.get()
+        const { realm } = this.get()
+        debugger;
         //const showContentTypeDialog = await importShowContentTypeDialog()
         //showContentTypeDialog(realm)
       },
