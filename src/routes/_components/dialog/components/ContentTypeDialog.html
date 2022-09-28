@@ -31,7 +31,7 @@
       close,
       onClick (item) {
         const { realm } = this.get()
-        this.store.setComposeData(realm, { contentType: item })
+        this.store.setComposeData(realm, { contentType: item.key })
         this.close()
       }
     },
