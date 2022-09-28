@@ -132,8 +132,8 @@
         showPostPrivacyDialog(realm)
       },
       async onContentTypeClick () {
-        const { realm } = this.get()
-        debugger;
+        const { realm, contentType } = this.get()
+        this.store.setComposeData(realm, { contentType: prompt("Content Type", contentType) })
         //const showContentTypeDialog = await importShowContentTypeDialog()
         //showContentTypeDialog(realm)
       },
