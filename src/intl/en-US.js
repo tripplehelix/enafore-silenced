@@ -675,5 +675,6 @@ export default {
   statusOptions: 'Status options',
   confirm: 'Confirm',
   closeDialog: 'Close dialog',
-  postPrivacy: 'Post privacy'
+  postPrivacy: 'Post privacy',
+  contentType: 'Content type'
 }

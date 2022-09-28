@@ -80,9 +80,11 @@
   import { store } from '../../_store/store.js'
   import { importShowEmojiDialog } from '../dialog/asyncDialogs/importShowEmojiDialog.js'
   import { importShowPostPrivacyDialog } from '../dialog/asyncDialogs/importShowPostPrivacyDialog.js'
+  import { importShowContentTypeDialog } from '../dialog/asyncDialogs/importShowContentTypeDialog.js'
   import { doMediaUpload } from '../../_actions/media.js'
   import { toggleContentWarningShown } from '../../_actions/contentWarnings.js'
   import { mediaAccept } from '../../_static/media.js'
+  import { KNOWN_CONTENT_TYPES } from '../../_static/statuses.js'
   import { enablePoll, disablePoll } from '../../_actions/composePoll.js'
   import { updateCustomEmojiForInstance } from '../../_actions/emoji.js'
   import { formatIntl } from '../../_utils/formatIntl.js'
@@ -98,12 +100,7 @@
       postPrivacyLabel: ({ postPrivacy }) => (
         formatIntl('intl.postPrivacyLabel', { label: postPrivacy.label })
       ),
-      contentTypeIcon: ({ contentType }) => ({
-        "text/markdown": "#fa-arrow-circle-down",
-        "text/html": "#fa-code",
-        "text/plain": "#fa-file-text",
-        "text/x.misskeymarkdown": "#misskey-logo"
-      })[contentType] || "#fa-file"
+      contentTypeIcon: ({ contentType }) => (KNOWN_CONTENT_TYPES[contentType] || KNOWN_CONTENT_TYPES["default"]).icon
     },
     store: () => store,
     methods: {
@@ -133,9 +130,8 @@
       },
       async onContentTypeClick () {
         const { realm, contentType } = this.get()
-        this.store.setComposeData(realm, { contentType: prompt("Content Type", contentType) })
-        //const showContentTypeDialog = await importShowContentTypeDialog()
-        //showContentTypeDialog(realm)
+        const showContentTypeDialog = await importShowContentTypeDialog()
+        showContentTypeDialog(realm)
       },
       onContentWarningClick () {
         const { realm } = this.get()

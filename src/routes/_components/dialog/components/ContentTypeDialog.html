@@ -1,0 +1,48 @@
+<ModalDialog
+  {id}
+  {label}
+  {title}
+  shrinkWidthToFit={true}
+  background="var(--main-bg)"
+>
+  <GenericDialogList selectable={true} {items} on:click="onClick(event)" />
+</ModalDialog>
+<script>
+  import ModalDialog from './ModalDialog.html'
+  import { store } from '../../../_store/store.js'
+  import { KNOWN_CONTENT_TYPES } from '../../../_static/statuses.js'
+  import GenericDialogList from './GenericDialogList.html'
+  import { show } from '../helpers/showDialog.js'
+  import { close } from '../helpers/closeDialog.js'
+  import { oncreate } from '../helpers/onCreateDialog.js'
+
+  export default {
+    oncreate,
+    components: {
+      ModalDialog,
+      GenericDialogList
+    },
+    store: () => store,
+    data: () => ({
+      contentTypes: KNOWN_CONTENT_TYPES
+    }),
+    methods: {
+      show,
+      close,
+      onClick (item) {
+        const { realm } = this.get()
+        this.store.setComposeData(realm, { contentType: item })
+        this.close()
+      }
+    },
+    computed: {
+      composeData: ({ $currentComposeData, realm }) => $currentComposeData[realm] || {},
+      contentType: ({ composeData }) => {
+        return composeData.contentType
+      },
+      items: ({ contentType, contentTypes, currentPostTypes }) => {
+        return Object.entries(contentTypes).filter(e => e[0] == "default" || currentPostTypes.includes(e[0])).map(e => ({ ...e[1], key: e[0] }))
+      }
+    }
+  }
+</script>
