@@ -30,19 +30,21 @@
   {#if showCard && showContent}
     <StatusCard {...params} />
   {/if}
-  {#if showQuote && showContent}
-    <svelte:self status={originalQuote} isQuote={true} />
-  {/if}
   {#if showMedia }
     <StatusMediaAttachments {...params} on:recalculateHeight />
   {/if}
   {#if showPoll && (showContent || preloadHiddenContent)}
     <StatusPoll {...params} shown={showContent} />
   {/if}
+  {#if showQuote && showContent}
+    <svelte:self status={originalQuote} isQuote={true} />
+  {/if}
   {#if isStatusInOwnThread}
     <StatusDetails {...params} {...timestampParams} />
   {/if}
-  <StatusToolbar {...params} {replyShown} on:recalculateHeight />
+  {#if !isQuote}
+    <StatusToolbar {...params} {replyShown} on:recalculateHeight />
+  {/if}
   {#if replyShown}
     <StatusComposeBox {...params} on:recalculateHeight />
   {/if}
@@ -98,11 +100,18 @@
       "media-grp   media-grp"
       "media       media"
       "poll        poll"
+      "quote       quote"
       "details     details"
       "toolbar     toolbar"
       "compose     compose";
     grid-template-columns: min-content 1fr;
     grid-template-rows: repeat(7, max-content);
+  }
+  .status-article.status-quoted {
+    grid-area: quote;
+    margin: 10px 10px 10px 5px;
+    border: 1px solid var(--main-border);
+    border-radius: 6px;
   }
 </style>
 <script>
@@ -258,10 +267,11 @@
       ),
       spoilerShown: ({ $spoilersShown, uuid }) => !!$spoilersShown[uuid],
       replyShown: ({ $repliesShown, uuid }) => !!$repliesShown[uuid],
-      showCard: ({ originalStatus, isStatusInNotification, showMedia, $hideCards }) => (
+      showCard: ({ originalStatus, isStatusInNotification, showMedia, $hideCards, showQuote }) => (
         !$hideCards &&
         !isStatusInNotification &&
         !showMedia &&
+        !showQuote &&
         originalStatus.card &&
         originalStatus.card.title
       ),
