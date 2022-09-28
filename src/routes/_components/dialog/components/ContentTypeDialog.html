@@ -40,8 +40,11 @@
       contentType: ({ composeData }) => {
         return composeData.contentType
       },
-      items: ({ contentType, contentTypes, $currentPostTypes }) => {
-        return Object.entries(contentTypes).filter(e => e[0] == "default" || $currentPostTypes.includes(e[0])).map(e => ({ ...e[1], key: e[0], selected: e[0] === contentType }))
+      allowedContentTypes: ({ contentTypes, $currentPostTypes }) => {
+        return Object.keys(contentTypes).filter(e => e == "default" || $currentPostTypes.includes(e))
+      },
+      items: ({ contentType, contentTypes, allowedContentTypes }) => {
+        return allowedContentTypes.map(e => ({ ...contentTypes[e], key: e, selected: e === contentType || (e === "default" && !allowedContentTypes.includes(e)) }))
       }
     }
   }
