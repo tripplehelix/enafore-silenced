@@ -16,7 +16,7 @@
         url: ({ params }) => "https://pinafore-themed-nitter.easrng.workers.dev/"+params.url,
       },
       store: () => store,
-      data: {
+      data: () => {
         loading: true
       },
       oncreate() {
