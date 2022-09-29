@@ -32,7 +32,7 @@
           const {url, unload} = message;
           if(url) {
             let newURL=`/nitter/${encodeURIComponent(url)}`
-            if(newURL != location.pathname) history.pushState({id: 0}, "", newURL)
+            if(newURL != location.pathname) history.pushState({id: cid}, "", newURL)
             this.set({loading: false})
           }
           if(unload) this.set({loading: true})
