@@ -154,7 +154,7 @@
           const href = anchor.getAttribute('href')
           const hrefParsed = new URL(href, location.href);
           if(hrefParsed.hostname.match(/(^|\.)twitter\.com$/)) {
-            anchor.setAttribute('href', `/nitter${hrefParsed.pathname}`)
+            anchor.setAttribute('href', `/nitter/${encodeURIComponent(href)}`)
             anchor.setAttribute('rel', 'nofollow noopener')
           } else if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)

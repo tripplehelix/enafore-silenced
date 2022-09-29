@@ -2,7 +2,7 @@
 <script>
     export default {
       computed: {
-        url: ({ params }) => window.__nitterPath=params.path.join("/"),
+        url: ({ params }) => window.__nitterPath=params.url,
       },
       store: () => store
     }
