@@ -9,16 +9,14 @@
 <script>
     import { store } from '../../_store/store.js'
     import iframeResizer from 'iframe-resizer';
-    import { onMount } from 'svelte';
-    let frame;
-    onMount(() => {
-      iframeResizer.iframeResize({log:true}, frame);
-    });
     export default {
       computed: {
         url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
       },
-      store: () => store
+      store: () => store,
+      oncreate() {
+        iframeResizer.iframeResize({log:true}, this.refs.frame);
+      }
     }
 </script>
-<iframe src={url} class="nitter-frame" bind:this=frame scrolling="no"></iframe>
+<iframe src={url} class="nitter-frame" ref:frame scrolling="no"></iframe>
