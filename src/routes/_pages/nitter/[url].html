@@ -5,6 +5,10 @@
     min-height: 100vh;
     outline: none;
   }
+  .load-wrap {
+    z-index: 51;
+    position: relative;
+  }
 </style>
 <script>
     import { store } from '../../_store/store.js'
@@ -23,7 +27,8 @@
         iframeResizer.iframeResize({log:true, initCallback: (...args)=>{
           console.debug("init", args)
           this.refs.frame.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
-        }, onMessage: ({url, unload})=>{
+        }, onMessage: ({message})=>{
+          const {url, unload} = message;
           if(url) {
             console.warn("navigated to", url)
             this.set({loading: false})
@@ -39,6 +44,6 @@
 </script>
 <DynamicPageBanner title="" />
 {#if loading}
-<LoadingPage />
+<div class="load-wrap"><LoadingPage /></div>
 {/if}
 <iframe src={url} class="nitter-frame" ref:frame scrolling="no"></iframe>
