@@ -11,7 +11,7 @@
     import { store } from '../../_store/store.js'
     export default {
       computed: {
-        url: ({ params }) => Object.assign(URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
+        url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
       },
       store: () => store
     }
