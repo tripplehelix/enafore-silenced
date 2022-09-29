@@ -12,14 +12,14 @@
     import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
     export default {
       computed: {
-        url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
+        url: ({ params }) => "https://pinafore-themed-nitter.easrng.workers.dev/"+params.url,
       },
       store: () => store,
       oncreate() {
         iframeResizer.iframeResize({log:true, initCallback: (...args)=>{
           console.debug("init", args)
-          $0.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
-        }}, this.refs.frame);
+          this.refs.frame.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
+        }, onMessage: ({url})=>url&&console.warn("navigated to", url)}, this.refs.frame);
       },
       components: {
         DynamicPageBanner
