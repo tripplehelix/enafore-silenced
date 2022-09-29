@@ -10,6 +10,7 @@
     import { store } from '../../_store/store.js'
     import iframeResizer from 'iframe-resizer';
     import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
+    let loading = true;
     export default {
       computed: {
         url: ({ params }) => "https://pinafore-themed-nitter.easrng.workers.dev/"+params.url,
@@ -19,7 +20,13 @@
         iframeResizer.iframeResize({log:true, initCallback: (...args)=>{
           console.debug("init", args)
           this.refs.frame.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
-        }, onMessage: ({url})=>url&&console.warn("navigated to", url)}, this.refs.frame);
+        }, onMessage: ({url, unload})=>{
+          if(url) {
+            console.warn("navigated to", url)
+            loading=false
+          }
+          if(unload) loading=true
+        }}, this.refs.frame);
       },
       components: {
         DynamicPageBanner
@@ -27,4 +34,7 @@
     }
 </script>
 <DynamicPageBanner title="" />
+{#if loading}
+<LoadingPage />
+{/if}
 <iframe src={url} class="nitter-frame" ref:frame scrolling="no"></iframe>
