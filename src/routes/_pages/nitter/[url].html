@@ -1,4 +1,4 @@
-<iframe src={url} class="nitter-frame" use:iframeResize></iframe>
+<iframe src={url} class="nitter-frame" use:iframeResize scrolling="no"></iframe>
 <style>
   .nitter-frame {
     width: 100%;
@@ -9,7 +9,8 @@
 </style>
 <script>
     import { store } from '../../_store/store.js'
-    import { iframeResize } from 'iframe-resizer';
+    import iframeResizer from 'iframe-resizer';
+    const iframeResize = ele => iframeResizer.iframeResize({log:true}, ele);
     export default {
       computed: {
         url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
