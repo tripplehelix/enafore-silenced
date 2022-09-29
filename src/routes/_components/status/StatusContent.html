@@ -156,7 +156,7 @@
           if(hrefParsed.hostname.match(/(^|\.)twitter\.com$/)) {
             anchor.setAttribute('href', `/nitter/${encodeURIComponent(href)}`)
             anchor.setAttribute('rel', 'nofollow')
-            anchor.removeAttribute('target')
+            anchor.target=""
           } else if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
