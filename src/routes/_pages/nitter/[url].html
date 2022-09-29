@@ -29,7 +29,7 @@
           console.debug("init", args)
           this.refs.frame.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
         }, onMessage: async ({message})=>{
-          const {url, unload, lightbox} = message;
+          const {url, unload, lightbox, alt} = message;
           if(url) {
             let newURL=`/nitter/${encodeURIComponent(url)}`
             if(newURL != location.pathname) history.pushState({id: 0}, "", newURL)
@@ -38,7 +38,7 @@
           if(unload) this.set({loading: true})
           if(lightbox) {
             const showMediaDialog = await importShowMediaDialog()
-            console.info(showMediaDialog)
+            showMediaDialog([{url:lightbox, description: alt}],0)
           }
         }}, this.refs.frame);
       },
