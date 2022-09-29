@@ -29,7 +29,7 @@
           console.debug("init", args)
           this.refs.frame.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
         }, onMessage: async ({message})=>{
-          const {url, unload, } = message;
+          const {url, unload, lightbox} = message;
           if(url) {
             let newURL=`/nitter/${encodeURIComponent(url)}`
             if(newURL != location.pathname) history.pushState({id: 0}, "", newURL)
