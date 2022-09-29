@@ -12,7 +12,7 @@
     import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
     export default {
       computed: {
-        url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
+        url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev", search:"?css="+encodeURIComponent(location.origin+`/theme-${__store.get().currentTheme}.css`)}).href,
       },
       store: () => store,
       oncreate() {
