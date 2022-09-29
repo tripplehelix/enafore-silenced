@@ -30,7 +30,8 @@
         }, onMessage: ({message})=>{
           const {url, unload} = message;
           if(url) {
-            console.warn("navigated to", url)
+            let newURL=`/nitter/${encodeURIComponent(url)}`
+            if(newURL != location.pathname) history.pushState(history.state, "", newURL)
             this.set({loading: false})
           }
           if(unload) this.set({loading: true})
