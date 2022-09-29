@@ -153,7 +153,7 @@
           // hydrate external links
           const href = anchor.getAttribute('href')
           const hrefParsed = new URL(href, location.href);
-          if(hrefParsed.hostname.match(/(^|\.)twitter\.com$/)) {
+          if(hrefParsed.hostname.match(/(^|\.)(twitter\.com|nitter\..+)$/)) {
             anchor.setAttribute('href', `/nitter/${encodeURIComponent(href)}`)
             anchor.setAttribute('rel', 'nofollow')
             anchor.target=""
