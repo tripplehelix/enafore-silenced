@@ -15,7 +15,8 @@
     import iframeResizer from 'iframe-resizer';
     import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
     import LoadingPage from '../../_components/LoadingPage.html'
-    import { cid } from '@sapper/app/router';
+    import { goto } from '../../../../__sapper__/client.js'
+    if(typeof window != "undefined") window.__goto=goto
     export default {
       computed: {
         url: ({ params }) => "https://pinafore-themed-nitter.easrng.workers.dev/"+params.url,
