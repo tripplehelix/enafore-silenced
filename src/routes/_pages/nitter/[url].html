@@ -15,8 +15,7 @@
     import iframeResizer from 'iframe-resizer';
     import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
     import LoadingPage from '../../_components/LoadingPage.html'
-    import { goto } from '../../../../__sapper__/client.js'
-    if(typeof window != "undefined") window.__goto=goto
+    import { importShowMediaDialog } from '../../_components/dialog/asyncDialogs/importShowMediaDialog.js'
     export default {
       computed: {
         url: ({ params }) => "https://pinafore-themed-nitter.easrng.workers.dev/"+params.url,
@@ -29,14 +28,18 @@
         iframeResizer.iframeResize({log:true, initCallback: (...args)=>{
           console.debug("init", args)
           this.refs.frame.iFrameResizer.sendMessage({theme:location.origin+`/theme-${__store.get().currentTheme}.css`})
-        }, onMessage: ({message})=>{
-          const {url, unload} = message;
+        }, onMessage: async ({message})=>{
+          const {url, unload, } = message;
           if(url) {
             let newURL=`/nitter/${encodeURIComponent(url)}`
             if(newURL != location.pathname) history.pushState({id: 0}, "", newURL)
             this.set({loading: false})
           }
           if(unload) this.set({loading: true})
+          if(lightbox) {
+            const showMediaDialog = await importShowMediaDialog()
+            console.info(showMediaDialog)
+          }
         }}, this.refs.frame);
       },
       components: {
