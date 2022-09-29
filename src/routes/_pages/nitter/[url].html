@@ -10,7 +10,7 @@
 <script>
     import { store } from '../../_store/store.js'
     import iframeResizer from 'iframe-resizer';
-    window.iframeResizer=iframeResizer;
+    if(window) window.iframeResizer=iframeResizer;
     export default {
       computed: {
         url: ({ params }) => Object.assign(new URL(params.url), {hostname:"pinafore-themed-nitter.easrng.workers.dev"}).href,
