@@ -10,6 +10,7 @@
     import { store } from '../../_store/store.js'
     import iframeResizer from 'iframe-resizer';
     import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
+    import LoadingPage from '../../_components/LoadingPage.html'
     let loading = true;
     export default {
       computed: {
@@ -29,7 +30,8 @@
         }}, this.refs.frame);
       },
       components: {
-        DynamicPageBanner
+        DynamicPageBanner,
+        LoadingPage
       }
     }
 </script>
