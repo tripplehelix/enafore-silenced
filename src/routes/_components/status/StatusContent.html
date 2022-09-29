@@ -152,7 +152,11 @@
           }
           // hydrate external links
           const href = anchor.getAttribute('href')
-          if (urlIsCrossOrigin(href)) {
+          const hrefParsed = new URL(href, location.href);
+          if(hrefParsed.hostname.match(/(^|\.)twitter\.com$/)) {
+            anchor.setAttribute('href', `/nitter${hrefParsed.pathname}`)
+            anchor.setAttribute('rel', 'nofollow noopener')
+          } else if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
             anchor.setAttribute('rel', 'nofollow noopener')

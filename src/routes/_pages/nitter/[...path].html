@@ -1,0 +1,9 @@
+<iframe src={url}></iframe>
+<script>
+    export default {
+      computed: {
+        url: ({ params }) => window.__nitterPath=params.path.join("/"),
+      },
+      store: () => store
+    }
+  </script>
