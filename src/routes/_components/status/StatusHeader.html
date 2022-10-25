@@ -135,6 +135,8 @@
           return 'intl.rebloggedYou'
         } else if (notificationType === 'favourite') {
           return 'intl.favoritedYou'
+        } else if (notificationType === 'pleroma:emoji_reaction') {
+          return 'reacted with an emoji'
         } else if (notificationType === 'follow') {
           return 'intl.followedYou'
         } else if (notificationType === 'status') {
