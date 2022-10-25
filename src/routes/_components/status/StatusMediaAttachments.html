@@ -194,7 +194,7 @@
       mediaAttachments: ({ originalStatus }) => originalStatus.media_attachments,
       sensitiveShown: ({ $sensitivesShown, uuid }) => !!$sensitivesShown[uuid],
       sensitive: ({ originalStatus, $markMediaAsSensitive, $neverMarkMediaAsSensitive }) => (
-        !$neverMarkMediaAsSensitive && ($markMediaAsSensitive || originalStatus.sensitive)
+        !$neverMarkMediaAsSensitive && ($markMediaAsSensitive || originalStatus.sensitive || originalStatus.spoiler_text)
       ),
       elementId: ({ uuid }) => `sensitive-${uuid}`,
       customSize: ({ $largeInlineMedia, mediaAttachments }) => {
