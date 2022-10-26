@@ -1,7 +1,7 @@
 <script>
   export default {
     oncreate() {
-      window.stuff={this:this, arguments:[...arguments]}
+      location.replace("https://farside.link/nitter/" + this.get().params.url);
     }
   }
 </script>
