@@ -156,8 +156,8 @@
           const match = hrefParsed.href.match(/^https?:\/\/(?:[^\/]+?\.)?(?:twitter\.com|nitter\.[^\/]+)(?:\/(.*))?$/);
           if(match) {
             anchor.setAttribute('href', `/nitter/${encodeURIComponent(match[1]||"")}`)
-            anchor.setAttribute('rel', 'nofollow')
-            anchor.target=""
+            anchor.setAttribute('target', '_blank')
+            anchor.setAttribute('rel', 'nofollow noopener')
           } else if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
