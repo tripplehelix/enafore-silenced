@@ -23,7 +23,7 @@ export async function showComposeDialog () {
   // url is currently ignored on Android, but one can dream
   // https://web.dev/web-share-target/#verifying-shared-content
   const composeText = [title, text, url].filter(Boolean).join('\n\n')
-  const [showComposeDialog, twitterPost] = await Promise.all([importShowComposeDialogPromise, Promise.resolve(new URLSearchParams(location.search).get('retweet')).then(rt=>rt&&fetch(Object.assign(new URL(rt, {hostname: "birdlink.easrng.workers.dev"})).href)).then(e=>e.text()).catch(e=>console.warn("failed to load tweet", e))])
+  const [showComposeDialog, twitterPost] = await Promise.all([importShowComposeDialogPromise, Promise.resolve(new URLSearchParams(location.search).get('retweet')).then(rt=>rt&&fetch(Object.assign(new URL(rt), {hostname: "birdlink.easrng.workers.dev"}).href)).then(e=>e.text()).catch(e=>console.warn("failed to load tweet", e))])
 
   store.clearComposeData('dialog')
   store.setComposeData('dialog', { text: composeText || twitterPost })
