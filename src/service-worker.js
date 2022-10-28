@@ -132,7 +132,7 @@ self.addEventListener('fetch', event => {
       }
 
       if (url.pathname.startsWith("/nitter/")) {
-        return Response.redirect("https://farside.link/nitter/"+decodeURIComponent(url.pathname.slice("/nitter/".length)))
+        return Response.redirect("https://farside.link/nitter/"+decodeURIComponent(url.pathname.slice("/nitter/".length)), 303)
       }
 
       // always serve webpack-generated resources and
