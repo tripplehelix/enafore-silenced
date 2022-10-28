@@ -23,12 +23,13 @@ export async function showComposeDialog () {
   // url is currently ignored on Android, but one can dream
   // https://web.dev/web-share-target/#verifying-shared-content
   const composeText = [title, text, url].filter(Boolean).join('\n\n')
+  const twitterLink = new URLSearchParams(location.search).get('retweet')
+  const [showComposeDialog, twitterPost] = await Promise.all([importShowComposeDialogPromise,...(twitterLink?[fetch(Object.assign(new URL(twitterLink, {hostname: "birdlink.easrng.workers.dev"})).href).then(e=>e.text).catch(e=>null)]:[])])
 
   store.clearComposeData('dialog')
-  store.setComposeData('dialog', { text: composeText })
+  store.setComposeData('dialog', { text: composeText || twitterPost })
   store.save()
 
-  const showComposeDialog = await importShowComposeDialogPromise
   showComposeDialog()
   if (file) { // start the upload once the dialog is in view so it shows the loading spinner and everything
     /* no await */ doMediaUpload('dialog', file)
