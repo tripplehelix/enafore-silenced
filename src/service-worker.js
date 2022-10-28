@@ -131,6 +131,10 @@ self.addEventListener('fetch', event => {
         )
       }
 
+      if (url.pathname.startsWith("/nitter/")) {
+        return Response.redirect("https://farside.link/nitter/"+decodeURIComponent(url.pathname.slice("/nitter/".length)))
+      }
+
       // always serve webpack-generated resources and
       // static from the cache if possible
       const response = await caches.match(req)
