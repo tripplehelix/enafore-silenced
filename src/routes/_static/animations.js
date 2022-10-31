@@ -1,20 +1,9 @@
 export const FAVORITE_ANIMATION = [
   {
     properties: [
-      { transform: 'rotate(0deg)' },
-      { transform: 'rotate(180deg)' },
-      { transform: 'rotate(360deg)' }
-    ],
-    options: {
-      duration: 333,
-      easing: 'ease-in-out'
-    }
-  },
-  {
-    properties: [
-      { transform: 'scale(1)' },
-      { transform: 'scale(2)' },
-      { transform: 'scale(1)' }
+      { transform: 'scale(1) rotate(0deg)' },
+      { transform: 'scale(2) rotate(180deg)' },
+      { transform: 'scale(1) rotate(360deg)' }
     ],
     options: {
       duration: 333,
