@@ -2,7 +2,9 @@ export const FAVORITE_ANIMATION = [
   {
     properties: [
       { transform: 'scale(1) rotate(0deg)' },
+      { transform: 'scale(0.75) rotate(80deg)' },
       { transform: 'scale(2) rotate(180deg)' },
+      { transform: 'scale(0.75) rotate(280deg)' },
       { transform: 'scale(1) rotate(360deg)' }
     ],
     options: {
