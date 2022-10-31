@@ -6,7 +6,7 @@ export const FAVORITE_ANIMATION = [
       { transform: 'scale(1) rotate(360deg)' }
     ],
     options: {
-      duration: 333,
+      duration: 666,
       easing: 'ease-in-out'
     }
   },
