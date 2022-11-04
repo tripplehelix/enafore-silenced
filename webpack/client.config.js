@@ -83,10 +83,10 @@ export default {
               store: true,
               hotReload: dev
             }
-          }/*,
+          },
           {
             loader: path.join(__dirname, './svelte-intl-loader.cjs')
-          }*/
+          }
         ]
       }
     ].filter(Boolean)
