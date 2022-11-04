@@ -22,6 +22,7 @@ async function renderCss (file) {
 
 async function compileGlobalSass () {
   const mainStyle = (await Promise.all([defaultThemeScss, globalScss].map(renderCss))).join('')
+  console.log("CSS DEBUG", mainStyle)
   const scrollbarStyle = (await renderCss(customScrollbarScss))
 
   return `<style>\n${mainStyle}</style>\n` +
