@@ -97,6 +97,7 @@ async function buildAll () {
   html = applyIntl(html)
     .replace('{process.env.LOCALE}', LOCALE)
     .replace('{process.env.LOCALE_DIRECTION}', LOCALE_DIRECTION)
+  console.log("HTML DEBUG", html)
   await writeFile(path.resolve(__dirname, '../src/template.html'), html, 'utf8')
   const end = performance.now()
   console.log(`Built template.html in ${(end - start).toFixed(2)}ms`)
