@@ -91,7 +91,7 @@ export default {
       }
     ].filter(Boolean)
   },
-  optimization: dev
+  optimization: true
     ? {}
     : {
         minimize: !process.env.DEBUG,
