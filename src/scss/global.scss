@@ -137,8 +137,12 @@ button, .button {
   }
 }
 
-p:not(.status-content /* wtf */ p), label, input {
+input, label, p {
   font-size: 1.3em;
+}
+
+.status-content p {
+  font-size: inherit;
 }
 
 ul, li, p {
