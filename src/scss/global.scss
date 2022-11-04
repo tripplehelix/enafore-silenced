@@ -137,7 +137,7 @@ button, .button {
   }
 }
 
-p, label, input {
+p:not(.status-content p), label, input {
   font-size: 1.3em;
 }
 
