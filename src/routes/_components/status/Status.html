@@ -292,13 +292,15 @@
       originalAccountAccessibleName: ({ originalAccount, $omitEmojiInDisplayNames }) => {
         return getAccountAccessibleName(originalAccount, $omitEmojiInDisplayNames)
       },
+      editedAtDate: ({ originalStatus }) => originalStatus.edited_at,
       createdAtDate: ({ originalStatus }) => originalStatus.created_at,
+      editedAtDateTS: ({ editedAtDate }) => editedAtDate && new Date(editedAtDate).getTime(),
       createdAtDateTS: ({ createdAtDate }) => new Date(createdAtDate).getTime(),
-      absoluteFormattedDate: ({ createdAtDateTS }) => absoluteDateFormatter().format(createdAtDateTS),
-      shortInlineFormattedDate: ({ createdAtDateTS, $now, $disableRelativeTimestamps }) => (
+      absoluteFormattedDate: ({ createdAtDateTS, editedAtDateTS }) => absoluteDateFormatter().format(editedAtDateTS || createdAtDateTS),
+      shortInlineFormattedDate: ({ createdAtDateTS, editedAtDateTS, $now, $disableRelativeTimestamps }) => (
         $disableRelativeTimestamps
-          ? dayOnlyAbsoluteDateFormatter().format(createdAtDateTS)
-          : formatTimeagoDate(createdAtDateTS, $now)
+          ? dayOnlyAbsoluteDateFormatter().format(editedAtDateTS || createdAtDateTS)
+          : formatTimeagoDate(editedAtDateTS || createdAtDateTS, $now)
       ),
       reblog: ({ status }) => status.reblog,
       ariaLabel: ({
@@ -332,9 +334,11 @@
       showContent: ({ spoilerText, spoilerShown }) => !spoilerText || spoilerShown,
       // These timestamp params may change every 10 seconds due to now() polling, so keep them
       // separate from the generic `params` list to avoid costly recomputes.
-      timestampParams: ({ createdAtDate, createdAtDateTS, shortInlineFormattedDate, absoluteFormattedDate }) => ({
+      timestampParams: ({ createdAtDate, createdAtDateTS, editedAtDate, editedAtDateTS, shortInlineFormattedDate, absoluteFormattedDate }) => ({
         createdAtDate,
         createdAtDateTS,
+        editedAtDate,
+        editedAtDateTS,
         shortInlineFormattedDate,
         absoluteFormattedDate
       }),

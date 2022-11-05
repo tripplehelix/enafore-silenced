@@ -4,8 +4,12 @@
    rel="prefetch"
    {tabindex}
 >
-  <time datetime={createdAtDate} title={absoluteFormattedDate}
-        aria-label={createdAtLabel}>
+  {#if editedAtDate}
+  <SvgIcon className="external-link-svg" href="#fa-pencil" />
+  <span class="sr-only">Last Updated </span>
+  {/if}
+  <time datetime={editedAtDate||createdAtDate} title={absoluteFormattedDate}
+        aria-label={formattedDateLabel}>
     {shortInlineFormattedDate}
   </time>
 </a>
@@ -41,7 +45,7 @@
         // just a duplicate link in the focus order.
         $disableTapOnStatus ? '0' : '-1'
       ),
-      createdAtLabel: ({ shortInlineFormattedDate }) => (
+      formattedDateLabel: ({ shortInlineFormattedDate }) => (
         formatIntl('intl.clickToShowThread', { time: shortInlineFormattedDate })
       )
     }
