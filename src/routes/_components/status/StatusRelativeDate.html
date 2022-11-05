@@ -5,13 +5,15 @@
    {tabindex}
 >
   {#if editedAtDate}
-  <SvgIcon className="external-link-svg" href="#fa-pencil" />
   <span class="sr-only">Last Updated </span>
   {/if}
   <time datetime={editedAtDate||createdAtDate} title={absoluteFormattedDate}
         aria-label={formattedDateLabel}>
     {shortInlineFormattedDate}
   </time>
+  {#if editedAtDate}
+  <SvgIcon className="status-edited-svg" href="#fa-pencil" />
+  {/if}
 </a>
 <style>
   .status-relative-date {
@@ -26,7 +28,12 @@
   .status-relative-date, .status-relative-date:hover, .status-relative-date:visited {
     color: var(--deemphasized-text-color);
   }
-
+  .status-edited-svg {
+    margin-left: 4px;
+    width: 14px;
+    height: 14px;
+    fill: var(--deemphasized-text-color);
+  }
   .status-relative-date.status-in-notification,
   .status-relative-date.status-in-notification:hover,
   .status-relative-date.status-in-notification:visited {
