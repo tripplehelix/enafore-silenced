@@ -141,6 +141,8 @@
           return 'intl.followedYou'
         } else if (notificationType === 'status') {
           return 'intl.posted'
+        } else if(notificationType == "update") {
+          return 'edited their post'
         } else if (notificationType === 'poll') {
           if ($currentVerifyCredentials && status && $currentVerifyCredentials.id === status.account.id) {
             return 'intl.pollYouCreatedEnded'

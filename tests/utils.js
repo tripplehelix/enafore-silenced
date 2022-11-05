@@ -590,11 +590,11 @@ export async function validateTimeline (t, timeline) {
     }
     if (status.rebloggedBy) {
       await t.expect(getNthStatusHeader(1 + i).innerText)
-        .match(new RegExp(status.rebloggedBy + '\\s+boosted your toot'), { timeout })
+        .match(new RegExp(status.rebloggedBy + '\\s+boosted your post'), { timeout })
     }
     if (status.favoritedBy) {
       await t.expect(getNthStatusHeader(1 + i).innerText)
-        .match(new RegExp(status.favoritedBy + '\\s+favorited your toot'), { timeout })
+        .match(new RegExp(status.favoritedBy + '\\s+favorited your post'), { timeout })
     }
   }
 }

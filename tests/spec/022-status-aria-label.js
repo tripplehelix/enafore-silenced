@@ -19,7 +19,7 @@ test('basic aria-labels for statuses', async t => {
   await t
     .hover(getNthStatus(1))
     .expect(getNthStatus(1).getAttribute('aria-label')).match(
-      /quux, pinned toot 1, .+ ago, @quux, Unlisted, Boosted by admin/i
+      /quux, pinned post 1, .+ ago, @quux, Unlisted, Boosted by admin/i
     )
     .expect(getNthStatusRelativeDateTime(1).getAttribute('aria-label')).match(
       /.* ago - click to show thread/i
@@ -55,11 +55,11 @@ test('aria-labels for notifications', async t => {
     .click(notificationsNavButton)
     .hover(getNthStatus(1))
     .expect(getNthStatus(1).getAttribute('aria-label')).match(
-      /admin favorited your toot, foobar, this is unlisted, .* ago, @foobar, Unlisted/i
+      /admin favorited your post, foobar, this is unlisted, .* ago, @foobar, Unlisted/i
     )
     .hover(getNthStatus(2))
     .expect(getNthStatus(2).getAttribute('aria-label')).match(
-      /admin boosted your toot, foobar, this is unlisted, .* ago, @foobar, Unlisted/i
+      /admin boosted your post, foobar, this is unlisted, .* ago, @foobar, Unlisted/i
     )
     .hover(getNthStatus(3))
     .expect(getNthStatus(3).getAttribute('aria-label')).match(
@@ -88,7 +88,7 @@ test('can shorten aria-labels', async t => {
     .click(homeNavButton)
     .hover(getNthStatus(1))
     .expect(getNthStatus(1).getAttribute('aria-label')).match(
-      /Unlisted toot by quux/
+      /Unlisted post by quux/
     )
     .click(settingsNavButton)
     .click(generalSettingsButton)
@@ -96,6 +96,6 @@ test('can shorten aria-labels', async t => {
     .click(homeNavButton)
     .hover(getNthStatus(1))
     .expect(getNthStatus(1).getAttribute('aria-label')).match(
-      /quux, pinned toot 1, .+ ago, @quux, Unlisted, Boosted by admin/i
+      /quux, pinned post 1, .+ ago, @quux, Unlisted, Boosted by admin/i
     )
 })
