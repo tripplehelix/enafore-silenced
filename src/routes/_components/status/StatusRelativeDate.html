@@ -36,7 +36,7 @@
 </style>
 <script>
   import { formatIntl } from '../../_utils/formatIntl.js'
-
+  import SvgIcon from '../SvgIcon.html'
   export default {
     computed: {
       elementId: ({ uuid }) => `status-relative-date-${uuid}`,
@@ -48,6 +48,9 @@
       formattedDateLabel: ({ shortInlineFormattedDate }) => (
         formatIntl('intl.clickToShowThread', { time: shortInlineFormattedDate })
       )
+    },
+    components: {
+      SvgIcon
     }
   }
 </script>
