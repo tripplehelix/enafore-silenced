@@ -183,11 +183,11 @@
         }
         return originalStatus.favourites_count || 0
       },
-      displayAbsoluteFormattedCreatedDate: ({ createdAtDateTS, $isMobileSize }) => (
-        ($isMobileSize ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(createdAtDateTS)
+      displayAbsoluteFormattedCreatedDate: ({ createdAtDateTS, editedAtDateTS, $isMobileSize }) => (
+        ((editedAtDateTS || $isMobileSize) ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(createdAtDateTS)
       ),
       displayAbsoluteFormattedEditedDate: ({ editedAtDateTS, $isMobileSize }) => (
-        ($isMobileSize ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(editedAtDateTS)
+        ((editedAtDateTS || $isMobileSize) ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(editedAtDateTS)
       ),
       reblogsLabel: ({ $disableReblogCounts, numReblogs }) => {
         if ($disableReblogCounts) {
