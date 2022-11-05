@@ -219,3 +219,10 @@ textarea {
 .status-content .quote-inline {
   display: none;
 }
+
+.external-link-with-icon .external-link-svg, .status-edited-svg {
+  margin-left: 4px;
+  width: 14px;
+  height: 14px;
+  fill: var(--deemphasized-text-color);
+}
