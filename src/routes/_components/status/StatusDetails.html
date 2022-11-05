@@ -9,9 +9,11 @@
     </time>
   </ExternalLink>
   {#if editedAtDate}
-  <span aria-hidden="true">•</span> Edited <time datetime={editedAtDate} title={absoluteFormattedEditedDate}>
-    {displayAbsoluteFormattedEditedDate}
-  </time>
+  <span class="status-edited-date">
+    Edited <time datetime={editedAtDate} title={absoluteFormattedEditedDate}>
+      {displayAbsoluteFormattedEditedDate}
+    </time>
+  </span>
   {/if}
   </span>
   {#if applicationName}
@@ -55,9 +57,14 @@
     justify-content: left;
     margin: 0 5px 10px;
   }
+
   :global(.status-absolute-date) {
     font-size: 1.1em;
     min-width: 0;
+  }
+
+  :global(.status-edited-date) {
+    margin-left: 20px;
   }
 
   :global(.status-absolute-date time) {
