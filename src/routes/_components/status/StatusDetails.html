@@ -1,4 +1,5 @@
 <div class="status-details">
+  <span>
   <ExternalLink className="status-absolute-date"
                 href={originalStatus.url}
                 showIcon={true}
@@ -13,6 +14,7 @@
     {displayAbsoluteFormattedEditedDate}
   </time>
   {/if}
+  </span>
   {#if applicationName}
     {#if applicationWebsite}
       <ExternalLink className="status-application"
