@@ -296,7 +296,8 @@
       createdAtDate: ({ originalStatus }) => originalStatus.created_at,
       editedAtDateTS: ({ editedAtDate }) => editedAtDate && new Date(editedAtDate).getTime(),
       createdAtDateTS: ({ createdAtDate }) => new Date(createdAtDate).getTime(),
-      absoluteFormattedDate: ({ createdAtDateTS, editedAtDateTS }) => absoluteDateFormatter().format(editedAtDateTS || createdAtDateTS),
+      absoluteFormattedCreatedDate: ({ createdAtDateTS }) => absoluteDateFormatter().format(createdAtDateTS),
+      absoluteFormattedEditedDate: ({ editedAtDateTS }) => editedAtDateTS && absoluteDateFormatter().format(editedAtDateTS),
       shortInlineFormattedDate: ({ createdAtDateTS, editedAtDateTS, $now, $disableRelativeTimestamps }) => (
         $disableRelativeTimestamps
           ? dayOnlyAbsoluteDateFormatter().format(editedAtDateTS || createdAtDateTS)
@@ -334,13 +335,14 @@
       showContent: ({ spoilerText, spoilerShown }) => !spoilerText || spoilerShown,
       // These timestamp params may change every 10 seconds due to now() polling, so keep them
       // separate from the generic `params` list to avoid costly recomputes.
-      timestampParams: ({ createdAtDate, createdAtDateTS, editedAtDate, editedAtDateTS, shortInlineFormattedDate, absoluteFormattedDate }) => ({
+      timestampParams: ({ createdAtDate, createdAtDateTS, editedAtDate, editedAtDateTS, shortInlineFormattedDate, absoluteFormattedCreatedDate, absoluteFormattedEditedDate }) => ({
         createdAtDate,
         createdAtDateTS,
         editedAtDate,
         editedAtDateTS,
         shortInlineFormattedDate,
-        absoluteFormattedDate
+        absoluteFormattedCreatedDate,
+        absoluteFormattedEditedDate
       }),
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
       // change frequently and would therefore cause costly recomputes if included here.

@@ -4,10 +4,15 @@
                 showIcon={true}
                 ariaLabel={externalLinkLabel}
   >
-    <time datetime={createdAtDate} title={absoluteFormattedDate}>
-      {displayAbsoluteFormattedDate}
+    <time datetime={createdAtDate} title={absoluteFormattedCreatedDate}>
+      {displayAbsoluteFormattedCreatedDate}
     </time>
   </ExternalLink>
+  {#if}
+  <span aria-hidden="true">•</span> Edited <time datetime={editedAtDate} title={absoluteFormattedEditedDate}>
+    {displayAbsoluteFormattedEditedDate}
+  </time>
+  {/if}
   {#if applicationName}
     {#if applicationWebsite}
       <ExternalLink className="status-application"
@@ -177,8 +182,11 @@
         }
         return originalStatus.favourites_count || 0
       },
-      displayAbsoluteFormattedDate: ({ createdAtDateTS, $isMobileSize }) => (
+      displayAbsoluteFormattedCreatedDate: ({ createdAtDateTS, $isMobileSize }) => (
         ($isMobileSize ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(createdAtDateTS)
+      ),
+      displayAbsoluteFormattedEditedDate: ({ editedAtDateTS, $isMobileSize }) => (
+        ($isMobileSize ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(editedAtDateTS)
       ),
       reblogsLabel: ({ $disableReblogCounts, numReblogs }) => {
         if ($disableReblogCounts) {
