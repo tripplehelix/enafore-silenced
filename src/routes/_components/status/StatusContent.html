@@ -94,6 +94,7 @@
   import { classname } from '../../_utils/classname.js'
   import { massageUserText } from '../../_utils/massageUserText.js'
   import { urlIsCrossOrigin } from '../../_utils/urlIsCrossOrigin.js'
+  import { importConfetti } from '../../_utils/asyncModules/importConfetti.js'
 
   export default {
     oncreate () {
@@ -158,6 +159,7 @@
             anchor.setAttribute('title', "confetti!")
             anchor.setAttribute('target', '_self')
             anchor.setAttribute('href', "/confetti")
+            anchor.addEventListener("click", () => importConfetti().then(confetti=>confetti()))
           } if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
