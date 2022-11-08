@@ -159,7 +159,7 @@
             anchor.setAttribute('title', "confetti!")
             anchor.setAttribute('target', '_self')
             anchor.setAttribute('href', "/confetti")
-            anchor.addEventListener("click", e => {
+            anchor.addEventListener("click", function (e) {
               e.preventDefault();
               importConfetti().then(confetti=>confetti())
             })
