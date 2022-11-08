@@ -1,5 +1,9 @@
 import confetti from "canvas-confetti";
 export default function() {
+    var count = 200;
+    var defaults = {
+      origin: { y: 0.7 },
+    };
     function fire(particleRatio, opts) {
         confetti(
             Object.assign({}, defaults, opts, {

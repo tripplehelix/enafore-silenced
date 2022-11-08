@@ -159,7 +159,10 @@
             anchor.setAttribute('title', "confetti!")
             anchor.setAttribute('target', '_self')
             anchor.setAttribute('href', "/confetti")
-            anchor.addEventListener("click", () => importConfetti().then(confetti=>confetti()))
+            anchor.addEventListener("click", e => {
+              e.preventDefault();
+              importConfetti().then(confetti=>confetti())
+            })
           } if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
