@@ -154,7 +154,11 @@
             anchor.setAttribute('href', `/nitter/${encodeURIComponent(match[1]||"")}`)
             anchor.setAttribute('target', '_blank')
             anchor.setAttribute('rel', 'nofollow noopener')
-          } else if (urlIsCrossOrigin(href)) {
+          } else if (hrefParsed.hostname.startsWith("pinafore") && hrefParsed.pathname=="/confetti") {
+            anchor.setAttribute('title', "confetti!")
+            anchor.setAttribute('target', '_self')
+            anchor.setAttribute('href', "/confetti")
+          } if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
             anchor.setAttribute('rel', 'nofollow noopener')
