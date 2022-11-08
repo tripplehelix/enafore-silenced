@@ -1,12 +1,18 @@
 <Title name="Confetti" />
-🎉
+<LazyPage {pageComponent} {params} />
 <script>
   import Title from './_components/Title.html'
-  import confetti from 'canvas-confetti'
-  if(typeof alert=='function')alert(typeof confetti)
+  import LazyPage from './_components/LazyPage.html'
+  import pageComponent from './_pages/confetti.html'
+
   export default {
     components: {
-      Title
-    }
+
+      Title,
+      LazyPage
+    },
+    data: () => ({
+      pageComponent
+    })
   }
 </script>
