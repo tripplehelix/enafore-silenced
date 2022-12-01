@@ -21,6 +21,11 @@ const fadeColorToPressedState = {
   }
 }
 
+export const REBLOG_ANIMATION = [
+  growBigThenSmall,
+  fadeColorToPressedState
+]
+
 export const FAVORITE_ANIMATION = [
   {
     properties: [

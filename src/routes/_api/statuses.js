@@ -11,7 +11,7 @@ export async function postStatus (instanceName, accessToken, text, inReplyToId, 
     media_ids: mediaIds,
     sensitive,
     spoiler_text: spoilerText,
-    content_type: contentType
+    content_type: contentType,
     visibility,
     poll
   }
