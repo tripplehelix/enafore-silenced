@@ -39,6 +39,9 @@
   {#if showQuote && showContent}
     <svelte:self status={originalQuote} isQuote={true} />
   {/if}
+  {#if reactions}
+    <StatusReactions {...params} {reactions} />
+  {/if}
   {#if isStatusInOwnThread}
     <StatusDetails {...params} {...timestampParams} />
   {/if}
@@ -71,6 +74,7 @@
         "sidebar poll         poll          poll"
         "media   media        media         media"
         "quote   quote        quote         quote"
+        "....... reactions    reactions     reactions"
         "....... toolbar      toolbar       toolbar"
         "compose compose      compose       compose";
     grid-template-columns: min-content minmax(0, max-content) 1fr min-content;
@@ -102,6 +106,7 @@
       "media       media"
       "poll        poll"
       "quote       quote"
+      "reactions   reactions"
       "details     details"
       "toolbar     toolbar"
       "compose     compose";
@@ -129,6 +134,7 @@
   import StatusSpoiler from './StatusSpoiler.html'
   import StatusComposeBox from './StatusComposeBox.html'
   import StatusMentions from './StatusMentions.html'
+  import StatusReactions from './StatusReactions.html'
   import StatusPoll from './StatusPoll.html'
   import Shortcut from '../shortcut/Shortcut.html'
   import { store } from '../../_store/store.js'
@@ -184,6 +190,7 @@
       StatusSpoiler,
       StatusComposeBox,
       StatusMentions,
+      StatusReactions,
       Shortcut
     },
     data: () => ({
@@ -320,6 +327,7 @@
         status.reblog ||
         timelineType === 'pinned'
       ),
+      reactions: ({ originalStatus }) => originalStatus.reactions || originalStatus.emoji_reactions,
       className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote }) => (classname(
         'status-article',
         'shortcut-list-item',

@@ -1,0 +1,27 @@
+<pre class="status-reactions {isStatusInOwnThread ? 'status-in-own-thread' : ''}">
+{reactionsJSON}
+</pre>
+<style>
+  .status-reactions {
+    grid-area: reactions;
+  }
+  @media (max-width: 240px) {
+    :global(.status-reactions .icon-button-svg) {
+      /* idk might want this later*/
+    }
+  }
+</style>
+<script>
+  export default {
+    oncreate () {
+    },
+    components: {
+    },
+    methods: {
+    },
+    computed: {
+      reactionsJSON: ({ reactions }) => JSON.stringify(reactions)
+    }
+  }
+</script>
+  
