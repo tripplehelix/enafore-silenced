@@ -34,7 +34,7 @@
     <StatusMediaAttachments {...params} on:recalculateHeight />
   {/if}
   {#if showPoll && (showContent || preloadHiddenContent)}
-    <StatusPoll {...params} shown={showContent} />
+    <StatusPoll {...params} shown={showContent} on:recalculateHeight />
   {/if}
   {#if showQuote && showContent}
     <svelte:self status={originalQuote} isQuote={true} />

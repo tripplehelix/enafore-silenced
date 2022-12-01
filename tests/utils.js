@@ -169,6 +169,10 @@ export const getActiveElementInnerText = exec(() =>
   (document.activeElement && document.activeElement.innerText) || ''
 )
 
+export const getActiveElementId = exec(() =>
+  (document.activeElement && document.activeElement.id) || ''
+)
+
 export const getActiveElementRectTop = exec(() => (
   (document.activeElement && document.activeElement.getBoundingClientRect().top) || -1
 ))
@@ -522,8 +526,12 @@ export function getNthStatusOptionsButton (n) {
   return $(`${getNthStatusSelector(n)} .status-toolbar button:nth-child(4)`)
 }
 
+export function getNthStatusAccountLinkSelector (n) {
+  return `${getNthStatusSelector(n)} .status-author-name`
+}
+
 export function getNthStatusAccountLink (n) {
-  return $(`${getNthStatusSelector(n)} .status-author-name`)
+  return $(getNthStatusAccountLinkSelector(n))
 }
 
 export function getNthFavoritedLabel (n) {
@@ -569,6 +577,12 @@ export function getNthPinnedStatus (n) {
 export function getNthPinnedStatusFavoriteButton (n) {
   return $(`${getNthPinnedStatusSelector(n)} .status-toolbar button:nth-child(3)`)
 }
+
+export const getNumElementsMatchingSelector = (selector) => (exec(() => {
+  return document.querySelectorAll(selector).length
+}, {
+  dependencies: { selector }
+}))
 
 export async function validateTimeline (t, timeline) {
   const timeout = 30000

@@ -10,8 +10,8 @@ import { version } from '../package.json'
 
 import urlRegex from '../src/routes/_utils/urlRegexSource.js'
 // TODO: make it so we don't have to list these out explicitly
-import fr from '../src/intl/emoji-picker/fr.js'
-import de from '../src/intl/emoji-picker/de.js'
+import fr from 'emoji-picker-element/i18n/fr.js'
+import de from 'emoji-picker-element/i18n/de.js'
 
 const emojiPickerLocales = { fr, de }
 
@@ -127,8 +127,8 @@ export default {
     dev && new webpack.HotModuleReplacementPlugin({
       requestTimeout: 120000
     }),
-    // generates report.html, somewhat expensive to compute, so avoid in CircleCI tests
-    !dev && !process.env.CIRCLECI && new BundleAnalyzerPlugin({
+    // generates report.html, somewhat expensive to compute, so avoid in CI tests
+    !dev && !process.env.CI && new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
       logLevel: 'silent'

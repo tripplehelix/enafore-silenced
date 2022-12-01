@@ -28,9 +28,26 @@
   <link href="/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
   <link href="/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
   <link href="/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-  <link href="https://mastodon.technology/@pinafore" rel="me">
+  <link rel="me" href="https://fosstodon.org/@pinafore">
 
   <!-- inline CSS -->
+
+  <style id="theBottomNavStyle" media="only x">
+    :root {
+      --nav-top: calc(100dvh - var(--nav-total-height));
+      --nav-bottom: initial;
+      --main-content-pad-top: 0px;
+      --main-content-pad-bottom: var(--main-content-pad-vertical);
+      --toast-gap-bottom: var(--nav-total-height);
+      --fab-gap-top: 0px;
+    }
+    @supports not (height: 1dvh) {
+      /* In browsers that don't support dvh, use the large-small-dynamic-viewport-units-polyfill */
+      :root {
+        --nav-top: calc((100 * var(--1dvh)) - var(--nav-total-height));
+      }
+    }
+  </style>
 
   <style id="theGrayscaleStyle" media="only x">
     /* Firefox doesn't seem to like applying filter: grayscale() to
@@ -103,6 +120,9 @@
 
   <!-- LoadingMask.html gets rendered here -->
   <div id="loading-mask" aria-hidden="true"></div>
+
+  <!-- announceAriaLivePolite.js gets rendered here -->
+  <div id="theAriaLive" class="sr-only" aria-live="polite"></div>
 
   <!-- inline SVG -->
 

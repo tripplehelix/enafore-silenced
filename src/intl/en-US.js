@@ -174,12 +174,12 @@ export default {
       true {({count})}
       other {}
     }
+    {name}
+    ·
     {showInstanceName, select,
       true {{instanceName}}
       other {Pinafore}
     }
-    ·
-    {name}
   `,
   pinLabel: `{label} {pinnable, select,
     true {
@@ -382,7 +382,8 @@ export default {
   theme: 'Theme',
   themeForInstance: 'Theme for {instance}',
   disableCustomScrollbars: 'Disable custom scrollbars',
-  centerNav: 'Center the navigation header',
+  bottomNav: 'Place the navigation bar at the bottom of the screen',
+  centerNav: 'Center the navigation bar',
   preferences: 'Preferences',
   hotkeySettings: 'Hotkey settings',
   disableHotkeys: 'Disable all hotkeys',
@@ -495,6 +496,7 @@ export default {
     other {video}
   }: {description}`,
   accountFollowedYou: '{name} followed you, {account}',
+  accountSignedUp: '{name} signed up, {account}',
   reblogCountsHidden: 'Boost counts hidden',
   favoriteCountsHidden: 'Favorite counts hidden',
   rebloggedTimes: `Boosted {count, plural,
@@ -509,10 +511,14 @@ export default {
   rebloggedYou: 'boosted your post',
   favoritedYou: 'favorited your post',
   followedYou: 'followed you',
+  signedUp: 'signed up',
   posted: 'posted',
   pollYouCreatedEnded: 'A poll you created has ended',
   pollYouVotedEnded: 'A poll you voted on has ended',
   reblogged: 'boosted',
+  favorited: 'favorited',
+  unreblogged: 'unboosted',
+  unfavorited: 'unfavorited',
   showSensitiveMedia: 'Show sensitive media',
   hideSensitiveMedia: 'Hide sensitive media',
   clickToShowSensitive: 'Sensitive content. Click to show.',
@@ -676,5 +682,12 @@ export default {
   confirm: 'Confirm',
   closeDialog: 'Close dialog',
   postPrivacy: 'Post privacy',
-  contentType: 'Content type'
+  contentType: 'Content type',
+  homeOnInstance: 'Home on {instance}',
+  statusesTimelineOnInstance: 'Statuses: {timeline} timeline on {instance}',
+  statusesHashtag: 'Statuses: #{hashtag} hashtag',
+  statusesThread: 'Statuses: thread',
+  statusesAccountTimeline: 'Statuses: account timeline',
+  statusesList: 'Statuses: list',
+  notificationsOnInstance: 'Notifications on {instance}'
 }

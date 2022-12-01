@@ -9,11 +9,11 @@ export async function postStatus (instanceName, accessToken, text, inReplyToId, 
     status: text,
     in_reply_to_id: inReplyToId,
     media_ids: mediaIds,
-    sensitive: sensitive,
+    sensitive,
     spoiler_text: spoilerText,
-    visibility: visibility,
-    poll: poll,
     content_type: contentType
+    visibility,
+    poll
   }
 
   for (const key of Object.keys(body)) {

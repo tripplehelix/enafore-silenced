@@ -50,3 +50,5 @@ export const KNOWN_CONTENT_TYPES = {
 
 export const LONG_POST_LENGTH = 1024
 export const LONG_POST_TEXT = 'intl.longPost'
+
+export const MAX_STATUS_CHARS = 500
