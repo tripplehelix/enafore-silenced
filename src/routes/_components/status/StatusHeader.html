@@ -147,7 +147,7 @@
           return 'intl.rebloggedYou'
         } else if (notificationType === 'favourite') {
           return 'intl.favoritedYou'
-        } else if (notificationType === 'pleroma:emoji_reaction') {
+        } else if (notificationType === 'pleroma:emoji_reaction' || notificationType === 'reaction') {
           return 'reacted with an emoji'
         } else if (notificationType === 'admin.sign_up') {
           return 'intl.signedUp'
