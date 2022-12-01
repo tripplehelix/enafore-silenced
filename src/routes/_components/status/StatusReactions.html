@@ -1,6 +1,8 @@
-<pre class="status-reactions {isStatusInOwnThread ? 'status-in-own-thread' : ''}">
-{reactionsJSON}
-</pre>
+<div class="status-reactions {isStatusInOwnThread ? 'status-in-own-thread' : ''}">
+  {#each reactions as reaction}
+    <button class="status-reaction {reaction.me?'pressed':''}">{reaction.name} {reaction.count}</button>
+  {/each}
+</div>
 <style>
   .status-reactions {
     grid-area: reactions;
