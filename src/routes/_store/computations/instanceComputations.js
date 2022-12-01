@@ -55,7 +55,7 @@ export function instanceComputations (store) {
       (currentInstanceInfo) => {
         if(currentInstanceInfo) {
           if(typeof currentInstanceInfo.pleroma == "object") return currentInstanceInfo.pleroma.metadata.post_formats
-          if(typeof currentInstanceInfo.version == "string" && currentInstanceInfo.version.includes("+glitch")) return ["text/plain", "text/markdown", "text/html"]
+          if(typeof currentInstanceInfo.version == "string" && currentInstanceInfo.version.match(/\+(glitch|cat|nya|types)/)) return ["text/plain", "text/markdown", "text/html"]
         }
         return ["text/plain"]
       })
