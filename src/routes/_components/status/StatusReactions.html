@@ -1,6 +1,6 @@
 <div class="status-reactions {isStatusInOwnThread ? 'status-in-own-thread' : ''}">
     {#each processedReactions as reaction}
-    <button class="status-reaction not-same-pressed {reaction.me?'pressed':''}">
+    <button class="status-reaction not-same-pressed {reaction.me?'pressed':''}" on:click="onClick(event, reaction)">
         {@html reaction.html}
         <span class="status-reaction-count">{reaction.count}</span>
     </button>
@@ -79,6 +79,9 @@
         components: {
         },
         methods: {
+            onClick (event, reaction) {
+                window.reactionClick={event, reaction, this:this}
+            }
         },
         computed: {
             processedReactions: ({ reactions, $autoplayGifs }) => reactions.map(e=>{
@@ -91,7 +94,14 @@
                         shortcode
                     }], $autoplayGifs)
                 }
-            })
+            }),
+            apiVersion: ({ $currentPleromaFeatures }) => {
+                return {
+                    customEmojiReactions: currentPleromaFeatures?currentPleromaFeatures.includes("custom_emoji_reactions"):true,
+                    externReactions: currentPleromaFeatures?true:false,
+                    isPleroma: !!currentPleromaFeatures
+                }
+            }
         }
     }
 </script>

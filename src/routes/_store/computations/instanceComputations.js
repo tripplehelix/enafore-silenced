@@ -49,16 +49,25 @@ export function instanceComputations (store) {
       }, loggedInInstances[currentInstance])
     })
 
-    store.compute(
-      'currentPostTypes',
-      ['currentInstanceInfo'],
-      (currentInstanceInfo) => {
-        if(currentInstanceInfo) {
-          if(typeof currentInstanceInfo.pleroma == "object") return currentInstanceInfo.pleroma.metadata.post_formats
-          if(typeof currentInstanceInfo.version == "string" && currentInstanceInfo.version.match(/\+(glitch|cat|nya|types)/)) return ["text/plain", "text/markdown", "text/html"]
-        }
-        return ["text/plain"]
-      })
+  store.compute(
+    'currentPostTypes',
+    ['currentInstanceInfo'],
+    (currentInstanceInfo) => {
+      if(currentInstanceInfo) {
+        if(typeof currentInstanceInfo.pleroma == "object") return currentInstanceInfo.pleroma.metadata.post_formats
+        if(typeof currentInstanceInfo.version == "string" && currentInstanceInfo.version.match(/\+(glitch|cat|nya|types)/)) return ["text/plain", "text/markdown", "text/html"]
+      }
+      return ["text/plain"]
+    })
+
+  store.compute(
+    'currentPleromaFeatures',
+    ['currentInstanceInfo'],
+    (currentInstanceInfo) => {
+      if(currentInstanceInfo) {
+        if(typeof currentInstanceInfo.pleroma == "object") return currentInstanceInfo.pleroma.metadata.features
+      } else return null
+    })
 
   store.compute(
     'accessToken',
