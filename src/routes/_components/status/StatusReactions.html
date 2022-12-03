@@ -72,6 +72,7 @@
 <script>
     import { store } from '../../_store/store.js'
     import { emojifyText } from '../../_utils/emojifyText.js'
+    import { setReacted } from '../../_actions/favorite.js'
     export default {
         store: () => store,
         oncreate() {
@@ -80,8 +81,8 @@
         },
         methods: {
             onClick (event, reaction) {
-                const { apiVersion } = this.get()
-                window.reactionClick={event, reaction, apiVersion}
+                const { apiVersion, statusId } = this.get()
+                setReacted(statusId, !reaction.me, reaction.name, apiVersion)
             }
         },
         computed: {
