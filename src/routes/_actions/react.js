@@ -5,7 +5,7 @@ import { database } from '../_database/database.js'
 import { formatIntl } from '../_utils/formatIntl.js'
 
 export async function setReacted (statusId, reacting, reaction, apiVersion) {
-  if(reaction.extern && !externReactions) {
+  if(reaction.extern && !apiVersion.externReactions) {
     /* no await */ toast.say('Your instance doesn\'t allow reacting with remote custom emojis')
     return false
   }

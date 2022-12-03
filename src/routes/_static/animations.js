@@ -49,3 +49,7 @@ export const CHECKMARK_ANIMATION = [
   fadeColorToPressedState
 ]
 
+export const REACT_ANIMATION = [
+  fadeColorToPressedState
+]
+
