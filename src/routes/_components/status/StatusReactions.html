@@ -82,7 +82,7 @@
         methods: {
             onClick (event, reaction) {
                 const { apiVersion, statusId } = this.get()
-                setReacted(statusId, !reaction.me, reaction.name, apiVersion)
+                setReacted(statusId, !reaction.me, reaction, apiVersion)
             }
         },
         computed: {

@@ -8,7 +8,7 @@ export async function reactStatus (instanceName, accessToken, statusId, reaction
   }
 }
 
-export async function unreactStatus (instanceName, accessToken, statusId, apiVersion) {
+export async function unreactStatus (instanceName, accessToken, statusId, reactionName, apiVersion) {
   if (apiVersion.isPleroma) {} else {
     const url = `${basename(instanceName)}/api/v1/statuses/${statusId}/unreact/${encodeURIComponent(reactionName)}`
     return post(url, null, auth(accessToken), { timeout: WRITE_TIMEOUT })
