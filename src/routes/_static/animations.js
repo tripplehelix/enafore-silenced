@@ -1,4 +1,4 @@
-const growBigThenSmall = {
+export const growBigThenSmall = {
   properties: [
     { transform: 'scale(1)' },
     { transform: 'scale(2)' },
@@ -61,6 +61,7 @@ export const CHECKMARK_ANIMATION = [
 ]
 
 export const REACT_ANIMATION = [
-  fadeBackgroundToPressedState
+  fadeBackgroundToPressedState,
+  growBigThenSmall
 ]
 
