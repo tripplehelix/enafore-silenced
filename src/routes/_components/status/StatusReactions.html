@@ -83,7 +83,7 @@
         },
         methods: {
             async onClick (event, reaction) {
-                window.__debugStuff={event,this}
+                window.__debugStuff={event,this:this}
                 const { apiVersion, statusId, reactions } = this.get()
                 const ogReactions = [...reactions];
                 const newReactions = [...reactions].map(e=>e.name==reaction.name?({
