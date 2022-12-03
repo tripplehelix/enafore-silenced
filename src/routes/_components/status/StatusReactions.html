@@ -80,7 +80,8 @@
         },
         methods: {
             onClick (event, reaction) {
-                window.reactionClick={event, reaction, this:this}
+                const { apiVersion } = this.get()
+                window.reactionClick={event, reaction, apiVersion}
             }
         },
         computed: {
