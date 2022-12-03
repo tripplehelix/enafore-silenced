@@ -1,7 +1,9 @@
 <div class="status-reactions {isStatusInOwnThread ? 'status-in-own-thread' : ''}">
-    {#each reactions as reaction}
-    <button class="status-reaction not-same-pressed {reaction.me?'pressed':''}">{reaction.name}
-        {reaction.count}</button>
+    {#each processedReactions as reaction}
+    <button class="status-reaction not-same-pressed {reaction.me?'pressed':''}">
+        {@html reaction.html}
+        <span class="status-reaction-count">{reaction.count}</span>
+    </button>
     {/each}
 </div>
 <style>
@@ -68,7 +70,9 @@
     }
 </style>
 <script>
+    import { store } from '../../_store/store.js'
     export default {
+        store: () => store,
         oncreate() {
         },
         components: {
@@ -76,7 +80,17 @@
         methods: {
         },
         computed: {
-            reactionsJSON: ({ reactions }) => JSON.stringify(reactions)
+            processedReactions: ({ reactions, $autoplayGifs }) => reactions.map(e=>{
+                const shortcode = url && e.name.replace(/:/g,"")
+                return {
+                    ...e,
+                    html: emojifyText(e.url?":"+shortcode+":":e.name, [{
+                        url: e.url,
+                        static_url: e.static_url || e.url,
+                        shortcode
+                    }], $autoplayGifs)
+                }
+            })
         }
     }
 </script>
