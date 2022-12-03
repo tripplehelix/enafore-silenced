@@ -61,7 +61,6 @@ export const CHECKMARK_ANIMATION = [
 ]
 
 export const REACT_ANIMATION = [
-  fadeBackgroundToPressedState,
-  growBigThenSmall
+  fadeBackgroundToPressedState
 ]
 
