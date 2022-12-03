@@ -7,12 +7,12 @@ import { formatIntl } from '../_utils/formatIntl.js'
 export async function setReacted (statusId, reacting, reaction, apiVersion) {
   if(reaction.extern && !externReactions) {
     /* no await */ toast.say('Your instance doesn\'t allow reacting with remote custom emojis')
-    return
+    return false
   }
   const { online } = store.get()
   if (!online) {
     /* no await */ toast.say(reacting ? 'intl.cannotFavoriteOffline' : 'intl.cannotUnfavoriteOffline')
-    return
+    return false
   }
   const { currentInstance, accessToken } = store.get()
   const networkPromise = reacting
@@ -20,11 +20,13 @@ export async function setReacted (statusId, reacting, reaction, apiVersion) {
     : unreactStatus(currentInstance, accessToken, statusId, reaction.name, apiVersion)
   try {
     await networkPromise
+    return true
   } catch (e) {
     console.error(e)
     /* no await */ toast.say(reacting
       ? formatIntl('intl.unableToFavorite', { error: (e.message || '') })
       : formatIntl('intl.unableToUnfavorite', { error: (e.message || '') })
     )
+    return false
   }
 }

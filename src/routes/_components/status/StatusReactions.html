@@ -80,9 +80,24 @@
         components: {
         },
         methods: {
-            onClick (event, reaction) {
-                const { apiVersion, statusId } = this.get()
-                setReacted(statusId, !reaction.me, reaction, apiVersion)
+            async onClick (event, reaction) {
+                const { apiVersion, statusId, reactions } = this.get()
+                const ogReactions = [...reactions];
+                const newReactions = [...reactions].map(e=>e.name==reaction.name?({
+                    ...e,
+                    me: !reaction.me
+                }):e);
+                this.set({
+                    reactions: newReactions
+                })
+                const didReact = await setReacted(statusId, !reaction.me, reaction, apiVersion)
+                if(didReact) {
+                    // fetch updated reactions from server
+                } else {
+                    this.set({
+                        reactions: ogReactions
+                    })
+                }
             }
         },
         computed: {
