@@ -81,7 +81,7 @@
         },
         computed: {
             processedReactions: ({ reactions, $autoplayGifs }) => reactions.map(e=>{
-                const shortcode = url && e.name.replace(/:/g,"")
+                const shortcode = e.url && e.name.replace(/:/g,"")
                 return {
                     ...e,
                     html: emojifyText(e.url?":"+shortcode+":":e.name, [{
