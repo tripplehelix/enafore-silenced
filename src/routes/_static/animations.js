@@ -61,10 +61,17 @@ export const CHECKMARK_ANIMATION = [
 ]
 
 export const REACT_ANIMATION = [
-  fadeBackgroundToPressedState
-]
-
-export const REACT_EMOJI_ANIMATION = [
-  growBigThenSmall
+  fadeBackgroundToPressedState,
+  {
+    properties: [
+      { transform: 'scale(1)' },
+      { transform: 'scale(1.175)' },
+      { transform: 'scale(1)' }
+    ],
+    options: {
+      duration: 333,
+      easing: 'ease-in-out'
+    }
+  }
 ]
 
