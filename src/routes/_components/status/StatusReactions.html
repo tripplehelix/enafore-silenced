@@ -75,11 +75,12 @@
     import { animate } from '../../_utils/animate.js'
     import { setReacted } from '../../_actions/react.js'
     import { REACT_ANIMATION } from '../../_static/animations.js'
+    import { on } from '../../_utils/eventBus.js'
     export default {
         store: () => store,
         oncreate() {
             const { statusId } = this.get()
-              on('statusUpdated', this, status => {
+            on('statusUpdated', this, status => {
                 if (status.id === statusId) {
                     this.set({
                         reactions: status.reactions
