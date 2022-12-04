@@ -39,8 +39,8 @@
   {#if showQuote && showContent}
     <svelte:self status={originalQuote} isQuote={true} />
   {/if}
-  {#if reactions}
-    <StatusReactions {...params} {reactions} />
+  {#if hasReactions}
+    <StatusReactions {...params} />
   {/if}
   {#if isStatusInOwnThread}
     <StatusDetails {...params} {...timestampParams} />
@@ -327,7 +327,7 @@
         status.reblog ||
         timelineType === 'pinned'
       ),
-      reactions: ({ originalStatus }) => originalStatus.reactions || originalStatus.emoji_reactions,
+      hasReactions: ({ originalStatus }) => Boolean(originalStatus.reactions || originalStatus.emoji_reactions),
       className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote }) => (classname(
         'status-article',
         'shortcut-list-item',
