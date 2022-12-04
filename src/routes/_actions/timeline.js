@@ -29,7 +29,7 @@ async function storeFreshTimelineItemsInDatabase (instanceName, timelineName, it
   }
 }
 
-async function updateStatus (instanceName, accessToken, statusId) {
+export async function updateStatus (instanceName, accessToken, statusId) {
   const status = await getStatus(instanceName, accessToken, statusId)
   await database.insertStatus(instanceName, status)
   emit('statusUpdated', status)
