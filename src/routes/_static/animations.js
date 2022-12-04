@@ -67,7 +67,7 @@ export const REACT_ANIMATION = [
       { backgroundColor: 'var(--action-button-fill-color-pressed)' }
     ],
     options: {
-      duration: 195,
+      duration: 222,
       easing: 'linear'
     }
   },
@@ -78,7 +78,7 @@ export const REACT_ANIMATION = [
       { transform: 'scale(1)' }
     ],
     options: {
-      duration: 195,
+      duration: 222,
       easing: 'ease-in-out'
     }
   }
