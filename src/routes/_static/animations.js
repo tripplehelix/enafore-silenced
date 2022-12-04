@@ -61,7 +61,16 @@ export const CHECKMARK_ANIMATION = [
 ]
 
 export const REACT_ANIMATION = [
-  fadeBackgroundToPressedState,
+  {
+    properties: [
+      { backgroundColor: 'var(--action-button-fill-color)' },
+      { backgroundColor: 'var(--action-button-fill-color-pressed)' }
+    ],
+    options: {
+      duration: 195,
+      easing: 'linear'
+    }
+  },
   {
     properties: [
       { transform: 'scale(1)' },
@@ -69,7 +78,7 @@ export const REACT_ANIMATION = [
       { transform: 'scale(1)' }
     ],
     options: {
-      duration: 333,
+      duration: 195,
       easing: 'ease-in-out'
     }
   }
