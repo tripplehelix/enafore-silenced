@@ -78,6 +78,14 @@
     export default {
         store: () => store,
         oncreate() {
+            const { statusId } = this.get()
+              on('statusUpdated', this, status => {
+                if (status.id === statusId) {
+                    this.set({
+                        reactions: status.reactions
+                    })
+                }
+            })
         },
         components: {
         },
