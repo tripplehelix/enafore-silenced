@@ -94,7 +94,6 @@
         },
         methods: {
             async onClick (event, reaction) {
-                window.__debugStuff={target:event.currentTarget,this:this}
                 const { apiVersion, originalStatusId, reactions } = this.get()
                 const ogReactions = [...reactions];
                 const newReactions = [...reactions].map(e=>e.name==reaction.name?({
@@ -110,6 +109,7 @@
                     animate(event.currentTarget, REACT_ANIMATION)
                 }
                 const didReact = await setReacted(originalStatusId, !reaction.me, reaction, apiVersion)
+                window.__debugStuff = {didReact, updateStatus, scheduleIdleTask,currentInstance, accessToken, originalStatusId}
                 if(didReact) {
                     scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
                 } else {
