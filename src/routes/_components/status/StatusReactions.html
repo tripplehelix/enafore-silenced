@@ -134,7 +134,7 @@
             apiVersion: ({ $currentPleromaFeatures }) => {
                 return {
                     customEmojiReactions: $currentPleromaFeatures?$currentPleromaFeatures.includes("custom_emoji_reactions"):true,
-                    externReactions: $currentPleromaFeatures?true:false,
+                    externReactions: true,
                     isPleroma: !!$currentPleromaFeatures
                 }
             },
