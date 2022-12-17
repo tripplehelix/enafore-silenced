@@ -23,7 +23,7 @@
     <StatusMentions {...params} />
   {/if}
   {#if content && (showContent || preloadHiddenContent)}
-    <StatusContent {...params} shown={showContent}/>
+    <StatusContent {...params} shown={showContent} {plainTextContent} />
   {/if}
   <!-- Apparently it's possible for spoilered content to sometimes have embeds, but I can't figure out how.
        Don't bother optimizing this with the preloadHiddenContent. -->

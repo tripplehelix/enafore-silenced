@@ -120,12 +120,10 @@
         )
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
-      plainTextContent: ({ originalStatus }) => (originalStatus.plainTextContent || ''),
       massagedContent: ({ content, originalStatusEmojis, $autoplayGifs }) => (
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
       shouldTranslate: async ({ plainTextContent }) => {
-        window.__plainTextContent = plainTextContent
         return (await franc(plainTextContent)).find(e=>e[0]=='eng')[1]
       }
     },
