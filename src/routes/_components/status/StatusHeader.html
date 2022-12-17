@@ -135,12 +135,14 @@
           return '#fa-bar-chart'
         } else if (notificationType === 'status') {
           return '#fa-comment'
-        } else if (notificationType == "update") {
-          return '#fa-pencil'
         } else if (notificationType === 'admin.sign_up') {
           return '#fa-user-plus'
-        } else if (notificationType == 'follow_request') {
-          return '#fa-user-plus'
+        } else if (notificationType === 'update') {
+          return '#fa-pencil'
+        } else if (notificationType === 'follow_request') {
+          return '#fa-hourglass'
+        } else if (notificationType === 'admin.report') {
+          return '#fa-flag'
         }
         return '#fa-star'
       },
@@ -157,10 +159,6 @@
           return 'intl.followedYou'
         } else if (notificationType === 'status') {
           return 'intl.posted'
-        } else if (notificationType == 'update') {
-          return 'edited their post'
-        } else if (notificationType == 'follow_request') {
-          return 'sent a follow request'
         } else if (notificationType === 'poll') {
           if ($currentVerifyCredentials && status && $currentVerifyCredentials.id === status.account.id) {
             return 'intl.pollYouCreatedEnded'
@@ -169,6 +167,12 @@
           }
         } else if (status && status.reblog) {
           return 'intl.reblogged'
+        } else if (notificationType === 'update') {
+          return 'intl.edited'
+        } else if (notificationType === 'follow_request') {
+          return 'intl.requestedFollow'
+        } else if (notificationType === 'admin.report') {
+          return 'intl.reported'
         } else {
           return ''
         }

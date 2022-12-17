@@ -46,7 +46,7 @@
     <StatusDetails {...params} {...timestampParams} />
   {/if}
   {#if !isQuote}
-    <StatusToolbar {...params} {replyShown} on:recalculateHeight />
+    <StatusToolbar {...params} {replyShown} on:recalculateHeight on:focusArticle="focusArticle()" />
   {/if}
   {#if replyShown}
     <StatusComposeBox {...params} on:recalculateHeight />
@@ -152,6 +152,7 @@
   import { composeNewStatusMentioning } from '../../_actions/mention.js'
   import { createStatusOrNotificationUuid } from '../../_utils/createStatusOrNotificationUuid.js'
   import { addEmojiTooltips } from '../../_utils/addEmojiTooltips.js'
+  import { tryToFocusElement } from '../../_utils/tryToFocusElement.js'
 
   const INPUT_TAGS = new Set(['a', 'button', 'input', 'textarea', 'label'])
   const isUserInputElement = node => INPUT_TAGS.has(node.localName)
@@ -233,6 +234,10 @@
       async mentionAuthor () {
         const { accountForShortcut } = this.get()
         await composeNewStatusMentioning(accountForShortcut)
+      },
+      focusArticle () {
+        const { elementId } = this.get()
+        tryToFocusElement(elementId, /* scroll */ true)
       }
     },
     computed: {
@@ -293,6 +298,13 @@
       ),
       originalQuote: ({ originalStatus }) => originalStatus.quote,
       showQuote: ({ originalQuote }) => !!originalQuote,
+      mediaAttachments: ({ originalStatus }) => (
+        originalStatus.media_attachments
+      ),
+      sensitiveShown: ({ $sensitivesShown, uuid }) => !!$sensitivesShown[uuid],
+      sensitive: ({ originalStatus, $markMediaAsSensitive, $neverMarkMediaAsSensitive }) => (
+        !$neverMarkMediaAsSensitive && ($markMediaAsSensitive || originalStatus.sensitive)
+      ),
       originalAccountEmojis: ({ originalAccount }) => (originalAccount.emojis || []),
       originalStatusEmojis: ({ originalStatus }) => (originalStatus.emojis || []),
       originalAccountDisplayName: ({ originalAccount }) => (originalAccount.display_name || originalAccount.username),
@@ -314,16 +326,16 @@
       ariaLabel: ({
         originalAccount, account, plainTextContent, shortInlineFormattedDate, spoilerText,
         showContent, reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
-        showMedia, showPoll
+        showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
       }) => (
         getAccessibleLabelForStatus(originalAccount, account, plainTextContent,
           shortInlineFormattedDate, spoilerText, showContent,
           reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
-          showMedia, showPoll
+          showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
         )
       ),
       showHeader: ({ notification, status, timelineType }) => (
-        (notification && ['reblog', 'favourite', 'poll', 'status', "pleroma:emoji_reaction", "reaction", "update"].includes(notification.type)) ||
+        (notification && ['reblog', 'favourite', 'poll', 'status', 'update', 'pleroma:emoji_reaction', 'reaction'].includes(notification.type)) ||
         status.reblog ||
         timelineType === 'pinned'
       ),
