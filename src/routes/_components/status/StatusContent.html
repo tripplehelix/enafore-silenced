@@ -120,6 +120,7 @@
         )
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
+      plainTextContent: ({ originalStatus }) => (originalStatus.plainTextContent || ''),
       massagedContent: ({ content, originalStatusEmojis, $autoplayGifs }) => (
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
