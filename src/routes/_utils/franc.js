@@ -18,7 +18,7 @@ async function decodeWithoutCache (text) {
 export async function franc (text) {
   let result = cache.get(text)
   if (!result) {
-    result = await decodeWithoutCache(blurhash)
+    result = await decodeWithoutCache(text)
     cache.set(text, result)
   }
   return result
