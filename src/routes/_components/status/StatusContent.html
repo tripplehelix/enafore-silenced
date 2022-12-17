@@ -124,7 +124,12 @@
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
       shouldTranslate: async ({ plainTextContent }) => {
-        return (await franc(plainTextContent)).find(e=>e[0]=='eng')[1]
+        const francResult = await franc(plainTextContent.replace(/:\w+:|\w+:\/\/\S+|#\w+/g,""))
+        if(francResult) {
+          const eng = francResult.find(e=>e[0]=='eng')
+          if(eng) return eng[1]
+        }
+        return 1
       }
     },
     methods: {
