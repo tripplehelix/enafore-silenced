@@ -1,5 +1,12 @@
 <div class={computedClass} ref:node>
     {@html massagedContent}
+    {#await shouldTranslate}
+	    <div data-waiting></div>
+    {:then answer}
+	    <div>{answer}</div>
+    {:catch error}
+	    <div data-error={error}></div>
+    {/await}
 </div>
 <style>
   .status-content {
@@ -115,7 +122,11 @@
       content: ({ originalStatus }) => (originalStatus.content || ''),
       massagedContent: ({ content, originalStatusEmojis, $autoplayGifs }) => (
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
-      )
+      ),
+      shouldTranslate: async ({ plainTextContent }) => {
+        window.__plainTextContent = plainTextContent
+        return (await franc(plainTextContent)).find(e=>e[0]=='eng')[1]
+      }
     },
     methods: {
       hydrateContent () {
