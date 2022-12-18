@@ -36,7 +36,7 @@ export const KNOWN_CONTENT_TYPES = {
   },
   "text/markdown": {
     label: 'Markdown',
-    icon: '#fa-arrow-circle-down'
+    icon: '#fa-markdown'
   },
   "text/x.misskeymarkdown": {
     label: 'Misskey Flavored Markdown',
