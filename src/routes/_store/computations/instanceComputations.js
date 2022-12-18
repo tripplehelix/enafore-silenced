@@ -65,8 +65,22 @@ export function instanceComputations (store) {
     ['currentInstanceInfo'],
     (currentInstanceInfo) => {
       if(currentInstanceInfo) {
-        if(typeof currentInstanceInfo.pleroma == "object") return currentInstanceInfo.pleroma.metadata.features
+        if(typeof currentInstanceInfo.pleroma === "object") return currentInstanceInfo.pleroma.metadata.features
       } else return null
+    })
+
+  store.compute(
+    'bubbleTimelineEnabled',
+    ['currentInstanceInfo'],
+    (currentInstanceInfo) => {
+      if(currentInstanceInfo) {
+        if(typeof currentInstanceInfo.nodeInfo === "object") {
+          if(currentInstanceInfo.nodeInfo !== null && typeof currentInstanceInfo.nodeInfo.metadata == "object" && currentInstanceInfo.nodeInfo.metadata !== null) {
+            const localBubbleInstances = currentInstanceInfo.nodeInfo.metadata.localBubbleInstances
+            return localBubbleInstances?localBubbleInstances.length>0:false
+          } else return false
+        } else return null // need updated instanceinfo
+      } else return false
     })
 
   store.compute(
