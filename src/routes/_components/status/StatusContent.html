@@ -131,7 +131,7 @@
         const francResult = await franc(strippedText)
         if(francResult) {
           const eng = francResult.find(e=>e[0]=='eng')
-          if(eng) return (eng[1]+(strippedText.length*-0.01)+0.2<0.6) // ehh, not great, but it'll do
+          if(eng) return (eng[1]+Math.max((strippedText.length*-0.01)+0.2, 0))<0.6 // ehh, not great, but it'll do
           return true
         } else {
           return false
