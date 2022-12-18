@@ -130,17 +130,29 @@
       FocusRestoration
     },
     data: () => ({
-      staticPinnables: [
+    }),
+    computed: {
+      isLockedAccount: ({ $currentVerifyCredentials }) => $currentVerifyCredentials && $currentVerifyCredentials.locked,
+      followRequestsLabel: ({ $hasFollowRequests, $numberOfFollowRequests }) => (
+        formatIntl('intl.followRequestsLabel', {
+          hasFollowRequests: $hasFollowRequests,
+          count: $numberOfFollowRequests
+        })
+      ),
+      listsLength: ({ $lists }) => $lists ? $lists.length : 0,
+      staticPinnablesLength: ({ staticPinnables }) => staticPinnables.length,
+      numPinnable: ({ listsLength, staticPinnablesLength }) => listsLength + staticPinnablesLength,
+      staticPinnables: ({ $bubbleTimelineEnabled }) => [
         {
           href: '/local',
           label: 'intl.localTimeline',
           icon: '#fa-users'
         },
-        {
+        ...($bubbleTimelineEnabled?[{
           href: '/bubble',
           label: 'intl.bubbleTimeline',
           icon: '#fa-circle'
-        },
+        }]:[]),
         {
           href: '/federated',
           label: 'intl.federatedTimeline',
@@ -162,18 +174,6 @@
           icon: '#fa-bookmark'
         }
       ]
-    }),
-    computed: {
-      isLockedAccount: ({ $currentVerifyCredentials }) => $currentVerifyCredentials && $currentVerifyCredentials.locked,
-      followRequestsLabel: ({ $hasFollowRequests, $numberOfFollowRequests }) => (
-        formatIntl('intl.followRequestsLabel', {
-          hasFollowRequests: $hasFollowRequests,
-          count: $numberOfFollowRequests
-        })
-      ),
-      listsLength: ({ $lists }) => $lists ? $lists.length : 0,
-      staticPinnablesLength: ({ staticPinnables }) => staticPinnables.length,
-      numPinnable: ({ listsLength, staticPinnablesLength }) => listsLength + staticPinnablesLength
     }
   }
 </script>
