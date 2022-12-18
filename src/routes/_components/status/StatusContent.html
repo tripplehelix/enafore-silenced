@@ -1,11 +1,13 @@
 <div class={computedClass} ref:node>
     {@html massagedContent}
     {#await shouldTranslate}
-	    <div data-waiting></div>
+      <!-- waiting -->
     {:then answer}
-	    <div>{answer}</div>
+      {#if answer}
+	      <div>this post is probably not english</div>
+      {/if}
     {:catch error}
-	    <div data-error={error}></div>
+	    <!-- {error} -->
     {/await}
 </div>
 <style>
@@ -123,14 +125,16 @@
       massagedContent: ({ content, originalStatusEmojis, $autoplayGifs }) => (
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
-      shouldTranslate: async ({ plainTextContent }) => {
-        const francResult = await franc(plainTextContent.replace(/:\w+:|\w+:\/\/\S+|#\w+/g,""))
+      shouldTranslate: async ({ plainTextContent, $detectTranslation }) => {
+        if(!$detectTranslation) return false
+        const strippedText = plainTextContent.replace(/:\w+:|\w+:\/\/\S+|#\w+/g,"")
+        const francResult = await franc(strippedText)
         if(francResult) {
           const eng = francResult.find(e=>e[0]=='eng')
-          if(eng) return eng[1]
-          return 0
+          if(eng) return (eng[1]+(strippedText.length*-0.01)+0.2<0.6) // ehh, not great, but it'll do
+          return true
         } else {
-          return 1
+          return false
         }
       }
     },

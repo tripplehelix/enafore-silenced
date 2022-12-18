@@ -8,6 +8,7 @@ import { isKaiOS } from '../_utils/userAgent/isKaiOS.js'
 const persistedState = {
   alwaysShowFocusRing: false,
   autoplayGifs: false,
+  detectTranslation: false,
   composeData: {},
   currentInstance: null,
   currentRegisteredInstanceName: undefined,
