@@ -82,6 +82,7 @@ export default {
   profile: 'Profile',
   federatedTimeline: 'Federated timeline',
   localTimeline: 'Local timeline',
+  bubbleTimeline: 'Bubble timeline',
   // community page
   community: 'Community',
   pinnableTimelines: 'Pinnable timelines',

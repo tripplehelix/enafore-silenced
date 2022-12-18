@@ -61,9 +61,10 @@ export default [
   { id: 'fa-hashtag', src: 'src/thirdparty/font-awesome-svg-png/white/svg/hashtag.svg' },
   { id: 'fa-bookmark', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bookmark.svg' },
   { id: 'fa-code', src: 'src/thirdparty/font-awesome-svg-png/white/svg/code.svg' },
-  { id: 'fa-arrow-circle-down', src: 'src/thirdparty/font-awesome-svg-png/white/svg/arrow-circle-down.svg' },
+  { id: 'fa-markdown', src: 'src/markdown.svg' },
   { id: 'fa-file-text', src: 'src/thirdparty/font-awesome-svg-png/white/svg/file-text.svg' },
   { id: 'fa-file', src: 'src/thirdparty/font-awesome-svg-png/white/svg/file.svg' },
   { id: 'fa-bold', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bold.svg' },
+  { id: 'fa-circle', src: 'src/thirdparty/font-awesome-svg-png/white/svg/circle.svg' },
   { id: 'misskey-logo', src: 'src/misskey.svg' }
 ]
