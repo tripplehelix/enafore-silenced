@@ -28,6 +28,13 @@ export function navComputations (store) {
           svg: '#fa-globe',
           label: 'intl.federated'
         }
+      } else if (pinnedPage === '/bubble') {
+        pinnedPageObject = {
+          name: 'bubble',
+          href: '/bubble',
+          svg: '#fa-circle',
+          label: 'intl.bubble'
+        }
       } else if (pinnedPage === '/direct') {
         pinnedPageObject = {
           name: 'direct',

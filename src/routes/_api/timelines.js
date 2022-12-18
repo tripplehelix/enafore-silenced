@@ -6,6 +6,8 @@ function getTimelineUrlPath (timeline) {
     case 'local':
     case 'federated':
       return 'timelines/public'
+    case 'bubble':
+      return 'timelines/bubble'
     case 'home':
       return 'timelines/home'
     case 'notifications':

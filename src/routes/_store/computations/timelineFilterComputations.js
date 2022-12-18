@@ -68,7 +68,7 @@ export function timelineFilterComputations (store) {
       if (currentTimeline === 'notifications' || currentTimeline.startsWith('notifications/')) {
         return WORD_FILTER_CONTEXT_NOTIFICATIONS
       }
-      if (currentTimeline === 'federated' || currentTimeline === 'local' || currentTimeline.startsWith('tag/')) {
+      if (currentTimeline === 'federated' || currentTimeline === 'bubble' || currentTimeline === 'local' || currentTimeline.startsWith('tag/')) {
         return WORD_FILTER_CONTEXT_PUBLIC
       }
       if (currentTimeline.startsWith('account/')) {
