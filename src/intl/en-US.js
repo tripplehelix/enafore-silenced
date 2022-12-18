@@ -143,9 +143,11 @@ export default {
     <li><kbd>g</kbd> + <kbd>h</kbd> to go home</li>
     <li><kbd>g</kbd> + <kbd>n</kbd> to go to notifications</li>
     <li><kbd>g</kbd> + <kbd>l</kbd> to go to the local timeline</li>
+    <li><kbd>g</kbd> + <kbd>b</kbd> to go to the bubble timeline</li>
     <li><kbd>g</kbd> + <kbd>t</kbd> to go to the federated timeline</li>
     <li><kbd>g</kbd> + <kbd>c</kbd> to go to the community page</li>
     <li><kbd>g</kbd> + <kbd>d</kbd> to go to the direct messages page</li>
+    <li><kbd>g</kbd> + <kbd>i</kbd> to go to the instances page</li>
     <li><kbd>h</kbd> or <kbd>?</kbd> to toggle the help dialog</li>
     <li><kbd>Backspace</kbd> to go back, close dialogs</li>
   `,
