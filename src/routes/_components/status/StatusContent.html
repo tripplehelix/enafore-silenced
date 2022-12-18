@@ -1,15 +1,17 @@
 <div class={computedClass} ref:node>
     {@html massagedContent}
-    {#await shouldTranslate}
-      <!-- waiting -->
-    {:then answer}
-      {#if answer}
-	      <div>this post is probably not english</div>
-      {/if}
-    {:catch error}
-	    <!-- {error} -->
-    {/await}
 </div>
+{#await shouldTranslate}
+<!-- waiting -->
+{:then answer}
+  {#if answer}
+    <div class={computedTranslateClass}>
+      <button class="status-translate-button" disabled>Translate</button>
+    </div>
+  {/if}
+{:catch error}
+<!-- {error} -->
+{/await}
 <style>
   .status-content {
     margin: 10px 10px 10px 5px;
@@ -125,6 +127,14 @@
       massagedContent: ({ content, originalStatusEmojis, $autoplayGifs }) => (
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
+      computedTranslateClass: ({ isStatusInOwnThread, isStatusInNotification, shown }) => {
+        return classname(
+          'status-translate',
+          isStatusInOwnThread && 'status-in-own-thread',
+          isStatusInNotification && 'status-in-notification',
+          shown && 'shown'
+        )
+      },
       shouldTranslate: async ({ plainTextContent, $detectTranslation }) => {
         if(!$detectTranslation) return false
         const strippedText = plainTextContent.replace(/:\w+:|\w+:\/\/\S+|#\w+/g,"")
