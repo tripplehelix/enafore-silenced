@@ -101,6 +101,7 @@ export default {
   favoritesNotLoggedIn: 'Your favorites will appear here when logged in.',
   federatedTimelineNotLoggedIn: 'Your federated timeline will appear here when logged in.',
   bubbleTimelineNotLoggedIn: 'Your bubble timeline will appear here when logged in.',
+  bubbleTimelineNotSupported: 'The bubble timeline isn\'t supported by your instance.',
   localTimelineNotLoggedIn: 'Your local timeline will appear here when logged in.',
   searchNotLoggedIn: 'You can search once logged in to an instance.',
   communityNotLoggedIn: 'Community options appear here when logged in.',

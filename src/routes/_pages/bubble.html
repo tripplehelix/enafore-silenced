@@ -1,9 +1,17 @@
 {#if $isUserLoggedIn}
-  <TimelinePage timeline="bubble">
-    {#if $pinnedPage !== '/bubble'}
-      <DynamicPageBanner title="{intl.bubbleTimeline}" icon="#fa-circle"/>
-    {/if}
-  </TimelinePage>
+  {#if $bubbleTimelineEnabled}
+    <TimelinePage timeline="bubble">
+      {#if $pinnedPage !== '/bubble'}
+        <DynamicPageBanner title="{intl.bubbleTimeline}" icon="#fa-circle"/>
+      {/if}
+    </TimelinePage>
+  {:else}
+    <FreeTextLayout>
+      <h1>{intl.bubble}</h1>
+
+      <p>{intl.bubbleTimelineNotSupported}</p>
+    </FreeTextLayout>
+  {/if}
 {:else}
   <HiddenFromSSR>
     <FreeTextLayout>
