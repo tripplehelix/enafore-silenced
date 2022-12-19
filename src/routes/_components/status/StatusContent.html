@@ -198,8 +198,14 @@
       showTranslate: ({ translateState }) => !!translateState.show,
       translating: ({ translateState }) => !!translateState.loading,
       translateError: ({ translateState }) => translateState.error,
-      translateContent: ({ $statusTranslationContents, translateKey }) => $statusTranslationContents[translateKey] && $statusTranslationContents[translateKey].html,
-      translatedFrom: ({ $statusTranslationContents, translateKey }) => $statusTranslationContents[translateKey] && $statusTranslationContents[translateKey].detected
+      translateContent_: ({ $statusTranslationContents, translateKey }) => {
+        const tc = $statusTranslationContents[translateKey]
+        if(!tc) return null
+        if(typeof tc === "string") return {html: tc, detected: "unknown"}
+        return tc
+      },
+      translateContent: ({ translateContent_ }) => translateContent_.html,
+      translatedFrom: ({ translateContent_ }) => translateContent_.detected
     },
     methods: {
       hydrateContent () {
