@@ -57,7 +57,7 @@ export default (translate) =>
       }
     }
     const translatedHTML = await translate(
-      numberified.flat().join(""),
+      numberified.flat().join("")+"<a></a>",
       to,
       from
     );
