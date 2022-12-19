@@ -4,11 +4,18 @@
   </div>
   {#if showTranslate}
     <div class="status-translate-toolbar">
-      {#if translating}
-        Translating...
-      {:else}
-        Translated post from {translatedFrom}
-      {/if}
+      <div class="status-translate-toolbar-label">
+        {#if translating}
+          Translating...
+        {:else}
+          Translated post from {translatedFrom}
+        {/if}
+      </div>
+      <IconButton
+        label="Hide tranlation"
+        href="#fa-times"
+        on:click={onHideTranslateClick}
+      />
     </div>
   {/if}
 </div>
@@ -44,6 +51,16 @@
 
   .status-content.shown {
     display: block;
+  }
+
+  .status-translate-toolbar {
+    font-size: 1.17em;
+    margin: 10px 10px 10px 5px;
+    border-radius: 3px;
+    padding: 0.25rem;
+    background: var(--toast-bg);
+    color: var(--toast-text);
+    border: 1px solid var(--toast-border);
   }
 
   :global(
@@ -111,6 +128,7 @@
   import { urlIsCrossOrigin } from '../../_utils/urlIsCrossOrigin.js'
   import { importConfetti } from '../../_utils/asyncModules/importConfetti.js'
   import { importGoogleTranslate } from '../../_utils/asyncModules/importGoogleTranslate.js'
+  import IconButton from '../IconButton.html'
   //import { franc } from '../../_utils/franc.js'
 
   async function translate(html, to, from) {
@@ -124,6 +142,9 @@
   }
 
   export default {
+    components: {
+      IconButton
+    },
     oncreate () {
       this.hydrateContent()
     },
@@ -163,9 +184,10 @@
           return false
         }*/
       },
-      translateState: ({ originalStatusId, $statusTranslations, $currentInstance }) => {
-        if(!$statusTranslations || !$statusTranslations[$currentInstance + "-" + originalStatusId]) return {}
-        return $statusTranslations[$currentInstance + "-" + originalStatusId]
+      translateKey: ({ $currentInstance, originalStatusId }) => $currentInstance + "-" + originalStatusId,
+      translateState: ({ translateKey, $statusTranslations }) => {
+        if(!$statusTranslations || !$statusTranslations[translateKey]) return {}
+        return $statusTranslations[translateKey]
       },
       showTranslate: ({ translateState }) => !!translateState.show,
       translating: ({ translateState }) => !!translateState.loading,
@@ -226,6 +248,13 @@
           }
         }
         stop('hydrateContent')
+      },
+      onHideTranslateClick () {
+        const { translateKey, translateState } = this.get()
+        const { statusTranslations } = this.state.get()
+        translateState.show = false
+        statusTranslations[translateKey] = translateState
+        this.store.set({ statusTranslations })
       }
     }
   }
