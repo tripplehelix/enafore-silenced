@@ -93,6 +93,9 @@ export default (translate) =>
       }
     }
     function mergeSiblingElements(node) {
+      if(node.firstChild) {
+        mergeSiblingElements(node.firstChild)
+      }
       // base case: if the node has no siblings, return the node
       if (!node.nextSibling) {
         return node;
