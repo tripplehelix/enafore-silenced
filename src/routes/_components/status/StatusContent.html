@@ -147,7 +147,7 @@
       IconButton
     },
     onupdate({ changed }) {
-      if(changed.massagedContent) {
+      if(changed.massagedContent || changed.showTranslate) {
         this.hydrateContent()
         requestAnimationFrame(() => this.fire('recalculateHeight'))
       }
