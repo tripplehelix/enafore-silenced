@@ -61,7 +61,7 @@ export default (translate) =>
       to,
       from
     );
-    const translatedDoc = parser.parseFromString(translated.text.replace(/<\s+a([\s>])/g,"<a$1"), "text/html");
+    const translatedDoc = parser.parseFromString(translated.text.replace(/<\s+(?:(\/)\s*)?a([\s>])/g,"<$1a$2"), "text/html");
     const translatedFlattenedWithTags = [...translatedDoc.body.childNodes]
       .map((e) => flattenNode(e))
       .flat();
