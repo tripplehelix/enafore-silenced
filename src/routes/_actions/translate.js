@@ -16,8 +16,8 @@ export function translateStatus(status, currentInstance) {
       const { statusTranslations } = store.get();
       statusTranslations[id].loading = false
       statusTranslations[id].content = content
-      this.store.set({ statusTranslations })
+      store.set({ statusTranslations })
     }).catch(console.error)
   }
-  this.store.set({ statusTranslations })
+  store.set({ statusTranslations })
 }
