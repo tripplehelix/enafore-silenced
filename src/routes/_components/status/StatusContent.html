@@ -149,6 +149,7 @@
     onupdate({ changed }) {
       if(changed.massagedContent) {
         this.hydrateContent()
+        requestAnimationFrame(() => this.fire('recalculateHeight'))
       }
     },
     store: () => store,
