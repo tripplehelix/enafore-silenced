@@ -1,16 +1,17 @@
 import getGoogleTranslateHTML from "./googleTranslateHTML.js";
 export default getGoogleTranslateHTML(async function translate(text, to, from) {
-  return (
-    await (
-      await fetch(
-        "https://simplytranslate.org/api/translate?" +
-          new URLSearchParams({
-            engine: "google",
-            from,
-            to,
-            text
-          })
-      )
-    ).json()
-  )["translated-text"];
+  return (await (await fetch("https://lingva.garudalinux.org/api/graphql", {
+    "headers": {
+      "Content-Type": "application/json",
+    },
+    "body": JSON.stringify({
+      "query": "query($q:String!,$s:String!,$t:String!){translation(query:$q,source:$s,target:$t){target{text}}}",
+      "variables":{
+        "q": text,
+        "s": from,
+        "t": to
+      }
+    }),
+    "method": "POST"
+  })).json()).data.translation.target.text
 });
