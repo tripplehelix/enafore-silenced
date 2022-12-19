@@ -45,7 +45,7 @@ const persistedState = {
     !process.browser ||
     matchMedia('(prefers-reduced-motion: reduce)').matches,
   underlineLinks: false,
-  statusTranslations: {}
+  statusTranslationContents: {}
 }
 
 const nonPersistedState = {
@@ -68,7 +68,8 @@ const nonPersistedState = {
   sensitivesShown: {},
   spoilersShown: {},
   statusModifications: {},
-  verifyCredentials: {}
+  verifyCredentials: {},
+  statusTranslations: {}
 }
 
 const state = Object.assign({}, persistedState, nonPersistedState)

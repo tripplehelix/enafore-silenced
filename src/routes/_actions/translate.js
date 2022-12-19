@@ -7,16 +7,16 @@ async function translate(html, to, from) {
 }
 export function translateStatus(status, currentInstance) {
   const id = currentInstance + "-" + status.id;
-  const { statusTranslations } = store.get();
+  const { statusTranslations, statusTranslationContents } = store.get();
   statusTranslations[id] = statusTranslations[id] || {}
   statusTranslations[id].show = true;
-  if(!(statusTranslations[id].loading || statusTranslations[id].content)) {
+  if(!(statusTranslations[id].loading || statusTranslationContents[id])) {
     statusTranslations[id].loading = true
     translate(status.content, "en", "auto").then(content => {
-      const { statusTranslations } = store.get();
+      const { statusTranslations, statusTranslationContents } = store.get();
       statusTranslations[id].loading = false
-      statusTranslations[id].content = content
-      store.set({ statusTranslations })
+      statusTranslationContents[id] = content
+      store.set({ statusTranslations, statusTranslationContents })
     }).catch(console.error)
   }
   store.set({ statusTranslations })
