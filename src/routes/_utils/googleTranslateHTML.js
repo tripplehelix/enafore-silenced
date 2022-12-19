@@ -80,7 +80,7 @@ export default (translate) =>
         } else {
           const id = tagStack[0].attributes.i;
           let t = e;
-          const rtags = tagStacks[id];
+          const rtags = id ? tagStacks[id] : [];
           for (let tag of rtags) {
             const newLayer = translatedDoc.createElement(tag.tagName);
             for (let attr in tag.attributes)
