@@ -141,6 +141,9 @@
     oncreate () {
       this.hydrateContent()
     },
+    onupdate({ changed, current, previous }) {
+      console.info(changed)
+    },
     store: () => store,
     computed: {
       computedClass: ({ isStatusInOwnThread, isStatusInNotification, shown, translating }) => {
@@ -153,7 +156,9 @@
         )
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
-      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs }) => (
+      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate }) => (
+        (showTranslate && translateContent) ?
+        translateContent :
         massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
       computedTranslateClass: ({ isStatusInOwnThread, isStatusInNotification, shown }) => {
@@ -185,7 +190,8 @@
       showTranslate: ({ translateState }) => !!translateState.show,
       translating: ({ translateState }) => !!translateState.loading,
       translatedFrom: ({ translateState }) => translateState.from,
-      translateError: ({ translateState }) => translateState.error
+      translateError: ({ translateState }) => translateState.error,
+      translateContent: ({ $statusTranslationContents, translateKey }) => $statusTranslationContents[translateKey]
     },
     methods: {
       hydrateContent () {
