@@ -101,11 +101,13 @@ export default (translate) =>
       const nodeNotInline = !isInline(node);
       while (
         nodeNotInline &&
-        node.nextSibling &&
         node.nextSibling.nodeType === Node.TEXT_NODE &&
         !node.nextSibling.data.trim()
       ) {
         node.nextSibling.remove();
+        if (!node.nextSibling) {
+          return node;
+        }
       }
       if (
         node.nextSibling.nodeType === Node.ELEMENT_NODE &&
