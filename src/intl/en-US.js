@@ -296,6 +296,7 @@ export default {
   unbookmarkStatus: 'Unbookmark post',
   deleteAndRedraft: 'Delete and redraft',
   reportStatus: 'Report post',
+  translateStatus: 'Translate post',
   shareStatus: 'Share post',
   copyLinkToStatus: 'Copy link to post',
   // Account profile

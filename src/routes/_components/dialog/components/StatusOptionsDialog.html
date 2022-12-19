@@ -156,6 +156,11 @@ export default {
         label: bookmarkLabel,
         icon: '#fa-bookmark'
       },
+      {
+        key: 'translate',
+        label: 'intl.translateStatus',
+        icon: '#fa-language'
+      },
       isPublicOrUnlisted && supportsWebShare && {
         key: 'share',
         label: 'intl.shareStatus',
@@ -204,6 +209,8 @@ export default {
           return this.onNotifyClicked()
         case 'denotify':
           return this.onDenotifyClicked()
+        case 'translate':
+          return this.onTranslateClicked()
       }
     },
     async onDeleteClicked () {
@@ -271,6 +278,15 @@ export default {
       const { accountId } = this.get()
       this.close()
       await setAccountNotified(accountId, /* notify */ false, /* toastOnSuccess */ true)
+    },
+    async onTranslateClicked () {
+      const { statusId } = this.get()
+      this.close()
+      const { statusTranslations, currentInstance } = this.store.get()
+      const id = currentInstance + "-" + statusId;
+      statusTranslations[id] = statusTranslations[id] || {}
+      statusTranslations[id].show = true;
+      this.store.set({ statusTranslations })
     }
   }
 }
