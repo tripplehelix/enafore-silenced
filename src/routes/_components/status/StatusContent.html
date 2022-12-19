@@ -146,11 +146,10 @@
     components: {
       IconButton
     },
-    oncreate () {
-      this.hydrateContent()
-    },
-    onupdate({ changed, current, previous }) {
-      console.info(changed)
+    onupdate({ changed }) {
+      if(changed.massagedContent) {
+        this.hydrateContent()
+      }
     },
     store: () => store,
     computed: {
