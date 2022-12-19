@@ -17,7 +17,13 @@ export function translateStatus(status, currentInstance) {
       statusTranslations[id].loading = false
       statusTranslationContents[id] = content
       store.set({ statusTranslations, statusTranslationContents })
-    }).catch(console.error)
+    }).catch((err) => {
+      const { statusTranslations, statusTranslationContents } = store.get();
+      statusTranslations[id].loading = false
+      statusTranslations[id].error = true
+      delete statusTranslationContents[id]
+      store.set({ statusTranslations, statusTranslationContents })
+    })
   }
   store.set({ statusTranslations })
 }

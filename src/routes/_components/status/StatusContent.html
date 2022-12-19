@@ -8,7 +8,11 @@
         {#if translating}
           Translating...
         {:else}
-          Translated post from {translatedFrom}
+          {#if translateError}
+            There was an error translating this post.
+          {:else}
+            Translated post from {translatedFrom}
+          {/if}
         {/if}
       </div>
       <IconButton
@@ -180,7 +184,8 @@
       },
       showTranslate: ({ translateState }) => !!translateState.show,
       translating: ({ translateState }) => !!translateState.loading,
-      translatedFrom: ({ translateState }) => translateState.from
+      translatedFrom: ({ translateState }) => translateState.from,
+      translateError: ({ translateState }) => translateState.error
     },
     methods: {
       hydrateContent () {
