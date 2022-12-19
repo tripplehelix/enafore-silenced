@@ -27,6 +27,7 @@ import { toggleMute } from '../../../_actions/toggleMute.js'
 import { reportStatusOrAccount } from '../../../_actions/report.js'
 import { formatIntl } from '../../../_utils/formatIntl.js'
 import { setAccountNotified } from '../../../_actions/setAccountNotified.js'
+import { translateStatus } from '../../../_actions/translate.js'
 
 export default {
   oncreate,
@@ -280,13 +281,10 @@ export default {
       await setAccountNotified(accountId, /* notify */ false, /* toastOnSuccess */ true)
     },
     async onTranslateClicked () {
-      const { statusId } = this.get()
+      const { status } = this.get()
+      const { currentInstance } = this.store.get()
       this.close()
-      const { statusTranslations, currentInstance } = this.store.get()
-      const id = currentInstance + "-" + statusId;
-      statusTranslations[id] = statusTranslations[id] || {}
-      statusTranslations[id].show = true;
-      this.store.set({ statusTranslations })
+      translateStatus(status, currentInstance)
     }
   }
 }
