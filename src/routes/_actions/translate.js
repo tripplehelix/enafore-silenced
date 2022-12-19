@@ -1,5 +1,5 @@
 import { importGoogleTranslate } from '../_utils/asyncModules/importGoogleTranslate.js'
-import { store } from '../../_store/store.js'
+import { store } from '../_store/store.js'
 async function translate(html, to, from) {
   return await (
     await importGoogleTranslate()
