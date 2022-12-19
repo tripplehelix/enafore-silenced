@@ -98,11 +98,10 @@ export default (translate) =>
         return node;
       }
       // check if the node and its sibling have the same data-id attribute
-      const nodeNotInline = !isInline(node);
+      const nodeInline = isInline(node);
       while (
-        nodeNotInline &&
         node.nextSibling.nodeType === Node.TEXT_NODE &&
-        !node.nextSibling.data.trim()
+        nodeInline?node.nextSibling.data=="":!node.nextSibling.data.trim()
       ) {
         node.nextSibling.remove();
         if (!node.nextSibling) {
