@@ -3,7 +3,7 @@ export default getGoogleTranslateHTML(async function translate(text, to, from) {
   return (
     await (
       await fetch(
-        "https://farside.link/simplytranslate/api/translate?" +
+        "https://simplytranslate.org/api/translate?" +
           new URLSearchParams({
             engine: "google",
             from,
