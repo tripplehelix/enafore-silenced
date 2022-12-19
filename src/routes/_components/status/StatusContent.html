@@ -9,9 +9,9 @@
           Translating...
         {:else}
           {#if translateError}
-            There was an error translating this post.
+            There was an error translating this post
           {:else}
-            Translated post to English with Google Translate
+            Translated post from {translatedFrom}
           {/if}
         {/if}
       </div>
@@ -197,9 +197,9 @@
       },
       showTranslate: ({ translateState }) => !!translateState.show,
       translating: ({ translateState }) => !!translateState.loading,
-      translatedFrom: ({ translateState }) => translateState.from,
       translateError: ({ translateState }) => translateState.error,
-      translateContent: ({ $statusTranslationContents, translateKey }) => $statusTranslationContents[translateKey]
+      translateContent: ({ $statusTranslationContents, translateKey }) => $statusTranslationContents[translateKey] && $statusTranslationContents[translateKey].html,
+      translatedFrom: ({ $statusTranslationContents, translateKey }) => $statusTranslationContents[translateKey] && $statusTranslationContents[translateKey].detected
     },
     methods: {
       hydrateContent () {
