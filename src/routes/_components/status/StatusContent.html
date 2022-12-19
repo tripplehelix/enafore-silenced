@@ -11,7 +11,7 @@
           {#if translateError}
             There was an error translating this post.
           {:else}
-            Translated post from {translatedFrom}
+            Translated post to English with Google Translate
           {/if}
         {/if}
       </div>
@@ -61,10 +61,18 @@
     font-size: 1.17em;
     margin: 10px 10px 10px 5px;
     border-radius: 3px;
-    padding: 0.25rem;
+    padding: 0.25rem 1rem;
+    padding-right: 1rem;
     background: var(--toast-bg);
     color: var(--toast-text);
     border: 1px solid var(--toast-border);
+    display: flex;
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .status-translate-toolbar-label {
+    flex-grow: 1;
   }
 
   :global(
