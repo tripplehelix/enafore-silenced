@@ -104,7 +104,7 @@ export default (translate) =>
       const nodeInline = isInline(node);
       while (
         node.nextSibling.nodeType === Node.TEXT_NODE &&
-        nodeInline?node.nextSibling.data=="":!node.nextSibling.data.trim()
+        (nodeInline?node.nextSibling.data=="":!node.nextSibling.data.trim())
       ) {
         node.nextSibling.remove();
         if (!node.nextSibling) {
