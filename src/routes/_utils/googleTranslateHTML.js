@@ -4,7 +4,7 @@ export default (translate) =>
     const doc = new DOMParser().parseFromString(html, "text/html");
     const nodes = doc.body.childNodes;
     function isInline(node) {
-      return getComputedStyle(node).display.startsWith("inline");
+      return !node || node.nodeType !== Node.ELEMENT_NODE || getComputedStyle(node).display.startsWith("inline");
     }
     function getAttributes(element) {
       const attributes = {};
