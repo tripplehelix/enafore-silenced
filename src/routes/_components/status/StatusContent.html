@@ -251,7 +251,7 @@
       },
       onHideTranslateClick () {
         const { translateKey, translateState } = this.get()
-        const { statusTranslations } = this.state.get()
+        const { statusTranslations } = this.store.get()
         translateState.show = false
         statusTranslations[translateKey] = translateState
         this.store.set({ statusTranslations })
