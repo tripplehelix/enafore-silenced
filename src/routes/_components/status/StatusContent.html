@@ -200,7 +200,7 @@
       translateError: ({ translateState }) => translateState.error,
       translateContent_: ({ $statusTranslationContents, translateKey }) => {
         const tc = $statusTranslationContents[translateKey]
-        if(!tc) return null
+        if(!tc) return {}
         if(typeof tc === "string") return {html: tc, detected: "unknown"}
         return tc
       },
