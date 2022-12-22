@@ -45,7 +45,7 @@
   {#if isStatusInOwnThread}
     <StatusDetails {...params} {...timestampParams} />
   {/if}
-  {#if !isQuote}
+  {#if !(isStatusInNotification || isQuote)}
     <StatusToolbar {...params} {replyShown} on:recalculateHeight on:focusArticle="focusArticle()" />
   {/if}
   {#if replyShown}

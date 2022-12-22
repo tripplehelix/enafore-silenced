@@ -1,19 +1,22 @@
 import { auth, basename } from './utils.js'
-import { DEFAULT_TIMEOUT, get, post, WRITE_TIMEOUT } from '../_utils/ajax.js'
+import { DEFAULT_TIMEOUT, get, post, put, WRITE_TIMEOUT } from '../_utils/ajax.js'
 
-export async function postStatus (instanceName, accessToken, text, inReplyToId, mediaIds,
+// post is create, put is edit
+async function postOrPutStatus (url, accessToken, method, text, inReplyToId, mediaIds,
   sensitive, spoilerText, visibility, poll, contentType) {
-  const url = `${basename(instanceName)}/api/v1/statuses`
-
   const body = {
     status: text,
-    in_reply_to_id: inReplyToId,
     media_ids: mediaIds,
     sensitive,
     spoiler_text: spoilerText,
     content_type: contentType,
     visibility,
-    poll
+    poll,
+    ...(method === 'post' && {
+      // you can't change these properties when editing
+      in_reply_to_id: inReplyToId,
+      visibility
+    })
   }
 
   for (const key of Object.keys(body)) {
@@ -24,7 +27,23 @@ export async function postStatus (instanceName, accessToken, text, inReplyToId, 
     }
   }
 
-  return post(url, body, auth(accessToken), { timeout: WRITE_TIMEOUT })
+  const func = method === 'post' ? post : put
+
+  return func(url, body, auth(accessToken), { timeout: WRITE_TIMEOUT })
+}
+
+export async function postStatus (instanceName, accessToken, text, inReplyToId, mediaIds,
+  sensitive, spoilerText, visibility, poll) {
+  const url = `${basename(instanceName)}/api/v1/statuses`
+  return postOrPutStatus(url, accessToken, 'post', text, inReplyToId, mediaIds,
+    sensitive, spoilerText, visibility, poll)
+}
+
+export async function putStatus (instanceName, accessToken, id, text, inReplyToId, mediaIds,
+  sensitive, spoilerText, visibility, poll) {
+  const url = `${basename(instanceName)}/api/v1/statuses/${id}`
+  return postOrPutStatus(url, accessToken, 'put', text, inReplyToId, mediaIds,
+    sensitive, spoilerText, visibility, poll)
 }
 
 export async function getStatusContext (instanceName, accessToken, statusId) {
