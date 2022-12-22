@@ -5,7 +5,8 @@ async function translate(html, to, from) {
   const { languageNames, translate } = await importGoogleTranslate()
   return {content:await translate(html, to, from), languageNames}
 }
-export function translateStatus(status, currentInstance, to = process.env.LOCALE, from = "auto") {
+const defaultLanguage = process.env.LOCALE.split("-")[0]
+export function translateStatus(status, currentInstance, to = defaultLanguage, from = "auto") {
   const id = currentInstance + "-" + status.id;
   const { statusTranslations, statusTranslationContents, autoplayGifs } = store.get();
   statusTranslations[id] = statusTranslations[id] || {}
