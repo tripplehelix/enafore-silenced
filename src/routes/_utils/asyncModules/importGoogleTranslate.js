@@ -1,2 +1,2 @@
-export const importGoogleTranslate = () => import('../googleTranslate.js').then(mod => mod.default)
+export const importGoogleTranslate = () => import('../googleTranslate.js')
   

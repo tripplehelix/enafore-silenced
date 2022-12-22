@@ -205,7 +205,7 @@
         return tc
       },
       translateContent: ({ translateContent_ }) => translateContent_.html,
-      translatedFrom: ({ translateContent_ }) => translateContent_.detected
+      translatedFrom: ({ translateContent_, translateState }) => translateState.languageNames[translateContent_.detected] ? translateState.languageNames[translateContent_.detected]+" (Detected)" : (translateState.languageNames[translateContent_.from] || translateContent_.detected)
     },
     methods: {
       hydrateContent () {
