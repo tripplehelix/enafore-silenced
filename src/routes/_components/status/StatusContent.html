@@ -192,12 +192,12 @@
       },
       translateKey: ({ $currentInstance, originalStatusId }) => $currentInstance + "-" + originalStatusId,
       translateState: ({ translateKey, $statusTranslations }) => {
-        if(!$statusTranslations || !$statusTranslations[translateKey]) return {}
+        if(!$statusTranslations || !$statusTranslations[translateKey]) return null
         return $statusTranslations[translateKey]
       },
-      showTranslate: ({ translateState }) => !!translateState.show,
-      translating: ({ translateState }) => !!translateState.loading,
-      translateError: ({ translateState }) => translateState.error,
+      showTranslate: ({ translateState }) => !!(translateState && translateState.show),
+      translating: ({ translateState }) => !!(translateState && translateState.loading),
+      translateError: ({ translateState }) => !!(translateState && translateState.error),
       translateContent_: ({ $statusTranslationContents, translateKey }) => {
         const tc = $statusTranslationContents[translateKey]
         if(!tc) return {}
@@ -265,6 +265,7 @@
       },
       onHideTranslateClick () {
         const { translateKey, translateState } = this.get()
+        translateState = translateState || {}
         const { statusTranslations, statusTranslationContents } = this.store.get()
         translateState.show = false
         statusTranslations[translateKey] = translateState
