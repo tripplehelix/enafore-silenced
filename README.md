@@ -6,7 +6,7 @@ easrng/pinafore is available at [pinafore.easrng.net](https://pinafore.easrng.ne
 
 See the [user guide](https://github.com/easrng/pinafore/blob/master/docs/User-Guide.md) for basic usage. See the [admin guide](https://github.com/easrng/pinafore/blob/master/docs/Admin-Guide.md) if Pinafore cannot connect to your instance.
 
-For updates and support, uhhhhhhhhh idk just follow me, I usually post when I fix or add things: [@easrng@cathode.church](https://cathode.church/@easrng).
+For updates, uhhhhhhhhh idk just follow me, I usually post when I fix or add things: [@easrng@cathode.church](https://cathode.church/@easrng).
 
 ## Browser support
 
