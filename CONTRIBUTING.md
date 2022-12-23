@@ -155,17 +155,16 @@ This is also available locally after `yarn run build` at `.sapper/client/report.
 
 ## Deploying
 
-This section only applies to `dev.pinafore.social` and `pinafore.social`, not if you're hosting your own version of
+This section only applies to `pinafore.easrng.net`, not if you're hosting your own version of
 Pinafore.
 
-The site uses [Vercel](https://vercel.com). The `master` branch publishes to `dev.pinafore.social` and the `production`
-branch deploys to `pinafore.social`.
+The site uses GitHub Pages.
 
 ## Architecture
 
-See [Architecture.md](https://github.com/nolanlawson/pinafore/blob/master/docs/Architecture.md).
+See [Architecture.md](https://github.com/easrng/pinafore/blob/master/docs/Architecture.md).
 
 ## Internationalization
 
-See [Internationalization.md](https://github.com/nolanlawson/pinafore/blob/master/docs/Internationalization.md).
+See [Internationalization.md](https://github.com/easrng/pinafore/blob/master/docs/Internationalization.md).
 

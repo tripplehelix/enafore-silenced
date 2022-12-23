@@ -1,12 +1,12 @@
-# Pinafore
+# easrng/pinafore
 
-An alternative web client for [Mastodon](https://joinmastodon.org), focused on speed and simplicity.
+My fork of [Pinafore](https://github.com/nolanlawson/pinafore), an alternative web client for [Mastodon](https://joinmastodon.org) focused on speed and simplicity.
 
-Pinafore is available at [pinafore.social](https://pinafore.social). Beta releases are at [dev.pinafore.social](https://dev.pinafore.social).
+easrng/pinafore is available at [pinafore.easrng.net](https://pinafore.easrng.net).
 
-See the [user guide](https://github.com/nolanlawson/pinafore/blob/master/docs/User-Guide.md) for basic usage. See the [admin guide](https://github.com/nolanlawson/pinafore/blob/master/docs/Admin-Guide.md) if Pinafore cannot connect to your instance.
+See the [user guide](https://github.com/easrng/pinafore/blob/master/docs/User-Guide.md) for basic usage. See the [admin guide](https://github.com/easrng/pinafore/blob/master/docs/Admin-Guide.md) if Pinafore cannot connect to your instance.
 
-For updates and support, follow [@pinafore@fosstodon.org](https://fosstodon.org/@pinafore).
+For updates and support, uhhhhhhhhh idk just follow me, I usually post when I fix or add things: [@easrng@cathode.church](https://cathode.church/@easrng).
 
 ## Browser support
 
@@ -31,13 +31,9 @@ Compatible versions of each (Opera, Brave, Samsung, etc.) should be fine.
 - Progressive Web App features
 - Multi-instance support
 - Support latest versions of Chrome, Edge, Firefox, and Safari
-- Support non-Mastodon instances (e.g. Pleroma) as well as possible
-- Internationalization
-
-### Secondary / possible future goals
-
-- Serve as an alternative frontend tied to a particular instance
-- Offline search
+- Support features not included in vanilla Mastodon, like post formatting.
+- Internationalization (I'm not doing a great job with this rn...)
+- Emoji support beyond the built-in system emoji (Currently using Noto Color Emoji when system emojis aren't available)
 
 ### Non-goals
 
@@ -45,7 +41,6 @@ Compatible versions of each (Opera, Brave, Samsung, etc.) should be fine.
 - React Native / NativeScript / hybrid-native version
 - Android/iOS apps (using Cordova or similar)
 - Full functionality with JavaScript disabled
-- Emoji support beyond the built-in system emoji
 - Multi-column support
 - Admin/moderation panel
 - Offline support in read-write mode (would require sophisticated sync logic)
@@ -94,25 +89,23 @@ To keep your version of Pinafore up to date, you can use `git` to check out the 
 Pinafore is a static site. When you run `yarn build`, static files will be
 written to `__sapper__/export`.
 
-It is _not_ recommended to directly expose these files when self-hosting. Instead, you should use `node server.js` (e.g. with an
-nginx or Apache proxy in front). This adds several things you don't get from the raw static files:
+~~It is _not_ recommended to directly expose these files when self-hosting. Instead, you should use `node server.js` (e.g. with an ~~
+~~nginx or Apache proxy in front). This adds several things you don't get from the raw static files:~~
 
-- [CSP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (important for security)
-- Certain dynamic routes (less important because of Service Worker managing routing, but certain things could break if Service Workers are disabled in the user's browser)
+- ~~[CSP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (important for security)~~
+- ~~Certain dynamic routes (less important because of Service Worker managing routing, but certain things could break if Service Workers are disabled in the user's browser)~~
 
-Having an [nginx config generator](https://github.com/nolanlawson/pinafore/issues/1878) is currently an open issue.
+lol fuck that I use GitHub Pages
 
 ## Developing and testing
 
-See [CONTRIBUTING.md](https://github.com/nolanlawson/pinafore/blob/master/CONTRIBUTING.md) for
+See [CONTRIBUTING.md](https://github.com/easrng/pinafore/blob/master/CONTRIBUTING.md) for
 how to run Pinafore in dev mode and run tests.
 
 ## Changelog
 
-For a changelog, see the [GitHub releases](http://github.com/nolanlawson/pinafore/releases/).
-
-For a list of breaking changes, see [BREAKING_CHANGES.md](https://github.com/nolanlawson/pinafore/blob/master/BREAKING_CHANGES.md).
+I don't have an updated changelog.
 
 ## What's with the name?
 
-Pinafore is named after the [Gilbert and Sullivan play](https://en.wikipedia.org/wiki/Hms_pinafore). The [soundtrack](https://www.allmusic.com/album/gilbert-sullivan-hms-pinafore-1949-mw0001830483) is very good.
+easrng/pinafore means "pinafore forked by easrng"

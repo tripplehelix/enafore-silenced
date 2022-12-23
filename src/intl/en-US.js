@@ -5,25 +5,22 @@ export default {
   homeDescription: `
     <p>
       Pinafore is a web client for
-      <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a>,
+      <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a> and <a rel="noopener" target="_blank" href="https://akkoma.social">Akkoma</a>,
       designed for speed and simplicity.
     </p>
     <p>
-      Read the
-      <a rel="noopener" target="_blank"
-         href="https://nolanlawson.com/2018/04/09/introducing-pinafore-for-mastodon/">introductory blog post</a>,
-      or get started by logging in to an instance:
+      Get started by logging in to an instance:
     </p>`,
   logIn: 'Log in',
   footer: `
     <p>
       Pinafore is
-      <a rel="noopener" target="_blank" href="https://github.com/nolanlawson/pinafore">open-source software</a>
-      created by
-      <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
-      and distributed under the
+      <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">open-source software</a>
+      originally created by
+      <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>, forked by 
+      <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>, and distributed under the
       <a rel="noopener" target="_blank"
-         href="https://github.com/nolanlawson/pinafore/blob/master/LICENSE">AGPL License</a>.
+         href="https://github.com/easrng/pinafore/blob/master/LICENSE">AGPL License</a>.
       Here is the <a href="/settings/about#privacy-policy" rel="prefetch">privacy policy</a>.
     </p>
   `,
