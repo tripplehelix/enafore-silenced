@@ -33,17 +33,17 @@ async function postOrPutStatus (url, accessToken, method, text, inReplyToId, med
 }
 
 export async function postStatus (instanceName, accessToken, text, inReplyToId, mediaIds,
-  sensitive, spoilerText, visibility, poll) {
+  sensitive, spoilerText, visibility, poll, contentType) {
   const url = `${basename(instanceName)}/api/v1/statuses`
   return postOrPutStatus(url, accessToken, 'post', text, inReplyToId, mediaIds,
-    sensitive, spoilerText, visibility, poll)
+    sensitive, spoilerText, visibility, poll, contentType)
 }
 
 export async function putStatus (instanceName, accessToken, id, text, inReplyToId, mediaIds,
-  sensitive, spoilerText, visibility, poll) {
+  sensitive, spoilerText, visibility, poll, contentType) {
   const url = `${basename(instanceName)}/api/v1/statuses/${id}`
   return postOrPutStatus(url, accessToken, 'put', text, inReplyToId, mediaIds,
-    sensitive, spoilerText, visibility, poll)
+    sensitive, spoilerText, visibility, poll, contentType)
 }
 
 export async function getStatusContext (instanceName, accessToken, statusId) {
