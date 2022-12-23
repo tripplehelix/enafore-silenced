@@ -1,10 +1,17 @@
 import { replaceAll } from './strings.js'
 import { replaceEmoji } from './replaceEmoji.js'
+import { testEmojiSupported } from './testEmojiSupported.js'
 
 export function emojifyText (text, emojis, autoplayGifs) {
   // replace native emoji with wrapped spans so we can give them the proper font-family
   // as well as show tooltips
-  text = replaceEmoji(text, substring => `<span class="inline-emoji">${substring}</span>`)
+  text = replaceEmoji(text, substring => {
+    if(testEmojiSupported(substring)) {
+      return `<span class="inline-emoji">${substring}</span>`
+    } else {
+      return `<span class="inline-emoji" data-unsupported>${substring}</span>`
+    }
+  })
 
   // replace custom emoji
   if (emojis) {

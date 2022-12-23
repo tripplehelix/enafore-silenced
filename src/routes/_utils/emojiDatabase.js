@@ -37,11 +37,7 @@ export function setCustomEmoji (customEmoji) {
 
 export async function findByUnicodeOrName (unicodeOrName) {
   init()
-  const [emoji, skinTone] = await Promise.all([
-    database.getEmojiByUnicodeOrName(unicodeOrName),
-    database.getPreferredSkinTone()
-  ])
-  return applySkinToneToEmoji(emoji, skinTone)
+  return database.getEmojiByUnicodeOrName(unicodeOrName)
 }
 
 export async function findBySearchQuery (query) {

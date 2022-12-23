@@ -11,8 +11,11 @@ export async function addEmojiTooltips (domNode) {
   if (emojis.length) {
     await Promise.all(Array.from(emojis).map(async emoji => {
       const emojiData = await emojiDatabase.findByUnicodeOrName(emoji.textContent)
-      if (emojiData && emojiData.shortcodes) {
-        emoji.title = emojiData.shortcodes.map(_ => `:${_}:`).join(', ')
+      if (emojiData) {
+        window.__lastEmoji = emojiData
+        if (emojiData.shortcodes) {
+          emoji.title = emojiData.shortcodes.map(_ => `:${_}:`).join(', ')
+        }
       }
     }))
   }
