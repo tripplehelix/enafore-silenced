@@ -142,7 +142,8 @@ export default {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
-      logLevel: 'silent'
+      logLevel: 'silent',
+      generateStatsFile: true
     })
   ].filter(Boolean),
   devtool: dev ? 'inline-source-map' : 'source-map',
