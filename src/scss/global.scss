@@ -237,3 +237,13 @@ textarea {
   height: 0;
   position: absolute;
 }
+
+.inline-emoji.unsupported {
+  color: transparent;
+  background-size: 1em;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 1em;
+  display: inline-block;
+  height: 1.4em;
+}
