@@ -70,6 +70,7 @@
       doRecalculateHeight () {
         // Recalculate immediately because this is done on-demand, e.g.
         // when clicking the "More" button on a spoiler.
+        if(!this.refs.node) return
         const rect = this.refs.node.getBoundingClientRect()
         const { key } = this.get()
         const { itemHeights } = this.store.get()
