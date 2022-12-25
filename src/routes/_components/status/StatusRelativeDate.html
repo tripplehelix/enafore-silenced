@@ -7,7 +7,7 @@
   {#if editedAtDate}
   <span class="sr-only">Last Updated </span>
   {/if}
-  <time datetime={editedAtDate||createdAtDate} title={absoluteFormattedDate}
+  <time datetime={editedAtDate||createdAtDate} title={absoluteFormattedEditedDate||absoluteFormattedCreatedDate}
         aria-label={formattedDateLabel}>
     {shortInlineFormattedDate}
   </time>
