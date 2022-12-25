@@ -23,7 +23,7 @@ const NOOP_MODULES = [
 const serverResolve = JSON.parse(JSON.stringify(resolve))
 serverResolve.alias = serverResolve.alias || {}
 NOOP_MODULES.forEach(mod => {
-  serverResolve.alias[mod] = '@stdlib/utils-noop'
+  serverResolve.alias[mod] = 'lodash.noop'
 })
 
 export default {
