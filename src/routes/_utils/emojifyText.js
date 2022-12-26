@@ -40,6 +40,8 @@ export function emojifyText (text, emojis, autoplayGifs) {
   return text
 }
 
-window.addEventListener("input", function (e) {
-  emojifyText(e.originalTarget.value) // load emoji fonts when typed in textareas and inputs and stuff
-})
+if(window) {
+  window.addEventListener("input", function (e) {
+    emojifyText(e.originalTarget.value) // load emoji fonts when typed in textareas and inputs and stuff
+  })
+}
