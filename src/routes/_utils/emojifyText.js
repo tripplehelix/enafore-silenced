@@ -20,7 +20,7 @@ export function emojifyText (text, emojis, autoplayGifs) {
     if(styleEle && !polyfilled.has(substring) && !testEmojiSupported(substring)) {
       polyfilled.add(substring);
       (async () => {
-        styleEle.textContent += await(await fetch("https://fonts.googleapis.com/css2?family=Noto+Colr+Emoji+Glyf&text=" + encodeURIComponent(substring))).text()
+        styleEle.textContent += await(await fetch("https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=" + encodeURIComponent(substring))).text()
       })()
     }
     return `<span class="inline-emoji">${substring}</span>`
