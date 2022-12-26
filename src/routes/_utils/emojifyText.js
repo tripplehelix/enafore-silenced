@@ -42,6 +42,7 @@ export function emojifyText (text, emojis, autoplayGifs) {
 
 if(typeof window !== "undefined") {
   window.addEventListener("input", function (e) {
+    console.warn("aaaaaa", e, emojifyText)
     emojifyText(e.originalTarget.value) // load emoji fonts when typed in textareas and inputs and stuff
   })
 }
