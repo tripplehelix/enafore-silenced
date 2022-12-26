@@ -23,7 +23,7 @@ const isSupported = (function () {
     var CANVAS_WIDTH = 20;
     var textSize = Math.floor(CANVAS_HEIGHT / 2);
     // Initialize convas context
-    ctx.font = textSize + 'px CountryFlagEmojiPolyfill, \'Noto Color Emoji\', PinaforeEmoji, Arial, Sans-Serif';
+    ctx.font = textSize + 'px CountryFlagEmojiPolyfill, PinaforeEmoji, \'Noto Color Emoji\', Arial, Sans-Serif';
     ctx.textBaseline = 'top';
     ctx.canvas.width = CANVAS_WIDTH * 2;
     ctx.canvas.height = CANVAS_HEIGHT;

@@ -170,7 +170,7 @@ input:required, input:invalid {
 }
 
 textarea {
-  font-family: CountryFlagEmojiPolyfill, system-ui, -apple-system, PinaforeRegular, sans-serif, 'Noto Color Emoji', PinaforeEmoji;
+  font-family: CountryFlagEmojiPolyfill, system-ui, -apple-system, PinaforeRegular, sans-serif, PinaforeEmoji, 'Noto Color Emoji';
   font-size: inherit;
   box-sizing: border-box;
 }
@@ -214,7 +214,7 @@ textarea {
 }
 
 .inline-emoji {
-  font-family: CountryFlagEmojiPolyfill, 'Noto Color Emoji', PinaforeEmoji, sans-serif;
+  font-family: CountryFlagEmojiPolyfill, PinaforeEmoji, 'Noto Color Emoji', sans-serif;
 }
 
 .status-content .quote-inline {
