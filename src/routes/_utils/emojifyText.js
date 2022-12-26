@@ -6,11 +6,21 @@ export function emojifyText (text, emojis, autoplayGifs) {
   // replace native emoji with wrapped spans so we can give them the proper font-family
   // as well as show tooltips
   text = replaceEmoji(text, substring => {
-    if(testEmojiSupported(substring)) {
-      return `<span class="inline-emoji">${substring}</span>`
-    } else {
-      return `<span class="inline-emoji unsupported" style="background-image:url('https://github.com/googlefonts/noto-emoji/blob/main/png/72/emoji_u${[...substring].map(e=>e.codePointAt(0).toString(16)).join("_")}.png?raw=true')">${substring}</span>`
+    if(!testEmojiSupported(substring)) {
+      if(!document.getElementById("emoji-font-"+substring)) {
+        document.head.appendChild(
+          Object.assign(
+            document.createElement("link"),
+            {
+              href: "https://fonts.googleapis.com/css2?family=Noto+Colr+Emoji+Glyf&text=" + encodeURIComponent(substring),
+              rel:"stylesheet",
+              id: "emoji-font-" + substring
+            }
+          )
+        )
+      }
     }
+    return `<span class="inline-emoji">${substring}</span>`
   })
 
   // replace custom emoji
