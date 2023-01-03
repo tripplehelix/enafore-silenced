@@ -265,7 +265,7 @@
         stop('hydrateContent')
       },
       onHideTranslateClick () {
-        const { translateKey, translateState } = this.get()
+        let { translateKey, translateState } = this.get()
         translateState = translateState || {}
         const { statusTranslations, statusTranslationContents } = this.store.get()
         translateState.show = false
