@@ -7,20 +7,20 @@ export async function getInstanceInfo (instanceName, accessToken) {
   const headers = accessToken ? auth(accessToken) : null
   const instance = await get(url, headers, { timeout: DEFAULT_TIMEOUT })
   instance.nodeInfo = null
-  try{
+  try {
     const nodeInfo = await get(`${basename(instanceName)}/.well-known/nodeinfo`, headers, { timeout: DEFAULT_TIMEOUT })
-    let nodeInfo21, nodeInfo20;
-    for(let link of nodeInfo.links) {
-      if(link.rel === "http://nodeinfo.diaspora.software/ns/schema/2.1") {
+    let nodeInfo21, nodeInfo20
+    for (const link of nodeInfo.links) {
+      if (link.rel === 'http://nodeinfo.diaspora.software/ns/schema/2.1') {
         nodeInfo21 = link.href
-      } else if(link.rel === "http://nodeinfo.diaspora.software/ns/schema/2.0") {
+      } else if (link.rel === 'http://nodeinfo.diaspora.software/ns/schema/2.0') {
         nodeInfo20 = link.href
       }
     }
     const realNodeInfo = await get(nodeInfo21 || nodeInfo20, {}, { timeout: DEFAULT_TIMEOUT })
-    instance.nodeInfo = realNodeInfo;
-  } catch(e) {
-    console.warn("got error fetching nodeInfo", e)
+    instance.nodeInfo = realNodeInfo
+  } catch (e) {
+    console.warn('got error fetching nodeInfo', e)
   }
   return instance
 }

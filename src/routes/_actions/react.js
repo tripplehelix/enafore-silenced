@@ -1,11 +1,10 @@
 import { reactStatus, unreactStatus } from '../_api/react.js'
 import { store } from '../_store/store.js'
 import { toast } from '../_components/toast/toast.js'
-import { database } from '../_database/database.js'
 import { formatIntl } from '../_utils/formatIntl.js'
 
 export async function setReacted (statusId, reacting, reaction, apiVersion) {
-  if(reaction.extern && !apiVersion.externReactions) {
+  if (reaction.extern && !apiVersion.externReactions) {
     /* no await */ toast.say('Your instance doesn\'t allow reacting with remote custom emojis')
     return false
   }

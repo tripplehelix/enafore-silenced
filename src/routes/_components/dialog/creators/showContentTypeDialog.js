@@ -5,6 +5,6 @@ export default function showContentTypeDialog (realm) {
   return showDialog(ContentTypeDialog, {
     label: 'intl.contentType',
     title: 'intl.contentType',
-    realm: realm
+    realm
   })
 }

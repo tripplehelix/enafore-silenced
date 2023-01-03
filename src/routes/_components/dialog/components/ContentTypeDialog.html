@@ -31,7 +31,7 @@
       close,
       onClick (item) {
         const { realm } = this.get()
-        this.store.setComposeData(realm, { contentType: item.key === "default" ? null : item.key })
+        this.store.setComposeData(realm, { contentType: item.key === 'default' ? null : item.key })
         this.close()
       }
     },
@@ -41,10 +41,10 @@
         return composeData.contentType
       },
       allowedContentTypes: ({ contentTypes, $currentPostTypes }) => {
-        return Object.keys(contentTypes).filter(e => e == "default" || $currentPostTypes.includes(e))
+        return Object.keys(contentTypes).filter(e => e === 'default' || $currentPostTypes.includes(e))
       },
       items: ({ contentType, contentTypes, allowedContentTypes }) => {
-        return allowedContentTypes.map(e => ({ ...contentTypes[e], key: e, selected: e === contentType || (e === "default" && !allowedContentTypes.includes(contentType)) }))
+        return allowedContentTypes.map(e => ({ ...contentTypes[e], key: e, selected: e === contentType || (e === 'default' && !allowedContentTypes.includes(contentType)) }))
       }
     }
   }

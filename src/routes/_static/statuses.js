@@ -26,23 +26,23 @@ export const KNOWN_CONTENT_TYPES = {
     label: 'Default',
     icon: '#fa-file'
   },
-  "text/plain": {
+  'text/plain': {
     label: 'Text',
     icon: '#fa-file-text'
   },
-  "text/html": {
+  'text/html': {
     label: 'HTML',
     icon: '#fa-code'
   },
-  "text/markdown": {
+  'text/markdown': {
     label: 'Markdown',
     icon: '#fa-markdown'
   },
-  "text/x.misskeymarkdown": {
+  'text/x.misskeymarkdown': {
     label: 'Misskey Flavored Markdown',
     icon: '#misskey-logo'
   },
-  "text/bbcode": {
+  'text/bbcode': {
     label: 'BBCode',
     icon: '#fa-bold'
   }

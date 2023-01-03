@@ -2,7 +2,6 @@ import { store } from '../_store/store.js'
 import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
 import * as emojiDatabase from '../_utils/emojiDatabase.js'
 import { SEARCH_RESULTS_LIMIT } from '../_static/autosuggest.js'
-import { mark, stop } from '../_utils/marks.js'
 
 async function searchEmoji (searchText) {
   let emojis = await emojiDatabase.findBySearchQuery(searchText)

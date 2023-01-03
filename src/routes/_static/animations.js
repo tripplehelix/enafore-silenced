@@ -21,17 +21,6 @@ const fadeColorToPressedState = {
   }
 }
 
-const fadeBackgroundToPressedState = {
-  properties: [
-    { backgroundColor: 'var(--action-button-fill-color)' },
-    { backgroundColor: 'var(--action-button-fill-color-pressed)' }
-  ],
-  options: {
-    duration: 333,
-    easing: 'linear'
-  }
-}
-
 export const REBLOG_ANIMATION = [
   growBigThenSmall,
   fadeColorToPressedState
@@ -83,4 +72,3 @@ export const REACT_ANIMATION = [
     }
   }
 ]
-

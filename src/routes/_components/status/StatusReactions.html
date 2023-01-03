@@ -79,66 +79,68 @@
     import { REACT_ANIMATION } from '../../_static/animations.js'
     import { on } from '../../_utils/eventBus.js'
     export default {
-        store: () => store,
-        oncreate() {
-            const { originalStatusId } = this.get()
-            on('statusUpdated', this, status => {
-                if (status.id === originalStatusId) {
-                    this.set({
-                        originalStatus: status
-                    })
-                }
+      store: () => store,
+      oncreate () {
+        const { originalStatusId } = this.get()
+        on('statusUpdated', this, status => {
+          if (status.id === originalStatusId) {
+            this.set({
+              originalStatus: status
             })
-        },
-        components: {
-        },
-        methods: {
-            async onClick (event, reaction) {
-                const { apiVersion, originalStatusId, reactions } = this.get()
-                const ogReactions = [...reactions];
-                const newReactions = [...reactions].map(e=>e.name==reaction.name?({
-                    ...e,
-                    me: !reaction.me,
-                    count: reaction.count + (reaction.me ? -1 : 1)
-                }):e);
-                this.set({
-                    reactions: newReactions
-                })
-                const { reduceMotion, currentInstance, accessToken } = this.store.get()
-                if (!(reaction.me || reduceMotion)) {
-                    animate(event.currentTarget, REACT_ANIMATION)
-                }
-                const didReact = await setReacted(originalStatusId, !reaction.me, reaction, apiVersion)
-                window.__debugStuff = {didReact, updateStatus, scheduleIdleTask,currentInstance, accessToken, originalStatusId}
-                if(didReact) {
-                    scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
-                } else {
-                    this.set({
-                        reactions: ogReactions
-                    })
-                }
-            }
-        },
-        computed: {
-            processedReactions: ({ reactions, $autoplayGifs }) => reactions.map(e=>{
-                const shortcode = e.url && e.name.replace(/:/g,"")
-                return {
-                    ...e,
-                    html: emojifyText(e.url?":"+shortcode+":":e.name, [{
-                        url: e.url,
-                        static_url: e.static_url || e.url,
-                        shortcode
-                    }], $autoplayGifs)
-                }
-            }),
-            apiVersion: ({ $currentPleromaFeatures }) => {
-                return {
-                    customEmojiReactions: $currentPleromaFeatures?$currentPleromaFeatures.includes("custom_emoji_reactions"):true,
-                    externReactions: true,
-                    isPleroma: !!$currentPleromaFeatures
-                }
-            },
-            reactions: ({ originalStatus }) => originalStatus.reactions || originalStatus.emoji_reactions,
+          }
+        })
+      },
+      components: {
+      },
+      methods: {
+        async onClick (event, reaction) {
+          const { apiVersion, originalStatusId, reactions } = this.get()
+          const ogReactions = [...reactions]
+          const newReactions = [...reactions].map(e => e.name === reaction.name
+            ? ({
+                ...e,
+                me: !reaction.me,
+                count: reaction.count + (reaction.me ? -1 : 1)
+              })
+            : e)
+          this.set({
+            reactions: newReactions
+          })
+          const { reduceMotion, currentInstance, accessToken } = this.store.get()
+          if (!(reaction.me || reduceMotion)) {
+            animate(event.currentTarget, REACT_ANIMATION)
+          }
+          const didReact = await setReacted(originalStatusId, !reaction.me, reaction, apiVersion)
+          window.__debugStuff = { didReact, updateStatus, scheduleIdleTask, currentInstance, accessToken, originalStatusId }
+          if (didReact) {
+            scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
+          } else {
+            this.set({
+              reactions: ogReactions
+            })
+          }
         }
+      },
+      computed: {
+        processedReactions: ({ reactions, $autoplayGifs }) => reactions.map(e => {
+          const shortcode = e.url && e.name.replace(/:/g, '')
+          return {
+            ...e,
+            html: emojifyText(e.url ? ':' + shortcode + ':' : e.name, [{
+              url: e.url,
+              static_url: e.static_url || e.url,
+              shortcode
+            }], $autoplayGifs)
+          }
+        }),
+        apiVersion: ({ $currentPleromaFeatures }) => {
+          return {
+            customEmojiReactions: $currentPleromaFeatures ? $currentPleromaFeatures.includes('custom_emoji_reactions') : true,
+            externReactions: true,
+            isPleroma: !!$currentPleromaFeatures
+          }
+        },
+        reactions: ({ originalStatus }) => originalStatus.reactions || originalStatus.emoji_reactions
+      }
     }
 </script>

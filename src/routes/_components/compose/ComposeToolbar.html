@@ -100,7 +100,7 @@
       postPrivacyLabel: ({ postPrivacy }) => (
         formatIntl('intl.postPrivacyLabel', { label: postPrivacy.label })
       ),
-      contentTypeIcon: ({ contentType }) => (KNOWN_CONTENT_TYPES[contentType] || KNOWN_CONTENT_TYPES["default"]).icon
+      contentTypeIcon: ({ contentType }) => (KNOWN_CONTENT_TYPES[contentType] || KNOWN_CONTENT_TYPES.default).icon
     },
     store: () => store,
     methods: {
@@ -129,7 +129,7 @@
         showPostPrivacyDialog(realm)
       },
       async onContentTypeClick () {
-        const { realm, contentType } = this.get()
+        const { realm } = this.get()
         const showContentTypeDialog = await importShowContentTypeDialog()
         showContentTypeDialog(realm)
       },

@@ -10,7 +10,7 @@ export async function deleteAndRedraft (status) {
 
   store.setComposeData('dialog', {
     text: deletedStatus.text || statusHtmlToPlainText(status.content, status.mentions),
-    contentType: deletedStatus.content_type || "text/plain",
+    contentType: deletedStatus.content_type || 'text/plain',
     contentWarningShown: !!status.spoiler_text,
     contentWarning: status.spoiler_text || '',
     postPrivacy: status.visibility,

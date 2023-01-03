@@ -53,19 +53,19 @@ export function instanceComputations (store) {
     'currentPostTypes',
     ['currentInstanceInfo'],
     (currentInstanceInfo) => {
-      if(currentInstanceInfo) {
-        if(typeof currentInstanceInfo.pleroma == "object") return currentInstanceInfo.pleroma.metadata.post_formats
-        if(typeof currentInstanceInfo.version == "string" && currentInstanceInfo.version.match(/\+(glitch|cat|nya|types)/)) return ["text/plain", "text/markdown", "text/html"]
+      if (currentInstanceInfo) {
+        if (typeof currentInstanceInfo.pleroma === 'object') return currentInstanceInfo.pleroma.metadata.post_formats
+        if (typeof currentInstanceInfo.version === 'string' && currentInstanceInfo.version.match(/\+(glitch|cat|nya|types)/)) return ['text/plain', 'text/markdown', 'text/html']
       }
-      return ["text/plain"]
+      return ['text/plain']
     })
 
   store.compute(
     'currentPleromaFeatures',
     ['currentInstanceInfo'],
     (currentInstanceInfo) => {
-      if(currentInstanceInfo) {
-        if(typeof currentInstanceInfo.pleroma === "object") return currentInstanceInfo.pleroma.metadata.features
+      if (currentInstanceInfo) {
+        if (typeof currentInstanceInfo.pleroma === 'object') return currentInstanceInfo.pleroma.metadata.features
       } else return null
     })
 
@@ -73,11 +73,11 @@ export function instanceComputations (store) {
     'bubbleTimelineEnabled',
     ['currentInstanceInfo'],
     (currentInstanceInfo) => {
-      if(currentInstanceInfo) {
-        if(typeof currentInstanceInfo.nodeInfo === "object") {
-          if(currentInstanceInfo.nodeInfo !== null && typeof currentInstanceInfo.nodeInfo.metadata == "object" && currentInstanceInfo.nodeInfo.metadata !== null) {
+      if (currentInstanceInfo) {
+        if (typeof currentInstanceInfo.nodeInfo === 'object') {
+          if (currentInstanceInfo.nodeInfo !== null && typeof currentInstanceInfo.nodeInfo.metadata === 'object' && currentInstanceInfo.nodeInfo.metadata !== null) {
             const localBubbleInstances = currentInstanceInfo.nodeInfo.metadata.localBubbleInstances
-            return localBubbleInstances?localBubbleInstances.length>0:false
+            return localBubbleInstances ? localBubbleInstances.length > 0 : false
           } else return false
         } else return null // need updated instanceinfo
       } else return false

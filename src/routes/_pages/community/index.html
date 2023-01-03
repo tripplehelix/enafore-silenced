@@ -148,11 +148,13 @@
           label: 'intl.localTimeline',
           icon: '#fa-users'
         },
-        ...($bubbleTimelineEnabled?[{
-          href: '/bubble',
-          label: 'intl.bubbleTimeline',
-          icon: '#fa-circle'
-        }]:[]),
+        ...($bubbleTimelineEnabled
+          ? [{
+              href: '/bubble',
+              label: 'intl.bubbleTimeline',
+              icon: '#fa-circle'
+            }]
+          : []),
         {
           href: '/federated',
           label: 'intl.federatedTimeline',

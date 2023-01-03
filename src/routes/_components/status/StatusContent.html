@@ -141,14 +141,14 @@
   import { urlIsCrossOrigin } from '../../_utils/urlIsCrossOrigin.js'
   import { importConfetti } from '../../_utils/asyncModules/importConfetti.js'
   import IconButton from '../IconButton.html'
-  //import { franc } from '../../_utils/franc.js'
+  // import { franc } from '../../_utils/franc.js'
 
   export default {
     components: {
       IconButton
     },
-    onupdate({ changed }) {
-      if(changed.massagedContent || changed.showTranslate) {
+    onupdate ({ changed }) {
+      if (changed.massagedContent || changed.showTranslate) {
         this.hydrateContent()
         requestAnimationFrame(() => this.fire('recalculateHeight'))
       }
@@ -166,9 +166,9 @@
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
       massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate }) => (
-        (showTranslate && translateContent) ?
-        translateContent :
-        massageUserText(content, originalStatusEmojis, $autoplayGifs)
+        (showTranslate && translateContent)
+          ? translateContent
+          : massageUserText(content, originalStatusEmojis, $autoplayGifs)
       ),
       computedTranslateClass: ({ isStatusInOwnThread, isStatusInNotification, shown }) => {
         return classname(
@@ -180,20 +180,20 @@
       },
       shouldTranslate: async ({ plainTextContent, $detectTranslation }) => {
         return false
-        /*if(!$detectTranslation) return false
+        /* if(!$detectTranslation) return false
         const strippedText = plainTextContent.replace(/:\w+:|\w+:\/\/\S+|#\w+/g,"")
         const francResult = await franc(strippedText)
         if(francResult) {
-          const eng = francResult.find(e=>e[0]=='eng')
+          const eng = francResult.find(e=>e[0]==='eng')
           if(eng) return (eng[1]+Math.max((strippedText.length*-0.01)+0.2, 0))<0.6 // ehh, not great, but it'll do
           return true
         } else {
           return false
-        }*/
+        } */
       },
-      translateKey: ({ $currentInstance, originalStatusId }) => $currentInstance + "-" + originalStatusId,
+      translateKey: ({ $currentInstance, originalStatusId }) => $currentInstance + '-' + originalStatusId,
       translateState: ({ translateKey, $statusTranslations }) => {
-        if(!$statusTranslations || !$statusTranslations[translateKey]) return null
+        if (!$statusTranslations || !$statusTranslations[translateKey]) return null
         return $statusTranslations[translateKey]
       },
       showTranslate: ({ translateState }) => !!(translateState && translateState.show),
@@ -201,12 +201,12 @@
       translateError: ({ translateState }) => !!(translateState && translateState.error),
       translateContent_: ({ $statusTranslationContents, translateKey }) => {
         const tc = $statusTranslationContents[translateKey]
-        if(!tc) return {}
-        if(typeof tc === "string") return {html: tc, detected: "unknown"}
+        if (!tc) return {}
+        if (typeof tc === 'string') return { html: tc, detected: 'unknown' }
         return tc
       },
       translateContent: ({ translateContent_ }) => translateContent_.html,
-      translatedFrom: ({ translateContent_, translateState }) => translateState && translateState.languageNames && (translateState.languageNames[translateContent_.detected] ? translateState.languageNames[translateContent_.detected]+" (Detected)" : (translateState.languageNames[translateContent_.from] || translateContent_.detected))
+      translatedFrom: ({ translateContent_, translateState }) => translateState && translateState.languageNames && (translateState.languageNames[translateContent_.detected] ? translateState.languageNames[translateContent_.detected] + ' (Detected)' : (translateState.languageNames[translateContent_.from] || translateContent_.detected))
     },
     methods: {
       hydrateContent () {
@@ -242,19 +242,19 @@
           }
           // hydrate external links
           const href = anchor.getAttribute('href')
-          const hrefParsed = new URL(href, location.href);
-          const match = hrefParsed.href.match(/^https?:\/\/(?:[^\/]+?\.)?(?:twitter\.com|nitter\.[^\/]+)(?:\/(.*))?$/);
-          if(match) {
-            anchor.setAttribute('href', `/nitter/${encodeURIComponent(match[1]||"")}`)
+          const hrefParsed = new URL(href, location.href)
+          const match = hrefParsed.href.match(/^https?:\/\/(?:[^/]+?\.)?(?:twitter\.com|nitter\.[^/]+)(?:\/(.*))?$/)
+          if (match) {
+            anchor.setAttribute('href', `/nitter/${encodeURIComponent(match[1] || '')}`)
             anchor.setAttribute('target', '_blank')
             anchor.setAttribute('rel', 'nofollow noopener')
-          } else if (hrefParsed.hostname.startsWith("pinafore") && hrefParsed.pathname=="/confetti") {
-            anchor.setAttribute('title', "confetti!")
+          } else if (hrefParsed.hostname.startsWith('pinafore') && hrefParsed.pathname === '/confetti') {
+            anchor.setAttribute('title', 'confetti!')
             anchor.setAttribute('target', '_self')
-            anchor.setAttribute('href', "/confetti")
-            anchor.addEventListener("click", function (e) {
-              e.preventDefault();
-              importConfetti().then(confetti=>confetti())
+            anchor.setAttribute('href', '/confetti')
+            anchor.addEventListener('click', function (e) {
+              e.preventDefault()
+              importConfetti().then(confetti => confetti())
             })
           } if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
