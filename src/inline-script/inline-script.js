@@ -71,7 +71,7 @@ if (isMac()) {
 }
 
 // Versions of iOS Safari before iOS 12.2 do not work properly as a PWA
-// for cross-origin authentication: https://github.com/nolanlawson/pinafore/issues/45
+// for cross-origin authentication
 // Here we sniff for iOS <12.2 by checking for the existence of a native IntersectionObserver
 // function, which was added in 12.2.
 if (isIOSPre12Point2()) {
@@ -80,7 +80,6 @@ if (isIOSPre12Point2()) {
 
 if (pushSubscription) {
   // Fix a bug in Pinafore <=v1.9.0 if we only have one instance we're logged in to
-  // (https://github.com/nolanlawson/pinafore/issues/1274)
   if (loggedInInstancesInOrder && loggedInInstancesInOrder.length === 1) {
     storeLite.set({
       pushSubscriptions: {

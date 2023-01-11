@@ -1,5 +1,5 @@
 // Forked from a11y-dialog 4.0.1, adding a small change to element.focus() to work
-// around a Chrome bug with sticky positioning (https://github.com/nolanlawson/pinafore/issues/671)
+// around a Chrome bug with sticky positioning
 // Now it also works around shadow DOM and video/audio with controls.
 // (video/audio with controls is not 100% fixable because we can't focus the elements inside, but
 // you can at least tab to the video/audio and use other controls, like space bar and left/right)
@@ -156,7 +156,7 @@ A11yDialog.prototype.hide = function (event) {
   // focus back to it
   if (focusedBeforeDialog) {
     // This double rAF is to work around a bug in Chrome when focusing sticky-positioned
-    // elements. See https://github.com/nolanlawson/pinafore/issues/671
+    // elements.
     requestAnimationFrame(() => requestAnimationFrame(() => focusedBeforeDialog.focus()))
   }
 

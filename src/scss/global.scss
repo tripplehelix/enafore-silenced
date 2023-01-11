@@ -27,7 +27,7 @@ body {
   @supports not (contain: content) {
     // For browsers which don't support the "contain" CSS property,
     // make a stacking context manually so that the z-index behavior
-    // is consistent. See: https://github.com/nolanlawson/pinafore/issues/1806
+    // is consistent.
     isolation: isolate;
   }
 }

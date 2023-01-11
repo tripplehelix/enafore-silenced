@@ -336,12 +336,12 @@ export default {
   <p>
     Pinafore is
     <a rel="noopener" target="_blank"
-       href="https://github.com/nolanlawson/pinafore">free and open-source software</a>
+       href="https://github.com/easrng/pinafore">free and open-source software</a>
     created by
     <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
     and distributed under the
     <a rel="noopener" target="_blank"
-       href="https://github.com/nolanlawson/pinafore/blob/master/LICENSE">GNU Affero General Public License</a>.
+       href="https://github.com/easrng/pinafore/blob/master/LICENSE">GNU Affero General Public License</a>.
   </p>
 
   <h2 id="privacy-policy">Privacy Policy</h2>

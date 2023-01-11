@@ -12,7 +12,6 @@ const safeFormatter = (formatter) => {
       } catch (e) {
         if (e instanceof RangeError) {
           // The fediverse is wild, so invalid dates may exist. Don't fail with a fatal error in that case.
-          // https://github.com/nolanlawson/pinafore/issues/2113
           return 'intl.never'
         }
         throw e

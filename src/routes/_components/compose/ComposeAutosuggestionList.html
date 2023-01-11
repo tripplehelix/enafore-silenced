@@ -10,8 +10,7 @@
       aria-selected="{i === selected}"
       on:click="onClick(event, item)"
   >
-    <!-- aria-label would be simpler than an sr-only element, but that breaks VoiceOver+Safari
-         https://github.com/nolanlawson/pinafore/issues/1629 -->
+    <!-- aria-label would be simpler than an sr-only element, but that breaks VoiceOver+Safari -->
       <span class="sr-only">{ariaLabels[i]}</span>
       <div class="compose-autosuggest-list-grid" aria-hidden="true">
         {#if type === 'account'}

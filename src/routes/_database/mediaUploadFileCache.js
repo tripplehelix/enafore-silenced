@@ -1,6 +1,5 @@
 // Keep an LRU cache of recently-uploaded files for OCR.
 // We keep them in IDB to avoid tainted canvas errors after a refresh.
-// https://github.com/nolanlawson/pinafore/issues/1901
 
 import { get, set, keys, del } from '../_thirdparty/idb-keyval/idb-keyval.js'
 

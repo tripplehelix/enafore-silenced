@@ -53,7 +53,6 @@ export function getAccessibleLabelForStatus (originalAccount, account, plainText
 
   if (disableLongAriaLabels) {
     // Long text can crash NVDA; allow users to shorten it like we had it before.
-    // https://github.com/nolanlawson/pinafore/issues/694
     return formatIntl('intl.shortStatusLabel', { privacy: privacyText, account: originalAccountDisplayName })
   }
 

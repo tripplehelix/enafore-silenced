@@ -4,7 +4,6 @@ import { BLURHASH_RESOLUTION as RESOLUTION } from '../_static/blurhash.js'
 import { isChromePre82 } from '../_utils/userAgent/isChromePre82.js'
 
 // Disabled in Chrome because convertToBlob() is slow
-// https://github.com/nolanlawson/pinafore/issues/1396
 const OFFSCREEN_CANVAS = !isChromePre82() && typeof OffscreenCanvas === 'function'
   ? new OffscreenCanvas(RESOLUTION, RESOLUTION)
   : null

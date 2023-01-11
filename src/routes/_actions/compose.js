@@ -16,7 +16,7 @@ export async function insertHandleForReply (statusId) {
   const originalStatus = status.reblog || status
   let accounts = [originalStatus.account].concat(originalStatus.mentions || [])
     .filter(account => account.id !== currentVerifyCredentials.id)
-  // Pleroma includes account in mentions as well, so make uniq https://github.com/nolanlawson/pinafore/issues/1591
+  // Pleroma includes account in mentions as well, so make uniq
   accounts = uniqBy(accounts, _ => _.id)
   if (!store.getComposeData(statusId, 'text') && accounts.length) {
     store.setComposeData(statusId, {

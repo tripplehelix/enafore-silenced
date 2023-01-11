@@ -71,7 +71,6 @@ self.addEventListener('install', event => {
     ])
     // We shouldn't have to do this, but the previous page could be an old one,
     // which would not send us a postMessage to skipWaiting().
-    // See https://github.com/nolanlawson/pinafore/issues/1243
     self.skipWaiting()
   })())
 })

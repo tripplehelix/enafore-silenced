@@ -103,7 +103,7 @@ how to run Pinafore in dev mode and run tests.
 
 ## Changelog
 
-I don't have an updated changelog.
+I don't have a changelog.
 
 ## What's with the name?
 

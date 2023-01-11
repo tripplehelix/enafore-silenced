@@ -91,7 +91,6 @@
       loaded: ({ $currentVerifyCredentials }) => !!$currentVerifyCredentials,
       verifyCredentials: ({ $currentVerifyCredentials }) => {
         // return a placeholder while we're waiting on IndexedDB to load
-        // (https://github.com/nolanlawson/pinafore/issues/1076)
         return $currentVerifyCredentials || {
           display_name: '',
           acct: '',
