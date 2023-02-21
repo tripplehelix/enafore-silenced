@@ -172,7 +172,10 @@ self.addEventListener('fetch', event => {
 
     // for everything else, go network-only
     return fetch(req)
-  })())
+  })().catch(error => {
+    console.error(error)
+    return new Response("error in service worker", {status:502})
+  }))
 })
 
 self.addEventListener('push', event => {
