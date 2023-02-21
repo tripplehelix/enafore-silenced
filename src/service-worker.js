@@ -174,7 +174,7 @@ self.addEventListener('fetch', event => {
     return fetch(req)
   })().catch(error => {
     console.error(error)
-    return new Response("error in service worker", {status:502})
+    return new Response('error in service worker', { status: 502 })
   }))
 })
 
