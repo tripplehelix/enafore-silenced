@@ -6,6 +6,7 @@
          aria-label={ariaLabel}
          on:recalculateHeight
          ref:article
+         data-level={level}
 >
   {#if showHeader}
     <StatusHeader {...params} />
@@ -364,6 +365,7 @@
         absoluteFormattedCreatedDate,
         absoluteFormattedEditedDate
       }),
+      level: ({ statusId, $currentInstance, $currentTimeline }) => store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries').find(e=>e.id === statusId).level,
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
       // change frequently and would therefore cause costly recomputes if included here.
       // The main goal here is to avoid typing by passing as many params as possible to child components.
