@@ -9,6 +9,7 @@ export async function deleteAndRedraft (status) {
   const dialogPromise = importShowComposeDialog()
   const deletedStatus = await deleteStatusPromise
   if (status.in_reply_to_id) {
+    const { currentInstance } = store.get()
     const replying_to = await database.getStatus(currentInstance, statusId)
     window.__replying_to = replying_to
   }
