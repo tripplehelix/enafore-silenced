@@ -2,37 +2,42 @@ import { pickBy, get } from '../../_utils/lodash-lite.js'
 import { getFirstIdFromItemSummaries } from '../../_utils/getIdFromItemSummaries.js'
 
 function reorder(timelineName, summaries) {
-  if (!timelineName.startsWith("status/")) {
-    return summaries
-  }
-  const quoteRenotes = summaries.filter(e=>e.quoteId)
-  summaries = summaries.filter(e=>!e.quoteId)
-  const replyChildren = {}
-  for (let summary of summaries) {
-    if (summary.replyId) {
-      replyChildren[summary.replyId] = replyChildren[summary.replyId] || []
-      replyChildren[summary.replyId].push(summary)
+  const backupSummaries = summaries
+  try {
+    if (!timelineName.startsWith("status/")) {
+      return summaries
     }
-  }
-  function flatten(summary, level = 0) {
-    return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
-  }
-  const reordered = flatten(summaries[0])
-  const reorderedIds = new Set(reordered.map(e => e.id))
-  for(let summary of summaries) {
-    if(!reorderedIds.has(summary.id)) {
-      console.error("reorder missing status", {summary, summaries, reordered, timelineName, replyChildren})
-      return [...summaries, ...quoteRenotes] // fail safe
+    const quoteRenotes = summaries.filter(e => e.quoteId)
+    summaries = summaries.filter(e => !e.quoteId)
+    const replyChildren = {}
+    for (let summary of summaries) {
+      if (summary.replyId) {
+        replyChildren[summary.replyId] = replyChildren[summary.replyId] || []
+        replyChildren[summary.replyId].push(summary)
+      }
     }
+    function flatten(summary, level = 0) {
+      return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
+    }
+    const reordered = flatten(summaries[0])
+    const reorderedIds = new Set(reordered.map(e => e.id))
+    for (let summary of summaries) {
+      if (!reorderedIds.has(summary.id)) {
+        throw Object.assign(new Error("reorder missing status"), { summary, summaries, reordered, timelineName, replyChildren })
+      }
+    }
+    return [...reordered, ...quoteRenotes]
+  } catch (e) {
+    console.error(e)
+    return backupSummaries
   }
-  return [...reordered, ...quoteRenotes]
 }
 
-export function timelineMixins (Store) {
+export function timelineMixins(Store) {
   Store.prototype.setForTimeline = function (instanceName, timelineName, obj) {
     const valuesToSet = {}
     for (const key of Object.keys(obj)) {
-      if(key === "timelineItemSummaries") {
+      if (key === "timelineItemSummaries") {
         obj[key] = reorder(timelineName, obj[key])
       }
       const rootKey = `timelineData_${key}`
