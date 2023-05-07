@@ -8,10 +8,11 @@ export async function deleteAndRedraft (status) {
   const deleteStatusPromise = doDeleteStatus(status.id)
   const dialogPromise = importShowComposeDialog()
   const deletedStatus = await deleteStatusPromise
+  let inReplyToHandle = null;
   if (status.in_reply_to_id) {
     const { currentInstance } = store.get()
     const replying_to = await database.getStatus(currentInstance, status.in_reply_to_id)
-    window.__replying_to = replying_to
+    inReplyToHandle = "@"+replying_to.account.acct
   }
   store.setComposeData('dialog', {
     text: deletedStatus.text || statusHtmlToPlainText(status.content, status.mentions),
@@ -24,6 +25,7 @@ export async function deleteAndRedraft (status) {
       data: _
     })),
     inReplyToId: status.in_reply_to_id,
+    inReplyToHandle,
     // note that for polls there is no real way to preserve the original expiry
     poll: status.poll && {
       multiple: !!status.poll.multiple,
