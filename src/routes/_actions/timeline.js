@@ -175,8 +175,8 @@ function reorder(timelineName, summaries) {
   const reordered = flatten(summaries[0])
   const reorderedIds = new Set(reordered.map(e => e.id))
   for(let summary of summaries) {
-    if(!reorderedIds.has(summary.ids)) {
-      console.error("reorder missing status", {summary, summaries, reordered, timelineName})
+    if(!reorderedIds.has(summary.id)) {
+      console.error("reorder missing status", {summary, summaries, reordered, timelineName, replyChildren})
       return summaries // fail safe
     }
   }
