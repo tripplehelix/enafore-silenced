@@ -365,7 +365,13 @@
         absoluteFormattedCreatedDate,
         absoluteFormattedEditedDate
       }),
-      level: ({ statusId, $currentInstance, $currentTimeline }) => store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries')?.find(e=>e.id === statusId)?.level,
+      level: ({ statusId, $currentInstance, $currentTimeline }) => {
+        const summaries = store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries');
+        if(!summaries) return null
+        const summary = summaries.find(e=>e.id === statusId)
+        if(!summary || typeof summary.level !== "number") return null
+        return summary.level
+      },
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
       // change frequently and would therefore cause costly recomputes if included here.
       // The main goal here is to avoid typing by passing as many params as possible to child components.
