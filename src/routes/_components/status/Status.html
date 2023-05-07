@@ -6,7 +6,7 @@
          aria-label={ariaLabel}
          on:recalculateHeight
          ref:article
-         style={"--status-level:" + level}
+         style={"--status-level:" + (level || 0)}
 >
   {#if showHeader}
     <StatusHeader {...params} />
