@@ -7,7 +7,16 @@
     {#if inReplyToId}
       <div class="compose-in-reply-to-wrapper"
            transition:slide="{duration: 333}">
-        {inReplyToId}
+        <div class="compose-in-reply-to-toolbar">
+          <div class="compose-in-reply-to-toolbar-label">
+            Replying to a post
+          </div>
+          <IconButton
+            label="Don't reply"
+            href="#fa-times"
+            on:click="onDontReplyClick()"
+          />
+        </div>
       </div>
     {/if}
     {#if contentWarningShown}
@@ -84,6 +93,25 @@
 
   .compose-poll-wrapper {
     grid-area: poll;
+  }
+
+
+  .compose-in-reply-to-toolbar {
+    font-size: 1.17em;
+    margin: 10px 10px 10px 5px;
+    border-radius: 3px;
+    padding: 0.25rem 1rem;
+    padding-right: 1rem;
+    background: var(--toast-bg);
+    color: var(--toast-text);
+    border: 1px solid var(--toast-border);
+    display: flex;
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .compose-in-reply-to-toolbar-label {
+    flex-grow: 1;
   }
 
   @media (max-width: 767px) {
@@ -262,6 +290,9 @@
           sensitive, contentWarning, postPrivacyKey,
           mediaDescriptions, inReplyToUuid, pollToPost,
           mediaFocalPoints, contentType)
+      },
+      onDontReplyClick() {
+        this.set({ inReplyToId: null })
       }
     }
   }
