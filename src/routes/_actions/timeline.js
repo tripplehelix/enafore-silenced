@@ -158,11 +158,16 @@ async function addTimelineItems (instanceName, timelineName, items, stale) {
   stop('addTimelineItemSummaries')
 }
 
+function reorder(timelineName, summaries) {
+  window.__summaries = summaries
+  return summaries
+}
+
 export async function addTimelineItemSummaries (instanceName, timelineName, newSummaries, newStale) {
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
   const oldStale = store.getForTimeline(instanceName, timelineName, 'timelineItemSummariesAreStale')
 
-  const mergedSummaries = uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId)
+  const mergedSummaries = reorder(timelineName, uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId))
 
   if (!isEqual(oldSummaries, mergedSummaries)) {
     store.setForTimeline(instanceName, timelineName, { timelineItemSummaries: mergedSummaries })
