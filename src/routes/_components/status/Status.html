@@ -312,7 +312,7 @@
         originalStatus.media_attachments.length
       ),
       originalQuote: ({ originalStatus }) => originalStatus.quote,
-      showQuote: ({ originalQuote }) => !!originalQuote,
+      showQuote: ({ originalQuote }) => originalQuote && !isStatusInNotification,
       mediaAttachments: ({ originalStatus }) => (
         originalStatus.media_attachments
       ),
