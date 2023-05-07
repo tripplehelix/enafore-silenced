@@ -2,12 +2,16 @@ import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.js'
 import { importShowComposeDialog } from '../_components/dialog/asyncDialogs/importShowComposeDialog.js'
 import { doDeleteStatus } from './delete.js'
 import { store } from '../_store/store.js'
+import { database } from '../_database/database.js'
 
 export async function deleteAndRedraft (status) {
   const deleteStatusPromise = doDeleteStatus(status.id)
   const dialogPromise = importShowComposeDialog()
   const deletedStatus = await deleteStatusPromise
-
+  if (status.in_reply_to_id) {
+    const replying_to = await database.getStatus(currentInstance, statusId)
+    window.__replying_to = replying_to
+  }
   store.setComposeData('dialog', {
     text: deletedStatus.text || statusHtmlToPlainText(status.content, status.mentions),
     contentType: deletedStatus.content_type || 'text/plain',
