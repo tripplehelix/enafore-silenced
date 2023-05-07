@@ -158,36 +158,11 @@ async function addTimelineItems(instanceName, timelineName, items, stale) {
   stop('addTimelineItemSummaries')
 }
 
-function reorder(timelineName, summaries) {
-  if (!timelineName.startsWith("status/")) {
-    return summaries
-  }
-  const replyChildren = {}
-  for (let summary of summaries) {
-    if (summary.replyId) {
-      replyChildren[summary.replyId] = replyChildren[summary.replyId] || []
-      replyChildren[summary.replyId].push(summary)
-    }
-  }
-  function flatten(summary, level = 0) {
-    return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
-  }
-  const reordered = flatten(summaries[0])
-  const reorderedIds = new Set(reordered.map(e => e.id))
-  for(let summary of summaries) {
-    if(!reorderedIds.has(summary.id)) {
-      console.error("reorder missing status", {summary, summaries, reordered, timelineName, replyChildren})
-      return summaries // fail safe
-    }
-  }
-  return reordered
-}
-
 export async function addTimelineItemSummaries(instanceName, timelineName, newSummaries, newStale) {
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
   const oldStale = store.getForTimeline(instanceName, timelineName, 'timelineItemSummariesAreStale')
 
-  const mergedSummaries = reorder(timelineName, uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId))
+  const mergedSummaries = uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId)
 
   if (!isEqual(oldSummaries, mergedSummaries)) {
     store.setForTimeline(instanceName, timelineName, { timelineItemSummaries: mergedSummaries })

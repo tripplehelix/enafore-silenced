@@ -1,10 +1,38 @@
 import { pickBy, get } from '../../_utils/lodash-lite.js'
 import { getFirstIdFromItemSummaries } from '../../_utils/getIdFromItemSummaries.js'
 
+function reorder(timelineName, summaries) {
+  if (!timelineName.startsWith("status/")) {
+    return summaries
+  }
+  const replyChildren = {}
+  for (let summary of summaries) {
+    if (summary.replyId) {
+      replyChildren[summary.replyId] = replyChildren[summary.replyId] || []
+      replyChildren[summary.replyId].push(summary)
+    }
+  }
+  function flatten(summary, level = 0) {
+    return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
+  }
+  const reordered = flatten(summaries[0])
+  const reorderedIds = new Set(reordered.map(e => e.id))
+  for(let summary of summaries) {
+    if(!reorderedIds.has(summary.id)) {
+      console.error("reorder missing status", {summary, summaries, reordered, timelineName, replyChildren})
+      return summaries // fail safe
+    }
+  }
+  return reordered
+}
+
 export function timelineMixins (Store) {
   Store.prototype.setForTimeline = function (instanceName, timelineName, obj) {
     const valuesToSet = {}
     for (const key of Object.keys(obj)) {
+      if(key === "timelineItemSummaries") {
+        obj[key] = reorder(timelineName, obj[key])
+      }
       const rootKey = `timelineData_${key}`
       const root = this.get()[rootKey] || {}
       const instanceData = root[instanceName] = root[instanceName] || {}
