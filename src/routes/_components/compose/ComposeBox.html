@@ -4,6 +4,12 @@
 <ComposeFileDrop {realm} >
   <div class="{computedClassName} {hideAndFadeIn}">
     <ComposeAuthor {realm} {dialogId} />
+    {#if inReplyToId}
+      <div class="compose-in-reply-to-wrapper"
+           transition:slide="{duration: 333}">
+        {inReplyToId}
+      </div>
+    {/if}
     {#if contentWarningShown}
       <div class="compose-content-warning-wrapper"
            transition:slide="{duration: 333}">
@@ -41,6 +47,7 @@
     align-items: flex-start;
     grid-template-areas:
       "avatar name        handle      handle"
+      "avatar inReplyTo   inReplyTo   inReplyTo"
       "avatar cw          cw          cw"
       "avatar input       input       input"
       "avatar gauge       gauge       gauge"
@@ -69,6 +76,10 @@
 
   .compose-content-warning-wrapper {
     grid-area: cw;
+  }
+
+  .compose-in-reply-to-wrapper {
+    grid-area: inReplyTo;
   }
 
   .compose-poll-wrapper {
