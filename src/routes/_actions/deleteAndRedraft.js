@@ -10,7 +10,7 @@ export async function deleteAndRedraft (status) {
   const deletedStatus = await deleteStatusPromise
   if (status.in_reply_to_id) {
     const { currentInstance } = store.get()
-    const replying_to = await database.getStatus(currentInstance, statusId)
+    const replying_to = await database.getStatus(currentInstance, status.in_reply_to_id)
     window.__replying_to = replying_to
   }
   store.setComposeData('dialog', {
