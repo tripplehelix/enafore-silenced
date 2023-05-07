@@ -38,7 +38,7 @@
     <StatusPoll {...params} shown={showContent} on:recalculateHeight />
   {/if}
   {#if showQuote && showContent}
-    <svelte:self status={originalQuote} isQuote={true} />
+    <svelte:self status={originalQuote} isQuote={true} on:recalculateHeight />
   {/if}
   {#if hasReactions}
     <StatusReactions {...params} />
