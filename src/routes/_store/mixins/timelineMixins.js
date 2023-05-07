@@ -5,6 +5,8 @@ function reorder(timelineName, summaries) {
   if (!timelineName.startsWith("status/")) {
     return summaries
   }
+  const quoteRenotes = summaries.filter(e=>e.quoteId)
+  summaries = summaries.filter(e=>!e.quoteId)
   const replyChildren = {}
   for (let summary of summaries) {
     if (summary.replyId) {
@@ -20,10 +22,10 @@ function reorder(timelineName, summaries) {
   for(let summary of summaries) {
     if(!reorderedIds.has(summary.id)) {
       console.error("reorder missing status", {summary, summaries, reordered, timelineName, replyChildren})
-      return summaries // fail safe
+      return [...summaries, ...quoteRenotes] // fail safe
     }
   }
-  return reordered
+  return [...reordered, ...quoteRenotes]
 }
 
 export function timelineMixins (Store) {

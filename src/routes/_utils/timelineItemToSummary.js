@@ -7,6 +7,7 @@ class TimelineSummary {
     this.accountId = item.account.id
     this.replyId = (item.in_reply_to_id) || undefined
     this.reblogId = (item.reblog && item.reblog.id) || undefined
+    this.quoteId = item.quote_id || undefined
     this.type = item.type || undefined
 
     // This is admittedly a weird place to do the filtering logic. But there are a few reasons to do it here:
