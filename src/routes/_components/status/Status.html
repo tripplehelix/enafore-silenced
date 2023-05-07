@@ -120,6 +120,20 @@
     border: 1px solid var(--main-border);
     border-radius: 6px;
   }
+  .status-article {
+    padding-left: calc((0.25rem + 2px) * var(--status-level) + var(--status-pad-h)) !important;
+  }
+  .status-article::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 2px, transparent 2px, transparent calc(0.25rem + 2px));
+    width: calc((0.25rem + 2px) * var(--status-level));
+    height: 100%;
+    z-index: -1;
+    color: var(--nav-active-bg);
+  }
 </style>
 <script>
   import StatusSidebar from './StatusSidebar.html'
