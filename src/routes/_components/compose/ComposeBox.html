@@ -296,7 +296,8 @@
           mediaFocalPoints, contentType)
       },
       onDontReplyClick() {
-        this.set({ inReplyToId: null })
+        const { realm } = this.get()
+        store.setComposeData(realm, { inReplyToId: null })
       }
     }
   }
