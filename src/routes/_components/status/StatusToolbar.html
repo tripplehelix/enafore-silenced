@@ -3,7 +3,7 @@
     pressable={true} pressed={replyShown} href={replyIcon} clickListener={false} elementId={replyKey} />
   <IconButton label={reblogLabel} pressedLabel="Unboost" pressable={!reblogDisabled} pressed={reblogged}
     checked={reblogged} disabled={reblogDisabled} href={reblogIcon} clickListener={false} elementId={reblogKey}
-    ref:reblogIcon />
+    ref:reblogIcon rightClickListener={true} on:rightClick="openQuoteDialog()" />
   <IconButton label="{intl.favorite}" pressedLabel="{intl.unfavorite}" pressable={true} pressed={favorited}
     checked={favorited} href="#fa-star" clickListener={false} elementId={favoriteKey} ref:favoriteIcon
     rightClickListener={true} on:rightClick="pickEmojiReaction()" />
@@ -60,6 +60,7 @@
   import { updateCustomEmojiForInstance } from '../../_actions/emoji.js'
   import { setReacted } from '../../_actions/react.js'
   import { updateStatus } from '../../_actions/timeline.js'
+  import { quote } from '../../_actions/quote.js'
   import { scheduleIdleTask } from '../../_utils/scheduleIdleTask.js'
 
   export default {
@@ -172,6 +173,10 @@
             scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
           }
         })
+      },
+      openQuoteDialog() {
+        const { originalStatus } = this.get()
+        quote(originalStatus)
       }
     },
     data: () => ({

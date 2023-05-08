@@ -31,7 +31,9 @@ export async function deleteAndRedraft (status) {
       multiple: !!status.poll.multiple,
       options: (status.poll.options || []).map(option => option.title)
     },
-    sensitive: !!status.sensitive
+    sensitive: !!status.sensitive,
+    quoteId: status.quote_id,
+    quoteHandle: status.quote && "@"+status.quote.account.acct
   })
   const showComposeDialog = await dialogPromise
   showComposeDialog()
