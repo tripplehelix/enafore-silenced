@@ -17,10 +17,10 @@ function reorder(timelineName, summaries) {
       }
     }
     function flatten(summary, level = 0) {
-      console.debug({summary, replyChildren, summaries})
+      //console.debug({summary, replyChildren, summaries})
       return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
     }
-    const reordered = flatten(summaries[0])
+    const reordered = summaries.length > 0 ? flatten(summaries[0]) : []
     const reorderedIds = new Set(reordered.map(e => e.id))
     for (let summary of summaries) {
       if (!reorderedIds.has(summary.id)) {
