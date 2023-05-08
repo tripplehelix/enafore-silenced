@@ -85,6 +85,8 @@
   import { on } from '../../_utils/eventBus.js'
   import { announceAriaLivePolite } from '../../_utils/announceAriaLivePolite.js'
   import { setStatusBookmarkedOrUnbookmarked } from '../../_actions/bookmark.js'
+  import { importShowEmojiDialog } from '../dialog/asyncDialogs/importShowEmojiDialog.js'
+  import { updateCustomEmojiForInstance } from '../../_actions/emoji.js'
 
   export default {
     oncreate () {
@@ -183,8 +185,12 @@
         const { originalStatus, originalStatusId } = this.get()
         /* no await */ setStatusBookmarkedOrUnbookmarked(originalStatusId, !originalStatus.bookmarked)
       },
-      pickEmojiReaction () {
-        console.debug("pickEmojiReaction")
+      async pickEmojiReaction () {
+        const [showEmojiDialog] = await Promise.all([
+          importShowEmojiDialog(),
+          updateCustomEmojiForInstance(currentInstance)
+        ])
+        console.debug(await showEmojiDialog("react"))
       }
     },
     data: () => ({
