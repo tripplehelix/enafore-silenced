@@ -186,6 +186,7 @@
         /* no await */ setStatusBookmarkedOrUnbookmarked(originalStatusId, !originalStatus.bookmarked)
       },
       async pickEmojiReaction () {
+        const { currentInstance } = this.store.get()
         const [showEmojiDialog] = await Promise.all([
           importShowEmojiDialog(),
           updateCustomEmojiForInstance(currentInstance)
