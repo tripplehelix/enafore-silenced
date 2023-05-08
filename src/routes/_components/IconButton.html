@@ -172,6 +172,10 @@
       },
       onClick (e) {
         this.fire('click', e)
+      },
+      onRightClick (e) {
+        e.preventDefault()
+        this.fire('rightclick', e)
       }
     },
     components: {
