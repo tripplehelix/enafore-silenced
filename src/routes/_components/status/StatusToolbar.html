@@ -168,7 +168,7 @@
           const { originalStatusId, reactionApiVersion } = this.get()
           const didReact = await setReacted(originalStatusId, true, { name: pickedEmoji.name || pickedEmoji.unicode }, reactionApiVersion)
           if (didReact) {
-            scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
+            updateStatus(currentInstance, accessToken, originalStatusId)
           }
         })
       }
