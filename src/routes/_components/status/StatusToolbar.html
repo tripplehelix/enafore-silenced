@@ -191,7 +191,7 @@
           importShowEmojiDialog(),
           updateCustomEmojiForInstance(currentInstance)
         ])
-        console.debug(await showEmojiDialog("react"))
+        showEmojiDialog(pickedEmoji => console.debug(pickedEmoji))
       }
     },
     data: () => ({
