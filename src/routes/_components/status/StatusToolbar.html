@@ -168,6 +168,7 @@
           const { originalStatusId, reactionApiVersion } = this.get()
           const didReact = await setReacted(originalStatusId, true, { name: pickedEmoji.name || pickedEmoji.unicode }, reactionApiVersion)
           if (didReact) {
+            await Promise.resolve()
             updateStatus(currentInstance, accessToken, originalStatusId)
           }
         })
