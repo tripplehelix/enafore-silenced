@@ -121,15 +121,15 @@
     border-radius: 6px;
   }
   .status-article {
-    padding-left: calc((0.25rem + 5px) * var(--status-level) + var(--status-pad-h)) !important;
+    padding-left: calc(10px * var(--status-level) + var(--status-pad-h)) !important;
   }
   .status-article::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 5px, transparent 5px, transparent calc(0.25rem + 5px));
-    width: calc((0.25rem + 5px) * var(--status-level));
+    background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 5px, transparent 5px, transparent 10px);
+    width: calc(10px * var(--status-level));
     height: 100%;
     z-index: -1;
     color: var(--body-bg);
