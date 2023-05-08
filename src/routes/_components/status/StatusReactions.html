@@ -112,7 +112,7 @@
           }
           const didReact = await setReacted(originalStatusId, !reaction.me, reaction, apiVersion)
           if (didReact) {
-            scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
+            updateStatus(currentInstance, accessToken, originalStatusId)
           } else {
             this.set({
               reactions: ogReactions
