@@ -3,13 +3,14 @@ import { DEFAULT_TIMEOUT, get, post, put, WRITE_TIMEOUT } from '../_utils/ajax.j
 
 // post is create, put is edit
 async function postOrPutStatus (url, accessToken, method, text, inReplyToId, mediaIds,
-  sensitive, spoilerText, visibility, poll, contentType) {
+  sensitive, spoilerText, visibility, poll, contentType, quoteId) {
   const body = {
     status: text,
     media_ids: mediaIds,
     sensitive,
     spoiler_text: spoilerText,
     content_type: contentType,
+    quote_id: quoteId,
     visibility,
     poll,
     ...(method === 'post' && {
@@ -33,17 +34,17 @@ async function postOrPutStatus (url, accessToken, method, text, inReplyToId, med
 }
 
 export async function postStatus (instanceName, accessToken, text, inReplyToId, mediaIds,
-  sensitive, spoilerText, visibility, poll, contentType) {
+  sensitive, spoilerText, visibility, poll, contentType, quoteId) {
   const url = `${basename(instanceName)}/api/v1/statuses`
   return postOrPutStatus(url, accessToken, 'post', text, inReplyToId, mediaIds,
-    sensitive, spoilerText, visibility, poll, contentType)
+    sensitive, spoilerText, visibility, poll, contentType, quoteId)
 }
 
 export async function putStatus (instanceName, accessToken, id, text, inReplyToId, mediaIds,
-  sensitive, spoilerText, visibility, poll, contentType) {
+  sensitive, spoilerText, visibility, poll, contentType, quoteId) {
   const url = `${basename(instanceName)}/api/v1/statuses/${id}`
   return postOrPutStatus(url, accessToken, 'put', text, inReplyToId, mediaIds,
-    sensitive, spoilerText, visibility, poll, contentType)
+    sensitive, spoilerText, visibility, poll, contentType, quoteId)
 }
 
 export async function getStatusContext (instanceName, accessToken, statusId) {

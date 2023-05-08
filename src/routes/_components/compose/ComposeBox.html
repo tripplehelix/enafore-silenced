@@ -19,6 +19,21 @@
         </div>
       </div>
     {/if}
+    {#if quoteId}
+      <div class="compose-quote-wrapper"
+           transition:slide="{duration: 333}">
+        <div class="compose-quote-toolbar">
+          <div class="compose-quote-toolbar-label">
+            Quoting <a href={"/statuses/" + quoteId}>a post{#if quoteHandle}&nbsp;by {quoteHandle}{/if}</a>
+          </div>
+          <IconButton
+            label="Don't quote"
+            href="#fa-times"
+            on:click="onDontQuoteClick()"
+          />
+        </div>
+      </div>
+    {/if}
     {#if contentWarningShown}
       <div class="compose-content-warning-wrapper"
            transition:slide="{duration: 333}">
@@ -57,6 +72,7 @@
     grid-template-areas:
       "avatar name        handle      handle"
       "avatar inReplyTo   inReplyTo   inReplyTo"
+      "avatar quote       quote       quote"
       "avatar cw          cw          cw"
       "avatar input       input       input"
       "avatar gauge       gauge       gauge"
@@ -91,12 +107,16 @@
     grid-area: inReplyTo;
   }
 
+  .compose-quote-wrapper {
+    grid-area: quote;
+  }
+
   .compose-poll-wrapper {
     grid-area: poll;
   }
 
 
-  .compose-in-reply-to-toolbar {
+  .compose-in-reply-to-toolbar, .compose-quote-toolbar {
     font-size: 1.17em;
     margin: 10px 0 0 5px;
     border-radius: 3px;
@@ -110,7 +130,7 @@
     padding-right: 0;
   }
 
-  .compose-in-reply-to-toolbar-label {
+  .compose-in-reply-to-toolbar-label, .compose-quote-toolbar-label {
     flex-grow: 1;
   }
 
@@ -230,6 +250,8 @@
       sensitive: ({ composeData }) => !!composeData.sensitive,
       contentType: ({ composeData }) => composeData.contentType,
       inReplyToHandle: ({ composeData }) => composeData.inReplyToHandle,
+      quoteId: ({ composeData }) => composeData.quoteId,
+      quoteHandle: ({ composeData }) => composeData.quoteHandle
     },
     transitions: {
       slide
@@ -262,6 +284,7 @@
           overLimit,
           inReplyToUuid, // typical replies, using Pinafore-specific uuid
           inReplyToId, // delete-and-redraft replies, using standard id
+          quoteId,
           poll,
           sensitive,
           contentType
@@ -293,11 +316,15 @@
         /* no await */ postStatus(realm, text, inReplyTo, mediaIds,
           sensitive, contentWarning, postPrivacyKey,
           mediaDescriptions, inReplyToUuid, pollToPost,
-          mediaFocalPoints, contentType)
+          mediaFocalPoints, contentType, quoteId)
       },
       onDontReplyClick() {
         const { realm } = this.get()
         store.setComposeData(realm, { inReplyToId: null })
+      },
+      onDontQuoteClick() {
+        const { realm } = this.get()
+        store.setComposeData(realm, { quoteId: null })
       }
     }
   }
