@@ -17,6 +17,7 @@ function reorder(timelineName, summaries) {
       }
     }
     function flatten(summary, level = 0) {
+      console.debug({summary, replyChildren, summaries})
       return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
     }
     const reordered = flatten(summaries[0])
