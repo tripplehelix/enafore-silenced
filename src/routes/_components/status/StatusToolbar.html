@@ -31,6 +31,8 @@
     clickListener={false}
     elementId={favoriteKey}
     ref:favoriteIcon
+    rightClickListener={true}
+    on:rightClick="pickEmojiReaction()"
     />
   <IconButton
     label="{intl.moreOptions}"
@@ -180,6 +182,9 @@
       bookmark () {
         const { originalStatus, originalStatusId } = this.get()
         /* no await */ setStatusBookmarkedOrUnbookmarked(originalStatusId, !originalStatus.bookmarked)
+      },
+      pickEmojiReaction () {
+        console.debug("pickEmojiReaction")
       }
     },
     data: () => ({

@@ -110,10 +110,14 @@
 
   export default {
     oncreate () {
-      const { clickListener } = this.get()
+      const { clickListener, rightClickListener } = this.get()
       if (clickListener) {
         this.onClick = this.onClick.bind(this)
         this.refs.node.addEventListener('click', this.onClick)
+      }
+      if (rightClickListener) {
+        this.onRightClick = this.onRightClick.bind(this)
+        this.refs.node.addEventListener('contextmenu', this.onRightClick)
       }
       if (process.env.NODE_ENV !== 'production') {
         const { pressable, pressedLabel, label } = this.get()
@@ -123,9 +127,12 @@
       }
     },
     ondestroy () {
-      const { clickListener } = this.get()
+      const { clickListener, rightClickListener } = this.get()
       if (clickListener) {
         this.refs.node.removeEventListener('click', this.onClick)
+      }
+      if (rightClickListener) {
+        this.refs.node.removeEventListener('contextmenu', this.onRightClick)
       }
     },
     data: () => ({
