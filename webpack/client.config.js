@@ -117,7 +117,15 @@ export default {
           chunks: 'async',
           minSize: 5000,
           maxAsyncRequests: Infinity,
-          maxInitialRequests: Infinity
+          maxInitialRequests: Infinity,
+          cacheGroups: {
+            katex: {
+              test: /[\\/]node_modules[\\/](katex)[\\/]/,
+              name: 'katex',
+              chunks: 'async',
+              enforce: true
+            }
+          }
         }
       },
   plugins: [
@@ -150,7 +158,7 @@ export default {
   performance: {
     hints: dev ? false : (process.env.DEBUG ? 'warning' : 'error'),
     assetFilter: assetFilename => {
-      return !(/\.map$/.test(assetFilename)) && !/tesseract-asset/.test(assetFilename)
+      return !(/\.map$/.test(assetFilename)) && !/tesseract-asset/.test(assetFilename) && !/katex/.test(assetFilename)
     }
   }
 }
