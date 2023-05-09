@@ -142,6 +142,7 @@
   import { massageUserText } from '../../_utils/massageUserText.js'
   import { urlIsCrossOrigin } from '../../_utils/urlIsCrossOrigin.js'
   import { importConfetti } from '../../_utils/asyncModules/importConfetti.js'
+  import { katexify } from '../../_utils/katexify.js'
   import IconButton from '../IconButton.html'
   // import { franc } from '../../_utils/franc.js'
 
@@ -264,6 +265,7 @@
             anchor.setAttribute('rel', 'nofollow noopener')
           }
         }
+        katexify(node)
         stop('hydrateContent')
       },
       onHideTranslateClick () {
