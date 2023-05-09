@@ -119,7 +119,7 @@
       close,
       onEmojiSelected (event) {
         const { realm } = this.get()
-        if(typeof realm === "function") {
+        if (typeof realm === 'function') {
           realm(event.detail)
         } else {
           insertEmoji(realm, event.detail)

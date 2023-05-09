@@ -175,7 +175,6 @@
   import { scheduleIdleTask } from '../../_utils/scheduleIdleTask.js'
   import IconButton from '../IconButton.html'
 
-
   export default {
     oncreate () {
       const { realm, replySpoiler, replyVisibility } = this.get()
@@ -320,11 +319,11 @@
           mediaDescriptions, inReplyToUuid, pollToPost,
           mediaFocalPoints, contentType, quoteId)
       },
-      onDontReplyClick() {
+      onDontReplyClick () {
         const { realm } = this.get()
         store.setComposeData(realm, { inReplyToId: null })
       },
-      onDontQuoteClick() {
+      onDontQuoteClick () {
         const { realm } = this.get()
         store.setComposeData(realm, { quoteId: null })
       }

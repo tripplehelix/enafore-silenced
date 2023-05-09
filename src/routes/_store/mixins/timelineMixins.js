@@ -1,29 +1,29 @@
 import { pickBy, get } from '../../_utils/lodash-lite.js'
 import { getFirstIdFromItemSummaries } from '../../_utils/getIdFromItemSummaries.js'
 
-function reorder(timelineName, summaries) {
+function reorder (timelineName, summaries) {
   const backupSummaries = summaries
   try {
-    if (!timelineName.startsWith("status/")) {
+    if (!timelineName.startsWith('status/')) {
       return summaries
     }
     const replyChildren = {}
-    for (let summary of summaries) {
+    for (const summary of summaries) {
       if (summary.replyId) {
         replyChildren[summary.replyId] = replyChildren[summary.replyId] || []
         replyChildren[summary.replyId].push(summary)
       }
     }
-    function flatten(summary, level = 0) {
+    function flatten (summary, level = 0) {
       return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
     }
     const reordered = summaries.length > 0 ? flatten(summaries[0]) : []
     const reorderedIds = new Set(reordered.map(e => e.id))
     const floating = []
-    for (let summary of summaries) {
+    for (const summary of summaries) {
       if (!reorderedIds.has(summary.id)) {
         floating.push(summary)
-        console.warn("reorder is missing a status. this could be a bug or it could not be. who knows.", { summary, summaries, reordered, timelineName, replyChildren })
+        console.warn('reorder is missing a status. this could be a bug or it could not be. who knows.', { summary, summaries, reordered, timelineName, replyChildren })
       }
     }
     return [...reordered, ...floating]
@@ -33,11 +33,11 @@ function reorder(timelineName, summaries) {
   }
 }
 
-export function timelineMixins(Store) {
+export function timelineMixins (Store) {
   Store.prototype.setForTimeline = function (instanceName, timelineName, obj) {
     const valuesToSet = {}
     for (const key of Object.keys(obj)) {
-      if (key === "timelineItemSummaries") {
+      if (key === 'timelineItemSummaries') {
         obj[key] = reorder(timelineName, obj[key])
       }
       const rootKey = `timelineData_${key}`

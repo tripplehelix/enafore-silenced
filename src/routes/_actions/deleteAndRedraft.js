@@ -8,11 +8,11 @@ export async function deleteAndRedraft (status) {
   const deleteStatusPromise = doDeleteStatus(status.id)
   const dialogPromise = importShowComposeDialog()
   const deletedStatus = await deleteStatusPromise
-  let inReplyToHandle = null;
+  let inReplyToHandle = null
   if (status.in_reply_to_id) {
     const { currentInstance } = store.get()
-    const replying_to = await database.getStatus(currentInstance, status.in_reply_to_id)
-    inReplyToHandle = "@"+replying_to.account.acct
+    const replyingTo = await database.getStatus(currentInstance, status.in_reply_to_id)
+    inReplyToHandle = '@' + replyingTo.account.acct
   }
   store.setComposeData('dialog', {
     text: deletedStatus.text || statusHtmlToPlainText(status.content, status.mentions),
@@ -33,7 +33,7 @@ export async function deleteAndRedraft (status) {
     },
     sensitive: !!status.sensitive,
     quoteId: status.quote_id,
-    quoteHandle: status.quote && "@"+status.quote.account.acct
+    quoteHandle: status.quote && '@' + status.quote.account.acct
   })
   const showComposeDialog = await dialogPromise
   showComposeDialog()

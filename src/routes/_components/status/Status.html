@@ -380,10 +380,10 @@
         absoluteFormattedEditedDate
       }),
       level: ({ statusId, $currentInstance, $currentTimeline }) => {
-        const summaries = store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries');
-        if(!summaries) return null
-        const summary = summaries.find(e=>e.id === statusId)
-        if(!summary || typeof summary.level !== "number") return null
+        const summaries = store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries')
+        if (!summaries) return null
+        const summary = summaries.find(e => e.id === statusId)
+        if (!summary || typeof summary.level !== 'number') return null
         return summary.level
       },
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these

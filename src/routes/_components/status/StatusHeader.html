@@ -188,7 +188,7 @@
         }
       },
       emojiReaction: ({ notification, $autoplayGifs }) => {
-        if(notification && (notification.type === 'pleroma:emoji_reaction' || notification.type === 'reaction') && notification.emoji) {
+        if (notification && (notification.type === 'pleroma:emoji_reaction' || notification.type === 'reaction') && notification.emoji) {
           const shortcode = notification.emoji_url && notification.emoji.replace(/:/g, '')
           return emojifyText(notification.emoji_url ? ':' + shortcode + ':' : notification.emoji, [{
             url: notification.emoji_url,

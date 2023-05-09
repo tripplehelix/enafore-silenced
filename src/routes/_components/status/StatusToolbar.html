@@ -64,7 +64,7 @@
   import { scheduleIdleTask } from '../../_utils/scheduleIdleTask.js'
 
   export default {
-    oncreate() {
+    oncreate () {
       const {
         favoriteKey,
         reblogKey,
@@ -97,7 +97,7 @@
     },
     store: () => store,
     methods: {
-      toggleFavorite(announce) {
+      toggleFavorite (announce) {
         const { originalStatusId, favorited } = this.get()
         const newFavoritedValue = !favorited
         /* no await */ setFavorited(originalStatusId, newFavoritedValue)
@@ -108,7 +108,7 @@
           announceAriaLivePolite(newFavoritedValue ? 'intl.favorited' : 'intl.unfavorited')
         }
       },
-      reblog(announce) {
+      reblog (announce) {
         const { originalStatusId, reblogged } = this.get()
         const newRebloggedValue = !reblogged
         /* no await */ setReblogged(originalStatusId, newRebloggedValue)
@@ -119,7 +119,7 @@
           announceAriaLivePolite(newRebloggedValue ? 'intl.reblogged' : 'intl.unreblogged')
         }
       },
-      reply() {
+      reply () {
         requestAnimationFrame(() => {
           const { uuid } = this.get()
           const { repliesShown } = this.store.get()
@@ -128,21 +128,21 @@
           this.fire('recalculateHeight')
         })
       },
-      dismiss() {
+      dismiss () {
         const { replyShown } = this.get()
         if (replyShown) {
           this.reply()
           this.fire('focusArticle')
         }
       },
-      async onOptionsClick() {
+      async onOptionsClick () {
         const { originalStatus, originalAccountId } = this.get()
         const updateRelationshipPromise = updateProfileAndRelationship(originalAccountId)
         const showStatusOptionsDialog = await importShowStatusOptionsDialog()
         await updateRelationshipPromise
         showStatusOptionsDialog(originalStatus)
       },
-      onPostedStatus(realm, inReplyToUuid) {
+      onPostedStatus (realm, inReplyToUuid) {
         const {
           originalStatusId,
           uuid
@@ -156,11 +156,11 @@
           this.refs.node.querySelector('.status-toolbar-reply-button').focus({ preventScroll: true })
         } catch (e) { /* ignore */ }
       },
-      bookmark() {
+      bookmark () {
         const { originalStatus, originalStatusId } = this.get()
         /* no await */ setStatusBookmarkedOrUnbookmarked(originalStatusId, !originalStatus.bookmarked)
       },
-      async pickEmojiReaction() {
+      async pickEmojiReaction () {
         const { currentInstance, accessToken } = this.store.get()
         const [showEmojiDialog] = await Promise.all([
           importShowEmojiDialog(),
@@ -174,7 +174,7 @@
           }
         })
       },
-      openQuoteDialog() {
+      openQuoteDialog () {
         const { originalStatus } = this.get()
         quote(originalStatus)
       }
@@ -233,7 +233,7 @@
           externReactions: true,
           isPleroma: !!$currentPleromaFeatures
         }
-      },
+      }
     }
   }
 </script>
