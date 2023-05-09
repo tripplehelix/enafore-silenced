@@ -7,8 +7,6 @@ function reorder(timelineName, summaries) {
     if (!timelineName.startsWith("status/")) {
       return summaries
     }
-    const quoteRenotes = summaries.filter(e => e.quoteId)
-    summaries = summaries.filter(e => !e.quoteId)
     const replyChildren = {}
     for (let summary of summaries) {
       if (summary.replyId) {
@@ -17,17 +15,18 @@ function reorder(timelineName, summaries) {
       }
     }
     function flatten(summary, level = 0) {
-      //console.debug({summary, replyChildren, summaries})
       return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
     }
     const reordered = summaries.length > 0 ? flatten(summaries[0]) : []
     const reorderedIds = new Set(reordered.map(e => e.id))
+    const floating = []
     for (let summary of summaries) {
       if (!reorderedIds.has(summary.id)) {
-        throw Object.assign(new Error("reorder missing status"), { summary, summaries, reordered, timelineName, replyChildren })
+        floating.push(summary)
+        console.warn("reorder is missing a status. this could be a bug or it could not be. who knows.", { summary, summaries, reordered, timelineName, replyChildren })
       }
     }
-    return [...reordered, ...quoteRenotes]
+    return [...reordered, ...floating]
   } catch (e) {
     console.error(e)
     return backupSummaries
