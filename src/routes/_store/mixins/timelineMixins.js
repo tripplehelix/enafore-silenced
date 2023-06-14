@@ -15,7 +15,18 @@ function reorder (timelineName, summaries) {
       }
     }
     function flatten (summary, level = 0) {
-      return [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
+      const subtree = summary.id === timelineName.slice('status/'.length)
+      if (subtree) {
+        level = 0
+      }
+      const statuses = [{ ...summary, level }, ...(replyChildren[summary.id] || []).map(e => flatten(e, level + 1))].flat()
+      if (subtree) {
+        statuses[0].subtree = statuses[0].subtree || {}
+        statuses[0].subtree.start = true
+        statuses[statuses.length - 1].subtree = statuses[statuses.length - 1].subtree || {}
+        statuses[statuses.length - 1].subtree.end = true
+      }
+      return statuses
     }
     const reordered = summaries.length > 0 ? flatten(summaries[0]) : []
     const reorderedIds = new Set(reordered.map(e => e.id))

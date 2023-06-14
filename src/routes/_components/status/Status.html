@@ -6,7 +6,7 @@
          aria-label={ariaLabel}
          on:recalculateHeight
          ref:article
-         style={"--status-level:" + (level || 0)}
+         style={"--status-level:" + ((treeMetadata && treeMetadata.level) || 0)}
 >
   {#if showHeader}
     <StatusHeader {...params} />
@@ -133,6 +133,12 @@
     height: 100%;
     z-index: -1;
     color: var(--body-bg);
+  }
+  .status-article.status-subtree-start {
+    border-top: 4px solid var(--main-border);
+  }
+  .status-article.status-subtree-end {
+    border-bottom: 4px solid var(--main-border);
   }
 </style>
 <script>
@@ -355,7 +361,7 @@
         timelineType === 'pinned'
       ),
       hasReactions: ({ originalStatus }) => Boolean(originalStatus.reactions || originalStatus.emoji_reactions),
-      className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote }) => (classname(
+      className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote, treeMetadata }) => (classname(
         'status-article',
         'shortcut-list-item',
         'focus-fix',
@@ -364,7 +370,9 @@
         isStatusInOwnThread && 'status-in-own-thread',
         $underlineLinks && 'underline-links',
         !$disableTapOnStatus && !isStatusInOwnThread && 'tap-on-status',
-        isQuote && 'status-quoted'
+        isQuote && 'status-quoted',
+        (treeMetadata && treeMetadata.subtree && treeMetadata.subtree.start) && 'status-subtree-start',
+        (treeMetadata && treeMetadata.subtree && treeMetadata.subtree.end) && 'status-subtree-end'
       )),
       content: ({ originalStatus }) => originalStatus.content || '',
       showContent: ({ spoilerText, spoilerShown }) => !spoilerText || spoilerShown,
@@ -379,12 +387,15 @@
         absoluteFormattedCreatedDate,
         absoluteFormattedEditedDate
       }),
-      level: ({ statusId, $currentInstance, $currentTimeline }) => {
+      treeMetadata: ({ statusId, $currentInstance, $currentTimeline }) => {
         const summaries = store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries')
         if (!summaries) return null
         const summary = summaries.find(e => e.id === statusId)
         if (!summary || typeof summary.level !== 'number') return null
-        return summary.level
+        return {
+          level: summary.level,
+          subtree: summary.subtree
+        }
       },
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
       // change frequently and would therefore cause costly recomputes if included here.
