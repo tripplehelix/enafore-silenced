@@ -29,6 +29,9 @@
       --toast-gap-bottom: var(--nav-total-height);
       --fab-gap-top: 0px;
     }
+    .main-nav-link {
+      flex-direction: column-reverse;
+    }
     @supports not (height: 1dvh) {
       /* In browsers that don't support dvh, use the large-small-dynamic-viewport-units-polyfill */
       :root {
