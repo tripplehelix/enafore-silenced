@@ -16,18 +16,15 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '16.x'
         cache: 'yarn'
     - run: yarn --production --pure-lockfile
     - run: yarn build
