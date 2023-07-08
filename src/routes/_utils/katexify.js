@@ -47,6 +47,7 @@ function consumeBalanced (string, open, close) {
 }
 
 export function katexify (node) {
+  const promises = []
   const allText = grabAllTextNodes(node, [])
   let length = allText.length
   let modified
@@ -62,12 +63,12 @@ export function katexify (node) {
       modified = true
       const element = document.createElement('span')
       element.textContent = string
-      importKatex().then(katex => {
+      promises.push(importKatex().then(katex => {
         katex.render(string, element, {
           throwOnError: false,
           displayMode
         })
-      })
+      }))
       return element
     }
     let match
@@ -94,5 +95,5 @@ export function katexify (node) {
       subnode.parentNode.replaceChild(fragment, subnode)
     }
   }
-  return node
+  return promises.length ? Promise.all([promises]) : null
 }

@@ -240,7 +240,12 @@
             anchor.setAttribute('rel', 'nofollow noopener')
           }
         }
-        katexify(node)
+        const renderPromise = katexify(node)
+        if(renderPromise) {
+          renderPromise.then(() => {
+            this.fire('recalculateHeight')
+          })
+        }
         stop('hydrateContent')
       },
       onHideTranslateClick () {
