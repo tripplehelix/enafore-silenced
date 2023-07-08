@@ -9,10 +9,7 @@ export default {
       der für Geschwindigkeit und einfache Bedienung konzipiert wurde.
     </p>
     <p>
-      Lies den
-      <a rel="noopener" target="_blank"
-         href="https://nolanlawson.com/2018/04/09/introducing-pinafore-for-mastodon/">einführenden Blogbeitrag</a> (auf englisch)
-      oder lege los, indem Du Dich bei einer Instanz anmeldest:
+      Dich bei einer Instanz anmeldest:
     </p>`,
   logIn: 'Anmelden',
   footer: `
@@ -22,8 +19,9 @@ export default {
       erstellt von <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
       und verteilt unter der
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/master/LICENSE">AGPL Lizenz</a>.
+         href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL Lizenz</a>.
       Hier ist die <a href="/settings/about#privacy-policy" rel="prefetch">Datenschutzerklärung</a>.
+      Es ist eine Fortsetzung des Pinafore-Projekts von <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
     </p>
   `,
   // Generic UI
@@ -313,6 +311,7 @@ export default {
   fields: 'Felder',
   accountHasMoved: '{account} ist umgezogen:',
   profilePageForAccount: 'Profilseite für {account}',
+  verified: 'Verified',
   // About page
   about: 'Über',
   aboutApp: 'Über Pinafore',
@@ -325,7 +324,7 @@ export default {
     <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
     und verteilt unter der
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore/blob/master/LICENSE">GNU Affero General Public License</a>.
+       href="https://github.com/easrng/pinafore/blob/main/LICENSE">GNU Affero General Public License</a>.
   </p>
 
   <h2 id="privacy-policy">Datenschutzerklärung</h2>
@@ -347,7 +346,7 @@ export default {
   </p>
 
   <p>
-    Logo thanks to "sailboat" by Gregor Cresnar from
+    Logo thanks to "Flag" by AFY Studio from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -507,7 +506,7 @@ export default {
   followersOnly: 'Nur Folgende',
   direct: 'Direkt',
   // Themes
-  themeRoyal: 'Royal',
+  themeRoyal: 'Light',
   themeScarlet: 'Scarlet',
   themeSeafoam: 'Seafoam',
   themeHotpants: 'Hotpants',
@@ -616,5 +615,7 @@ export default {
   showingOfflineContent: 'Anforderung übers Internet fehlgeschlagen. Zeige Offline-Inhalte an.',
   youAreOffline: 'Du scheinst keine Verbindung zum Internet zu haben. Du kanst weiterhin Tröts lesen, solange Du offline bist.',
   // Snackbar UI
-  updateAvailable: 'Update der App verfügbar'
+  updateAvailable: 'Update der App verfügbar',
+  // Details
+  statusEdited: 'Edited'
 }

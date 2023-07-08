@@ -77,7 +77,7 @@ CREATE FUNCTION public.timestamp_id(table_name text) RETURNS bigint
 $$;
 
 
-ALTER FUNCTION public.timestamp_id(table_name text) OWNER TO pinafore;
+ALTER FUNCTION public.timestamp_id(table_name text) OWNER TO pinaforee;
 
 SET default_tablespace = '';
 

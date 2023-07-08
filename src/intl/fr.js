@@ -9,10 +9,7 @@ export default {
       dessiné pour la vitesse et la simplicité.
     </p>
     <p>
-      Lire
-      <a rel="noopener" target="_blank"
-         href="https://nolanlawson.com/2018/04/09/introducing-pinafore-for-mastodon/">l'article introductoire (anglais)</a>,
-      ou se connecter à une instance:
+      Se connecter à une instance:
     </p>`,
   logIn: 'Se connecter',
   footer: `
@@ -23,8 +20,10 @@ export default {
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
       et distribué sous la
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/master/LICENSE">License AGPL</a>.
+         href="https://github.com/easrng/pinafore/blob/main/LICENSE">License AGPL</a>.
       Lire la <a href="/settings/about#privacy-policy" rel="prefetch">politique de confidentialité</a>.
+      C'est une continuation du projet Pinafore créé par
+      <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
     </p>
   `,
   // Generic UI
@@ -314,6 +313,7 @@ export default {
   fields: 'Champs',
   accountHasMoved: '{account} a déménagé',
   profilePageForAccount: 'Page de profil pour {account}',
+  verified: 'Verified',
   // About page
   about: 'Infos',
   aboutApp: 'Infos sur Pinafore',
@@ -326,7 +326,7 @@ export default {
     <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
     et distribué sous le
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore/blob/master/LICENSE">License GNU Affero General Public (AGPL)</a>.
+       href="https://github.com/easrng/pinafore/blob/main/LICENSE">License GNU Affero General Public (AGPL)</a>.
   </p>
 
   <h2 id="privacy-policy">Politique de confidentialité</h2>
@@ -348,7 +348,7 @@ export default {
   </p>
 
   <p>
-    Logo grâce à Gregor Cresnar du
+    Logo grâce à AFY Studio du
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">Noun Project</a>.
   </p>`,
   // Settings
@@ -514,7 +514,7 @@ export default {
   followersOnly: 'Abonnés/abonnées uniquement',
   direct: 'Direct',
   // Themes
-  themeRoyal: 'Royale',
+  themeRoyal: 'Light',
   themeScarlet: 'Ecarlate',
   themeSeafoam: 'Ecume',
   themeHotpants: 'Hotpants',
@@ -623,5 +623,7 @@ export default {
   showingOfflineContent: "Requête d'internet impossible. Contenu hors de connexion affiché.",
   youAreOffline: 'Il semble que vous êtes hors de connextion. Vous pouvez toujours lire les pouets dans cet état.',
   // Snackbar UI
-  updateAvailable: 'Mise à jour disponible.'
+  updateAvailable: 'Mise à jour disponible.',
+  // Details
+  statusEdited: 'Edited'
 }

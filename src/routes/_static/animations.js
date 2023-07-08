@@ -41,10 +41,6 @@ export const FAVORITE_ANIMATION = [
   fadeColorToPressedState
 ]
 
-export const FOLLOW_BUTTON_ANIMATION = [
-  growBigThenSmall
-]
-
 export const CHECKMARK_ANIMATION = [
   fadeColorToPressedState
 ]

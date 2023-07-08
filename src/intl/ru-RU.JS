@@ -23,8 +23,9 @@ export default {
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>
       и распространяемое под лицензией
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/master/LICENSE">AGPL License</a>.
+         href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
       Здесь <a href="/settings/about#privacy-policy" rel="prefetch">политика конфиденциальности</a>.
+      Это продолжение проекта Pinafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
     </p>
   `,
   // Manifest
@@ -197,7 +198,7 @@ export default {
   contentWarning: 'Предупреждение о содержимом',
   dropToUpload: 'Перетащите для загрузки',
   invalidFileType: 'Неверный тип файла',
-  composeLabel: "О чем Вы думаете?",
+  composeLabel: 'О чем Вы думаете?',
   autocompleteDescription: 'Когда результаты автозаполнения доступны, нажмите стрелки вверх или вниз и нажмите Enter, чтобы выбрать.',
   mediaUploads: 'Загрузка медиа',
   edit: 'Редактировать',
@@ -323,19 +324,19 @@ export default {
   fields: 'Поля',
   accountHasMoved: '{account} переехал:',
   profilePageForAccount: 'Страница профиля для {account}',
+  verified: 'Verified',
   // About page
   about: 'О нас',
   aboutApp: 'О Pinafore',
   aboutAppDescription: `
   <p>
-  Pinafore — это
+    Pinafore — это
+    <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">программное обеспечение с открытым исходным кодом</a>
+    поддерживается <a rel="noopener" target="_blank" href="https://easrng.net">easrng/a>.
+    и распространяемое под лицензией
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore">бесплатное программное обеспечение с открытым исходным кодом</a>
-       создано
-    <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>
-    и распространяется под
-    <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore/blob/master/LICENSE">GNU Affero General Public License</a>.
+      href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
+    Это продолжение проекта Pinafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
   </p>
 
   <h2 id="privacy-policy">Политика конфиденциальности</h2>
@@ -358,8 +359,8 @@ export default {
   </p>
 
   <p>
-    Благодарим за логотип «парусника» Грегора Креснара из
-    <a rel="noopener" target="_blank" href="https://thenounproject.com/"> Noun Project</a>.
+    Logo thanks to "Flag" by AFY Studio from
+    <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
   settings: 'Настройки',
@@ -431,14 +432,14 @@ export default {
   enterInstanceName: 'Введите имя инстанса',
   instanceColon: 'Инстанс:',
   // Custom tooltip, concatenated together
-  getAnInstancePre: "У вас нет",
+  getAnInstancePre: 'У вас нет',
   getAnInstanceText: 'инстанса',
   getAnInstanceDescription: 'Инстанс — это ваш домашний сервер Mastodon, например, mastodon.social или cybre.space.',
   getAnInstancePost: '?',
   joinMastodon: 'Присоединяйтесь к Mastodon!',
-  instancesYouveLoggedInTo: "Инстансы, в которые вы вошли:",
+  instancesYouveLoggedInTo: 'Инстансы, в которые вы вошли:',
   addAnotherInstance: 'Добавить другой инстанс',
-  youreNotLoggedIn: "Вы не вошли ни в один инстанс.",
+  youreNotLoggedIn: 'Вы не вошли ни в один инстанс.',
   currentInstanceLabel: `{instance} {current, select,
     true {(current instance)}
     other {}
@@ -466,7 +467,7 @@ export default {
   logOutOfInstanceConfirm: 'Выйти из {instance}?',
   notificationFilterSettings: 'Настройки фильтра уведомлений',
   // Push notifications
-  browserDoesNotSupportPush: "Ваш браузер не поддерживает push-уведомления.",
+  browserDoesNotSupportPush: 'Ваш браузер не поддерживает push-уведомления.',
   deniedPush: 'Вы запретили показывать уведомления.',
   pushNotificationsNote: 'Обратите внимание, что вы можете получать push-уведомления только для одного инстанса за раз.',
   pushSettings: 'Настройки push-уведомлений',
@@ -535,7 +536,7 @@ export default {
   followersOnly: 'Только для подписчиков',
   direct: 'Личное сообщение',
   // Themes
-  themeRoyal: 'Royal',
+  themeRoyal: 'Light',
   themeScarlet: 'Scarlet',
   themeSeafoam: 'Seafoam',
   themeHotpants: 'Hotpants',
@@ -686,5 +687,7 @@ export default {
   statusesThread: 'Записи: треды',
   statusesAccountTimeline: 'Записи: лента аккаунта',
   statusesList: 'Записи: список',
-  notificationsOnInstance: 'Уведомления на {instance}'
+  notificationsOnInstance: 'Уведомления на {instance}',
+  // Details
+  statusEdited: 'Edited'
 }
