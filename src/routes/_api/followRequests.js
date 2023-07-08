@@ -1,8 +1,9 @@
-import { DEFAULT_TIMEOUT, get, post, WRITE_TIMEOUT } from '../_utils/ajax.js'
+import { DEFAULT_TIMEOUT, get, post, WRITE_TIMEOUT, paramsString } from '../_utils/ajax.js'
 import { auth, basename } from './utils.js'
 
-export async function getFollowRequests (instanceName, accessToken) {
-  const url = `${basename(instanceName)}/api/v1/follow_requests`
+export async function getFollowRequests (instanceName, accessToken, limit = 80) {
+  let url = `${basename(instanceName)}/api/v1/follow_requests`
+  url += '?' + paramsString({ limit })
   return get(url, auth(accessToken), { timeout: DEFAULT_TIMEOUT })
 }
 
