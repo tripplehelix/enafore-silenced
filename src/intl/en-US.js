@@ -20,7 +20,7 @@ export default {
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>, forked by 
       <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>, and distributed under the
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/master/LICENSE">AGPL License</a>.
+         href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
       Here is the <a href="/settings/about#privacy-policy" rel="prefetch">privacy policy</a>.
     </p>
   `,
@@ -329,6 +329,7 @@ export default {
   fields: 'Fields',
   accountHasMoved: '{account} has moved:',
   profilePageForAccount: 'Profile page for {account}',
+  verified: 'Verified',
   // About page
   about: 'About',
   aboutApp: 'About Pinafore',
@@ -341,7 +342,7 @@ export default {
     <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
     and distributed under the
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore/blob/master/LICENSE">GNU Affero General Public License</a>.
+       href="https://github.com/easrng/pinafore/blob/main/LICENSE">GNU Affero General Public License</a>.
   </p>
 
   <h2 id="privacy-policy">Privacy Policy</h2>
@@ -364,7 +365,7 @@ export default {
   </p>
 
   <p>
-    Logo thanks to "sailboat" by Gregor Cresnar from
+    Logo thanks to "Flag" by AFY Studio from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -548,7 +549,7 @@ export default {
   followersOnly: 'Followers-only',
   direct: 'Direct',
   // Themes
-  themeRoyal: 'Royal',
+  themeRoyal: 'Light',
   themeScarlet: 'Scarlet',
   themeSeafoam: 'Seafoam',
   themeHotpants: 'Hotpants',
@@ -700,5 +701,7 @@ export default {
   statusesThread: 'Statuses: thread',
   statusesAccountTimeline: 'Statuses: account timeline',
   statusesList: 'Statuses: list',
-  notificationsOnInstance: 'Notifications on {instance}'
+  notificationsOnInstance: 'Notifications on {instance}',
+  // Details
+  statusEdited: 'Edited'
 }

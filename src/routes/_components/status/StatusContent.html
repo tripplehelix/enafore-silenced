@@ -23,17 +23,6 @@
     </div>
   {/if}
 </div>
-<!--{#await shouldTranslate}
-< !-- waiting -- >
-{:then answer}
-  {#if answer}
-    <div class={computedTranslateClass}>
-      <button class="status-translate-button" disabled>Translate</button>
-    </div>
-  {/if}
-{:catch error}
-< !-- {error} -- >
-{/await}--->
 <style>
   .status-content {
     margin: 10px 10px 10px 5px;
@@ -144,7 +133,6 @@
   import { importConfetti } from '../../_utils/asyncModules/importConfetti.js'
   import { katexify } from '../../_utils/katexify.js'
   import IconButton from '../IconButton.html'
-  // import { franc } from '../../_utils/franc.js'
 
   export default {
     components: {
@@ -180,19 +168,6 @@
           isStatusInNotification && 'status-in-notification',
           shown && 'shown'
         )
-      },
-      shouldTranslate: async ({ plainTextContent, $detectTranslation }) => {
-        return false
-        /* if(!$detectTranslation) return false
-        const strippedText = plainTextContent.replace(/:\w+:|\w+:\/\/\S+|#\w+/g,"")
-        const francResult = await franc(strippedText)
-        if(francResult) {
-          const eng = francResult.find(e=>e[0]==='eng')
-          if(eng) return (eng[1]+Math.max((strippedText.length*-0.01)+0.2, 0))<0.6 // ehh, not great, but it'll do
-          return true
-        } else {
-          return false
-        } */
       },
       translateKey: ({ $currentInstance, originalStatusId }) => $currentInstance + '-' + originalStatusId,
       translateState: ({ translateKey, $statusTranslations }) => {

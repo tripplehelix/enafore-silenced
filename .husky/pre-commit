@@ -7,5 +7,3 @@ set -x
 PATH="$PATH:./node_modules/.bin"
 
 lint-staged
-run-s build-vercel-json
-git add vercel.json

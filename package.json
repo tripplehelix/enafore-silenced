@@ -1,7 +1,7 @@
 {
-  "name": "pinafore",
+  "name": "@easrng/pinafore",
   "description": "Alternative web client for Mastodon",
-  "version": "2.6.0",
+  "version": "1.0.0",
   "type": "module",
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || ^16.0.0 || ^18.0.0"
@@ -14,7 +14,7 @@
     "sapper-dev": "cross-env NODE_ENV=development PORT=4002 WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper dev",
     "before-build": "run-p build-template-html build-assets build-webpack-config",
     "build": "cross-env NODE_ENV=production run-s build-steps",
-    "build-steps": "run-s before-build sapper-export build-vercel-json",
+    "build-steps": "run-s before-build sapper-export",
     "sapper-build": "cross-env WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper build",
     "start": "node server.js",
     "build-and-start": "run-s build start",
@@ -36,9 +36,6 @@
     "test-unit": "NODE_ENV=test mocha -r bin/browser-shim.js tests/unit/",
     "test-in-ci-suite0": "cross-env BROWSER=chrome:headless run-p --race run-mastodon start test-mastodon-suite0",
     "test-in-ci-suite1": "cross-env BROWSER=chrome:headless run-p --race run-mastodon start test-mastodon-suite1",
-    "test-vercel-json": "run-s test-vercel-json-copy build test-vercel-json-test",
-    "test-vercel-json-copy": "./bin/copy-vercel-json.sh",
-    "test-vercel-json-test": "./bin/test-vercel-json-unchanged.sh",
     "wait-for-mastodon-to-start": "node bin/wait-for-mastodon-to-start.js",
     "wait-for-mastodon-data": "node bin/wait-for-mastodon-data.js",
     "backup-mastodon-data": "./bin/backup-mastodon-data.sh",
@@ -46,8 +43,7 @@
     "print-export-info": "node ./bin/print-export-info.js",
     "export-steps": "run-s before-build sapper-export print-export-info",
     "export": "cross-env NODE_ENV=production run-s export-steps",
-    "now-build": "run-s export",
-    "build-vercel-json": "node bin/build-vercel-json.js"
+    "now-build": "run-s export"
   },
   "dependencies": {
     "@formatjs/intl-listformat": "^7.1.3",

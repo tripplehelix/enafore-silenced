@@ -9,10 +9,7 @@ export default {
       diseñado para ser rápido y sencillo.
     </p>
     <p>
-      Lee el
-      <a rel="noopener" target="_blank"
-         href="https://nolanlawson.com/2018/04/09/introducing-pinafore-for-mastodon/">artículo introductorio en el blog</a>,
-      o comienza iniciando sesión en una instancia:
+      Comienza iniciando sesión en una instancia:
     </p>`,
   logIn: 'Iniciar sesión',
   footer: `
@@ -23,8 +20,10 @@ export default {
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
       y distribuido bajo la
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/master/LICENSE">Licencia AGPL</a>.
+         href="https://github.com/easrng/pinafore/blob/main/LICENSE">Licencia AGPL</a>.
       Aquí está la <a href="/settings/about#privacy-policy" rel="prefetch">política de privacidad</a>.
+      Es una continuación de Pinafore creado por
+        <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
     </p>
   `,
   // Manifest
@@ -325,6 +324,7 @@ export default {
   fields: 'Campos',
   accountHasMoved: '{account} se ha trasladado:',
   profilePageForAccount: 'Página de perfil para {account}',
+  verified: 'Verified',
   // About page
   about: 'Acerca de',
   aboutApp: 'Acerca de Pinafore',
@@ -337,7 +337,7 @@ export default {
     <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
     y distribuido bajo la
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore/blob/master/LICENSE">GNU Affero General Public License</a>.
+       href="https://github.com/easrng/pinafore/blob/main/LICENSE">GNU Affero General Public License</a>.
   </p>
 
   <h2 id="privacy-policy">Política de privacidad</h2>
@@ -360,7 +360,7 @@ export default {
   </p>
 
   <p>
-    Logo gracias a "sailboat" por Gregor Cresnar, de
+    Logo gracias a "Flag" por AFY Studio, de
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -541,7 +541,7 @@ export default {
   followersOnly: 'Solo seguidores',
   direct: 'Directo',
   // Themes
-  themeRoyal: 'Royal',
+  themeRoyal: 'Light',
   themeScarlet: 'Escarlata',
   themeSeafoam: 'Espuma de mar',
   themeHotpants: 'Hotpants',
@@ -692,5 +692,7 @@ export default {
   statusesThread: 'Estados: hilo',
   statusesAccountTimeline: 'Estado: cronología de cuenta',
   statusesList: 'Estado: lista',
-  notificationsOnInstance: 'Notificaciones en {instance}'
+  notificationsOnInstance: 'Notificaciones en {instance}',
+  // Details
+  statusEdited: 'Edited'
 }

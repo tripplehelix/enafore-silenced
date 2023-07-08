@@ -52,17 +52,6 @@ export default {
       },
       {
         test: input => {
-          return input.endsWith(path.join('_workers', 'franc.js'))
-        },
-        use: {
-          loader: 'worker-loader',
-          options: {
-            filename: dev ? '[fullhash]/franc.[name].js' : 'franc.[contenthash].[name].js'
-          }
-        }
-      },
-      {
-        test: input => {
           return (
             input.endsWith(path.join('tesseract.js', 'dist', 'worker.min.js')) ||
             input.endsWith(path.join('tesseract.js', 'dist', 'worker.min.js.map')) ||
