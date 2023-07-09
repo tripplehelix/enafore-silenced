@@ -95,5 +95,5 @@ export function katexify (node) {
       subnode.parentNode.replaceChild(fragment, subnode)
     }
   }
-  return promises.length ? Promise.all([promises]) : null
+  return promises.length ? Promise.all(promises) : null
 }
