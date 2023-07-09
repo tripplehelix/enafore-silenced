@@ -294,6 +294,7 @@ export default {
   deleteAndRedraft: 'Delete and redraft',
   reportStatus: 'Report post',
   translateStatus: 'Translate post',
+  reactToStatus: 'React to post',
   shareStatus: 'Share post',
   copyLinkToStatus: 'Copy link to post',
   // Account profile

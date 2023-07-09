@@ -28,6 +28,7 @@ import { reportStatusOrAccount } from '../../../_actions/report.js'
 import { formatIntl } from '../../../_utils/formatIntl.js'
 import { setAccountNotified } from '../../../_actions/setAccountNotified.js'
 import { translateStatus } from '../../../_actions/translate.js'
+import { pickEmojiReaction } from '../../../_actions/react.js'
 
 export default {
   oncreate,
@@ -96,11 +97,12 @@ export default {
     muteConversationIcon: ({ mutingConversation }) => mutingConversation ? '#fa-volume-up' : '#fa-volume-off',
     isPublicOrUnlisted: ({ visibility }) => visibility === 'public' || visibility === 'unlisted',
     bookmarkLabel: ({ status }) => status.bookmarked ? 'intl.unbookmarkStatus' : 'intl.bookmarkStatus',
+    hasReactions: ({ status }) => Boolean(status.reactions || status.emoji_reactions),
     items: ({
       blockLabel, blocking, blockIcon, muteLabel, muteIcon, followLabel, followIcon,
       following, followRequested, pinLabel, isUser, visibility, mentionsUser, mutingConversation,
       muteConversationLabel, muteConversationIcon, supportsWebShare, isPublicOrUnlisted, bookmarkLabel,
-      username, notifying
+      username, notifying, hasReactions
     }) => ([
       isUser && {
         key: 'delete',
@@ -151,6 +153,11 @@ export default {
         key: 'report',
         label: 'intl.reportStatus',
         icon: '#fa-flag'
+      },
+      hasReactions && {
+        key: 'react',
+        label: 'intl.reactToStatus',
+        icon: '#fa-smile'
       },
       {
         key: 'bookmark',
@@ -212,6 +219,8 @@ export default {
           return this.onDenotifyClicked()
         case 'translate':
           return this.onTranslateClicked()
+        case 'react':
+          return this.onReactClicked()
       }
     },
     async onDeleteClicked () {
@@ -285,6 +294,11 @@ export default {
       const { currentInstance } = this.store.get()
       this.close()
       translateStatus(status, currentInstance)
+    },
+    async onReactClicked () {
+      const { status } = this.get()
+      this.close()
+      pickEmojiReaction(status)
     }
   }
 }

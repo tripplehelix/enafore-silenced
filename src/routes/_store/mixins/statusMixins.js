@@ -1,11 +1,12 @@
 function getStatusModifications (store, instanceName) {
   const { statusModifications } = store.get()
-  statusModifications[instanceName] = statusModifications[instanceName] || {
+  statusModifications[instanceName] = Object.assign({
     favorites: {},
     reblogs: {},
     pins: {},
-    bookmarks: {}
-  }
+    bookmarks: {},
+    reactions: {}
+  }, statusModifications[instanceName] || {})
   return statusModifications
 }
 
@@ -30,5 +31,9 @@ export function statusMixins (Store) {
 
   Store.prototype.setStatusBookmarked = function (instanceName, statusId, bookmarked) {
     setStatusModification(this, instanceName, statusId, 'bookmarks', bookmarked)
+  }
+
+  Store.prototype.setStatusReacted = function (instanceName, statusId, reaction, state) {
+    setStatusModification(this, instanceName, statusId + '-' + reaction.name, 'reactions', state)
   }
 }

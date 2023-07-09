@@ -56,12 +56,8 @@
   import { on } from '../../_utils/eventBus.js'
   import { announceAriaLivePolite } from '../../_utils/announceAriaLivePolite.js'
   import { setStatusBookmarkedOrUnbookmarked } from '../../_actions/bookmark.js'
-  import { importShowEmojiDialog } from '../dialog/asyncDialogs/importShowEmojiDialog.js'
-  import { updateCustomEmojiForInstance } from '../../_actions/emoji.js'
-  import { setReacted } from '../../_actions/react.js'
-  import { updateStatus } from '../../_actions/timeline.js'
+  import { pickEmojiReaction } from '../../_actions/react.js'
   import { quote } from '../../_actions/quote.js'
-  import { scheduleIdleTask } from '../../_utils/scheduleIdleTask.js'
 
   export default {
     oncreate () {
@@ -161,18 +157,8 @@
         /* no await */ setStatusBookmarkedOrUnbookmarked(originalStatusId, !originalStatus.bookmarked)
       },
       async pickEmojiReaction () {
-        const { currentInstance, accessToken } = this.store.get()
-        const [showEmojiDialog] = await Promise.all([
-          importShowEmojiDialog(),
-          updateCustomEmojiForInstance(currentInstance)
-        ])
-        showEmojiDialog(async pickedEmoji => {
-          const { originalStatusId, reactionApiVersion } = this.get()
-          const didReact = await setReacted(originalStatusId, true, { name: pickedEmoji.name || pickedEmoji.unicode }, reactionApiVersion)
-          if (didReact) {
-            scheduleIdleTask(() => updateStatus(currentInstance, accessToken, originalStatusId))
-          }
-        })
+        const { originalStatus } = this.get()
+        pickEmojiReaction(originalStatus)
       },
       openQuoteDialog () {
         const { originalStatus } = this.get()
@@ -226,14 +212,7 @@
       favoriteKey: ({ uuid }) => `fav-${uuid}`,
       reblogKey: ({ uuid }) => `reblog-${uuid}`,
       replyKey: ({ uuid }) => `reply-${uuid}`,
-      optionsKey: ({ uuid }) => `options-${uuid}`,
-      reactionApiVersion: ({ $currentPleromaFeatures }) => {
-        return {
-          customEmojiReactions: $currentPleromaFeatures ? $currentPleromaFeatures.includes('custom_emoji_reactions') : true,
-          externReactions: true,
-          isPleroma: !!$currentPleromaFeatures
-        }
-      }
+      optionsKey: ({ uuid }) => `options-${uuid}`
     }
   }
 </script>
