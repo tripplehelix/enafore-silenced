@@ -6,6 +6,7 @@
          aria-label={ariaLabel}
          on:recalculateHeight
          ref:article
+         on:load|capture="recalculateHeight()"
          style={"--status-level:" + ((treeMetadata && treeMetadata.level) || 0)}
 >
   {#if showHeader}
@@ -259,6 +260,9 @@
       focusArticle () {
         const { elementId } = this.get()
         tryToFocusElement(elementId, /* scroll */ true)
+      },
+      recalculateHeight () {
+        this.fire("recalculateHeight")
       }
     },
     computed: {
