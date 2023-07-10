@@ -7,15 +7,19 @@ import { isKaiOS } from '../_utils/userAgent/isKaiOS.js'
 
 const persistedState = {
   alwaysShowFocusRing: false,
-  autoplayGifs: false,
+  autoplayGifs: !(
+    !process.browser || matchMedia('(prefers-reduced-motion: reduce)').matches
+  ),
   composeData: {},
   currentInstance: null,
   currentRegisteredInstanceName: undefined,
   currentRegisteredInstance: undefined,
   // we disable scrollbars by default on iOS
-  disableCustomScrollbars: process.browser && /iP(?:hone|ad|od)/.test(navigator.userAgent),
+  disableCustomScrollbars:
+    process.browser && /iP(?:hone|ad|od)/.test(navigator.userAgent),
   bottomNav: false,
   centerNav: false,
+  disableFollowRequestCount: false,
   disableFavCounts: false,
   disableFollowerCounts: false,
   disableHotkeys: false,
@@ -42,8 +46,7 @@ const persistedState = {
   pinnedPages: {},
   pushSubscriptions: {},
   reduceMotion:
-    !process.browser ||
-    matchMedia('(prefers-reduced-motion: reduce)').matches,
+    !process.browser || matchMedia('(prefers-reduced-motion: reduce)').matches,
   underlineLinks: false,
   statusTranslationContents: {}
 }
@@ -60,9 +63,9 @@ const nonPersistedState = {
   polls: {},
   pushNotificationsSupport:
     process.browser &&
-    ('serviceWorker' in navigator &&
-      'PushManager' in window &&
-      'getKey' in window.PushSubscription.prototype),
+    'serviceWorker' in navigator &&
+    'PushManager' in window &&
+    'getKey' in window.PushSubscription.prototype,
   queryInSearch: '',
   repliesShown: {},
   sensitivesShown: {},

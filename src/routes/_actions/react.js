@@ -5,6 +5,7 @@ import { formatIntl } from '../_utils/formatIntl.js'
 import { importShowEmojiDialog } from '../_components/dialog/asyncDialogs/importShowEmojiDialog.js'
 import { updateCustomEmojiForInstance } from './emoji.js'
 import { updateStatus } from './timeline.js'
+import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
 
 export async function setReacted (statusId, reacting, reaction, apiVersion) {
   if (reaction.extern && !apiVersion.externReactions) {
@@ -47,7 +48,9 @@ export async function pickEmojiReaction (status) {
   showEmojiDialog(async pickedEmoji => {
     const didReact = await setReacted(status.id, true, { name: pickedEmoji.name || pickedEmoji.unicode }, reactionApiVersion)
     if (didReact) {
-      updateStatus(currentInstance, accessToken, status.id)
+      scheduleIdleTask(() => {
+        updateStatus(currentInstance, accessToken, status.id)
+      })
     }
   })
 }

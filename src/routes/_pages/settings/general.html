@@ -72,6 +72,11 @@
              bind:checked="$bottomNav" on:change="onChange(event)">
       {intl.bottomNav}
     </label>
+    <label class="setting-group">
+      <input type="checkbox" id="choice-disable-follow-request-count"
+             bind:checked="$disableFollowRequestCount" on:change="onChange(event)">
+      {intl.disableFollowRequestCount}
+    </label>
   </form>
 
   <h2>{intl.accessibility}</h2>

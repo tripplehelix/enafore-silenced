@@ -17,8 +17,8 @@ export function badgeComputations (store) {
   )
 
   store.compute('numberOfFollowRequests',
-    ['followRequestCounts', 'currentInstance'],
-    (followRequestCounts, currentInstance) => get(followRequestCounts, [currentInstance], 0)
+    ['followRequestCounts', 'currentInstance', 'disableFollowRequestCount'],
+    (followRequestCounts, currentInstance, disableFollowRequestCount) => disableFollowRequestCount ? 0 : get(followRequestCounts, [currentInstance], 0)
   )
 
   store.compute('hasFollowRequests',

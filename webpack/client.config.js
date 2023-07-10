@@ -6,13 +6,15 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import terser from './terser.config.js'
 import CircularDependencyPlugin from 'circular-dependency-plugin'
 import { mode, dev, resolve, inlineSvgs } from './shared.config.js'
-import { version } from '../package.json'
+import { execSync } from 'child_process'
 
 import urlRegex from '../src/routes/_utils/urlRegexSource.js'
 // TODO: make it so we don't have to list these out explicitly
 import fr from 'emoji-picker-element/i18n/fr.js'
 import de from 'emoji-picker-element/i18n/de.js'
 import es from 'emoji-picker-element/i18n/es.js'
+
+const version = execSync('git rev-parse --short HEAD').toString().trim()
 
 const emojiPickerLocales = { fr, de, es }
 

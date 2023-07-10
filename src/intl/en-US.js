@@ -397,6 +397,7 @@ export default {
   leftRightArrows: 'Left/right arrow keys change focus rather than columns/media',
   guide: 'Guide',
   reload: 'Reload',
+  disableFollowRequestCount: 'Hide follow request count',
   // Wellness settings
   wellness: 'Wellness',
   wellnessSettings: 'Wellness settings',
