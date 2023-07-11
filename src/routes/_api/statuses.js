@@ -56,3 +56,8 @@ export async function getStatus (instanceName, accessToken, statusId) {
   const url = `${basename(instanceName)}/api/v1/statuses/${statusId}`
   return get(url, auth(accessToken), { timeout: DEFAULT_TIMEOUT })
 }
+
+export async function getStatusSource (instanceName, accessToken, statusId) {
+  const url = `${basename(instanceName)}/api/v1/statuses/${statusId}/source`
+  return get(url, auth(accessToken), { timeout: DEFAULT_TIMEOUT })
+}

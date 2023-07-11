@@ -147,21 +147,9 @@
   import { store } from '../../_store/store.js'
   import { absoluteDateFormatter, shortAbsoluteDateFormatter } from '../../_utils/formatters.js'
   import SvgIcon from '../SvgIcon.html'
-  import { on } from '../../_utils/eventBus.js'
   import { formatIntl } from '../../_utils/formatIntl.js'
 
   export default {
-    oncreate () {
-      const { originalStatusId } = this.get()
-      on('statusUpdated', this, status => {
-        if (status.id === originalStatusId) {
-          this.set({
-            overrideNumReblogs: status.reblogs_count || 0,
-            overrideNumFavs: status.favourites_count || 0
-          })
-        }
-      })
-    },
     store: () => store,
     data: () => ({
       overrideNumReblogs: undefined,

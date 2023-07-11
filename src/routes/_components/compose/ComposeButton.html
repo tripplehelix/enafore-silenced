@@ -1,10 +1,10 @@
 <div class="compose-box-button-halo {sticky ? 'compose-box-button-halo-sticky' : ''}">
   <button class="primary compose-box-button"
           {disabled}
-          aria-label={sticky ? '{intl.composeStatus}' : '{intl.postStatus}'}
+          aria-label={sticky ? '{intl.composeStatus}' : label}
           on:click>
     <span class={$postingStatus || sticky ? 'hidden' : ''}>
-      {intl.postStatus}
+      {label}
     </span>
     <div class="compose-box-button-spinner"
          aria-hidden="true">
@@ -69,7 +69,8 @@
   export default {
     store: () => store,
     computed: {
-      disabled: ({ $postingStatus, overLimit }) => $postingStatus || overLimit
+      disabled: ({ $postingStatus, overLimit }) => $postingStatus || overLimit,
+      label: ({ editId }) => editId ? '{intl.edit}' : '{intl.postStatus}'
     },
     components: {
       SvgIcon

@@ -1,6 +1,6 @@
 import { store } from '../_store/store.js'
 import { toast } from '../_components/toast/toast.js'
-import { postStatus as postStatusToServer } from '../_api/statuses.js'
+import { postStatus as postStatusToServer, putStatus as putStatusToServer } from '../_api/statuses.js'
 import { addStatusOrNotification } from './addStatusOrNotification.js'
 import { database } from '../_database/database.js'
 import { emit } from '../_utils/eventBus.js'
@@ -27,7 +27,7 @@ export async function insertHandleForReply (statusId) {
 
 export async function postStatus (realm, text, inReplyToId, mediaIds,
   sensitive, spoilerText, visibility,
-  mediaDescriptions, inReplyToUuid, poll, mediaFocalPoints, contentType, quoteId) {
+  mediaDescriptions, inReplyToUuid, poll, mediaFocalPoints, contentType, quoteId, editId) {
   const { currentInstance, accessToken, online } = store.get()
 
   if (!online) {
@@ -55,11 +55,19 @@ export async function postStatus (realm, text, inReplyToId, mediaIds,
         return putMediaMetadata(currentInstance, accessToken, mediaIds[i], description, focalPoint)
       }
     }))
-    const status = await postStatusToServer(currentInstance, accessToken, text,
-      inReplyToId, mediaIds, sensitive, spoilerText, visibility, poll, contentType, quoteId)
-    addStatusOrNotification(currentInstance, 'home', status)
+    if (editId) {
+      const status = await putStatusToServer(currentInstance, accessToken, editId, text,
+        inReplyToId, mediaIds, sensitive, spoilerText, visibility, poll, contentType, quoteId)
+      await database.insertStatus(currentInstance, status)
+      emit('statusUpdated', status)
+      emit('postedStatus', realm, inReplyToUuid)
+    } else {
+      const status = await postStatusToServer(currentInstance, accessToken, text,
+        inReplyToId, mediaIds, sensitive, spoilerText, visibility, poll, contentType, quoteId)
+      addStatusOrNotification(currentInstance, 'home', status)
+      emit('postedStatus', realm, inReplyToUuid)
+    }
     store.clearComposeData(realm)
-    emit('postedStatus', realm, inReplyToUuid)
     scheduleIdleTask(() => (mediaIds || []).forEach(mediaId => database.deleteCachedMediaFile(mediaId))) // clean up media cache
   } catch (e) {
     console.error(e)

@@ -175,6 +175,7 @@
   import { createStatusOrNotificationUuid } from '../../_utils/createStatusOrNotificationUuid.js'
   import { addEmojiTooltips } from '../../_utils/addEmojiTooltips.js'
   import { tryToFocusElement } from '../../_utils/tryToFocusElement.js'
+  import { on } from '../../_utils/eventBus.js'
 
   const INPUT_TAGS = new Set(['a', 'button', 'input', 'textarea', 'label'])
   const isUserInputElement = node => INPUT_TAGS.has(node.localName)
@@ -183,7 +184,14 @@
 
   export default {
     oncreate () {
-      const { elementId, isStatusInOwnThread, showContent } = this.get()
+      const { elementId, isStatusInOwnThread, showContent, originalStatusId } = this.get()
+      on('statusUpdated', this, status => {
+        if (status.id === originalStatusId) {
+          this.set({
+            overrideOriginalStatus: status
+          })
+        }
+      })
       const { disableTapOnStatus } = this.store.get()
       if (!isStatusInOwnThread && !disableTapOnStatus) {
         // the whole <article> is clickable in this case
@@ -266,7 +274,7 @@
       }
     },
     computed: {
-      originalStatus: ({ status }) => status.reblog ? status.reblog : status,
+      originalStatus: ({ status, overrideOriginalStatus }) => overrideOriginalStatus || (status.reblog ? status.reblog : status),
       originalStatusId: ({ originalStatus }) => originalStatus.id,
       statusId: ({ status }) => status.id,
       notificationId: ({ notification }) => notification && notification.id,

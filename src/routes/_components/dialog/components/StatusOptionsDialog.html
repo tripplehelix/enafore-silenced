@@ -22,6 +22,7 @@ import { setStatusBookmarkedOrUnbookmarked } from '../../../_actions/bookmark.js
 import { setConversationMuted } from '../../../_actions/muteConversation.js'
 import { copyText } from '../../../_actions/copyText.js'
 import { deleteAndRedraft } from '../../../_actions/deleteAndRedraft.js'
+import { edit } from '../../../_actions/edit.js'
 import { shareStatus } from '../../../_actions/share.js'
 import { toggleMute } from '../../../_actions/toggleMute.js'
 import { reportStatusOrAccount } from '../../../_actions/report.js'
@@ -145,6 +146,11 @@ export default {
         icon: muteConversationIcon
       },
       isUser && {
+        key: 'edit',
+        label: 'intl.edit',
+        icon: '#fa-pencil'
+      },
+      isUser && {
         key: 'redraft',
         label: 'intl.deleteAndRedraft',
         icon: '#fa-pencil'
@@ -205,6 +211,8 @@ export default {
           return this.onCopyClicked()
         case 'muteConversation':
           return this.onMuteConversationClicked()
+        case 'edit':
+          return this.onEdit()
         case 'redraft':
           return this.onRedraft()
         case 'share':
@@ -263,6 +271,11 @@ export default {
       const { status } = this.get()
       this.close()
       await deleteAndRedraft(status)
+    },
+    async onEdit () {
+      const { status } = this.get()
+      this.close()
+      await edit(status)
     },
     async onShare () {
       const { status } = this.get()

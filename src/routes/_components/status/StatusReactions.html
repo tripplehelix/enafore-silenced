@@ -82,19 +82,9 @@
   import { setReacted } from '../../_actions/react.js'
   import { updateStatus } from '../../_actions/timeline.js'
   import { REACT_ANIMATION } from '../../_static/animations.js'
-  import { on } from '../../_utils/eventBus.js'
+  
   export default {
     store: () => store,
-    oncreate () {
-      const { originalStatusId } = this.get()
-      on('statusUpdated', this, status => {
-        if (status.id === originalStatusId) {
-          this.set({
-            originalStatus: status
-          })
-        }
-      })
-    },
     components: {},
     methods: {
       async onClick (event, reaction) {

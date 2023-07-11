@@ -4,6 +4,21 @@
 <ComposeFileDrop {realm} >
   <div class="{computedClassName} {hideAndFadeIn}">
     <ComposeAuthor {realm} {dialogId} />
+    {#if editId}
+      <div class="compose-edit-wrapper"
+           transition:slide="{duration: 333}">
+        <div class="compose-edit-toolbar">
+          <div class="compose-edit-toolbar-label">
+            Editing <a href={"/statuses/" + editId}>a post</a>
+          </div>
+          <IconButton
+            label="Don't edit"
+            href="#fa-times"
+            on:click="onDontEditClick()"
+          />
+        </div>
+      </div>
+    {/if}
     {#if inReplyToId}
       <div class="compose-in-reply-to-wrapper"
            transition:slide="{duration: 333}">
@@ -11,11 +26,13 @@
           <div class="compose-in-reply-to-toolbar-label">
             Replying to <a href={"/statuses/" + inReplyToId}>a post{#if inReplyToHandle}&nbsp;by {inReplyToHandle}{/if}</a>
           </div>
-          <IconButton
-            label="Don't reply"
-            href="#fa-times"
-            on:click="onDontReplyClick()"
-          />
+          {#if !editId}
+            <IconButton
+              label="Don't reply"
+              href="#fa-times"
+              on:click="onDontReplyClick()"
+            />
+          {/if}
         </div>
       </div>
     {/if}
@@ -58,6 +75,7 @@
 <ComposeStickyButton {showSticky}
                      {overLimit}
                      {hideAndFadeIn}
+                     {editId}
                      on:postAction="doPostStatus()" />
 {#if !hideBottomBorder}
   <div class="compose-box-border-bottom {hideAndFadeIn}"></div>
@@ -71,6 +89,7 @@
     align-items: flex-start;
     grid-template-areas:
       "avatar name        handle      handle"
+      "avatar edit        edit        edit"
       "avatar inReplyTo   inReplyTo   inReplyTo"
       "avatar quote       quote       quote"
       "avatar cw          cw          cw"
@@ -111,12 +130,16 @@
     grid-area: quote;
   }
 
+  .compose-edit-wrapper {
+    grid-area: edit;
+  }
+
   .compose-poll-wrapper {
     grid-area: poll;
   }
 
 
-  .compose-in-reply-to-toolbar, .compose-quote-toolbar {
+  .compose-in-reply-to-toolbar, .compose-quote-toolbar, .compose-edit-toolbar {
     font-size: 1.17em;
     margin: 10px 0 0 5px;
     border-radius: 3px;
@@ -130,7 +153,7 @@
     padding-right: 0;
   }
 
-  .compose-in-reply-to-toolbar-label, .compose-quote-toolbar-label {
+  .compose-in-reply-to-toolbar-label, .compose-quote-toolbar-label, .compose-edit-toolbar-label {
     flex-grow: 1;
     word-wrap: break-word;
     width: 0;
@@ -252,7 +275,8 @@
       contentType: ({ composeData }) => composeData.contentType,
       inReplyToHandle: ({ composeData }) => composeData.inReplyToHandle,
       quoteId: ({ composeData }) => composeData.quoteId,
-      quoteHandle: ({ composeData }) => composeData.quoteHandle
+      quoteHandle: ({ composeData }) => composeData.quoteHandle,
+      editId: ({ composeData }) => composeData.editId
     },
     transitions: {
       slide
@@ -288,7 +312,8 @@
           quoteId,
           poll,
           sensitive,
-          contentType
+          contentType,
+          editId
         } = this.get()
         const mediaIds = media.map(_ => _.data.id)
         const mediaDescriptions = media.map(_ => _.description)
@@ -317,7 +342,7 @@
         /* no await */ postStatus(realm, text, inReplyTo, mediaIds,
           sensitive, contentWarning, postPrivacyKey,
           mediaDescriptions, inReplyToUuid, pollToPost,
-          mediaFocalPoints, contentType, quoteId)
+          mediaFocalPoints, contentType, quoteId, editId)
       },
       onDontReplyClick () {
         const { realm } = this.get()
@@ -326,6 +351,10 @@
       onDontQuoteClick () {
         const { realm } = this.get()
         store.setComposeData(realm, { quoteId: null })
+      },
+      onDontEditClick () {
+        const { realm } = this.get()
+        store.setComposeData(realm, { editId: null })
       }
     }
   }
