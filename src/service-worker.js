@@ -4,7 +4,13 @@ import {
   routes as __routes__
 } from '../__sapper__/service-worker.js'
 import { get, post } from './routes/_utils/ajax.js'
-import { setWebShareData, closeKeyValIDBConnection } from './routes/_database/webShare.js'
+import {
+  setWebShareData,
+  closeKeyValIDBConnection
+} from './routes/_database/webShare.js'
+import {
+  getLastThemeColor
+} from './routes/_database/themeColor.js'
 import { getKnownInstances } from './routes/_database/knownInstances.js'
 import { basename } from './routes/_api/utils.js'
 
@@ -33,7 +39,7 @@ const ON_DEMAND_CACHE = [
 
 // `static` is an array of everything in the `static` directory
 const assets = __assets__
-  .map(file => file.startsWith('/') ? file : `/${file}`)
+  .map(file => (file.startsWith('/') ? file : `/${file}`))
   .filter(filename => !filename.endsWith('.map'))
   .filter(filename => filename !== '/robots.txt')
   .filter(filename => !filename.includes('traineddata.gz')) // cache on-demand
@@ -55,48 +61,51 @@ const webpackAssets = __shell__
 const routes = __routes__
 
 self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    await Promise.all([
-      caches.open(WEBPACK_ASSETS).then(cache => cache.addAll(webpackAssets)),
-      caches.open(ASSETS).then(cache => cache.addAll(assets))
-    ])
-    // We shouldn't have to do this, but the previous page could be an old one,
-    // which would not send us a postMessage to skipWaiting().
-    self.skipWaiting()
-  })())
+  event.waitUntil(
+    (async () => {
+      await Promise.all([
+        caches.open(WEBPACK_ASSETS).then(cache => cache.addAll(webpackAssets)),
+        caches.open(ASSETS).then(cache => cache.addAll(assets))
+      ])
+      // We shouldn't have to do this, but the previous page could be an old one,
+      // which would not send us a postMessage to skipWaiting().
+      self.skipWaiting()
+    })()
+  )
 })
 
 self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys()
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys()
 
-    // delete old asset/ondemand caches
-    for (const key of keys) {
-      if (key !== ASSETS &&
-        !key.startsWith('webpack_assets_')) {
+      // delete old asset/ondemand caches
+      for (const key of keys) {
+        if (key !== ASSETS && !key.startsWith('webpack_assets_')) {
+          await caches.delete(key)
+        }
+      }
+
+      // for webpack static, keep the two latest builds because we may need
+      // them when the service worker has installed but the page has not
+      // yet reloaded (e.g. when it gives the toast saying "please reload"
+      // but then you don't refresh and instead load an async chunk)
+      const webpackKeysToDelete = keys
+        .filter(key => key.startsWith('webpack_assets_'))
+        .sort((a, b) => {
+          const aTimestamp = parseInt(a.substring(15), 10)
+          const bTimestamp = parseInt(b.substring(15), 10)
+          return bTimestamp < aTimestamp ? -1 : 1
+        })
+        .slice(2)
+
+      for (const key of webpackKeysToDelete) {
         await caches.delete(key)
       }
-    }
 
-    // for webpack static, keep the two latest builds because we may need
-    // them when the service worker has installed but the page has not
-    // yet reloaded (e.g. when it gives the toast saying "please reload"
-    // but then you don't refresh and instead load an async chunk)
-    const webpackKeysToDelete = keys
-      .filter(key => key.startsWith('webpack_assets_'))
-      .sort((a, b) => {
-        const aTimestamp = parseInt(a.substring(15), 10)
-        const bTimestamp = parseInt(b.substring(15), 10)
-        return bTimestamp < aTimestamp ? -1 : 1
-      })
-      .slice(2)
-
-    for (const key of webpackKeysToDelete) {
-      await caches.delete(key)
-    }
-
-    await self.clients.claim()
-  })())
+      await self.clients.claim()
+    })()
+  )
 })
 
 self.addEventListener('fetch', event => {
@@ -108,92 +117,117 @@ self.addEventListener('fetch', event => {
     return
   }
 
-  event.respondWith((async () => {
-    const sameOrigin = url.origin === self.origin
+  event.respondWith(
+    (async () => {
+      const sameOrigin = url.origin === self.origin
 
-    if (sameOrigin) {
-      if (req.method === 'POST' && url.pathname === '/share') {
-        // handle Web Share Target requests (see manifest.json)
-        const formData = await req.formData()
-        const title = formData.get('title')
-        const text = formData.get('text')
-        const url = formData.get('url')
-        const file = formData.get('file')
-        await setWebShareData({ title, text, url, file })
-        await closeKeyValIDBConnection() // don't need to keep the IDB connection open
-        return Response.redirect(
-          '/?pwa=true&compose=true', // pwa=true because this can only be invoked from a PWA
-          303 // 303 recommended by https://web.dev/web-share-target/
-        )
-      }
-
-      if (url.pathname.startsWith('/nitter/')) {
-        return Response.redirect('https://farside.link/nitter/' + decodeURIComponent(url.pathname.slice('/nitter/'.length)), 303)
-      }
-
-      // always serve webpack-generated resources and
-      // static from the cache if possible
-      const response = await caches.match(req)
-      if (response) {
-        return response
-      }
-
-      for (const { regex, cache } of ON_DEMAND_CACHE) {
-        if (regex.test(url.pathname)) {
-          // cache this on-demand
-          const response = await fetch(req)
-          if (response && response.status >= 200 && response.status < 300) {
-            const clonedResponse = response.clone()
-            /* no await */
-            caches.open(cache).then(cache => cache.put(req, clonedResponse))
-          }
-          return response
+      if (sameOrigin) {
+        if (url.pathname === '/manifest.json') {
+          const manifest = await (
+            (await caches.match('/manifest.json')) ||
+            (await fetch('/manifest.json'))
+          ).json()
+          manifest.theme_color = await getLastThemeColor() || manifest.theme_color
+          await closeKeyValIDBConnection() // don't need to keep the IDB connection open
+          return new Response(JSON.stringify(manifest), {
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
         }
-      }
+        if (req.method === 'POST' && url.pathname === '/share') {
+          // handle Web Share Target requests (see manifest.json)
+          const formData = await req.formData()
+          const title = formData.get('title')
+          const text = formData.get('text')
+          const url = formData.get('url')
+          const file = formData.get('file')
+          await setWebShareData({ title, text, url, file })
+          await closeKeyValIDBConnection() // don't need to keep the IDB connection open
+          return Response.redirect(
+            '/?pwa=true&compose=true', // pwa=true because this can only be invoked from a PWA
+            303 // 303 recommended by https://web.dev/web-share-target/
+          )
+        }
 
-      // for routes, serve the /service-worker-index.html file from the most recent
-      // static cache
-      if (routes.find(route => route.pattern.test(url.pathname))) {
-        const response = await caches.match('/service-worker-index.html')
+        if (url.pathname.startsWith('/nitter/')) {
+          return Response.redirect(
+            'https://farside.link/nitter/' +
+              decodeURIComponent(url.pathname.slice('/nitter/'.length)),
+            303
+          )
+        }
+
+        // always serve webpack-generated resources and
+        // static from the cache if possible
+        const response = await caches.match(req)
         if (response) {
           return response
         }
-      }
-    }
 
-    // for everything else, go network-only
-    return fetch(req)
-  })().catch(error => {
-    console.error(error)
-    return new Response('error in service worker', { status: 502 })
-  }))
+        for (const { regex, cache } of ON_DEMAND_CACHE) {
+          if (regex.test(url.pathname)) {
+            // cache this on-demand
+            const response = await fetch(req)
+            if (response && response.status >= 200 && response.status < 300) {
+              const clonedResponse = response.clone()
+              /* no await */
+              caches.open(cache).then(cache => cache.put(req, clonedResponse))
+            }
+            return response
+          }
+        }
+
+        // for routes, serve the /service-worker-index.html file from the most recent
+        // static cache
+        if (routes.find(route => route.pattern.test(url.pathname))) {
+          const response = await caches.match('/service-worker-index.html')
+          if (response) {
+            return response
+          }
+        }
+      }
+
+      // for everything else, go network-only
+      return fetch(req)
+    })().catch(error => {
+      console.error(error)
+      return new Response('error in service worker', { status: 502 })
+    })
+  )
 })
 
 self.addEventListener('push', event => {
-  event.waitUntil((async () => {
-    const data = event.data.json()
-    // If there is only once instance, then we know for sure that the push notification came from it
-    const knownInstances = await getKnownInstances()
-    if (knownInstances.length !== 1) {
-      // TODO: Mastodon currently does not tell us which instance the push notification came from.
-      // So we have to guess and currently just choose the first one. We _could_ locally store the instance that
-      // currently has push notifications enabled, but this would only work for one instance at a time.
-      // See: https://github.com/mastodon/mastodon/issues/22183
-      await showSimpleNotification(data)
-      return
-    }
+  event.waitUntil(
+    (async () => {
+      const data = event.data.json()
+      // If there is only once instance, then we know for sure that the push notification came from it
+      const knownInstances = await getKnownInstances()
+      if (knownInstances.length !== 1) {
+        // TODO: Mastodon currently does not tell us which instance the push notification came from.
+        // So we have to guess and currently just choose the first one. We _could_ locally store the instance that
+        // currently has push notifications enabled, but this would only work for one instance at a time.
+        // See: https://github.com/mastodon/mastodon/issues/22183
+        await showSimpleNotification(data)
+        return
+      }
 
-    const origin = basename(knownInstances[0])
-    try {
-      const notification = await get(`${origin}/api/v1/notifications/${data.notification_id}`, {
-        Authorization: `Bearer ${data.access_token}`
-      }, { timeout: 2000 })
+      const origin = basename(knownInstances[0])
+      try {
+        const notification = await get(
+          `${origin}/api/v1/notifications/${data.notification_id}`,
+          {
+            Authorization: `Bearer ${data.access_token}`
+          },
+          { timeout: 2000 }
+        )
 
-      await showRichNotification(data, notification)
-    } catch (e) {
-      await showSimpleNotification(data)
-    }
-  })())
+        await showRichNotification(data, notification)
+      } catch (e) {
+        await showSimpleNotification(data)
+      }
+    })()
+  )
 })
 
 async function showSimpleNotification (data) {
@@ -246,7 +280,9 @@ async function showRichNotification (data, notification) {
       break
     }
     case 'mention': {
-      const isPublic = ['public', 'unlisted'].includes(notification.status.visibility)
+      const isPublic = ['public', 'unlisted'].includes(
+        notification.status.visibility
+      )
       const actions = [
         isPublic && {
           action: 'reblog',
@@ -295,40 +331,47 @@ const cloneNotification = notification => {
 const updateNotificationWithoutAction = (notification, action) => {
   const newNotification = cloneNotification(notification)
 
-  newNotification.actions = newNotification.actions.filter(item => item.action !== action)
+  newNotification.actions = newNotification.actions.filter(
+    item => item.action !== action
+  )
 
-  return self.registration.showNotification(newNotification.title, newNotification)
+  return self.registration.showNotification(
+    newNotification.title,
+    newNotification
+  )
 }
 
 self.addEventListener('notificationclick', event => {
-  event.waitUntil((async () => {
-    switch (event.action) {
-      case 'reblog': {
-        const url = `${event.notification.data.instance}/api/v1/statuses/${event.notification.data.status_id}/reblog`
-        await post(url, null, {
-          Authorization: `Bearer ${event.notification.data.access_token}`
-        })
-        await updateNotificationWithoutAction(event.notification, 'reblog')
-        break
+  event.waitUntil(
+    (async () => {
+      switch (event.action) {
+        case 'reblog': {
+          const url = `${event.notification.data.instance}/api/v1/statuses/${event.notification.data.status_id}/reblog`
+          await post(url, null, {
+            Authorization: `Bearer ${event.notification.data.access_token}`
+          })
+          await updateNotificationWithoutAction(event.notification, 'reblog')
+          break
+        }
+        case 'favourite': {
+          const url = `${event.notification.data.instance}/api/v1/statuses/${event.notification.data.status_id}/favourite`
+          await post(url, null, {
+            Authorization: `Bearer ${event.notification.data.access_token}`
+          })
+          await updateNotificationWithoutAction(event.notification, 'favourite')
+          break
+        }
+        default: {
+          await self.clients.openWindow(event.notification.data.url)
+          await event.notification.close()
+          break
+        }
       }
-      case 'favourite': {
-        const url = `${event.notification.data.instance}/api/v1/statuses/${event.notification.data.status_id}/favourite`
-        await post(url, null, {
-          Authorization: `Bearer ${event.notification.data.access_token}`
-        })
-        await updateNotificationWithoutAction(event.notification, 'favourite')
-        break
-      }
-      default: {
-        await self.clients.openWindow(event.notification.data.url)
-        await event.notification.close()
-        break
-      }
-    }
-  })())
+    })()
+  )
 })
 
-self.addEventListener('message', (event) => {
+self.addEventListener('message', event => {
   switch (event.data) {
     case 'skip-waiting':
       self.skipWaiting()

@@ -8,5 +8,5 @@ See the [user guide](https://github.com/easrng/pinafore/blob/main/docs/User-Guid
 
 For updates, uhhhhhhhhh idk just follow me, I usually post when I fix or add things: [@easrng@cathode.church](https://cathode.church/@easrng).
 
-> Literally the best Akkoma client
+> Literally the best Akkoma client\
 > \- [@Seirdy@pleroma.envs.net](https://pleroma.envs.net/objects/ad9360b2-ae86-4bd1-ba8c-3c24553f92f6)

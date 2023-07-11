@@ -1,5 +1,4 @@
 {
-  "background_color": "#ffffff",
   "theme_color": "#4169e1",
   "name": "{intl.longAppName}",
   "short_name": "{intl.appName}",
