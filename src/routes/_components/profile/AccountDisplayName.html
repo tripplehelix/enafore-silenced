@@ -1,7 +1,12 @@
-<span class="account-display-name">{@html massagedAccountName }</span>
+<span class="account-display-name" title={accountName}>{@html massagedAccountName }</span>
 <style>
   .account-display-name {
-    pointer-events: none; /* allows focus to work correctly, focus on the parent only */
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: max-content;
   }
 </style>
 <script>

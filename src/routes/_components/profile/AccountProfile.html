@@ -38,7 +38,7 @@
 
   .account-profile-grid {
     display: grid;
-    grid-template-areas: "avatar     name        label     followed-by   follow"
+    grid-template-areas: "avatar     name        name      name          follow"
                          "avatar     username    username  username      follow"
                          "avatar     note        note      note          note"
                          "meta       meta        meta      meta          meta"
@@ -84,7 +84,7 @@
 
   @media (max-width: 400px) {
     .account-profile-grid {
-      grid-template-areas: "avatar      name name label"
+      grid-template-areas: "avatar      name name name"
                            "avatar      username username username"
                            "followed-by followed-by follow follow"
                            "note        note note note"

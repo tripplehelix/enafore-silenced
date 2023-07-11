@@ -8,6 +8,9 @@
 </div>
 <div class="account-profile-name">
   <AccountDisplayName {account} />
+  {#if label}
+    <Label {label} className="account-profile-label" />
+  {/if}
   <div class="account-profile-followed-by account-profile-followed-by-bigscreen">
     {#if relationship && relationship.blocking}
       <span class="account-profile-followed-by-span">{intl.blocked}</span>
@@ -23,9 +26,6 @@
     {/if}
   </div>
 </div>
-{#if label}
-  <Label {label} className="account-profile-label" />
-{/if}
 <div class="account-profile-username">
   <ExternalLink className="focus-fix" href={account.url}>
     {'@' + account.acct}
@@ -51,6 +51,7 @@
     text-transform: uppercase;
     color: var(--deemphasized-text-color);
     white-space: nowrap;
+    display: flex;
   }
   .account-profile-followed-by-bigscreen {
     font-size: 0.53em;
@@ -126,11 +127,6 @@
   :global(a.account-profile-name-link:hover) {
     color: var(--body-text-color);
     text-decoration: underline;
-  }
-
-  :global(.account-profile-label) {
-    grid-area: label;
-    justify-content: left !important;
   }
 
   @media (max-width: 767px) {
