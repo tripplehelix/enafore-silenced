@@ -293,6 +293,7 @@ export default {
   reportStatus: 'Report post',
   translateStatus: 'Translate post',
   reactToStatus: 'React to post',
+  quoteStatus: 'Quote post',
   shareStatus: 'Share post',
   copyLinkToStatus: 'Copy link to post',
   // Account profile

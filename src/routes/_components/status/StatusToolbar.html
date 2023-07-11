@@ -3,10 +3,10 @@
     pressable={true} pressed={replyShown} href={replyIcon} clickListener={false} elementId={replyKey} />
   <IconButton label={reblogLabel} pressedLabel="Unboost" pressable={!reblogDisabled} pressed={reblogged}
     checked={reblogged} disabled={reblogDisabled} href={reblogIcon} clickListener={false} elementId={reblogKey}
-    ref:reblogIcon rightClickListener={true} on:rightClick="openQuoteDialog()" />
+    ref:reblogIcon rightClickListener={hasQuote} on:rightClick="openQuoteDialog()" />
   <IconButton label="{intl.favorite}" pressedLabel="{intl.unfavorite}" pressable={true} pressed={favorited}
     checked={favorited} href="#fa-star" clickListener={false} elementId={favoriteKey} ref:favoriteIcon
-    rightClickListener={true} on:rightClick="pickEmojiReaction()" />
+    rightClickListener={hasReactions} on:rightClick="pickEmojiReaction()" />
   <IconButton label="{intl.moreOptions}" href="#fa-ellipsis-h" clickListener={false} elementId={optionsKey} />
 </div>
 {#if enableShortcuts}
@@ -212,7 +212,9 @@
       favoriteKey: ({ uuid }) => `fav-${uuid}`,
       reblogKey: ({ uuid }) => `reblog-${uuid}`,
       replyKey: ({ uuid }) => `reply-${uuid}`,
-      optionsKey: ({ uuid }) => `options-${uuid}`
+      optionsKey: ({ uuid }) => `options-${uuid}`,
+      hasReactions: ({ status }) => Boolean(status.reactions || status.emoji_reactions),
+      hasQuote: ({ status }) => 'quote' in status
     }
   }
 </script>

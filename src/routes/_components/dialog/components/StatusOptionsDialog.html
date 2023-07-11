@@ -30,6 +30,7 @@ import { formatIntl } from '../../../_utils/formatIntl.js'
 import { setAccountNotified } from '../../../_actions/setAccountNotified.js'
 import { translateStatus } from '../../../_actions/translate.js'
 import { pickEmojiReaction } from '../../../_actions/react.js'
+import { quote } from '../../../_actions/quote.js'
 
 export default {
   oncreate,
@@ -99,11 +100,12 @@ export default {
     isPublicOrUnlisted: ({ visibility }) => visibility === 'public' || visibility === 'unlisted',
     bookmarkLabel: ({ status }) => status.bookmarked ? 'intl.unbookmarkStatus' : 'intl.bookmarkStatus',
     hasReactions: ({ status }) => Boolean(status.reactions || status.emoji_reactions),
+    hasQuote: ({ status }) => 'quote' in status,
     items: ({
       blockLabel, blocking, blockIcon, muteLabel, muteIcon, followLabel, followIcon,
       following, followRequested, pinLabel, isUser, visibility, mentionsUser, mutingConversation,
       muteConversationLabel, muteConversationIcon, supportsWebShare, isPublicOrUnlisted, bookmarkLabel,
-      username, notifying, hasReactions
+      username, notifying, hasReactions, hasQuote
     }) => ([
       isUser && {
         key: 'delete',
@@ -164,6 +166,11 @@ export default {
         key: 'react',
         label: 'intl.reactToStatus',
         icon: '#fa-smile'
+      },
+      hasQuote && {
+        key: 'quote',
+        label: 'intl.quoteStatus',
+        icon: '#fa-quote-right'
       },
       {
         key: 'bookmark',
@@ -229,6 +236,8 @@ export default {
           return this.onTranslateClicked()
         case 'react':
           return this.onReactClicked()
+        case 'quote':
+          return this.onQuoteClicked()
       }
     },
     async onDeleteClicked () {
@@ -312,6 +321,11 @@ export default {
       const { status } = this.get()
       this.close()
       pickEmojiReaction(status)
+    },
+    async onQuoteClicked () {
+      const { status } = this.get()
+      this.close()
+      quote(status)
     }
   }
 }
