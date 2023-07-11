@@ -28,6 +28,7 @@
       label={postPrivacyLabel}
       href={postPrivacy.icon}
       on:click="onPostPrivacyClick()"
+      disabled={!!editId}
     />
     <IconButton
       className="compose-toolbar-button"
@@ -97,9 +98,11 @@
       mediaAccept
     }),
     computed: {
-      postPrivacyLabel: ({ postPrivacy }) => (
-        formatIntl('intl.postPrivacyLabel', { label: postPrivacy.label })
-      ),
+      postPrivacyLabel: ({ postPrivacy, editId }) => editId
+        ? postPrivacy.label
+        : (
+            formatIntl('intl.postPrivacyLabel', { label: postPrivacy.label })
+          ),
       contentTypeIcon: ({ contentType }) => (KNOWN_CONTENT_TYPES[contentType] || KNOWN_CONTENT_TYPES.default).icon
     },
     store: () => store,

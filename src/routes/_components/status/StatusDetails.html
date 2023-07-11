@@ -196,8 +196,8 @@
         }
         return formatIntl('intl.favoritedTimes', { count: numFavs })
       },
-      externalLinkLabel: ({ displayAbsoluteFormattedDate }) => (
-        formatIntl('intl.opensInNewWindow', { label: displayAbsoluteFormattedDate })
+      externalLinkLabel: ({ absoluteFormattedCreatedDate }) => (
+        formatIntl('intl.opensInNewWindow', { label: absoluteFormattedCreatedDate })
       ),
       applicationLinkLabel: ({ applicationName }) => (
         formatIntl('intl.opensInNewWindow', { label: applicationName })

@@ -26,7 +26,9 @@
           <div class="compose-in-reply-to-toolbar-label">
             Replying to <a href={"/statuses/" + inReplyToId}>a post{#if inReplyToHandle}&nbsp;by {inReplyToHandle}{/if}</a>
           </div>
-          {#if !editId}
+          {#if editId}
+            <div style="height:36px"></div>
+          {:else}
             <IconButton
               label="Don't reply"
               href="#fa-times"
@@ -66,7 +68,7 @@
         <ComposePoll {realm} {poll} />
       </div>
     {/if}
-    <ComposeToolbar {realm} {postPrivacy} {media} {contentWarningShown} {text} {poll} {contentType} />
+    <ComposeToolbar {realm} {postPrivacy} {media} {contentWarningShown} {text} {poll} {contentType} {editId} />
     <ComposeLengthIndicator {length} {overLimit} />
     <ComposeMedia {realm} {media} />
     <ComposeMediaSensitive {realm} {media} {sensitive} {contentWarning} {contentWarningShown} />
