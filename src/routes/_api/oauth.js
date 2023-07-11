@@ -3,7 +3,7 @@ import { basename } from './utils.js'
 
 const WEBSITE = 'https://pinafore.easrng.net'
 const SCOPES = 'read write follow push'
-const CLIENT_NAME = 'Pinafore'
+const CLIENT_NAME = 'Enafore'
 
 export function registerApplication (instanceName, redirectUri) {
   const url = `${basename(instanceName)}/api/v1/apps`

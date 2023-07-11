@@ -1,10 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
-  appName: 'Pinafore',
+  appName: 'Enafore',
   appDescription: 'Ein alternativer Web Client für Mastodon, der auf Geschwindigkeit und einfache Bedienung ausgelegt ist.',
   homeDescription: `
     <p>
-      Pinafore ist ein Web Client für
+      Enafore ist ein Web Client für
       <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a>,
       der für Geschwindigkeit und einfache Bedienung konzipiert wurde.
     </p>
@@ -14,14 +14,14 @@ export default {
   logIn: 'Anmelden',
   footer: `
     <p>
-      Pinafore ist
+      Enafore ist
       <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">quelloffene Software</a>,
       erstellt von <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
       und verteilt unter der
       <a rel="noopener" target="_blank"
          href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL Lizenz</a>.
       Hier ist die <a href="/settings/about#privacy-policy" rel="prefetch">Datenschutzerklärung</a>.
-      Es ist eine Fortsetzung des Pinafore-Projekts von <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
+      Es ist eine Fortsetzung des Enafore-Projekts von <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
     </p>
   `,
   // Generic UI
@@ -172,7 +172,7 @@ export default {
     ·
     {showInstanceName, select,
       true {{instanceName}}
-      other {Pinafore}
+      other {Enafore}
     }
   `,
   pinLabel: `{label} {pinnable, select,
@@ -314,10 +314,10 @@ export default {
   verified: 'Verified',
   // About page
   about: 'Über',
-  aboutApp: 'Über Pinafore',
+  aboutApp: 'Über Enafore',
   aboutAppDescription: `
   <p>
-    Pinafore ist
+    Enafore ist
     <a rel="noopener" target="_blank"
        href="https://github.com/easrng/pinafore">freie und quelloffene Software</a>
     erstellt von
@@ -330,13 +330,13 @@ export default {
   <h2 id="privacy-policy">Datenschutzerklärung</h2>
 
   <p>
-    Pinafore speichert keine persönlichen Informationen auf seinen Servern,
+    Enafore speichert keine persönlichen Informationen auf seinen Servern,
     einschließlich, aber nicht beschränkt auf, Namen, E-Mail-Adressen,
     IP-Adressen, Beiträgen, und Fotos.
   </p>
 
   <p>
-    Pinafore ist eine statische Seite. Alle Daten werden lokal in Ihrem Browser gespeichert und mit den Instanzen des Fediversums geteilt, zu denen Sie sich verbinden.
+    Enafore ist eine statische Seite. Alle Daten werden lokal in Ihrem Browser gespeichert und mit den Instanzen des Fediversums geteilt, zu denen Sie sich verbinden.
   </p>
 
   <h2>Mitwirkende</h2>
@@ -346,7 +346,7 @@ export default {
   </p>
 
   <p>
-    Logo thanks to "Flag" by AFY Studio from
+    Logo thanks to "sailboat" by Gregor Cresnar from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -405,7 +405,7 @@ export default {
   notificationFilters: 'Filter für Benachrichtigungen',
   pushNotifications: 'Push-Benachrichtigungen',
   // Add instance page
-  storageError: 'Es sieht so aus als ob Pinafore lokal keine Daten speichern kann. Ist Dein Browser im privaten Modus oder blockiert Cookies? Pinafore speichert alle Daten lokal und braucht zum ordnungsgemäßen Betrieb LocalStorage und IndexedDB.',
+  storageError: 'Es sieht so aus als ob Enafore lokal keine Daten speichern kann. Ist Dein Browser im privaten Modus oder blockiert Cookies? Enafore speichert alle Daten lokal und braucht zum ordnungsgemäßen Betrieb LocalStorage und IndexedDB.',
   javaScriptError: 'Du musst zum Einloggen javaScript einschalten.',
   enterInstanceName: 'Namen der Instanz eingeben',
   instanceColon: 'Instanz:',
@@ -425,7 +425,7 @@ export default {
   // Link text
   logInToAnInstancePre: '',
   logInToAnInstanceText: 'Melde Dich bei einer Instanz an',
-  logInToAnInstancePost: 'um Pinafore zu verwenden.',
+  logInToAnInstancePost: 'um Enafore zu verwenden.',
   // Another custom tooltip
   showRingPre: 'Immer einen',
   showRingText: 'Fokusring',

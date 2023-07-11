@@ -1,12 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
-  appName: 'Pinafore',
-  appDescription: 'An alternative web client for Mastodon, focused on speed and simplicity.',
+  appName: 'Enafore',
+  appDescription: 'A somewhat unstable fediverse client with better support for Akkoma and glitch-soc instances.',
   homeDescription: `
     <p>
-      Pinafore is a web client for
-      <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a> and <a rel="noopener" target="_blank" href="https://akkoma.social">Akkoma</a>,
-      designed for speed and simplicity.
+      Enafore is a somewhat unstable fediverse client forked from <a href="https://github.com/nolanlawson/pinafore">Pinafore</a> with better support for Akkoma and glitch-soc instances.
     </p>
     <p>
       Get started by logging in to an instance:
@@ -14,7 +12,7 @@ export default {
   logIn: 'Log in',
   footer: `
     <p>
-      Pinafore is
+      Enafore is
       <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">open-source software</a>
       originally created by
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>, forked by 
@@ -25,7 +23,7 @@ export default {
     </p>
   `,
   // Manifest
-  longAppName: 'Pinafore for Mastodon',
+  longAppName: 'Enafore',
   newStatus: 'New post',
   // Generic UI
   loading: 'Loading',
@@ -183,7 +181,7 @@ export default {
     ·
     {showInstanceName, select,
       true {{instanceName}}
-      other {Pinafore}
+      other {Enafore}
     }
   `,
   pinLabel: `{label} {pinnable, select,
@@ -333,10 +331,10 @@ export default {
   verified: 'Verified',
   // About page
   about: 'About',
-  aboutApp: 'About Pinafore',
+  aboutApp: 'About Enafore',
   aboutAppDescription: `
   <p>
-    Pinafore is
+    Enafore is
     <a rel="noopener" target="_blank"
        href="https://github.com/easrng/pinafore">free and open-source software</a>
     created by
@@ -349,13 +347,13 @@ export default {
   <h2 id="privacy-policy">Privacy Policy</h2>
 
   <p>
-    Pinafore does not store any personal information on its servers,
+    Enafore does not store any personal information on its servers,
     including but not limited to names, email addresses,
     IP addresses, posts, and photos.
   </p>
 
   <p>
-    Pinafore is a static site. All data is stored locally in your browser and shared with the fediverse
+    Enafore is a static site. All data is stored locally in your browser and shared with the fediverse
     instance(s) you connect to.
   </p>
 
@@ -366,7 +364,7 @@ export default {
   </p>
 
   <p>
-    Logo thanks to "Flag" by AFY Studio from
+    Logo thanks to "sailboat" by Gregor Cresnar from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -434,8 +432,8 @@ export default {
   notificationFilters: 'Notification filters',
   pushNotifications: 'Push notifications',
   // Add instance page
-  storageError: `It seems Pinafore cannot store data locally. Is your browser in private mode
-          or blocking cookies? Pinafore stores all data locally, and requires LocalStorage and
+  storageError: `It seems Enafore cannot store data locally. Is your browser in private mode
+          or blocking cookies? Enafore stores all data locally, and requires LocalStorage and
           IndexedDB to work correctly.`,
   javaScriptError: 'You must enable JavaScript to log in.',
   enterInstanceName: 'Enter instance name',
@@ -456,7 +454,7 @@ export default {
   // Link text
   logInToAnInstancePre: '',
   logInToAnInstanceText: 'Log in to an instance',
-  logInToAnInstancePost: 'to start using Pinafore.',
+  logInToAnInstancePost: 'to start using Enafore.',
   // Another custom tooltip
   showRingPre: 'Always show',
   showRingText: 'focus ring',

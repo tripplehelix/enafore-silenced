@@ -3,10 +3,7 @@ import path from 'path'
 import webpack from 'webpack'
 import config from 'sapper/config/webpack.js'
 import pkg from '../package.json'
-import { mode, dev, resolve, inlineSvgs } from './shared.config.js'
-import { execSync } from 'child_process'
-
-const version = execSync('git rev-parse --short HEAD').toString().trim()
+import { mode, dev, resolve, inlineSvgs, version } from './shared.config.js'
 
 // modules that the server should ignore, either because they cause errors or warnings
 // (because they're only used on the client side)

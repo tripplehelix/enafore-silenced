@@ -1,4 +1,5 @@
 import svgs from '../bin/svgs.js'
+import { execSync } from 'child_process'
 
 const inlineSvgs = svgs.filter(_ => _.inline).map(_ => `#${_.id}`)
 const mode = process.env.NODE_ENV || 'production'
@@ -16,9 +17,14 @@ const resolve = {
   }
 }
 
+const commitCount = parseInt(execSync('git rev-list --count HEAD').toString().trim()) - 2701
+const commitHash = execSync('git rev-parse --short HEAD').toString().trim()
+const version = 'v' + commitCount + '-' + commitHash
+
 export {
   mode,
   dev,
   resolve,
-  inlineSvgs
+  inlineSvgs,
+  version
 }

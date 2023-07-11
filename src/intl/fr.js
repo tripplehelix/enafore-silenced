@@ -1,10 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
-  appName: 'Pinafore',
+  appName: 'Enafore',
   appDescription: 'Un client alternatif pour Mastodon, concentré sur la vitesse et la simplicité',
   homeDescription: `
     <p>
-      Pinafore est un client web pour
+      Enafore est un client web pour
       <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a>,
       dessiné pour la vitesse et la simplicité.
     </p>
@@ -14,7 +14,7 @@ export default {
   logIn: 'Se connecter',
   footer: `
     <p>
-      Pinafore est
+      Enafore est
       <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">logiciel open-source</a>
       créé par
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
@@ -22,7 +22,7 @@ export default {
       <a rel="noopener" target="_blank"
          href="https://github.com/easrng/pinafore/blob/main/LICENSE">License AGPL</a>.
       Lire la <a href="/settings/about#privacy-policy" rel="prefetch">politique de confidentialité</a>.
-      C'est une continuation du projet Pinafore créé par
+      C'est une continuation du projet Enafore créé par
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
     </p>
   `,
@@ -174,7 +174,7 @@ export default {
     ·
     {showInstanceName, select,
       true {{instanceName}}
-      other {Pinafore}
+      other {Enafore}
     }
   `,
   pinLabel: `{label} {pinnable, select,
@@ -316,10 +316,10 @@ export default {
   verified: 'Verified',
   // About page
   about: 'Infos',
-  aboutApp: 'Infos sur Pinafore',
+  aboutApp: 'Infos sur Enafore',
   aboutAppDescription: `
   <p>
-    Pinafore est un logiciel
+    Enafore est un logiciel
     <a rel="noopener" target="_blank"
        href="https://github.com/easrng/pinafore">gratuit et open-source</a>
     créé par
@@ -332,12 +332,12 @@ export default {
   <h2 id="privacy-policy">Politique de confidentialité</h2>
 
   <p>
-    Pinafore ne garde pas d'informations personelles dans ses serveurs,
+    Enafore ne garde pas d'informations personelles dans ses serveurs,
     y compris les noms, addresses courriel, addresses IP, messages, et photos.
   </p>
 
   <p>
-    Pinafore est un site statique. Tous données sont gardées en locale dans le navigateur, et sont partagée qu'avec
+    Enafore est un site statique. Tous données sont gardées en locale dans le navigateur, et sont partagée qu'avec
     les instances auxquelles vous vous connectez.
   </p>
 
@@ -348,7 +348,7 @@ export default {
   </p>
 
   <p>
-    Logo grâce à AFY Studio du
+    Logo thanks to "sailboat" by Gregor Cresnar from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">Noun Project</a>.
   </p>`,
   // Settings
@@ -409,8 +409,8 @@ export default {
   notificationFilters: 'Filtres de notifications',
   pushNotifications: 'Filtres de notifications push',
   // Add instance page
-  storageError: `Il semble que Pinafore ne peut pas stocker les données en locale. Est-ce que votre navigateur
-          est en mode privé, ou est-ce qu'il bloque les cookies? Pinafore garde tous ses données en locale et
+  storageError: `Il semble que Enafore ne peut pas stocker les données en locale. Est-ce que votre navigateur
+          est en mode privé, ou est-ce qu'il bloque les cookies? Enafore garde tous ses données en locale et
           ne peut pas fonctionner sans LocalStorage ou IndexedDB.`,
   javaScriptError: 'Le JavaScript devrait être activé pour continuer.',
   enterInstanceName: "Saisir le nom d'instance",
@@ -431,7 +431,7 @@ export default {
   // Link text
   logInToAnInstancePre: '',
   logInToAnInstanceText: 'Se connecter à une instance',
-  logInToAnInstancePost: 'pour utiliser Pinafore.',
+  logInToAnInstancePost: 'pour utiliser Enafore.',
   // Another custom tooltip
   showRingPre: 'Afficher toujours',
   showRingText: "l'anneau de focus",

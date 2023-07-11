@@ -1,10 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
-  appName: 'Pinafore',
+  appName: 'Enafore',
   appDescription: 'Un cliente web alternativo para Mastodon, centrado en la velocidad y la sencillez.',
   homeDescription: `
     <p>
-      Pinafore es un cliente web para
+      Enafore es un cliente web para
       <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a>,
       diseñado para ser rápido y sencillo.
     </p>
@@ -14,7 +14,7 @@ export default {
   logIn: 'Iniciar sesión',
   footer: `
     <p>
-      Pinafore es
+      Enafore es
       <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">software de código abierto</a>
       creado por
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
@@ -22,12 +22,12 @@ export default {
       <a rel="noopener" target="_blank"
          href="https://github.com/easrng/pinafore/blob/main/LICENSE">Licencia AGPL</a>.
       Aquí está la <a href="/settings/about#privacy-policy" rel="prefetch">política de privacidad</a>.
-      Es una continuación de Pinafore creado por
+      Es una continuación de Enafore creado por
         <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>.
     </p>
   `,
   // Manifest
-  longAppName: 'Pinafore para Mastodon',
+  longAppName: 'Enafore para Mastodon',
   newStatus: 'Nuevo toot',
   // Generic UI
   loading: 'Cargando',
@@ -179,7 +179,7 @@ export default {
     ·
     {showInstanceName, select,
       true {{instanceName}}
-      other {Pinafore}
+      other {Enafore}
     }
   `,
   pinLabel: `{label} {pinnable, select,
@@ -327,10 +327,10 @@ export default {
   verified: 'Verified',
   // About page
   about: 'Acerca de',
-  aboutApp: 'Acerca de Pinafore',
+  aboutApp: 'Acerca de Enafore',
   aboutAppDescription: `
   <p>
-    Pinafore es
+    Enafore es
     <a rel="noopener" target="_blank"
        href="https://github.com/easrng/pinafore">software libre y de código abierto</a>
     creado por
@@ -343,13 +343,13 @@ export default {
   <h2 id="privacy-policy">Política de privacidad</h2>
 
   <p>
-    Pinafore no almacena ninguna información personal en sus servidores,
+    Enafore no almacena ninguna información personal en sus servidores,
     incluyendo, pero no limitándose a nombres, direcciones de correo electrónico,
     direcciones IP, posts y fotos.
   </p>
 
   <p>
-    Pinafore es un sitio estático. Todos los datos son almacenados en tu navegador y compartidos con las instancias del fediverso
+    Enafore es un sitio estático. Todos los datos son almacenados en tu navegador y compartidos con las instancias del fediverso
     a las que te conectas.
   </p>
 
@@ -360,7 +360,7 @@ export default {
   </p>
 
   <p>
-    Logo gracias a "Flag" por AFY Studio, de
+    Logo thanks to "sailboat" by Gregor Cresnar from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -425,8 +425,8 @@ export default {
   notificationFilters: 'Filtros para notificaciones',
   pushNotifications: 'Notificaciones Push',
   // Add instance page
-  storageError: `Parece que Pinafore no puede almacenar datos localmente. ¿Está tu navegador en modo privado
-          o bloqueando las cookies? Pinafore almacena todos los datos localmente, y requiere LocalStorage e
+  storageError: `Parece que Enafore no puede almacenar datos localmente. ¿Está tu navegador en modo privado
+          o bloqueando las cookies? Enafore almacena todos los datos localmente, y requiere LocalStorage e
           IndexedDB para funcionar correctamente.`,
   javaScriptError: 'Debes habilitar JavaScript para iniciar sesión.',
   enterInstanceName: 'Introducir nombre de instancia',
@@ -447,7 +447,7 @@ export default {
   // Link text
   logInToAnInstancePre: '',
   logInToAnInstanceText: 'Inicia sesión en una instancia',
-  logInToAnInstancePost: 'para empezar a usar Pinafore.',
+  logInToAnInstancePost: 'para empezar a usar Enafore.',
   // Another custom tooltip
   showRingPre: 'Mostrar siempre',
   showRingText: 'anillo del foco',

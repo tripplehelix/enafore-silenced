@@ -17,12 +17,12 @@ console.log(`
          ./((((((((((((((((.
 
 
-           P I N A F O R E
+            E N A F O R E
 
 
 Export successful! Static files are in:
 
     __sapper__/export/
 
-Enjoy Pinafore!
+Enjoy Enafore!
 `)

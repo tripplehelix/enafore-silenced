@@ -1,10 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
-  appName: 'Pinafore',
+  appName: 'Enafore',
   appDescription: 'Альтернативный веб-клиент для Mastodon, ориентированный на скорость и простоту.',
   homeDescription: `
     <p>
-    Pinafore — веб-клиент для
+    Enafore — веб-клиент для
       <a rel="noopener" target="_blank" href="https://joinmastodon.org">Mastodon</a>,
       разработан для скорости и простоты.
     </p>
@@ -17,7 +17,7 @@ export default {
   logIn: 'Войти',
   footer: `
     <p>
-      Pinafore — это
+      Enafore — это
       <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">программное обеспечение с открытым исходным кодом</a>
       созданное
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>
@@ -25,11 +25,11 @@ export default {
       <a rel="noopener" target="_blank"
          href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
       Здесь <a href="/settings/about#privacy-policy" rel="prefetch">политика конфиденциальности</a>.
-      Это продолжение проекта Pinafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
+      Это продолжение проекта Enafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
     </p>
   `,
   // Manifest
-  longAppName: 'Pinafore для Mastodon',
+  longAppName: 'Enafore для Mastodon',
   newStatus: 'Новая запись',
   // Generic UI
   loading: 'Загрузка',
@@ -177,7 +177,7 @@ export default {
     }
     {showInstanceName, select,
       true {{instanceName}}
-      other {Pinafore}
+      other {Enafore}
     }
     ·
     {name}
@@ -327,28 +327,28 @@ export default {
   verified: 'Verified',
   // About page
   about: 'О нас',
-  aboutApp: 'О Pinafore',
+  aboutApp: 'О Enafore',
   aboutAppDescription: `
   <p>
-    Pinafore — это
+    Enafore — это
     <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">программное обеспечение с открытым исходным кодом</a>
     поддерживается <a rel="noopener" target="_blank" href="https://easrng.net">easrng/a>.
     и распространяемое под лицензией
     <a rel="noopener" target="_blank"
       href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
-    Это продолжение проекта Pinafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
+    Это продолжение проекта Enafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
   </p>
 
   <h2 id="privacy-policy">Политика конфиденциальности</h2>
 
   <p>
-    Pinafore не хранит никакой личной информации на своих серверах,
+    Enafore не хранит никакой личной информации на своих серверах,
     включая, помимо прочего, имена, адреса электронной почты,
     IP-адреса, сообщения и фотографии.
   </p>
 
   <p>
-  Pinafore — это статический сайт. Все данные хранятся локально в вашем браузере и передаются через Федиверс
+  Enafore — это статический сайт. Все данные хранятся локально в вашем браузере и передаются через Федиверс
     инстансы, к которым вы подключаетесь.
   </p>
 
@@ -359,7 +359,7 @@ export default {
   </p>
 
   <p>
-    Logo thanks to "Flag" by AFY Studio from
+    Logo thanks to "sailboat" by Gregor Cresnar from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
   </p>`,
   // Settings
@@ -425,8 +425,8 @@ export default {
   notificationFilters: 'Фильтры уведомлений',
   pushNotifications: 'Всплывающее уведомление',
   // Add instance page
-  storageError: `Похоже, Pinafore не может хранить данные локально. Ваш браузер находится в приватном режиме
-          или блокирует файлов cookie? Pinafore хранит все данные локально, и для этого требуется LocalStorage и
+  storageError: `Похоже, Enafore не может хранить данные локально. Ваш браузер находится в приватном режиме
+          или блокирует файлов cookie? Enafore хранит все данные локально, и для этого требуется LocalStorage и
           IndexedDB для корректной работы.`,
   javaScriptError: 'Вы должны включить JavaScript, чтобы войти в систему.',
   enterInstanceName: 'Введите имя инстанса',
@@ -447,7 +447,7 @@ export default {
   // Link text
   logInToAnInstancePre: '',
   logInToAnInstanceText: 'Войти в инстанс',
-  logInToAnInstancePost: 'чтобы начать использовать Pinafore.',
+  logInToAnInstancePost: 'чтобы начать использовать Enafore.',
   // Another custom tooltip
   showRingPre: 'Всегда показывать',
   showRingText: 'кольцо фокусировки',

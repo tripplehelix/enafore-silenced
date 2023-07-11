@@ -1,10 +1,10 @@
-# Contributing to Pinafore
+# Contributing to Enafore
 
 ## Building
 
-Pinafore requires [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com).
+Enafore requires [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com).
 
-To build Pinafore for production, first install dependencies:
+To build Enafore for production, first install dependencies:
 
     yarn --production --pure-lockfile
 
@@ -18,7 +18,7 @@ Then run:
 
 ### Exporting
 
-Pinafore is a static site. When you run `yarn build`, static files will be
+Enafore is a static site. When you run `yarn build`, static files will be
 written to `__sapper__/export`.
 
 ## Installing
@@ -41,7 +41,7 @@ because of [this issue](https://github.com/paulmillr/chokidar/issues/237).
 
 ## Linting
 
-Pinafore uses [JavaScript Standard Style](https://standardjs.com/).
+Enafore uses [JavaScript Standard Style](https://standardjs.com/).
 
 Lint:
 

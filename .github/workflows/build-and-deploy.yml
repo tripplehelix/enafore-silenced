@@ -1,4 +1,4 @@
-name: Build Pinafore
+name: Build Enafore
 on:
   push:
     branches: [ "main" ]
@@ -21,6 +21,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
