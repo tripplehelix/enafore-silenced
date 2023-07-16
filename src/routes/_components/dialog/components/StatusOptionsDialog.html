@@ -117,7 +117,7 @@ export default {
         label: pinLabel,
         icon: '#fa-thumb-tack'
       },
-      !followLabel && {
+      !followLabel && !isUser && !blocking && {
         key: 'loading',
         label: 'intl.loading',
         icon: '#fa-spinner'
