@@ -30,7 +30,7 @@
     computed: {
       note: ({ account }) => account.note,
       emojis: ({ account }) => account.emojis || [],
-      massagedNote: ({ note, emojis, $autoplayGifs }) => massageUserText(note, emojis, $autoplayGifs)
+      massagedNote: ({ note, emojis, $autoplayGifs, $disableDecomojiConverter }) => massageUserText(note, emojis, $autoplayGifs, $disableDecomojiConverter)
     }
   }
 </script>

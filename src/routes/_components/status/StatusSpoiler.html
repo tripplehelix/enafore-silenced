@@ -67,9 +67,9 @@
       Shortcut
     },
     computed: {
-      massagedSpoilerText: ({ spoilerText, originalStatusEmojis, $autoplayGifs }) => {
+      massagedSpoilerText: ({ spoilerText, originalStatusEmojis, $autoplayGifs, $disableDecomojiConverter }) => {
         spoilerText = escapeHtml(spoilerText)
-        return emojifyText(spoilerText, originalStatusEmojis, $autoplayGifs)
+        return emojifyText(spoilerText, originalStatusEmojis, $autoplayGifs, $disableDecomojiConverter)
       },
       elementId: ({ uuid }) => `spoiler-${uuid}`
     },

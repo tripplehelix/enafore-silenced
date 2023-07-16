@@ -16,7 +16,6 @@ body {
   @media (max-width: 240px) {
     font-size: 0.75em; /* tiny text for tiny screens */
   }
-
 }
 
 .main-content {
@@ -59,7 +58,12 @@ footer {
   border: 1px solid var(--main-border);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0 0 0.5em 0;
   font-weight: 400;
   line-height: 1.2;
@@ -80,7 +84,6 @@ a {
   &:hover {
     text-decoration: underline;
   }
-
 }
 
 input {
@@ -89,12 +92,13 @@ input {
   box-sizing: border-box;
 }
 
-input[type=search] {
+input[type='search'] {
   -webkit-appearance: none; // reset Safari user agent stylesheet
 }
 
 // Fixes gray/black background when using a dark GTK theme
-input, textarea {
+input,
+textarea {
   background: inherit;
   color: inherit;
   border-radius: var(--input-border-radius-size);
@@ -105,7 +109,8 @@ input, textarea {
   color: var(--input-placeholder-color);
 }
 
-button, .button {
+button,
+.button {
   font-size: 1.2em;
   background: var(--button-bg);
   border-radius: var(--input-border-radius-size);
@@ -144,7 +149,9 @@ button, .button {
   }
 }
 
-input, label, p {
+input,
+label,
+p {
   font-size: 1.3em;
 }
 
@@ -156,7 +163,9 @@ input, label, p {
   overflow-y: auto;
 }
 
-ul, li, p {
+ul,
+li,
+p {
   padding: 0;
   margin: 0;
 }
@@ -171,12 +180,14 @@ button::-moz-focus-inner {
 
 /* Firefox hacks to remove ugly red border.
    Unnecessary since it gives a warning if you submit an empty field anyway. */
-input:required, input:invalid {
+input:required,
+input:invalid {
   box-shadow: none;
 }
 
 textarea {
-  font-family: CountryFlagEmojiPolyfill, system-ui, -apple-system, PinaforeRegular, sans-serif, PinaforeEmoji, 'Noto Color Emoji';
+  font-family: CountryFlagEmojiPolyfill, system-ui, -apple-system,
+    PinaforeRegular, sans-serif, PinaforeEmoji, 'Noto Color Emoji';
   font-size: inherit;
   box-sizing: border-box;
 }
@@ -195,7 +206,7 @@ textarea {
 }
 
 .ellipsis::after {
-  content: "\2026";
+  content: '\2026';
 }
 
 /* via https://stackoverflow.com/a/19758620 */
@@ -219,14 +230,27 @@ textarea {
 }
 
 .inline-emoji {
-  font-family: CountryFlagEmojiPolyfill, PinaforeEmoji, 'Noto Color Emoji', sans-serif;
+  font-family: CountryFlagEmojiPolyfill, PinaforeEmoji, 'Noto Color Emoji',
+    sans-serif;
+}
+
+.decomoji {
+  font-family: 'Kosugi Maru', ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand,
+    Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri,
+    source-sans-pro, sans-serif;
+  color: #fff;
+  -webkit-text-stroke: #00a1eb 3px;
+  text-stroke: #00a1eb 3px;
+  paint-order: stroke fill;
+  font-weight: 400;
 }
 
 .status-content .quote-inline {
   display: none;
 }
 
-.external-link-with-icon .external-link-svg, .status-edited-svg {
+.external-link-with-icon .external-link-svg,
+.status-edited-svg {
   margin-left: 4px;
   width: 14px;
   height: 14px;

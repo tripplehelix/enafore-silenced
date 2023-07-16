@@ -8,12 +8,12 @@ async function translate (html, to, from) {
 const defaultLanguage = process.env.LOCALE.split('-')[0]
 export function translateStatus (status, currentInstance, to = defaultLanguage, from = 'auto') {
   const id = currentInstance + '-' + status.id
-  const { statusTranslations, statusTranslationContents, autoplayGifs } = store.get()
+  const { statusTranslations, statusTranslationContents, autoplayGifs, disableDecomojiConverter } = store.get()
   statusTranslations[id] = statusTranslations[id] || {}
   statusTranslations[id].show = true
   if (!(statusTranslations[id].loading || (statusTranslationContents[id] && statusTranslationContents[id].to === to && statusTranslationContents[id].from === from))) {
     statusTranslations[id].loading = true
-    translate(massageUserText(status.content, status.emojis || [], autoplayGifs), to, from).then(({ content, languageNames }) => {
+    translate(massageUserText(status.content, status.emojis || [], autoplayGifs, disableDecomojiConverter), to, from).then(({ content, languageNames }) => {
       const { statusTranslations, statusTranslationContents } = store.get()
       statusTranslations[id].loading = false
       statusTranslations[id].languageNames = languageNames

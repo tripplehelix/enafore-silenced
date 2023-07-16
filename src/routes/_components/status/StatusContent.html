@@ -156,10 +156,10 @@
         )
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
-      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate }) => (
+      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate, $disableDecomojiConverter }) => (
         (showTranslate && translateContent)
           ? translateContent
-          : massageUserText(content, originalStatusEmojis, $autoplayGifs)
+          : massageUserText(content, originalStatusEmojis, $autoplayGifs, $disableDecomojiConverter)
       ),
       computedTranslateClass: ({ isStatusInOwnThread, isStatusInNotification, shown }) => {
         return classname(

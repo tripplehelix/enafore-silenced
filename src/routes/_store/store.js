@@ -29,6 +29,7 @@ const persistedState = {
   disableReblogCounts: false,
   disableRelativeTimestamps: false,
   disableTapOnStatus: false,
+  disableDecomojiConverter: false,
   enableGrayscale: false,
   hideCards: false,
   largeInlineMedia: false,
