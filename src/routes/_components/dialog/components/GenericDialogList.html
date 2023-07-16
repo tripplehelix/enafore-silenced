@@ -6,7 +6,7 @@
         on:click="fire('click', item)">
       <!-- Extra wrapper inside button is required for KaiOS. Seems old Firefox does not like flex buttons. -->
       <div class="generic-dialog-list-button-inner">
-        <SvgIcon className="generic-dialog-list-item-svg" href={item.icon} />
+        <SvgIcon className="generic-dialog-list-item-svg {item.icon === '#fa-spinner' ? 'spin' : ''}" href={item.icon} />
         <span class="generic-dialog-list-button-span">
           {item.label}
         </span>
@@ -24,6 +24,7 @@
     list-style: none;
     width: 100%;
     border: 1px solid var(--settings-list-item-border);
+    background-color: var(--settings-list-item-border); /* for overscroll */
     box-sizing: border-box;
     overflow: auto;
   }

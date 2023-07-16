@@ -55,9 +55,9 @@ export default {
     following: ({ relationship }) => relationship && relationship.following,
     followRequested: ({ relationship }) => relationship && relationship.requested,
     accountId: ({ account }) => account && account.id,
-    username: ({ account }) => account.username,
-    muting: ({ relationship }) => relationship.muting,
-    blocking: ({ relationship }) => relationship.blocking,
+    username: ({ account }) => account && account.username,
+    muting: ({ relationship }) => relationship && relationship.muting,
+    blocking: ({ relationship }) => relationship && relationship.blocking,
     notifying: ({ relationship }) => relationship && relationship.notifying,
     followLabel: ({ following, followRequested, account, username }) => {
       if (typeof following === 'undefined' || !account) {
@@ -105,7 +105,7 @@ export default {
       blockLabel, blocking, blockIcon, muteLabel, muteIcon, followLabel, followIcon,
       following, followRequested, pinLabel, isUser, visibility, mentionsUser, mutingConversation,
       muteConversationLabel, muteConversationIcon, supportsWebShare, isPublicOrUnlisted, bookmarkLabel,
-      username, notifying, hasReactions, hasQuote
+      username, notifying, hasReactions, hasQuote, relationship
     }) => ([
       isUser && {
         key: 'delete',
@@ -117,17 +117,22 @@ export default {
         label: pinLabel,
         icon: '#fa-thumb-tack'
       },
-      !isUser && !blocking && {
+      !followLabel && {
+        key: 'loading',
+        label: 'intl.loading',
+        icon: '#fa-spinner'
+      },
+      followLabel && !isUser && !blocking && {
         key: 'follow',
         label: followLabel,
         icon: followIcon
       },
-      !isUser && following && notifying === false && { // notifying could be undefined for old servers
+      !isUser && following && !notifying && {
         key: 'notify',
         label: formatIntl('intl.notify', { account: `@${username}` }),
         icon: '#fa-bell'
       },
-      !isUser && following && notifying === true && { // notifying could be undefined for old servers
+      !isUser && following && notifying && {
         key: 'denotify',
         label: formatIntl('intl.denotify', { account: `@${username}` }),
         icon: '#fa-bell-o'
@@ -204,6 +209,8 @@ export default {
     close,
     onClick (item) {
       switch (item.key) {
+        case 'loading':
+          return
         case 'delete':
           return this.onDeleteClicked()
         case 'pin':

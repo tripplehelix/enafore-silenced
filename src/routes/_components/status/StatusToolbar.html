@@ -135,8 +135,9 @@
         const { originalStatus, originalAccountId } = this.get()
         const updateRelationshipPromise = updateProfileAndRelationship(originalAccountId)
         const showStatusOptionsDialog = await importShowStatusOptionsDialog()
-        await updateRelationshipPromise
+        await Promise.resolve()
         showStatusOptionsDialog(originalStatus)
+        await updateRelationshipPromise
       },
       onPostedStatus (realm, inReplyToUuid) {
         const {

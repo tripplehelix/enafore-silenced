@@ -59,6 +59,7 @@ export async function clearProfileAndRelationship () {
 export async function updateProfileAndRelationship (accountId) {
   const { currentInstance, accessToken } = store.get()
 
+  await clearProfileAndRelationship()
   await Promise.all([
     _updateAccount(accountId, currentInstance, accessToken),
     _updateRelationship(accountId, currentInstance, accessToken)
@@ -68,5 +69,6 @@ export async function updateProfileAndRelationship (accountId) {
 export async function updateRelationship (accountId) {
   const { currentInstance, accessToken } = store.get()
 
+  await clearProfileAndRelationship()
   await _updateRelationship(accountId, currentInstance, accessToken)
 }
