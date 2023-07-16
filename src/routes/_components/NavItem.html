@@ -24,6 +24,7 @@
     align-items: center;
     flex: 1;
     flex-direction: column;
+    position: relative;
   }
 
   .nav-icon-and-label {
@@ -32,6 +33,11 @@
     justify-content: center;
     align-items: center;
     flex: 1;
+  }
+
+  :global(body:not(.reduce-motion)) .nav-icon-and-label {
+    transition: transform 333ms ease-in;
+    will-change: transform;
   }
 
   .main-nav-link.selected {
@@ -46,15 +52,16 @@
     width: 100%;
     height: var(--nav-indicator-height);
     display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
   .nav-indicator {
     flex: 1;
     transform-origin: left;
-  }
-
-  .nav-indicator {
-    background: var(--nav-indicator-bg);
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
   }
 
   .nav-indicator-wrapper.animating > .nav-indicator {
@@ -62,19 +69,12 @@
     will-change: transform;
   }
 
-  .main-nav-link:hover .nav-indicator {
-    background: var(--nav-indicator-bg-hover);
-  }
-
   .main-nav-link.selected .nav-indicator {
     background: var(--nav-indicator-bg-active);
   }
 
-  /* Desktop/mouse only https://medium.com/@mezoistvan/finally-a-css-only-solution-to-hover-on-touchscreens-c498af39c31c */
-  @media(hover: hover) and (pointer: fine) {
-    .main-nav-link:hover .nav-indicator-wrapper.pre-animating {
-      background: var(--nav-indicator-bg-hover);
-    }
+  .main-nav-link.selected .nav-icon-and-label {
+    transform: translateY(calc(var(--nav-indicator-height) * -0.5));
   }
 
   .main-nav-link:hover {
@@ -174,8 +174,7 @@
         (name === 'notifications' && $numberOfNotifications) || (name === 'community' && $numberOfFollowRequests) || 0
       ),
       animationClasses: ({ animating, preAnimating }) => classname(
-        animating && 'animating',
-        preAnimating && 'pre-animating'
+        animating && 'animating'
       )
     },
     methods: {

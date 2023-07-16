@@ -57,8 +57,14 @@
     display: flex;
     flex-direction: row;
     max-height: calc(100% - 20px);
-    max-width: calc(100% - 20px);
-    flex: 0 1 580px;
+    max-width: 100%;
+    width: 580px;
+  }
+
+  @media (max-width: 580px) {
+    :global(.modal-dialog) {
+      align-items: flex-end;
+    }
   }
 
   .modal-dialog-document {
@@ -156,15 +162,17 @@
     pushShortcutScope,
     popShortcutScope
   } from '../../../_utils/shortcuts.js'
+  import { store } from '../../../_store/store.js'
 
   export default {
     oncreate () {
       const { id, shouldAnimate } = this.get()
+      const { reduceMotion } = store.get()
       this.onPopState = this.onPopState.bind(this)
       const dialogElement = this.refs.node.parentElement
       this._a11yDialog = new A11yDialog(dialogElement)
       this._a11yDialog.on('hide', async () => {
-        if (shouldAnimate) {
+        if (shouldAnimate && !reduceMotion) {
           this.refs.node.parentElement.style.display = 'flex'
           try {
             await Promise.all([
@@ -242,6 +250,7 @@
     methods: {
       showDialog (otherId) {
         const { id, shouldAnimate } = this.get()
+        const { reduceMotion } = store.get()
         if (otherId !== id) {
           return
         }
@@ -274,14 +283,16 @@
                 iterations: 1,
                 easing: 'linear'
               })
-              this.refs.node.animate([
-                { transform: 'scale(0.8)' },
-                { transform: 'scale(1)' }
-              ], {
-                duration: 150,
-                iterations: 1,
-                easing: 'cubic-bezier(0, 0, 0.2, 1)'
-              })
+              if (!reduceMotion) {
+                this.refs.node.animate([
+                  { transform: matchMedia('(max-width: 580px)').matches ? 'translateY(3rem)' : 'scale(0.8)' },
+                  { transform: 'scale(1)' }
+                ], {
+                  duration: 150,
+                  iterations: 1,
+                  easing: 'cubic-bezier(0, 0, 0.2, 1)'
+                })
+              }
             }
           })
         })

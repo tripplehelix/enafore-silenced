@@ -1,10 +1,11 @@
 :root {
-  --nav-bg: #{lighten($body-bg-color, 10%)};
-  --nav-a-bg-hover: #{lighten($body-bg-color, 25%)};
-  --nav-active-bg: #{lighten($body-bg-color, 35%)};
-  --nav-a-selected-bg: #{lighten($body-bg-color, 25%)};
-  --nav-a-selected-bg-hover: #{lighten($body-bg-color, 40%)};
-  --nav-a-selected-active-bg: #{lighten($body-bg-color, 50%)};
+  $nav-base-color: mix($body-bg-color, $main-theme-color, 95%);
+  --nav-bg: #{lighten($nav-base-color, 10%)};
+  --nav-a-bg-hover: #{lighten($nav-base-color, 20%)};
+  --nav-active-bg: #{lighten($nav-base-color, 30%)};
+  --nav-a-selected-bg: #{lighten($nav-base-color, 25%)};
+  --nav-a-selected-bg-hover: #{lighten($nav-base-color, 30%)};
+  --nav-a-selected-active-bg: #{lighten($nav-base-color, 35%)};
 
   --button-primary-bg: #{darken($main-theme-color, 5%)};
 }

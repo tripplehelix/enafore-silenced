@@ -23,16 +23,18 @@
   .generic-dialog-list {
     list-style: none;
     width: 100%;
-    border: 1px solid var(--settings-list-item-border);
+    border-top: 1px solid var(--settings-list-item-border);
     background-color: var(--settings-list-item-border); /* for overscroll */
     box-sizing: border-box;
     overflow: auto;
   }
   .generic-dialog-list-item {
-    border: 1px solid var(--settings-list-item-border);
     font-size: 1.2em;
     display: flex;
     outline-width: 4px;
+  }
+  .generic-dialog-list-item:not(:last-child) {
+    border-bottom: 1px solid var(--settings-list-item-border);
   }
   :global(.generic-dialog-list-item-svg) {
     width: 24px;
@@ -41,7 +43,7 @@
   }
   .generic-dialog-list-button {
     flex: 1;
-    padding: 20px;
+    padding: 15px 10px;
     background: var(--settings-list-item-bg);
     border: none;
     margin: 0;
@@ -68,9 +70,6 @@
   }
 
   @media (max-width: 767px) {
-    .generic-dialog-list-button {
-      padding: 20px 10px;
-    }
     .generic-dialog-list-button-span {
       margin-left: 10px;
     }
@@ -79,9 +78,6 @@
   @media (max-width: 479px) {
     .generic-dialog-list {
       min-width: calc(100% - 20px);
-    }
-    .generic-dialog-list-button {
-      padding: 15px 10px;
     }
     .generic-dialog-list-button-span {
       margin-left: 10px;

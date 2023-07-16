@@ -26,4 +26,5 @@ $scrollbar-face-active: #{lighten($main-theme-color, 1%)};
 
   --button-primary-bg: #{$main-theme-color};
   --button-primary-text: #141414;
+  --nav-indicator-bg-active: #{mix($secondary-text-color, $main-theme-color, 40%)}; // special override on the nav indicator color
 }

@@ -29,8 +29,18 @@
       --toast-gap-bottom: var(--nav-total-height);
       --fab-gap-top: 0px;
     }
-    .main-nav-link {
-      flex-direction: column-reverse !important;
+    .main-nav-link .nav-indicator-wrapper {
+      bottom: unset !important;
+      top: 0 !important;
+    }
+    .main-nav-link .nav-indicator {
+      border-top-right-radius: 0 !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+    }
+    .main-nav-link.selected .nav-icon-and-label {
+      transform: translateY(calc(var(--nav-indicator-height) * 0.5)) !important;
     }
     @supports not (height: 1dvh) {
       /* In browsers that don't support dvh, use the large-small-dynamic-viewport-units-polyfill */

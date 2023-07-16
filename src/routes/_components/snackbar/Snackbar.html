@@ -24,7 +24,6 @@
     bottom: var(--toast-gap-bottom);
     left: 0;
     right: 0;
-    transition: transform 333ms ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,6 +31,9 @@
       and .status-sensitive-media-shown which are 90 */
     z-index: 95;
     transform: translateY(100%);
+  }
+  :global(body:not(.reduce-motion)) .snackbar-modal {
+    transition: transform 333ms ease-in-out;
   }
 
   /* For iOS < 11.2 */
