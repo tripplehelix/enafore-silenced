@@ -4,7 +4,8 @@ const ELEMENT_NODE = 1
 const TEXT_NODE = 3
 export default (translate) =>
   async function googleTranslateHTML (html, to, from = 'auto') {
-    const doc = new DOMParser().parseFromString(html, 'text/html')
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
     const nodes = doc.body.childNodes
     function isInline (node) {
       return !node || node.nodeType !== ELEMENT_NODE || getComputedStyle(node).display.startsWith('inline')
@@ -17,7 +18,6 @@ export default (translate) =>
       }
       return attributes
     }
-    const parser = new DOMParser()
     let nodeIdCounter = 0
     function flattenNode (node) {
       if (node.nodeType === ELEMENT_NODE) {
@@ -132,10 +132,17 @@ export default (translate) =>
         return mergeSiblingElements(node.nextSibling)
       }
     }
-    const div = document.createElement('div')
+    const div = doc.createElement('div')
     div.append(...out)
     mergeSiblingElements(div.firstChild)
+    const spoilerEle = div.querySelector('.spoiler_text')
+    let spoiler
+    if (spoilerEle) {
+      spoiler = DOMPurify.sanitize(spoilerEle.innerHTML.trimEnd())
+      spoilerEle.remove()
+    }
     return {
+      spoiler,
       html: DOMPurify.sanitize(div.innerHTML),
       detected: translated.detected
     }
