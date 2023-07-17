@@ -72,9 +72,9 @@ This is also available locally after `yarn run build` at `.sapper/client/report.
 
 ## Architecture
 
-See [Architecture.md](https://github.com/easrng/pinafore/blob/main/docs/Architecture.md).
+See [Architecture.md](https://github.com/easrng/enafore/blob/main/docs/Architecture.md).
 
 ## Internationalization
 
-See [Internationalization.md](https://github.com/easrng/pinafore/blob/main/docs/Internationalization.md).
+See [Internationalization.md](https://github.com/easrng/enafore/blob/main/docs/Internationalization.md).
 

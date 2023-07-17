@@ -13,12 +13,12 @@ export default {
   footer: `
     <p>
       Enafore is
-      <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">open-source software</a>
+      <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore">open-source software</a>
       originally created by
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>, forked by 
       <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>, and distributed under the
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
+         href="https://github.com/easrng/enafore/blob/main/LICENSE">AGPL License</a>.
       Here is the <a href="/settings/about#privacy-policy" rel="prefetch">privacy policy</a>.
     </p>
   `,
@@ -337,12 +337,12 @@ export default {
   <p>
     Enafore is
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore">free and open-source software</a>
+       href="https://github.com/easrng/enafore">free and open-source software</a>
     created by
     <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
     and distributed under the
     <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/pinafore/blob/main/LICENSE">GNU Affero General Public License</a>.
+       href="https://github.com/easrng/enafore/blob/main/LICENSE">GNU Affero General Public License</a>.
   </p>
 
   <h2 id="privacy-policy">Privacy Policy</h2>

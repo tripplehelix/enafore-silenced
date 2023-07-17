@@ -18,12 +18,12 @@ export default {
   footer: `
     <p>
       Enafore — это
-      <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">программное обеспечение с открытым исходным кодом</a>
+      <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore">программное обеспечение с открытым исходным кодом</a>
       созданное
       <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>
       и распространяемое под лицензией
       <a rel="noopener" target="_blank"
-         href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
+         href="https://github.com/easrng/enafore/blob/main/LICENSE">AGPL License</a>.
       Здесь <a href="/settings/about#privacy-policy" rel="prefetch">политика конфиденциальности</a>.
       Это продолжение проекта Enafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
     </p>
@@ -331,11 +331,11 @@ export default {
   aboutAppDescription: `
   <p>
     Enafore — это
-    <a rel="noopener" target="_blank" href="https://github.com/easrng/pinafore">программное обеспечение с открытым исходным кодом</a>
+    <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore">программное обеспечение с открытым исходным кодом</a>
     поддерживается <a rel="noopener" target="_blank" href="https://easrng.net">easrng/a>.
     и распространяемое под лицензией
     <a rel="noopener" target="_blank"
-      href="https://github.com/easrng/pinafore/blob/main/LICENSE">AGPL License</a>.
+      href="https://github.com/easrng/enafore/blob/main/LICENSE">AGPL License</a>.
     Это продолжение проекта Enafore, созданного <a rel="noopener" target="_blank" href="https://nolanlawson.com">Ноланом Лоусоном</a>.
   </p>
 

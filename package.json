@@ -184,15 +184,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/easrng/pinafore.git"
+    "url": "git+https://github.com/easrng/enafore.git"
   },
   "keywords": [],
   "author": "easrng",
   "license": "AGPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/easrng/pinafore/issues"
+    "url": "https://github.com/easrng/enafore/issues"
   },
-  "homepage": "https://github.com/easrng/pinafore#readme",
+  "homepage": "https://github.com/easrng/enafore#readme",
   "lint-staged": {
     "*.js": "standard --fix",
     "*.html": "standard --fix --plugin html 'src/routes/**/*.html'"
