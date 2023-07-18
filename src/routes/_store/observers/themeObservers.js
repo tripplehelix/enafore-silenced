@@ -15,7 +15,10 @@ export function themeObservers (store) {
     switchToTheme(theme, enableGrayscale)
   }, { init: false }) // init:false because the inline script takes care of it
   store.observe('currentTheme', currentTheme => {
-    database.setLastThemeColor(window.__themeColors[currentTheme]).then(() => {
+    Promise.all([
+      database.setLastThemeColor(window.__themeColors[currentTheme]),
+      database.setLastTheme(currentTheme)
+    ]).then(() => {
       console.log('saved theme color to idb')
     })
   })

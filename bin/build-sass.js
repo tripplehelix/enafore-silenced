@@ -11,7 +11,6 @@ const readdir = promisify(fs.readdir)
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 const globalScss = path.join(__dirname, '../src/scss/global.scss')
-const defaultThemeScss = path.join(__dirname, '../src/scss/themes/_default.scss')
 const customScrollbarScss = path.join(__dirname, '../src/scss/custom-scrollbars.scss')
 const themesScssDir = path.join(__dirname, '../src/scss/themes')
 const assetsDir = path.join(__dirname, '../static')
@@ -21,7 +20,7 @@ async function renderCss (file) {
 }
 
 async function compileGlobalSass () {
-  const mainStyle = (await Promise.all([defaultThemeScss, globalScss].map(renderCss))).join('')
+  const mainStyle = (await Promise.all([globalScss].map(renderCss))).join('')
   const scrollbarStyle = (await renderCss(customScrollbarScss))
 
   return `<style>\n${mainStyle}</style>\n` +
@@ -35,6 +34,9 @@ async function compileThemesSass () {
     css = cssDedoupe(new TextDecoder('utf-8').decode(css)) // remove duplicate custom properties
     const outputFilename = 'theme-' + path.basename(file).replace(/\.scss$/, '.css')
     await writeFile(path.join(assetsDir, outputFilename), css, 'utf8')
+    if (outputFilename === 'theme-default.css') {
+      await writeFile(path.join(assetsDir, 'theme-sw.css'), css, 'utf8')
+    }
   }))
 }
 

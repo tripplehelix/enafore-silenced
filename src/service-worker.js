@@ -9,8 +9,9 @@ import {
   closeKeyValIDBConnection
 } from './routes/_database/webShare.js'
 import {
-  getLastThemeColor
-} from './routes/_database/themeColor.js'
+  getLastThemeColor,
+  getLastTheme
+} from './routes/_database/theme.js'
 import { getKnownInstances } from './routes/_database/knownInstances.js'
 import { basename } from './routes/_api/utils.js'
 
@@ -134,6 +135,15 @@ self.addEventListener('fetch', event => {
               'content-type': 'application/json'
             }
           })
+        }
+        if (url.pathname === '/theme-sw.css') {
+          const theme = await getLastTheme()
+          if (theme) {
+            const response = await caches.match('/theme-' + theme + '.css')
+            if (response) {
+              return response
+            }
+          }
         }
         if (req.method === 'POST' && url.pathname === '/share') {
           // handle Web Share Target requests (see manifest.json)

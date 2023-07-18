@@ -3,7 +3,7 @@
 // To allow CSP to work correctly, we also calculate a sha256 hash during
 // the build process and write it to checksum.js.
 
-import { INLINE_THEME, DEFAULT_THEME, switchToTheme } from '../routes/_utils/themeEngine.js'
+import { /* INLINE_THEME, */DEFAULT_THEME, switchToTheme } from '../routes/_utils/themeEngine.js'
 import { basename } from '../routes/_api/utils.js'
 import { onUserIsLoggedOut } from '../routes/_actions/onUserIsLoggedOut.js'
 import { storeLite } from '../routes/_store/storeLite.js'
@@ -34,10 +34,7 @@ if (currentInstance) {
   document.head.appendChild(link)
 }
 
-if (theme !== INLINE_THEME || enableGrayscale) {
-  // switch theme ASAP to minimize flash of default theme
-  switchToTheme(theme, enableGrayscale)
-}
+switchToTheme(theme, enableGrayscale)
 
 if (enableGrayscale) {
   // set the grayscale style on every img, svg, etc.

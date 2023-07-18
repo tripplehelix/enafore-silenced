@@ -7,3 +7,11 @@ export function setLastThemeColor (data) {
 export function getLastThemeColor () {
   return get('theme-color')
 }
+
+export function setLastTheme (data) {
+  return set('theme', data)
+}
+
+export function getLastTheme () {
+  return get('theme')
+}

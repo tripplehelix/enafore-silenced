@@ -12,7 +12,7 @@ body.theme-foobar {
 }
 ```
 
-> Note: You can find all the SCSS variables available in `scss/themes/_default.scss` 
+> Note: You can find all the SCSS variables available in `scss/themes/default.scss` 
 > while the all CSS Custom Properties available are listed in `scss/themes/_base.scss`.
 
 Then, Add your theme to `src/routes/_static/themes.js`
