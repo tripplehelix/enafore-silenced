@@ -8,7 +8,7 @@ import createWorker from 'tesseract.js/src/createWorker.js'
 
 const { origin } = location
 
-export default () => createWorker({
+export default async () => await createWorker({
   workerPath: `${origin}/${workerPath}`,
   langPath: `${origin}/`,
   corePath: `${origin}/${corePath}`,

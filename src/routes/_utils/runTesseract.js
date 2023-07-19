@@ -39,9 +39,8 @@ async function spyOnWorkerProgress (onProgress, runnable) {
 
 async function initWorker (onProgress) {
   if (!worker) {
-    worker = (await importTesseractWorker())()
+    worker = await (await importTesseractWorker())()
     await spyOnWorkerProgress(onProgress, async () => {
-      await worker.load()
       await worker.loadLanguage('eng')
       await worker.initialize('eng')
     })

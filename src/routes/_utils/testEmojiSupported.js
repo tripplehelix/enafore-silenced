@@ -330,7 +330,7 @@ const COUNTRY_FLAG_EMOJI = new Set(
 
 export function testEmojiSupported (unicode) {
   if (store.get().polyfilledCountryFlagEmoji && COUNTRY_FLAG_EMOJI.has(unicode)) {
-    return true // just assume it's supported; is-emoji-supported doesn't work in this case
+    return true // just assume it's supported; isEmojiSupported doesn't work in this case
   }
   return isEmojiSupported(unicode)
 }

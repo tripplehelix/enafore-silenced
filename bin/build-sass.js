@@ -1,10 +1,8 @@
-import sass from 'sass'
+import * as sass from 'sass'
 import path from 'path'
 import fs from 'fs'
 import { promisify } from 'util'
 import cssDedoupe from 'css-dedoupe'
-import textEncodingPackage from 'text-encoding'
-const { TextDecoder } = textEncodingPackage
 
 const writeFile = promisify(fs.writeFile)
 const readdir = promisify(fs.readdir)
@@ -16,7 +14,8 @@ const themesScssDir = path.join(__dirname, '../src/scss/themes')
 const assetsDir = path.join(__dirname, '../static')
 
 async function renderCss (file) {
-  return sass.renderSync({ file, outputStyle: 'compressed' }).css
+  const result = await sass.compile(file, { outputStyle: 'compressed' });
+  return result.css;
 }
 
 async function compileGlobalSass () {
@@ -31,7 +30,7 @@ async function compileThemesSass () {
   const files = (await readdir(themesScssDir)).filter(file => !path.basename(file).startsWith('_') && !path.basename(file).startsWith('.'))
   await Promise.all(files.map(async file => {
     let css = await renderCss(path.join(themesScssDir, file))
-    css = cssDedoupe(new TextDecoder('utf-8').decode(css)) // remove duplicate custom properties
+    css = cssDedoupe(css) // remove duplicate custom properties
     const outputFilename = 'theme-' + path.basename(file).replace(/\.scss$/, '.css')
     await writeFile(path.join(assetsDir, outputFilename), css, 'utf8')
     if (outputFilename === 'theme-default.css') {
