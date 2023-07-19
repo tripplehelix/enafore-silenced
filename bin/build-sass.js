@@ -14,8 +14,8 @@ const themesScssDir = path.join(__dirname, '../src/scss/themes')
 const assetsDir = path.join(__dirname, '../static')
 
 async function renderCss (file) {
-  const result = await sass.compile(file, { outputStyle: 'compressed' });
-  return result.css;
+  const result = await sass.compile(file, { outputStyle: 'compressed' })
+  return result.css
 }
 
 async function compileGlobalSass () {

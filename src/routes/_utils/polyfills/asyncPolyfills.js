@@ -1,4 +1,3 @@
-
 export const importRequestIdleCallback = () => import(
   /* webpackChunkName: '$polyfill$-requestidlecallback' */ 'requestidlecallback'
 )
