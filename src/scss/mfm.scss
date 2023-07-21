@@ -84,7 +84,9 @@
   transform-origin: center center;
 }
 
-/* sparkle */
+.reduce-motion .mfm {
+  animation: none !important;
+}
 
 @keyframes mfm-tada {
   from {
