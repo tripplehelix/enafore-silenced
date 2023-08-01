@@ -1,9 +1,12 @@
+// eslint-disable-next-line no-unused-vars
+import { themes } from '../_static/themes.js'
 const prefersDarkTheme = process.browser && matchMedia('(prefers-color-scheme: dark)').matches
 const meta = process.browser && document.getElementById('theThemeColor')
 
 export const DEFAULT_LIGHT_THEME = 'default' // theme that is shown by default
 export const DEFAULT_DARK_THEME = 'ozark' // theme that is shown for prefers-color-scheme:dark
 export const DEFAULT_THEME = prefersDarkTheme ? DEFAULT_DARK_THEME : DEFAULT_LIGHT_THEME
+const THEME_COLORS = process.env.THEME_COLORS
 
 function getExistingThemeLink () {
   return document.head.querySelector('link[rel=stylesheet][href^="/theme-"]')
@@ -30,7 +33,7 @@ export function switchToTheme (themeName = DEFAULT_THEME, enableGrayscale) {
   if (enableGrayscale) {
     themeName = prefersDarkTheme ? 'dark-grayscale' : 'grayscale'
   }
-  const themeColor = window.__themeColors[themeName]
-  meta.content = themeColor || window.__themeColors[DEFAULT_THEME]
+  const themeColor = THEME_COLORS[themeName]
+  meta.content = themeColor || THEME_COLORS[DEFAULT_THEME]
   loadCSS(`/theme-${themeName}.css`)
 }
