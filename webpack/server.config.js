@@ -3,7 +3,7 @@ import path from 'path'
 import webpack from 'webpack'
 import config from 'sapper/config/webpack.js'
 import pkg from '../package.json'
-import { mode, dev, resolve, inlineSvgs, version, importThemeColors } from './shared.config.js'
+import { mode, dev, resolve, inlineSvgs, version } from './shared.config.js'
 
 // modules that the server should ignore, either because they cause errors or warnings
 // (because they're only used on the client side)
@@ -67,7 +67,7 @@ export default {
       'process.env.LOCALE': JSON.stringify(LOCALE),
       'process.env.PINAFORE_VERSION': JSON.stringify(version),
       'process.env.IS_SERVICE_WORKER': 'false',
-      'process.env.THEME_COLORS': JSON.stringify(importThemeColors)
+      'process.env.THEME_COLORS': 'null'
     })
   ]
 }
