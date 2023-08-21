@@ -12,10 +12,7 @@ export default {
   logIn: 'Log in',
   footer: `
     <p>
-      Enafore is
-      <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore">open-source software</a>
-      originally created by
-      <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>, forked by 
+      Enafore is <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore">open-source software</a> by 
       <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>, and distributed under the
       <a rel="noopener" target="_blank"
          href="https://github.com/easrng/enafore/blob/main/LICENSE">AGPL License</a>.
@@ -339,7 +336,7 @@ export default {
     <a rel="noopener" target="_blank"
        href="https://github.com/easrng/enafore">free and open-source software</a>
     created by
-    <a rel="noopener" target="_blank" href="https://nolanlawson.com">Nolan Lawson</a>
+    <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>
     and distributed under the
     <a rel="noopener" target="_blank"
        href="https://github.com/easrng/enafore/blob/main/LICENSE">GNU Affero General Public License</a>.

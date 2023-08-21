@@ -1,5 +1,5 @@
 {#if sensitive }
-<div class={computedClass} style={customSize}>
+<div class={computedClass}>
   <div class="status-sensitive-inner-div">
     {#if sensitiveShown}
       <button id={elementId}
@@ -197,12 +197,6 @@
         !$neverMarkMediaAsSensitive && ($markMediaAsSensitive || originalStatus.sensitive || originalStatus.spoiler_text)
       ),
       elementId: ({ uuid }) => `sensitive-${uuid}`,
-      customSize: ({ $largeInlineMedia, mediaAttachments }) => {
-        if ($largeInlineMedia || !mediaAttachments || mediaAttachments.length < 5) {
-          return ''
-        }
-        return `padding-bottom: ${Math.ceil(mediaAttachments.length / 2) * 29}%;`
-      },
       nCols: ({ mediaAttachments, $largeInlineMedia }) => {
         return (!$largeInlineMedia && mediaAttachments.length > 1) ? 2 : 1
       },

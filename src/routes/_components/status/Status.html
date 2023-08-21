@@ -7,7 +7,7 @@
          on:recalculateHeight
          ref:article
          on:load|capture="recalculateHeight()"
-         style={"--status-level:" + ((treeMetadata && treeMetadata.level) || 0)}
+         style={"--status-level:" + Math.min(8, (treeMetadata && treeMetadata.level) || 0)}
 >
   {#if showHeader}
     <StatusHeader {...params} />
