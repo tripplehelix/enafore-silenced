@@ -14,6 +14,7 @@ export async function deleteAndRedraft (status) {
     const replyingTo = await database.getStatus(currentInstance, status.in_reply_to_id)
     if (replyingTo) inReplyToHandle = '@' + replyingTo.account.acct
   }
+  store.clearComposeData('dialog')
   store.setComposeData('dialog', {
     text: deletedStatus.text || statusHtmlToPlainText(status.content, status.mentions),
     contentType: deletedStatus.content_type || 'text/plain',

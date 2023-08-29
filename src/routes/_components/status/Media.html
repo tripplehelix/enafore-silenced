@@ -1,4 +1,16 @@
-{#if !blurhash && (type === 'video' || type === 'audio')}
+{#if !blurhash && type === 'unknown'}
+  <button id={elementId}
+            type="button"
+            class="inline-media file-button focus-after"
+            aria-label="attatched file"
+            {tabindex}
+            aria-hidden={ariaHidden}
+            data-width={inlineWidth}
+            data-height={inlineHeight}>
+      <FileIcon />
+  </button>
+{:else}
+  {#if !blurhash && (type === 'video' || type === 'audio')}
     <button id={elementId}
             type="button"
             class="inline-media play-video-button focus-after {type === 'audio' ? 'play-audio-button' : ''} {noNativeWidthHeight ? 'no-native-width-height' : ''}"
@@ -22,8 +34,8 @@
         />
       {/if}
     </button>
-{:else}
-  <button id={elementId}
+  {:else}
+    <button id={elementId}
           type="button"
           class="inline-media show-image-button focus-after {(noNativeWidthHeight && !blurhash) ? 'no-native-width-height' : ''}"
           aria-label={imageButtonAriaLabel}
@@ -69,19 +81,24 @@
       {focus}
     />
   {/if}
-  </button>
+    </button>
+  {/if}
 {/if}
 <style>
   :global(.status-media video, .status-media img) {
     object-fit: cover;
   }
 
-  .play-video-button, .show-image-button {
+  .play-video-button, .show-image-button, .file-button {
     margin: auto;
     padding: 0;
     border-radius: 0;
     border: none;
     background: none;
+  }
+
+  .file-button {
+    background: var(--mask-bg);
   }
 
   .play-audio-button {
@@ -108,6 +125,7 @@
   import { mouseover } from '../../_utils/events.js'
   import NonAutoplayGifv from '../NonAutoplayGifv.html'
   import PlayVideoIcon from '../PlayVideoIcon.html'
+  import FileIcon from '../FileIcon.html'
   import { store } from '../../_store/store.js'
   import LazyImage from '../LazyImage.html'
   import AutoplayVideo from '../AutoplayVideo.html'
@@ -148,8 +166,6 @@ export default {
         if (!$ignoreBlurhash && decodedBlurhash) {
           return decodedBlurhash
         }
-        // Convert the var(--loading-bg) variable into a data URL based on a single pixel of color
-        // TODO: this is hacky
         return convertCssPropertyToDataUrl('--mask-bg')
       },
       blurhash: ({ blurhashToUse, showAsSensitive }) => showAsSensitive && blurhashToUse,
@@ -171,6 +187,7 @@ export default {
       onClick () {
         (async () => {
           const { mediaAttachments, index } = this.get()
+          console.log(mediaAttachments[index])
           const showMediaDialog = await importShowMediaDialog()
           showMediaDialog(mediaAttachments, index)
         })()
@@ -188,6 +205,7 @@ export default {
     components: {
       NonAutoplayGifv,
       PlayVideoIcon,
+      FileIcon,
       LazyImage,
       AutoplayVideo
     }
