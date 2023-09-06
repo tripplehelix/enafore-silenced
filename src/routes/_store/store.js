@@ -49,7 +49,8 @@ const persistedState = {
   reduceMotion:
     !process.browser || matchMedia('(prefers-reduced-motion: reduce)').matches,
   underlineLinks: false,
-  statusTranslationContents: {}
+  statusTranslationContents: {},
+  iconColors: ''
 }
 
 const nonPersistedState = {
