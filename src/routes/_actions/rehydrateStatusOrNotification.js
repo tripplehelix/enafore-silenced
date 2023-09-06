@@ -31,6 +31,7 @@ async function decodeAllBlurhashes (statusOrNotification) {
     await Promise.all(mediaWithBlurhashes.map(async media => {
       try {
         media.decodedBlurhash = await decodeBlurhash(media.blurhash)
+        console.log('decoded blurhash for', media)
       } catch (err) {
         console.warn('Could not decode blurhash, ignoring', err)
       }
@@ -64,4 +65,5 @@ export async function rehydrateStatusOrNotification (statusOrNotification) {
     decodeAllBlurhashes(statusOrNotification),
     calculatePlainTextContent(statusOrNotification)
   ])
+  return statusOrNotification
 }

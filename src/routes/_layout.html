@@ -17,6 +17,8 @@
 <script>
   import { store } from './_store/store.js'
   import { observe } from 'svelte-extras'
+  import { checkStats } from './_actions/stats.js'
+  import { scheduleIdleTask } from './_utils/scheduleIdleTask.js'
 
   export default {
     components: {
@@ -31,6 +33,7 @@
       this.observe('page', page => {
         console.log('currentPage', page)
         this.store.set({ currentPage: page })
+        scheduleIdleTask(checkStats)
       })
     },
     store: () => store,
