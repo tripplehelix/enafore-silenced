@@ -25,8 +25,9 @@ async function storeFreshTimelineItemsInDatabase (instanceName, timelineName, it
     // For status threads, we want to be sure to update the favorite/reblog counts even if
     // this is a stale "view" of the status. See 119-status-counts-update.js for
     // an example of why we need this.
-    items.forEach(async item => {
-      emit('statusUpdated', await rehydrateStatusOrNotification(item))
+    items.forEach(async status => {
+      await rehydrateStatusOrNotification({ status })
+      emit('statusUpdated', status)
     })
   }
 }
@@ -34,7 +35,8 @@ async function storeFreshTimelineItemsInDatabase (instanceName, timelineName, it
 export async function updateStatus (instanceName, accessToken, statusId) {
   const status = await getStatus(instanceName, accessToken, statusId)
   await database.insertStatus(instanceName, status)
-  emit('statusUpdated', await rehydrateStatusOrNotification(status))
+  await rehydrateStatusOrNotification({ status })
+  emit('statusUpdated', status)
   return status
 }
 

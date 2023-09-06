@@ -61,7 +61,8 @@ export async function postStatus (realm, text, inReplyToId, mediaIds,
       const status = await putStatusToServer(currentInstance, accessToken, editId, text,
         inReplyToId, mediaIds, sensitive, spoilerText, visibility, poll, contentType, quoteId)
       await database.insertStatus(currentInstance, status)
-      emit('statusUpdated', await rehydrateStatusOrNotification(status))
+      await rehydrateStatusOrNotification({ status })
+      emit('statusUpdated', status)
       emit('postedStatus', realm, inReplyToUuid)
     } else {
       const status = await postStatusToServer(currentInstance, accessToken, text,
