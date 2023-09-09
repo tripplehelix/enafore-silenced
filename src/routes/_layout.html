@@ -1,3 +1,6 @@
+<svelte:head>
+  <link rel="canonical" href={canonical}>
+</svelte:head>
 <Nav {page} />
 
 <div class="main-content">
@@ -33,13 +36,15 @@
       this.observe('page', page => {
         console.log('currentPage', page)
         this.store.set({ currentPage: page })
-        scheduleIdleTask(checkStats)
+        if (process.browser && location.hostname === 'pinafore.easrng.net') scheduleIdleTask(checkStats)
       })
     },
     store: () => store,
     computed: {
       page: ({ child }) => child.props.path.slice(1) || 'home',
-      infiniteScrollPage: ({ $isUserLoggedIn, page }) => $isUserLoggedIn && !page.startsWith('settings')
+      path: ({ child }) => child.props.path,
+      infiniteScrollPage: ({ $isUserLoggedIn, page }) => $isUserLoggedIn && !page.startsWith('settings'),
+      canonical: ({ path }) => (process.browser ? location.origin + path : process.env.UPSTREAM ? 'https://pinafore.easrng.net' + path : null)
     },
     methods: {
       observe

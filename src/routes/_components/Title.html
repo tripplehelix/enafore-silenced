@@ -20,7 +20,8 @@
           instanceName: $currentInstance,
           hasNotifications: $hasNotifications,
           count: $numberOfNotifications,
-          name
+          name,
+          appName: process.env.UPSTREAM ? 'Enafore' : process.browser ? location.hostname : ''
         })
       }
     }

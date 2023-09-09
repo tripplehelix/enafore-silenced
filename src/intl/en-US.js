@@ -20,7 +20,6 @@ export default {
     </p>
   `,
   // Manifest
-  longAppName: 'Enafore',
   newStatus: 'New post',
   // Generic UI
   loading: 'Loading',
@@ -178,7 +177,7 @@ export default {
     ·
     {showInstanceName, select,
       true {{instanceName}}
-      other {Enafore}
+      other {{appName}}
     }
   `,
   pinLabel: `{label} {pinnable, select,
