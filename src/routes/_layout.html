@@ -42,7 +42,6 @@
     store: () => store,
     computed: {
       page: ({ child }) => child.props.path.slice(1) || 'home',
-      path: ({ child }) => child.props.path,
       infiniteScrollPage: ({ $isUserLoggedIn, page }) => $isUserLoggedIn && !page.startsWith('settings'),
       canonical: ({ path }) => (process.browser ? location.origin + path : process.env.UPSTREAM ? 'https://pinafore.easrng.net' + path : null)
     },

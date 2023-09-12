@@ -69,5 +69,6 @@ export default [
   { id: 'fa-circle', src: 'src/thirdparty/font-awesome-svg-png/white/svg/circle.svg' },
   { id: 'fa-language', src: 'src/thirdparty/font-awesome-svg-png/white/svg/language.svg' },
   { id: 'fa-quote-right', src: 'src/thirdparty/font-awesome-svg-png/white/svg/quote-right.svg' },
+  { id: 'fa-home', src: 'src/thirdparty/font-awesome-svg-png/white/svg/home.svg' },
   { id: 'misskey-logo', src: 'src/static/misskey.svg' }
 ]

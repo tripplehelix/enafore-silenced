@@ -16,6 +16,11 @@
   </span>
   {/if}
   </span>
+  {#if localOnly}
+  <span class="status-favs-reblogs" title="{intl.localOnly}">
+    <SvgIcon className="status-favs-reblogs-svg" href="#fa-home" />
+  </span>
+  {/if}
   {#if applicationName}
     {#if applicationWebsite}
       <ExternalLink className="status-application"
@@ -50,8 +55,8 @@
 <style>
   .status-details {
     grid-area: details;
-    display: grid;
-    grid-template-columns: minmax(0, max-content) repeat(3, max-content);
+    display: flex;
+    flex-wrap: wrap;
     grid-gap: 20px;
     align-items: center;
     justify-content: left;
@@ -135,8 +140,7 @@
       font-size: 1em;
     }
     .status-details {
-      grid-gap: 5px;
-      justify-content: space-between;
+      grid-gap: 10px;
     }
 
   }

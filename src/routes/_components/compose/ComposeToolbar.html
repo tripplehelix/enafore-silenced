@@ -29,6 +29,8 @@
       href={postPrivacy.icon}
       on:click="onPostPrivacyClick()"
       disabled={!!editId}
+      checked={localOnly}
+      checkIcon="#fa-home"
     />
     <IconButton
       className="compose-toolbar-button"
@@ -45,6 +47,7 @@
       pressable={true}
       pressed={contentWarningShown}
     />
+    <ComposeLengthIndicator {length} {overLimit} />
   </div>
   <input ref:input
          on:change="onFileChange(event)"
@@ -61,9 +64,17 @@
   .compose-box-toolbar-items {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+  }
+  :global(.compose-box-toolbar .icon-button-check) {
+    width: 19px;
+    height: 18px;
+    bottom: 1px;
+    top: unset;
+    filter: drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg));
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: 340px) {
     :global(button.icon-button.compose-toolbar-button) {
       padding-left: 5px;
       padding-right: 5px;
@@ -89,10 +100,12 @@
   import { enablePoll, disablePoll } from '../../_actions/composePoll.js'
   import { updateCustomEmojiForInstance } from '../../_actions/emoji.js'
   import { formatIntl } from '../../_utils/formatIntl.js'
+  import ComposeLengthIndicator from './ComposeLengthIndicator.html'
 
   export default {
     components: {
-      IconButton
+      IconButton,
+      ComposeLengthIndicator
     },
     data: () => ({
       mediaAccept

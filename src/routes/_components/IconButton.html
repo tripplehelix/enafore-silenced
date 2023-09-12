@@ -13,7 +13,7 @@
 >
   <SvgIcon className="icon-button-svg {svgClassName || ''}" ref:svg {href} />
   {#if checked}
-    <SvgIcon className="icon-button-svg icon-button-check" ref:check href="#fa-check" />
+    <SvgIcon className="icon-button-svg icon-button-check" ref:check href={checkIcon} />
   {/if}
 </button>
 <style>
@@ -148,7 +148,8 @@
       sameColorWhenPressed: false,
       ariaHidden: false,
       clickListener: true,
-      checked: false
+      checked: false,
+      checkIcon: '#fa-check'
     }),
     store: () => store,
     computed: {

@@ -696,6 +696,7 @@ export default {
   confirm: 'Confirm',
   closeDialog: 'Close dialog',
   postPrivacy: 'Post privacy',
+  localOnly: 'Local only',
   contentType: 'Content type',
   homeOnInstance: 'Home on {instance}',
   statusesTimelineOnInstance: 'Statuses: {timeline} timeline on {instance}',

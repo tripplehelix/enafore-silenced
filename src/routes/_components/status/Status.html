@@ -394,6 +394,7 @@
         (treeMetadata && treeMetadata.subtree && treeMetadata.subtree.end) && 'status-subtree-end'
       )),
       content: ({ originalStatus }) => originalStatus.content || '',
+      localOnly: ({ originalStatus }) => originalStatus.local_only || false,
       showContent: ({ spoilerText, spoilerShown }) => !spoilerText || spoilerShown,
       // These timestamp params may change every 10 seconds due to now() polling, so keep them
       // separate from the generic `params` list to avoid costly recomputes.
@@ -424,7 +425,7 @@
         account, accountId, uuid, isStatusInNotification, isStatusInOwnThread,
         originalAccount, originalAccountId, visibility,
         replyVisibility, spoilerText, originalStatus, originalStatusId, inReplyToId,
-        enableShortcuts, shortcutScope, originalStatusEmojis
+        enableShortcuts, shortcutScope, originalStatusEmojis, localOnly
       }) => ({
         notification,
         notificationId,
@@ -446,7 +447,8 @@
         inReplyToId,
         enableShortcuts,
         shortcutScope,
-        originalStatusEmojis
+        originalStatusEmojis,
+        localOnly
       })
     }
   }
