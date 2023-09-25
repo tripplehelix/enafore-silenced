@@ -41,6 +41,9 @@
   {#if showQuote && showContent}
     <svelte:self status={originalQuote} isQuote={true} on:recalculateHeight />
   {/if}
+  {#if showHashtagsInBar}
+    <StatusTags {hashtagsInBar} />
+  {/if}
   {#if hasReactions}
     <StatusReactions {...params} />
   {/if}
@@ -75,6 +78,7 @@
         "sidebar media        media         media"
         "sidebar poll         poll          poll"
         "quote   quote        quote         quote"
+        "....... tags         tags          tags"
         "....... reactions    reactions     reactions"
         "....... toolbar      toolbar       toolbar"
         "compose compose      compose       compose";
@@ -106,6 +110,7 @@
       "media       media"
       "poll        poll"
       "quote       quote"
+      "tags        tags"
       "reactions   reactions"
       "details     details"
       "toolbar     toolbar"
@@ -155,6 +160,7 @@
   import StatusComposeBox from './StatusComposeBox.html'
   import StatusMentions from './StatusMentions.html'
   import StatusReactions from './StatusReactions.html'
+  import StatusTags from './StatusTags.html'
   import StatusPoll from './StatusPoll.html'
   import Shortcut from '../shortcut/Shortcut.html'
   import { store } from '../../_store/store.js'
@@ -221,6 +227,7 @@
       StatusComposeBox,
       StatusMentions,
       StatusReactions,
+      StatusTags,
       Shortcut
     },
     data: () => ({
@@ -294,7 +301,7 @@
       accountForShortcut: ({ originalAccount, notification }) => notification ? notification.account : originalAccount,
       visibility: ({ originalStatus }) => originalStatus.visibility,
       plainTextContent: ({ originalStatus }) => originalStatus.plainTextContent || '',
-      plainTextContentOverLength: ({ plainTextContent }) => (
+      plainTextContentOverLength: ({ plainTextContent, $hideLongPosts }) => $hideLongPosts && (
         // measureText() is expensive, so avoid doing it when possible.
         // Also measureText() typically only makes text shorter, not longer, so we can measure the raw length
         // as a shortcut. (The only case where it makes text longer is with short URLs which get expanded to a longer
@@ -417,6 +424,8 @@
           subtree: summary.subtree
         }
       },
+      hashtagsInBar: ({ originalStatus }) => originalStatus.hashtagsInBar || [],
+      showHashtagsInBar: ({ hashtagsInBar, showContent }) => showContent && (hashtagsInBar.length > 0),
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
       // change frequently and would therefore cause costly recomputes if included here.
       // The main goal here is to avoid typing by passing as many params as possible to child components.
