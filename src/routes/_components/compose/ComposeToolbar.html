@@ -26,11 +26,9 @@
     <IconButton
       className="compose-toolbar-button"
       label={postPrivacyLabel}
-      href={postPrivacy.icon}
+      href={actualPostPrivacy.icon}
       on:click="onPostPrivacyClick()"
       disabled={!!editId}
-      checked={localOnly}
-      checkIcon="#fa-home"
     />
     <IconButton
       className="compose-toolbar-button"
@@ -65,13 +63,6 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-  }
-  :global(.compose-box-toolbar .icon-button-check) {
-    width: 19px;
-    height: 18px;
-    bottom: 1px;
-    top: unset;
-    filter: drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg)) drop-shadow(0 0 1px var(--main-bg));
   }
 
   @media (max-width: 340px) {
@@ -111,10 +102,14 @@
       mediaAccept
     }),
     computed: {
-      postPrivacyLabel: ({ postPrivacy, editId }) => editId
-        ? postPrivacy.label
+      actualPostPrivacy: ({ postPrivacy, localOnly }) => ({
+        icon: postPrivacy.icon + (localOnly ? '-home' : ''),
+        label: postPrivacy.label + (localOnly ? ', ' + 'intl.localOnly' : '')
+      }),
+      postPrivacyLabel: ({ actualPostPrivacy, editId }) => editId
+        ? actualPostPrivacy.label
         : (
-            formatIntl('intl.postPrivacyLabel', { label: postPrivacy.label })
+            formatIntl('intl.postPrivacyLabel', { label: actualPostPrivacy.label })
           ),
       contentTypeIcon: ({ contentType }) => (KNOWN_CONTENT_TYPES[contentType] || KNOWN_CONTENT_TYPES.default).icon
     },

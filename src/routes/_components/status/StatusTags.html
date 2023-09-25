@@ -1,4 +1,4 @@
-<div class="status-hashtag-bar">
+<div class="status-hashtag-bar {isStatusInNotification ? 'status-in-notification' : '' }">
   {#each hashtagsInBar as hashtagInBar}
   <a href="/tags/{hashtagInBar}" class="hashtag">#{hashtagInBar}</a>
   {/each}
@@ -16,5 +16,8 @@
   .status-hashtag-bar a {
     color: var(--deemphasized-text-color);
     margin-right: 0.5em;
+  }
+  .status-in-notification.status-hashtag-bar a {
+    color: var(--very-deemphasized-text-color)
   }
 </style>

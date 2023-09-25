@@ -73,11 +73,14 @@ export function computeHashtagBarForStatus (status) {
         // stop here, this is not a real hashtag, so consider it as text
         return false
       }
+      return normalized
     } else if (node.nodeType !== 3 || node.nodeValue?.trim()) {
       // not a space
       return false
+    } else {
+      // spaces
+      return true
     }
-    return true
   }
 
   let lastChild = template.content.lastChild
@@ -119,9 +122,14 @@ export function computeHashtagBarForStatus (status) {
   // try to see if the last line is only hashtags
   let onlyHashtags = true
 
-  Array.from(lastChild.childNodes).forEach((node) => {
-    onlyHashtags = isValidNode(node)
-  })
+  for (const node of lastChild.childNodes) {
+    const tag = isValidNode(node)
+    if (typeof tag === 'string') {
+      lastLineHashtags.push(tag)
+    } else if (!tag) {
+      onlyHashtags = false
+    }
+  }
 
   const hashtagsInBar = tagNames.filter((tag) => {
     const normalizedTag = tag.normalize('NFKC')

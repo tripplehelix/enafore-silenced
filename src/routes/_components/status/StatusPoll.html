@@ -175,10 +175,6 @@
     color: var(--very-deemphasized-text-color);
   }
 
-  :global(.poll-stat.is-notification .poll-icon) {
-    fill: var(--very-deemphasized-text-color);
-  }
-
   .poll-stat.poll-expired {
     display: none;
   }
@@ -208,6 +204,11 @@
     stroke: none;
     fill: var(--svg-fill);
     vertical-align: middle;
+    margin-left: 5px;
+  }
+
+  :global(.poll-stat.is-notification .poll-icon, .status-in-notification .poll-own-vote) {
+    fill: var(--very-deemphasized-text-color);
   }
 
   .poll-form-option {

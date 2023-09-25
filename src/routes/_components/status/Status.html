@@ -42,7 +42,7 @@
     <svelte:self status={originalQuote} isQuote={true} on:recalculateHeight />
   {/if}
   {#if showHashtagsInBar}
-    <StatusTags {hashtagsInBar} />
+    <StatusTags {hashtagsInBar} {isStatusInNotification} />
   {/if}
   {#if hasReactions}
     <StatusReactions {...params} />
