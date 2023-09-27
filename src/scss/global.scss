@@ -128,6 +128,10 @@ button,
     background: var(--button-bg-active);
   }
 
+  &:visited {
+    color: var(--button-text);
+  }
+
   &[disabled] {
     opacity: 0.35;
     pointer-events: none;

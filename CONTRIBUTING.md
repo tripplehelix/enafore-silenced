@@ -65,8 +65,8 @@ To disable minification in a production build (for debugging purposes), you can 
 
 The Webpack Bundle Analyzer `report.html` and `stats.json` are available publicly via e.g.:
 
-- https://pinafore.easrng.net/client/report.html
-- https://pinafore.easrng.net/client/stats.json
+- https://enafore.social/client/report.html
+- https://enafore.social/client/stats.json
 
 This is also available locally after `yarn run build` at `.sapper/client/report.html`.
 
