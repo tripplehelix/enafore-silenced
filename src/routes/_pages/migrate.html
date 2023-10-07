@@ -79,8 +79,8 @@
 
   export default {
     oncreate () {
-      const hash = location.hash || window.sessionStorage.getItem('migrationData')
-      window.sessionStorage.setItem('migrationData', hash)
+      const hash = location.hash || sessionStorage.getItem('migrationData')
+      sessionStorage.setItem('migrationData', hash)
       history.replaceState(history.state, '', location.pathname)
       const data = {}
       for (const [key, value] of new URLSearchParams(hash.slice(1)).entries()) {

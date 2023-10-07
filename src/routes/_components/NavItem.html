@@ -216,7 +216,7 @@
         }
         update()
         await animation.finished
-        if (lastAnimationFrame) window.cancelAnimationFrame(lastAnimationFrame)
+        if (lastAnimationFrame) cancelAnimationFrame(lastAnimationFrame)
         for (const label of labels) {
           label.style.transform = ''
           label.style.transition = ''

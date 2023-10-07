@@ -67,7 +67,7 @@ const nonPersistedState = {
     process.browser &&
     'serviceWorker' in navigator &&
     'PushManager' in window &&
-    'getKey' in window.PushSubscription.prototype,
+    'getKey' in PushSubscription.prototype,
   queryInSearch: '',
   repliesShown: {},
   sensitivesShown: {},
