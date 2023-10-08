@@ -59,7 +59,7 @@
   }
 
   .main-nav-link.selected .nav-indicator {
-    transform: translateY(0%);
+    transform: translateY(0%) !important;
   }
 
   .main-nav-link.selected .nav-icon-and-label {
@@ -169,12 +169,13 @@
         }
       },
       animatePart1 ({ toPage }) {
+        const { bottomNav } = this.store.get()
         const indicator = this.refs.indicator
         mark('animateNavPart1 gBCR')
         const fromRect = indicator.getBoundingClientRect()
         stop('animateNavPart1 gBCR')
         indicator.firstElementChild.style.transition = 'unset'
-        indicator.firstElementChild.style.transform = 'translateY(100%)'
+        indicator.firstElementChild.style.transform = `translateY(${bottomNav ? '-' : ''}100%)!important`
         emit('animateNavPart2', { fromRect, fromLi: indicator.closest('li'), toPage })
         requestAnimationFrame(() => {
           indicator.firstElementChild.style.transition = ''
@@ -190,7 +191,7 @@
           label.style.transition = 'unset'
         }
         indicator.firstElementChild.style.transition = 'unset'
-        indicator.firstElementChild.style.transform = 'translateY(0%)'
+        indicator.firstElementChild.style.transform = 'translateY(0%)!important'
         mark('animateNavPart2 gBCR')
         const toRect = indicator.getBoundingClientRect()
         stop('animateNavPart2 gBCR')
