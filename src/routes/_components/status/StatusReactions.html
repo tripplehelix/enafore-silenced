@@ -1,6 +1,4 @@
-<div
-  class="status-reactions {isStatusInOwnThread ? 'status-in-own-thread' : ''}"
->
+<div class="status-reactions">
   {#each processedReactions as reaction}
   <button
     class="status-reaction not-same-pressed {reaction.me?'pressed':''}"

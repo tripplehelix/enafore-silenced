@@ -42,7 +42,7 @@ async function buildIcons () {
   await mkdir(path.resolve(__dirname, '../static/icons'), {
     recursive: true
   })
-  for (const theme of [{ name: '' }, { name: '-alt', bg: '#332e39', fg: '#eaddff' }]) {
+  for (const theme of [{ name: '' }, { name: '-alt', bg: '#3c2947', fg: '#d4bbff' }]) {
     const icon = Buffer.from(makeIcon(theme))
     const iosIcon = Buffer.from(makeIcon({ ...theme, ios: true }))
     const maskableIcon = Buffer.from(makeIcon({ ...theme, maskable: true }))
