@@ -15,8 +15,8 @@ export async function edit (status) {
     if (replyingTo) inReplyToHandle = '@' + replyingTo.account.acct
   }
   store.setComposeData('dialog', {
-    text: source.text || statusHtmlToPlainText(status.content, status.mentions),
-    contentType: source.content_type || 'text/plain',
+    text: (source.akkoma && source.akkoma.source && source.akkoma.source.content) || source.text || statusHtmlToPlainText(status.content, status.mentions),
+    contentType: (source.akkoma && source.akkoma.source && source.akkoma.source.mediaType) || source.content_type || 'text/plain',
     contentWarningShown: !!(source.spoiler_text || status.spoiler_text),
     contentWarning: source.spoiler_text || status.spoiler_text || '',
     postPrivacy: status.visibility,

@@ -30,6 +30,7 @@
     overflow: hidden;
     white-space: pre-wrap;
     font-size: 1.17em;
+    line-height: 1.369;
     display: none;
   }
 
@@ -130,7 +131,6 @@
   import { classname } from '../../_utils/classname.js'
   import { massageUserText } from '../../_utils/massageUserText.js'
   import { urlIsCrossOrigin } from '../../_utils/urlIsCrossOrigin.js'
-  import { importConfetti } from '../../_utils/asyncModules/importConfetti.js'
   import { katexify } from '../../_utils/katexify.js'
   import IconButton from '../IconButton.html'
 
@@ -156,7 +156,8 @@
         )
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
-      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate, $disableDecomojiConverter }) => (
+      mentions: ({ originalStatus }) => originalStatus.mentions,
+      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate, $disableDecomojiConverter, mentions, uuid, originalAccount, $currentVerifyCredentials }) => (
         (showTranslate && translateContent)
           ? translateContent
           : massageUserText(content, originalStatusEmojis, $autoplayGifs, $disableDecomojiConverter)
@@ -220,16 +221,7 @@
           }
           // hydrate external links
           const href = anchor.getAttribute('href')
-          const hrefParsed = new URL(href, location.href)
-          if (hrefParsed.hostname.startsWith('pinafore') && hrefParsed.pathname === '/confetti') {
-            anchor.setAttribute('title', 'confetti!')
-            anchor.setAttribute('target', '_self')
-            anchor.setAttribute('href', '/confetti')
-            anchor.addEventListener('click', function (e) {
-              e.preventDefault()
-              importConfetti().then(confetti => confetti())
-            })
-          } if (urlIsCrossOrigin(href)) {
+          if (urlIsCrossOrigin(href)) {
             anchor.setAttribute('title', href)
             anchor.setAttribute('target', '_blank')
             anchor.setAttribute('rel', 'nofollow noopener')

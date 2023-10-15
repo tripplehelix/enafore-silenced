@@ -224,7 +224,7 @@ export default {
   addMedia: 'Add media (images, video, audio)',
   addPoll: 'Add poll',
   removePoll: 'Remove poll',
-  postPrivacyLabel: 'Adjust privacy (currently {label})',
+  postPrivacyLabel: 'Change post privacy (currently {label})',
   addContentWarning: 'Add content warning',
   removeContentWarning: 'Remove content warning',
   altLabel: 'Describe for visually impaired people',
@@ -302,14 +302,13 @@ export default {
   moreOptions: 'More options',
   followersLabel: 'Followed by {count}',
   followingLabel: 'Follows {count}',
-  followLabel: `Follow {requested, select,
-    true {(follow requested)}
-    other {}
-  }`,
-  unfollowLabel: `Unfollow {requested, select,
-    true {(follow requested)}
-    other {}
-  }`,
+  followLabel: 'Follow',
+  unfollowLabel: 'Unfollow',
+  unrequestLabel: 'Cancel request',
+  unfollowingLabel: 'Unfollowing...',
+  unblockingLabel: 'Unblocking...',
+  unrequestingLabel: 'Canceling...',
+  requestingLabel: 'Requesting...',
   notify: 'Subscribe to {account}',
   denotify: 'Unsubscribe from {account}',
   subscribedAccount: 'Subscribed to account',
@@ -702,6 +701,7 @@ export default {
   postPrivacy: 'Post privacy',
   localOnly: 'Local only',
   contentType: 'Content type',
+  contentTypeLabel: 'Change content type (currently {label})',
   homeOnInstance: 'Home on {instance}',
   statusesTimelineOnInstance: 'Statuses: {timeline} timeline on {instance}',
   statusesHashtag: 'Statuses: #{hashtag} hashtag',
