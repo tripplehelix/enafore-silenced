@@ -1,10 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
   appName: 'Enafore',
-  appDescription: 'A somewhat unstable fediverse client with better support for Akkoma and glitch-soc instances.',
+  appDescription: 'A somewhat unstable fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.',
   homeDescription: `
     <p>
-      Enafore is a somewhat unstable fediverse client forked from <a href="https://github.com/nolanlawson/pinafore">Pinafore</a> with better support for Akkoma and glitch-soc instances.
+      Enafore is a somewhat unstable fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.
     </p>
     <p>
       Get started by logging in to an instance:

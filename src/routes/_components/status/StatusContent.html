@@ -25,7 +25,7 @@
 </div>
 <style>
   .status-content {
-    margin: 10px 10px 10px 5px;
+    padding: 10px 10px 10px 5px;
     word-wrap: break-word;
     overflow: hidden;
     white-space: pre-wrap;
@@ -41,7 +41,7 @@
 
   .status-content.status-in-own-thread {
     font-size: 1.69em;
-    margin: 20px 10px 20px 5px;
+    padding: 20px 10px 20px 5px;
   }
 
   .status-content.shown {
@@ -105,6 +105,7 @@
 
   .status-content.status-in-notification {
     color: var(--very-deemphasized-text-color);
+    --button-text: var(--very-deemphasized-text-color);
   }
   :global(.status-content.status-in-notification a, .status-mentions.status-in-notification a) {
     color: var(--very-deemphasized-link-color);
@@ -126,11 +127,8 @@
 
 </style>
 <script>
-  import { mark, stop } from '../../_utils/marks.js'
   import { store } from '../../_store/store.js'
   import { classname } from '../../_utils/classname.js'
-  import { massageUserText } from '../../_utils/massageUserText.js'
-  import { urlIsCrossOrigin } from '../../_utils/urlIsCrossOrigin.js'
   import { katexify } from '../../_utils/katexify.js'
   import IconButton from '../IconButton.html'
 
@@ -157,11 +155,10 @@
       },
       content: ({ originalStatus }) => (originalStatus.content || ''),
       mentions: ({ originalStatus }) => originalStatus.mentions,
-      massagedContent: ({ content, originalStatusEmojis, $autoplayGifs, translateContent, showTranslate, $disableDecomojiConverter, mentions, uuid, originalAccount, $currentVerifyCredentials }) => (
+      massagedContent: ({ content, translateContent, showTranslate }) =>
         (showTranslate && translateContent)
           ? translateContent
-          : massageUserText(content, originalStatusEmojis, $autoplayGifs, $disableDecomojiConverter)
-      ),
+          : content,
       computedTranslateClass: ({ isStatusInOwnThread, isStatusInNotification, shown }) => {
         return classname(
           'status-translate',
@@ -189,51 +186,12 @@
     },
     methods: {
       hydrateContent () {
-        mark('hydrateContent')
-        const node = this.refs.node
-        const { originalStatus, uuid } = this.get()
-        const { mentions, tags } = originalStatus
-        let count = 0
-        const anchors = Array.from(node.getElementsByTagName('A'))
-
-        for (const anchor of anchors) {
-          // hydrate hashtag
-          if (tags && anchor.classList.contains('hashtag')) {
-            for (const tag of tags) {
-              if (anchor.getAttribute('href').toLowerCase().endsWith(`/${tag.name.toLowerCase()}`)) {
-                anchor.setAttribute('href', `/tags/${tag.name}`)
-                anchor.setAttribute('id', `status-content-link-${uuid}-${++count}`)
-                anchor.removeAttribute('target')
-                anchor.removeAttribute('rel')
-              }
-            }
-          // hydrate mention
-          } else if (mentions && anchor.classList.contains('mention')) {
-            for (const mention of mentions) {
-              if (anchor.getAttribute('href') === mention.url) {
-                anchor.setAttribute('href', `/accounts/${mention.id}`)
-                anchor.setAttribute('title', `@${mention.acct}`)
-                anchor.setAttribute('id', `status-content-link-${uuid}-${++count}`)
-                anchor.removeAttribute('target')
-                anchor.removeAttribute('rel')
-              }
-            }
-          }
-          // hydrate external links
-          const href = anchor.getAttribute('href')
-          if (urlIsCrossOrigin(href)) {
-            anchor.setAttribute('title', href)
-            anchor.setAttribute('target', '_blank')
-            anchor.setAttribute('rel', 'nofollow noopener')
-          }
-        }
-        const renderPromise = katexify(node)
+        const renderPromise = katexify(this.refs.node)
         if (renderPromise) {
           renderPromise.then(() => {
             this.fire('recalculateHeight')
           })
         }
-        stop('hydrateContent')
       },
       onHideTranslateClick () {
         let { translateKey, translateState } = this.get()

@@ -18,18 +18,12 @@ function massageMentions (doc, mentions) {
 // paragraphs should be separated by double newlines
 // single <br/>s should become single newlines
 function innerTextRetainingNewlines (doc) {
-  let res = ''
-  const paragraphs = doc.querySelectorAll('p')
-  for (let i = 0; i < paragraphs.length; i++) {
-    const paragraph = paragraphs[i]
-    const brs = paragraph.querySelectorAll('br')
-    for (let j = 0; j < brs.length; j++) {
-      const br = brs[j]
-      br.parentNode.replaceChild(doc.createTextNode('\n'), br)
-    }
-    res += (i > 0 ? '\n\n' : '') + paragraph.textContent
+  const brs = doc.querySelectorAll('br')
+  for (let j = 0; j < brs.length; j++) {
+    const br = brs[j]
+    br.parentNode.replaceChild(doc.createTextNode('\n'), br)
   }
-  return res
+  return [].map.call(doc.body.childNodes, e => e.textContent).join('\n\n')
 }
 
 export function statusHtmlToPlainText (html, mentions) {

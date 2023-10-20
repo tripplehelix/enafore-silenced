@@ -27,10 +27,6 @@ async function insertUpdatesIntoTimeline (instanceName, timelineName, updates) {
   await database.insertTimelineItems(instanceName, timelineName, updates)
 
   const itemSummariesToAdd = store.getForTimeline(instanceName, timelineName, 'timelineItemSummariesToAdd') || []
-  console.log('itemSummariesToAdd', JSON.parse(JSON.stringify(itemSummariesToAdd)))
-  console.log('updates.map(timelineItemToSummary)', JSON.parse(JSON.stringify(updates.map(timelineItemToSummary))))
-  console.log('concat(itemSummariesToAdd, updates.map(timelineItemToSummary))',
-    JSON.parse(JSON.stringify(concat(itemSummariesToAdd, updates.map(item => timelineItemToSummary(item, instanceName))))))
   const newItemSummariesToAdd = uniqBy(
     concat(itemSummariesToAdd, updates.map(item => timelineItemToSummary(item, instanceName))),
     _ => _.id

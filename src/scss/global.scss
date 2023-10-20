@@ -273,3 +273,15 @@ textarea {
   height: 0;
   position: absolute;
 }
+
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-button-svg {
+  fill: currentColor;
+  width: 18px;
+  height: 18px;
+  flex: 1;
+}

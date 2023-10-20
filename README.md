@@ -1,6 +1,6 @@
 # Enafore
 
-A somewhat unstable fediverse client forked from [Pinafore](https://github.com/nolanlawson/pinafore) with better support for Akkoma and glitch-soc instances.
+A somewhat unstable fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.
 
 Enafore is available at [enafore.social](https://enafore.social).
 

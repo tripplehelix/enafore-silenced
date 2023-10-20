@@ -16,6 +16,7 @@ const NOOP_MODULES = [
   'tesseract.js/src/createWorker.js',
   'tesseract.js/src/createWorker.js.map',
   '@easrng/image-grid/index.js',
+  '@easrng/sparkle/index.js',
   'katex/dist/katex.min.css'
 ]
 

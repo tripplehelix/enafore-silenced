@@ -67,7 +67,7 @@ export function instanceComputations (store) {
     ['currentInstanceInfo'],
     (currentInstanceInfo) => {
       let _a, _b
-      return ((_b = (_a = currentInstanceInfo === null || currentInstanceInfo === undefined ? undefined : currentInstanceInfo.configuration) === null || _a === undefined ? undefined : _a.statuses) === null || _b === undefined ? undefined : _b.supported_toggles) || {}
+      return ((_b = (_a = currentInstanceInfo === null || currentInstanceInfo === undefined ? undefined : currentInstanceInfo.configuration) === null || _a === undefined ? undefined : _a.statuses) === null || _b === undefined ? undefined : _b.supported_toggles)
     })
 
   store.compute(
