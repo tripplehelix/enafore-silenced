@@ -521,6 +521,7 @@ export default {
   pinnedStatus: 'Pinned post',
   rebloggedYou: 'boosted your post',
   favoritedYou: 'favorited your post',
+  reacted: 'reacted with an emoji',
   followedYou: 'followed you',
   edited: 'edited their post',
   requestedFollow: 'requested to follow you',

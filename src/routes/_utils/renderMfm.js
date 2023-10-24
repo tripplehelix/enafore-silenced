@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { parse } from 'mfm-js'
-import '@easrng/sparkle/index.js'
 
 export function renderMfm ({
   mfmContent,
@@ -262,7 +261,7 @@ export function renderMfm ({
         if (!emoji) return `:${token.props.name}:`
         const urlToUse = autoplayGifs ? emoji.url : emoji.static_url
         const shortcodeWithColons = `:${emoji.shortcode}:`
-        return Object.assign(new Image(), {
+        return Object.assign(document.createElement('img'), {
           className: 'inline-custom-emoji',
           draggable: false,
           src: urlToUse,

@@ -27,7 +27,6 @@ async function storeFreshTimelineItemsInDatabase (instanceName, timelineName, it
     // an example of why we need this.
     await Promise.all(items.map(async status => {
       await rehydrateStatusOrNotification({ status })
-      emit('statusUpdated', status)
     }))
   }
 }
@@ -75,18 +74,21 @@ async function fetchThreadFromNetwork (instanceName, accessToken, timelineName) 
     return fetchFreshThreadFromNetwork(instanceName, accessToken, statusId)
   }
 
+  const rehydrated = rehydrateStatusOrNotification({ status })
+
   if (!status.in_reply_to_id) {
     // status is not a reply to another status (fast path)
     // Update the status and thread asynchronously, but return just the status for now
     // Any replies to the status will load asynchronously
     /* no await */ updateStatusAndThread(instanceName, accessToken, timelineName, statusId)
+    await rehydrated
     return [status]
   }
   // status is a reply to some other status, meaning we don't want some
   // jerky behavior where it suddenly scrolls into place. Update the status asynchronously
   // but grab the thread now
   scheduleIdleTask(() => updateStatus(instanceName, accessToken, statusId))
-  const context = await getStatusContext(instanceName, accessToken, statusId)
+  const [context] = await Promise.all([getStatusContext(instanceName, accessToken, statusId), rehydrated])
   return concat(context.ancestors, status, context.descendants)
 }
 
@@ -109,7 +111,12 @@ async function addPagedTimelineItems (instanceName, timelineName, items) {
 export async function addPagedTimelineItemSummaries (instanceName, timelineName, newSummaries) {
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
 
-  const mergedSummaries = uniqBy(concat(oldSummaries || [], newSummaries), byId)
+  let mergedSummaries = uniqBy(concat(oldSummaries || [], newSummaries), byId)
+
+  const [type, statusId] = timelineName.split('/')
+  if (type === 'status') {
+    mergedSummaries = sortItemSummariesForThread(mergedSummaries, statusId)
+  }
 
   if (!isEqual(oldSummaries, mergedSummaries)) {
     store.setForTimeline(instanceName, timelineName, { timelineItemSummaries: mergedSummaries })
@@ -166,7 +173,12 @@ export async function addTimelineItemSummaries (instanceName, timelineName, newS
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
   const oldStale = store.getForTimeline(instanceName, timelineName, 'timelineItemSummariesAreStale')
 
-  const mergedSummaries = uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId)
+  let mergedSummaries = uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId)
+
+  const [type, statusId] = timelineName.split('/')
+  if (type === 'status') {
+    mergedSummaries = sortItemSummariesForThread(mergedSummaries, statusId)
+  }
 
   if (!isEqual(oldSummaries, mergedSummaries)) {
     store.setForTimeline(instanceName, timelineName, { timelineItemSummaries: mergedSummaries })
@@ -259,7 +271,7 @@ export async function showMoreItemsForThread (instanceName, timelineName) {
     }
   }
   const statusId = timelineName.split('/').slice(-1)[0]
-  const sortedTimelineItemSummaries = await sortItemSummariesForThread(timelineItemSummaries, statusId)
+  const sortedTimelineItemSummaries = sortItemSummariesForThread(timelineItemSummaries, statusId)
   store.setForTimeline(instanceName, timelineName, {
     timelineItemSummariesToAdd: [],
     timelineItemSummaries: sortedTimelineItemSummaries

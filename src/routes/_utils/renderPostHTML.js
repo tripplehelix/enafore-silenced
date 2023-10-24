@@ -59,7 +59,7 @@ export function renderPostHTML ({
         if (!emoji) newNodes.push(`:${customEmoji}:`)
         const urlToUse = autoplayGifs ? emoji.url : emoji.static_url
         const shortcodeWithColons = `:${emoji.shortcode}:`
-        newNodes.push(Object.assign(new Image(), {
+        newNodes.push(Object.assign(document.createElement('img'), {
           className: 'inline-custom-emoji',
           draggable: false,
           src: urlToUse,
@@ -102,33 +102,35 @@ export function renderPostHTML ({
   }
   const anchors = Array.from(dom.getElementsByTagName('A'))
   for (const anchor of anchors) {
-    if (originalStatus.tags && anchor.classList.contains('hashtag')) {
-      for (const tag of originalStatus.tags) {
-        if (anchor.getAttribute('href').toLowerCase().endsWith(`/${tag.name.toLowerCase()}`)) {
-          anchor.setAttribute('href', `/tags/${tag.name}`)
+    block: { // eslint-disable-line no-labels
+      if (originalStatus.tags && anchor.classList.contains('hashtag')) {
+        for (const tag of originalStatus.tags) {
+          if (anchor.getAttribute('href').toLowerCase().endsWith(`/${tag.name.toLowerCase()}`)) {
+            anchor.setAttribute('href', `/tags/${tag.name}`)
+            anchor.removeAttribute('target')
+            anchor.removeAttribute('rel')
+            anchor.className = 'hashtag'
+            break block // eslint-disable-line no-labels
+          }
+        }
+      } else if (anchor.classList.contains('mention')) {
+        const mention = mentionsByURL.get(anchor.getAttribute('href'))
+        if (mention) {
+          mention.included = true
+          anchor.setAttribute('href', `/accounts/${mention.id}`)
+          anchor.setAttribute('title', `@${mention.acct}`)
           anchor.removeAttribute('target')
           anchor.removeAttribute('rel')
-          anchor.className = 'hashtag'
-          continue
+          anchor.className = 'mention'
+          anchor.textContent = `@${mention.username}`
+          break block // eslint-disable-line no-labels
         }
       }
-    } else if (anchor.classList.contains('mention')) {
-      const mention = mentionsByURL.get(anchor.getAttribute('href'))
-      if (mention) {
-        mention.included = true
-        anchor.setAttribute('href', `/accounts/${mention.id}`)
-        anchor.setAttribute('title', `@${mention.acct}`)
-        anchor.removeAttribute('target')
-        anchor.removeAttribute('rel')
-        anchor.className = 'mention'
-        anchor.textContent = `@${mention.username}`
-        continue
-      }
+      anchor.setAttribute('title', anchor.href)
+      anchor.setAttribute('target', '_blank')
+      anchor.setAttribute('rel', 'nofollow noopener')
+      anchor.className = ''
     }
-    anchor.setAttribute('title', anchor.href)
-    anchor.setAttribute('target', '_blank')
-    anchor.setAttribute('rel', 'nofollow noopener')
-    anchor.className = ''
   }
   return dom
 }

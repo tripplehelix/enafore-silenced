@@ -7,6 +7,7 @@
          on:recalculateHeight
          ref:article
          on:load|capture="recalculateHeight()"
+         style={style}
 >
   {#if showHeader}
     <StatusHeader {...params} />
@@ -123,8 +124,24 @@
     border: 1px solid var(--main-border);
     border-radius: 6px;
   }
-  .status-article {
-    padding-left: var(--status-pad-h);
+  .status-article {    padding-left: calc(10px * var(--status-depth) + var(--status-pad-h)) !important;
+  }
+  .status-article::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 5px, transparent 5px, transparent 10px);
+    width: calc(10px * var(--status-depth));
+    height: 100%;
+    z-index: -1;
+    color: var(--body-bg);
+  }
+  .status-article.status-subtree-start {
+    border-top: 4px solid var(--main-border);
+  }
+  .status-article.status-subtree-end {
+    border-bottom: 4px solid var(--main-border);
   }
 </style>
 <script>
@@ -164,6 +181,7 @@
   import { on } from '../../_utils/eventBus.js'
   import { rehydrated } from '../../_actions/rehydrateStatusOrNotification.js'
   import { canonicalStatusUrl } from '../../_utils/canonicalStatusUrl.js'
+  import '@easrng/sparkle/index.js'
 
   const INPUT_TAGS = new Set(['a', 'button', 'input', 'textarea', 'label'])
   const isUserInputElement = node => INPUT_TAGS.has(node.localName)
@@ -379,7 +397,7 @@
         timelineType === 'pinned'
       ),
       hasReactions: ({ isQuote, originalStatus }) => isQuote ? false : ((originalStatus.reactions || originalStatus.emoji_reactions) || []).length > 0,
-      className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote }) => (classname(
+      className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote, treeMetadata }) => (classname(
         'status-article',
         'shortcut-list-item',
         'focus-fix',
@@ -388,6 +406,8 @@
         isStatusInOwnThread && 'status-in-own-thread',
         $underlineLinks && 'underline-links',
         !$disableTapOnStatus && !isStatusInOwnThread && 'tap-on-status',
+        (treeMetadata && treeMetadata.start) && 'status-subtree-start',
+        (treeMetadata && treeMetadata.end) && 'status-subtree-end',
         isQuote && 'status-quoted'
       )),
       content: ({ originalStatus }) => originalStatus.content || '',
@@ -404,6 +424,17 @@
         absoluteFormattedCreatedDate,
         absoluteFormattedEditedDate
       }),
+      treeMetadata: ({ statusId, $currentInstance, $currentTimeline }) => {
+        const summaries = store.getForTimeline($currentInstance, $currentTimeline, 'timelineItemSummaries')
+        if (!(summaries && summaries.byId)) return null
+        const summary = summaries.byId.get(statusId)
+        if (!summary) return null
+        return {
+          depth: summary.depth,
+          start: summary.start
+        }
+      },
+      style: ({ treeMetadata }) => `--status-depth:${treeMetadata ? Math.min(8, treeMetadata.depth || 0) : 0}`,
       hashtagsInBar: ({ originalStatus }) => originalStatus.hashtagsInBar || [],
       showHashtagsInBar: ({ hashtagsInBar, showContent }) => showContent && (hashtagsInBar.length > 0),
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
