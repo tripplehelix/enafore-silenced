@@ -31,6 +31,7 @@ export function translateStatus (
     )
   ) {
     statusTranslations[id].loading = true
+    statusTranslations[id].error = false
     translate(
       (status.spoiler_text
         ? massageUserText(

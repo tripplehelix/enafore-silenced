@@ -321,6 +321,7 @@ export default {
   domainHidden: 'Domain blocked',
   muted: 'Muted',
   followsYou: 'Follows you',
+  locked: 'This account is locked. The owner manually reviews who can follow them.',
   avatarForAccount: 'Avatar for {account}',
   fields: 'Fields',
   accountHasMoved: '{account} has moved:',
@@ -331,15 +332,13 @@ export default {
   aboutApp: 'About Enafore',
   aboutAppDescription: `
   <p>
-    Enafore is
-    <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/enafore">free and open-source software</a>
-    created by
-    <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>
-    and distributed under the
-    <a rel="noopener" target="_blank"
-       href="https://github.com/easrng/enafore/blob/main/LICENSE">GNU Affero General Public License</a>.
+    Enafore is <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore">open-source</a> software by <a rel="noopener" target="_blank" href="https://easrng.net">easrng</a>.
   </p>
+
+  <div class="donate-banner ui-settings">
+    <h2>Want to support Enafore development?</h2>
+    <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore#donate" class="button primary">Donate</a>
+  </div>
 
   <h2 id="privacy-policy">Privacy Policy</h2>
 
@@ -367,6 +366,16 @@ export default {
   <p>
     Logo thanks to "sailboat" by Gregor Cresnar from
     <a rel="noopener" target="_blank" href="https://thenounproject.com/">the Noun Project</a>.
+  </p>
+
+  <p>
+    Enafore is licensed under the <a rel="noopener" target="_blank" href="https://github.com/easrng/enafore/blob/main/LICENSE">GNU Affero General Public License</a>.
+  </p>
+  
+  <h2>Version</h2>
+  
+  <p>
+    You are running Enafore version <code class="enafore-version"></code>.
   </p>`,
   // Settings
   settings: 'Settings',
