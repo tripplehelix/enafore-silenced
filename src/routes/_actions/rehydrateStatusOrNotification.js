@@ -20,9 +20,7 @@ function getActualStatus (statusOrNotification) {
     get(statusOrNotification, ['notification', 'status'])
   )
 }
-
-export function prepareToRehydrate () {
-  // start the blurhash worker a bit early to save time
+if (process.browser) {
   try {
     initBlurhash()
   } catch (err) {
@@ -84,5 +82,5 @@ export async function rehydrateStatusOrNotification (statusOrNotification) {
     rehydrateQuote(originalStatus)
   ])
   delete originalStatus[rehydrating]
-  originalStatus[rehydrated] = true
+  originalStatus[rehydrated] = new Error('rehydrated at')
 }

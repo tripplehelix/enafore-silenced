@@ -96,6 +96,14 @@ export function renderMfm ({
             style = useAnim ? `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom;` : ''
             break
           }
+          case 'fade': {
+            const direction = token.props.args.out
+              ? 'alternate-reverse'
+              : 'alternate'
+            const speed = validTime(token.props.args.speed) || '1.5s'
+            style = `animation: mfm-fade ${speed} linear infinite;animation-direction:${direction}`
+            break
+          }
           case 'flip': {
             const transform = (token.props.args.h && token.props.args.v)
               ? 'scale(-1, -1)'
@@ -107,19 +115,19 @@ export function renderMfm ({
           }
           case 'x2': {
             const ele = document.createElement('span')
-            ele.className = 'mfm-x2'
+            ele.setAttribute('class', '_mfm_x2_')
             ele.append(...genEl(token.children, scale * 2))
             return ele
           }
           case 'x3': {
             const ele = document.createElement('span')
-            ele.className = 'mfm-x3'
+            ele.setAttribute('class', '_mfm_x3_')
             ele.append(...genEl(token.children, scale * 3))
             return ele
           }
           case 'x4': {
             const ele = document.createElement('span')
-            ele.className = 'mfm-x4'
+            ele.setAttribute('class', '_mfm_x4_')
             ele.append(...genEl(token.children, scale * 4))
             return ele
           }
@@ -142,14 +150,14 @@ export function renderMfm ({
           }
           case 'blur': {
             const ele = document.createElement('span')
-            ele.className = '_mfm_blur_'
+            ele.setAttribute('class', '_mfm_blur_')
             ele.append(...genEl(token.children, scale))
             return ele
           }
           case 'rainbow': {
             if (!useAnim) {
               const ele = document.createElement('span')
-              ele.className = '_mfm_rainbow_fallback_'
+              ele.setAttribute('class', '_mfm_rainbow_fallback_')
               ele.append(...genEl(token.children, scale))
               return ele
             }
@@ -218,17 +226,19 @@ export function renderMfm ({
       }
       case 'url': {
         const ele = document.createElement('a')
-        ele.title = ele.href = token.props.url
-        ele.target = '_blank'
-        ele.rel = 'nofollow noopener'
+        ele.setAttribute('title', token.props.url)
+        ele.setAttribute('href', token.props.url)
+        ele.setAttribute('target', '_blank')
+        ele.setAttribute('rel', 'nofollow noopener')
         ele.textContent = token.props.url
         return ele
       }
       case 'link': {
         const ele = document.createElement('a')
-        ele.title = ele.href = token.props.url
-        ele.target = '_blank'
-        ele.rel = 'nofollow noopener'
+        ele.setAttribute('title', token.props.url)
+        ele.setAttribute('href', token.props.url)
+        ele.setAttribute('target', '_blank')
+        ele.setAttribute('rel', 'nofollow noopener')
         ele.append(...genEl(token.children, scale))
         return ele
       }
@@ -282,7 +292,10 @@ export function renderMfm ({
         return Object.assign(document.createElement('pre'), { textContent: token.props.formula, className: 'to-katexify' })
       }
       case 'search': {
-        const form = Object.assign(document.createElement('form'), { target: '_blank', action: 'https://duckduckgo.com', className: '_mfm_search_' })
+        const form = document.createElement('form')
+        form.setAttribute('target', '_blank')
+        form.setAttribute('action', 'https://duckduckgo.com')
+        form.className = '_mfm_search_'
         const button = document.createElement('button')
         button.setAttribute('class', 'search-button')
         button.setAttribute('aria-label', 'Search')

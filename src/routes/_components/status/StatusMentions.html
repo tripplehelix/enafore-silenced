@@ -1,7 +1,7 @@
 {#if mentions.length}
-  <div class="status-mentions {isStatusInOwnThread ? 'status-in-own-thread' : ''}">
+  <div class="status-mentions {isStatusInOwnThread ? 'status-in-own-thread' : ''} {isStatusInNotification ? 'status-in-notification' : ''}">
     <p>
-      {#each mentions as mention, i}<a id="status-mention-link-{uuid}-{mention.id}" href="/accounts/{mention.id}" title="@{mention.acct}">@{mention.username}</a>&nbsp;{/each}
+      {#each mentions as mention, i}<a id="status-mention-link-{uuid}-{mention.id}" href="/accounts/{mention.id}" title="@{mention.acct}">@{mention.username}</a>{' '}{/each}
     </p>
   </div>
 {/if}
@@ -16,6 +16,10 @@
   .status-mentions.status-in-own-thread {
     font-size: 1.3em;
     margin: 20px 10px 20px 5px;
+  }
+
+  .status-mentions.status-in-notification {
+    color: var(--very-deemphasized-link-color);
   }
 
   :global(.underline-links .status-mentions a) {

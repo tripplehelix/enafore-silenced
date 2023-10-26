@@ -59,18 +59,18 @@ export function renderPostHTML ({
         if (!emoji) newNodes.push(`:${customEmoji}:`)
         const urlToUse = autoplayGifs ? emoji.url : emoji.static_url
         const shortcodeWithColons = `:${emoji.shortcode}:`
-        newNodes.push(Object.assign(document.createElement('img'), {
-          className: 'inline-custom-emoji',
-          draggable: false,
-          src: urlToUse,
-          alt: shortcodeWithColons,
-          title: shortcodeWithColons
-        }))
+        const ele = document.createElement('img')
+        ele.setAttribute('class', 'inline-custom-emoji')
+        ele.setAttribute('draggable', 'false')
+        ele.setAttribute('src', urlToUse)
+        ele.setAttribute('alt', shortcodeWithColons)
+        ele.setAttribute('title', shortcodeWithColons)
+        newNodes.push(ele)
       } else if (unicodeEmoji) {
-        newNodes.push(Object.assign(document.createElement('span'), {
-          className: 'inline-emoji',
-          textContent: unicodeEmoji
-        }))
+        const ele = document.createElement('span')
+        ele.setAttribute('class', 'inline-emoji')
+        ele.textContent = unicodeEmoji
+        newNodes.push(ele)
       }
     }
     newNodes = newNodes.map(text => {
@@ -83,15 +83,24 @@ export function renderPostHTML ({
         text = text.slice(match.index + match[0].length)
         if (match[1]) {
           const consumed = text.slice(0, text.indexOf('$$'))
-          fragment.appendChild(Object.assign(document.createElement('code'), { textContent: consumed, className: 'to-katexify' }))
+          const codeElement = document.createElement('code')
+          codeElement.textContent = consumed
+          codeElement.setAttribute('class', 'to-katexify')
+          fragment.appendChild(codeElement)
           text = text.slice(consumed.length + 2)
         } else if (match[2]) {
           const { consumed, remaining } = consumeBalanced(text, '(', ')')
-          fragment.appendChild(Object.assign(document.createElement('code'), { textContent: consumed, className: 'to-katexify' }))
+          const codeElement = document.createElement('code')
+          codeElement.textContent = consumed
+          codeElement.setAttribute('class', 'to-katexify')
+          fragment.appendChild(codeElement)
           text = remaining
         } else if (match[3]) {
           const { consumed, remaining } = consumeBalanced(text, '[', ']')
-          fragment.appendChild(Object.assign(document.createElement('pre'), { textContent: consumed, className: 'to-katexify' }))
+          const codeElement = document.createElement('pre')
+          codeElement.textContent = consumed
+          codeElement.setAttribute('class', 'to-katexify')
+          fragment.appendChild(codeElement)
           text = remaining
         }
       }
@@ -109,7 +118,7 @@ export function renderPostHTML ({
             anchor.setAttribute('href', `/tags/${tag.name}`)
             anchor.removeAttribute('target')
             anchor.removeAttribute('rel')
-            anchor.className = 'hashtag'
+            anchor.setAttribute('class', 'hashtag')
             break block // eslint-disable-line no-labels
           }
         }
@@ -121,7 +130,7 @@ export function renderPostHTML ({
           anchor.setAttribute('title', `@${mention.acct}`)
           anchor.removeAttribute('target')
           anchor.removeAttribute('rel')
-          anchor.className = 'mention'
+          anchor.setAttribute('class', 'mention')
           anchor.textContent = `@${mention.username}`
           break block // eslint-disable-line no-labels
         }
@@ -129,7 +138,7 @@ export function renderPostHTML ({
       anchor.setAttribute('title', anchor.href)
       anchor.setAttribute('target', '_blank')
       anchor.setAttribute('rel', 'nofollow noopener')
-      anchor.className = ''
+      anchor.removeAttribute('class')
     }
   }
   return dom

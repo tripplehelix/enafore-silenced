@@ -4,7 +4,7 @@ import { toast } from '../_components/toast/toast.js'
 import { mark, stop } from '../_utils/marks.js'
 import { concat, mergeArrays } from '../_utils/arrays.js'
 import { compareTimelineItemSummaries } from '../_utils/statusIdSorting.js'
-import { uniqBy, isEqual } from '../_thirdparty/lodash/objects.js'
+import { isEqual, uniqById } from '../_utils/lodash-lite.js'
 import { database } from '../_database/database.js'
 import { getStatus, getStatusContext } from '../_api/statuses.js'
 import { emit } from '../_utils/eventBus.js'
@@ -13,27 +13,23 @@ import { timelineItemToSummary } from '../_utils/timelineItemToSummary.js'
 import { addStatusesOrNotifications } from './addStatusOrNotification.js'
 import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
 import { sortItemSummariesForThread } from '../_utils/sortItemSummariesForThread.js'
-import { prepareToRehydrate, rehydrateStatusOrNotification } from './rehydrateStatusOrNotification.js'
+import { rehydrateStatusOrNotification } from './rehydrateStatusOrNotification.js'
 import li from 'li'
 
-const byId = _ => _.id
-
 async function storeFreshTimelineItemsInDatabase (instanceName, timelineName, items) {
-  prepareToRehydrate()
+  console.log('storeFreshTimelineItemsInDatabase start', timelineName)
   await database.insertTimelineItems(instanceName, timelineName, items)
-  if (timelineName.startsWith('status/')) {
-    // For status threads, we want to be sure to update the favorite/reblog counts even if
-    // this is a stale "view" of the status. See 119-status-counts-update.js for
-    // an example of why we need this.
-    await Promise.all(items.map(async status => {
-      await rehydrateStatusOrNotification({ status })
-    }))
-  }
+  console.log('storeFreshTimelineItemsInDatabase inserted', timelineName)
+}
+
+async function updateStatus_ (instanceName, accessToken, statusId) {
+  const status = await getStatus(instanceName, accessToken, statusId)
+  await database.insertStatus(instanceName, status)
+  return status
 }
 
 export async function updateStatus (instanceName, accessToken, statusId) {
-  const status = await getStatus(instanceName, accessToken, statusId)
-  await database.insertStatus(instanceName, status)
+  const status = await updateStatus_(instanceName, accessToken, statusId)
   await rehydrateStatusOrNotification({ status })
   emit('statusUpdated', status)
   return status
@@ -41,15 +37,16 @@ export async function updateStatus (instanceName, accessToken, statusId) {
 
 async function updateStatusAndThread (instanceName, accessToken, timelineName, statusId) {
   const [status, context] = await Promise.all([
-    updateStatus(instanceName, accessToken, statusId),
+    updateStatus_(instanceName, accessToken, statusId),
     getStatusContext(instanceName, accessToken, statusId)
   ])
+  const newStatuses = concat(context.ancestors, status, context.descendants)
   await database.insertTimelineItems(
     instanceName,
     timelineName,
-    concat(context.ancestors, status, context.descendants)
+    newStatuses
   )
-  addStatusesOrNotifications(instanceName, timelineName, concat(context.ancestors, context.descendants))
+  addStatusesOrNotifications(instanceName, timelineName, newStatuses)
 }
 
 async function fetchFreshThreadFromNetwork (instanceName, accessToken, statusId) {
@@ -74,21 +71,18 @@ async function fetchThreadFromNetwork (instanceName, accessToken, timelineName) 
     return fetchFreshThreadFromNetwork(instanceName, accessToken, statusId)
   }
 
-  const rehydrated = rehydrateStatusOrNotification({ status })
-
   if (!status.in_reply_to_id) {
     // status is not a reply to another status (fast path)
     // Update the status and thread asynchronously, but return just the status for now
     // Any replies to the status will load asynchronously
     /* no await */ updateStatusAndThread(instanceName, accessToken, timelineName, statusId)
-    await rehydrated
     return [status]
   }
   // status is a reply to some other status, meaning we don't want some
   // jerky behavior where it suddenly scrolls into place. Update the status asynchronously
   // but grab the thread now
   scheduleIdleTask(() => updateStatus(instanceName, accessToken, statusId))
-  const [context] = await Promise.all([getStatusContext(instanceName, accessToken, statusId), rehydrated])
+  const context = await getStatusContext(instanceName, accessToken, statusId)
   return concat(context.ancestors, status, context.descendants)
 }
 
@@ -111,7 +105,7 @@ async function addPagedTimelineItems (instanceName, timelineName, items) {
 export async function addPagedTimelineItemSummaries (instanceName, timelineName, newSummaries) {
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
 
-  let mergedSummaries = uniqBy(concat(oldSummaries || [], newSummaries), byId)
+  let mergedSummaries = uniqById(concat(oldSummaries || [], newSummaries))
 
   const [type, statusId] = timelineName.split('/')
   if (type === 'status') {
@@ -173,7 +167,7 @@ export async function addTimelineItemSummaries (instanceName, timelineName, newS
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
   const oldStale = store.getForTimeline(instanceName, timelineName, 'timelineItemSummariesAreStale')
 
-  let mergedSummaries = uniqBy(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries), byId)
+  let mergedSummaries = uniqById(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries))
 
   const [type, statusId] = timelineName.split('/')
   if (type === 'status') {

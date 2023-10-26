@@ -30,7 +30,9 @@
       </a>
     {/if}
 
-    <span class="status-header-action">{actionText}</span>
+    {#if actionText}
+      <span class="status-header-action">{actionText}</span>
+    {/if}
     {#if icon === '#fa-question'}
     <a class="report-button button" target="blank" href="https://github.com/easrng/enafore/issues/new?title={encodeURIComponent(actionText)}">Report</a>
     {/if}
@@ -86,9 +88,10 @@
   }
 
   .status-header-action {
-    margin-left: 0.5ch;
-    white-space: nowrap;
+    margin: 0 0.5ch;
     flex: 1;
+    width: 0;
+    white-space: pre-wrap;
   }
 
   .status-header-action,

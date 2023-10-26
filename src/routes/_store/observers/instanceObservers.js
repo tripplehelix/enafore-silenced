@@ -49,13 +49,13 @@ async function refreshInstanceData (instanceName) {
   scheduleIdleTask(() => updatePushSubscriptionForInstance(instanceName))
 
   // these are the only critical ones
-  await Promise.all([
+  store.setInstanceData(instanceName, 'instanceDataReady', Promise.all([
     updateInstanceInfo(instanceName),
     updateVerifyCredentialsForInstance(instanceName).then(() => {
       // Once we have the verifyCredentials (so we know if the account is locked), lazily update the follow requests
       scheduleIdleTask(() => updateFollowRequestCountIfLockedAccount(instanceName))
     })
-  ])
+  ]))
 }
 
 function stream (store, instanceName, currentInstanceInfo) {
@@ -88,6 +88,6 @@ export function instanceObservers () {
       return
     }
 
-    scheduleIdleTask(() => refreshInstanceDataAndStream(store, currentInstance))
+    refreshInstanceDataAndStream(store, currentInstance)
   })
 }

@@ -20,6 +20,7 @@ export function instanceComputations (store) {
   computeForInstance(store, 'currentCustomEmoji', 'customEmoji', [])
   computeForInstance(store, 'currentComposeData', 'composeData', {})
   computeForInstance(store, 'currentPushSubscription', 'pushSubscriptions', null)
+  computeForInstance(store, 'currentInstanceDataReady', 'instanceDataReady', null)
 
   store.compute(
     'isUserLoggedIn',

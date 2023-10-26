@@ -3,14 +3,14 @@ import { statusHtmlToPlainText } from '../_utils/statusHtmlToPlainText.js'
 import { computeHashtagBarForStatus } from '../_utils/hashtagBar.js'
 import { renderMfm } from '../_utils/renderMfm.js'
 import { renderPostHTML } from '../_utils/renderPostHTML.js'
-import { parseHTML } from 'linkedom'
+import { parseHTML } from 'linkedom/worker'
 const { document } = parseHTML('')
 self.document = document
 
 registerPromiseWorker(async ({ originalStatus, autoplayGifs, disableDecomojiConverter, currentVerifyCredentials }) => {
   const mfmContent = originalStatus.content_type === 'text/x.misskeymarkdown' ? originalStatus.text : (originalStatus.akkoma && originalStatus.akkoma.source && originalStatus.akkoma.source.mediaType === 'text/x.misskeymarkdown') ? originalStatus.akkoma.source.content : null
   let dom, hashtagsInBar
-  const userHost = currentVerifyCredentials && currentVerifyCredentials.fqn.split('@')[1]
+  const userHost = (currentVerifyCredentials && currentVerifyCredentials.fqn) ? currentVerifyCredentials.fqn.split('@')[1] : new URL(currentVerifyCredentials.url).hostname
   const emojis = new Map()
   if (originalStatus.emojis) {
     for (const emoji of originalStatus.emojis) {

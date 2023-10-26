@@ -7,6 +7,7 @@
          on:recalculateHeight
          ref:article
          on:load|capture="recalculateHeight()"
+         on:error|capture="recalculateHeight()"
          style={style}
 >
   {#if showHeader}
@@ -431,7 +432,8 @@
         if (!summary) return null
         return {
           depth: summary.depth,
-          start: summary.start
+          start: summary.start,
+          end: summary.end
         }
       },
       style: ({ treeMetadata }) => `--status-depth:${treeMetadata ? Math.min(8, treeMetadata.depth || 0) : 0}`,

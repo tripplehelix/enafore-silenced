@@ -137,9 +137,9 @@
       IconButton
     },
     onupdate ({ changed }) {
-      if (changed.massagedContent || changed.showTranslate) {
-        this.hydrateContent()
-        requestAnimationFrame(() => this.fire('recalculateHeight'))
+      if (changed.massagedContent || changed.translateState) {
+        this.katexify()
+        this.fire('recalculateHeight')
       }
     },
     store: () => store,
@@ -185,7 +185,7 @@
       translatedFrom: ({ translateContent_, translateState }) => translateState && translateState.languageNames && (translateState.languageNames[translateContent_.detected] ? translateState.languageNames[translateContent_.detected] + ' (Detected)' : (translateState.languageNames[translateContent_.from] || translateContent_.detected))
     },
     methods: {
-      hydrateContent () {
+      katexify () {
         const renderPromise = katexify(this.refs.node)
         if (renderPromise) {
           renderPromise.then(() => {
