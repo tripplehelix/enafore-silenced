@@ -105,13 +105,15 @@
             ...e,
             html: emojifyText(
               e.url ? ':' + shortcode + ':' : e.name,
-              [
-                {
-                  url: e.url,
-                  static_url: e.static_url || e.url,
-                  shortcode
-                }
-              ],
+              e.url
+                ? [
+                    {
+                      url: e.url,
+                      static_url: e.static_url || e.url,
+                      shortcode
+                    }
+                  ]
+                : [],
               $autoplayGifs,
               true
             )
