@@ -23,7 +23,7 @@ export async function buildInlineScript () {
           'process.browser': true,
           'process.env.THEME_COLORS': JSON.stringify(inlineThemeColors)
         },
-        preventAssignment: true
+        preventAssignment: false
       }),
       // TODO: can't disable terser at all, it causes the CSP checksum to stop working
       // because the HTML gets minified as some point so the checksums don't match.

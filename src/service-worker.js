@@ -193,6 +193,7 @@ self.addEventListener('fetch', event => {
           return response
         }
       }
+      return fetch(req)
     })().catch(error => {
       console.error(error)
       return new Response('error in service worker', { status: 502 })

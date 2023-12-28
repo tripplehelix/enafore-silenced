@@ -157,7 +157,7 @@ export default {
   performance: {
     hints: dev ? false : (process.env.DEBUG ? 'warning' : 'error'),
     assetFilter: assetFilename => {
-      return !(/\.map$/.test(assetFilename)) && !/tesseract-asset/.test(assetFilename) && !/katex/.test(assetFilename)
+      return !(/\.map$/.test(assetFilename)) && !/tesseract-asset/.test(assetFilename) && !/katex/.test(assetFilename) && !/\$polyfill\$/.test(assetFilename)
     }
   }
 }

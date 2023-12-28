@@ -4,9 +4,9 @@ A somewhat unstable fediverse client with better support for Akkoma, glitch-soc,
 
 Enafore is available at [enafore.social](https://enafore.social).
 
-See the [user guide](https://github.com/easrng/enafore/blob/main/docs/User-Guide.md) for basic usage. See the [admin guide](https://github.com/easrng/enafore/blob/main/docs/Admin-Guide.md) if Enafore cannot connect to your instance.
+See the [user guide](https://github.com/enafore/enafore/blob/main/docs/User-Guide.md) for basic usage. See the [admin guide](https://github.com/enafore/enafore/blob/main/docs/Admin-Guide.md) if Enafore cannot connect to your instance.
 
-For updates, follow me, I usually post when I fix or add things: [@em@cassilda.house](https://fedi.cassilda.house/users/em). Patch notes are tagged with #enafore.
+For updates, follow [@enafore@enafore.social](https://meta.enafore.social/@enafore).
 
 # Testimonials
 > Literally the best Akkoma client\

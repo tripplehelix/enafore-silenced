@@ -3,6 +3,10 @@
 @import './focus.scss';
 @import './mfm.scss';
 
+:root {
+  scroll-padding-top: var(--nav-total-height);
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, PinaforeRegular, sans-serif;
@@ -250,7 +254,7 @@ textarea {
   font-weight: 400;
 }
 
-.status-content .quote-inline {
+.status-content .quote-inline, .status-content .reference-link-inline {
   display: none;
 }
 

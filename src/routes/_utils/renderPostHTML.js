@@ -38,9 +38,6 @@ export function renderPostHTML ({
     return dom
   }
   dom.innerHTML = content
-  for (const quoteInline of dom.querySelectorAll('quote-inline')) {
-    quoteInline.remove()
-  }
   const textNodes = grabAllTextNodes(dom, [])
   const customEmoji = [...emojis.keys()].map(e => escapeRegExp(e)).join('|')
   const unicodeEmoji = getEmojiRegex().source
