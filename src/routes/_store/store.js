@@ -51,7 +51,7 @@ const persistedState = {
     !process.browser || matchMedia('(prefers-reduced-motion: reduce)').matches,
   underlineLinks: false,
   iconColors: '',
-  lastContentType: null
+  lastContentTypes: {}
 }
 
 const nonPersistedState = {
