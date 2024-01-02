@@ -14,6 +14,6 @@ For updates, follow [@enafore@enafore.social](https://meta.enafore.social/@enafo
 
 # Donate
 Want to support my work on Enafore?
-<table><tr><td><a href="http://cash.app/$EmCassilda"><img src="docs/CashAppQR.svg" width="270" alt="Cash App"></a></td><td><img src="docs/MoneroQR.svg" width="270" alt="Monero"></td></tr></table>
-<table><tr><th>Cash&nbsp;App</th><td><a href="http://cash.app/$EmCassilda">$EmCassilda</a></td></tr>
+<table><tr><td><a href="http://cash.app/$enafore"><img src="docs/CashAppQR.svg" width="270" alt="Cash App"></a></td><td><img src="docs/MoneroQR.svg" width="270" alt="Monero"></td></tr></table>
+<table><tr><th>Cash&nbsp;App</th><td><a href="http://cash.app/$enafore">$enafore</a></td></tr>
 <tr><th>Monero</th><td><code>852KMZurkViCzwa8BZM8YPCBjcmzXo54bGpm4qziBriwfbFysPSSC6KVgBRpNrszorZEeAnzKbWR9ZbCC1ZLBvjj3Gp6C9t</code></td></tr></table>
