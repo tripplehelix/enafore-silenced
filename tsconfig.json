@@ -4,7 +4,9 @@
         "module": "ESNext",
         "target": "ESNext",
         "moduleResolution": "Bundler",
-        "allowJs": true
+        "allowJs": true,
+        "outDir": "dist",
+        "strictNullChecks": true
     },
     "include": [
         "src/**/*.ts"
