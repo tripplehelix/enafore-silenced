@@ -289,6 +289,13 @@ export default {
   deleteAndRedraft: 'Delete and redraft',
   reportStatus: 'Report post',
   translateStatus: 'Translate post',
+  translated: `Translated post from {from}{detected, select,
+    true { - Detected}
+    other {}
+  }`,
+  translateError: 'There was an error translating this post',
+  translating: 'Translating...',
+  hideTranslation: 'Hide translation',
   reactToStatus: 'React to post',
   quoteStatus: 'Quote post',
   shareStatus: 'Share post',
@@ -354,7 +361,11 @@ export default {
   </p>
 
   <p>
-    Approximately once per day Enafore will send a request proxied through your instance so I can collect some general statistics. None of your personal information is sent. Unless you're on a single user instance.
+    Approximately once per day Enafore will send a request proxied through your instance so I can collect some general statistics. No personal information is sent, only your instance domain is visible.
+  </p>
+
+  <p>
+    Post translation is powered by Google Translate via <a href="https://simplytranslate.org">SimplyTranslate.org</a>.
   </p>
 
   <h2>Credits</h2>
