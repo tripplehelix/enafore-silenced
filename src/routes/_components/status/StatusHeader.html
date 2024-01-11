@@ -17,7 +17,7 @@
   <div class="status-header-content">
     {#if timelineType === 'pinned'}
       <span class="status-header-author">
-        {intl.pinnedStatus}
+        {'intl.pinnedStatus'}
       </span>
     {:elseif icon !== '#fa-question' && notificationType !== 'poll'}
       <a id={authorElementId}

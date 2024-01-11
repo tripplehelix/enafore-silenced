@@ -1,5 +1,5 @@
 {#if massagedFields.length}
-  <h2 class="sr-only">{intl.fields}</h2>
+  <h2 class="sr-only">{'intl.fields'}</h2>
   <div class="account-profile-meta">
     {#each massagedFields as field, i}
       <div
@@ -22,7 +22,7 @@
               className="account-profile-meta-verified-svg"
               href="#fa-check"
             />
-            {intl.verified}
+            {'intl.verified'}
           </span>
         {/if}
       </div>

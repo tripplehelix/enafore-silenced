@@ -471,7 +471,7 @@ export function renderMfm({
             const button = defaultTreeAdapter.createElement('button', HTML, [
               {
                 name: 'aria-label',
-                value: '{intl.search}'
+                value: 'intl.search'
               },
               {
                 name: 'class',

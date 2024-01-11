@@ -32,9 +32,9 @@
       </div>
       <div class="report-info">
         <p>{reportingLabel}</p>
-        <label class="sr-only" id="comments-label">{intl.additionalComments}</label>
+        <label class="sr-only" id="comments-label">{'intl.additionalComments'}</label>
         <textarea bind:value="comment"
-                  placeholder="{intl.additionalComments}"
+                  placeholder="{'intl.additionalComments'}"
                   aria-labelledby="comments-label"
                   maxlength="1000"></textarea>
         {#if remoteInstance}

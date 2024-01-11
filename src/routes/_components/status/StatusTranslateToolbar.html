@@ -1,16 +1,16 @@
 <div class="status-translate-toolbar">
   <div class="status-translate-toolbar-label">
     {#if translating}
-      {intl.translating}
+      {'intl.translating'}
     {:else}
       {#if translateError}
-        {intl.translateError}
+        {'intl.translateError'}
       {:else}
       {translatedFrom}
       {/if}
     {/if}
   </div>
-  <IconButton label="{intl.hideTranslation}" href="#fa-times" on:click="onHideTranslateClick()" />
+  <IconButton label="{'intl.hideTranslation'}" href="#fa-times" on:click="onHideTranslateClick()" />
 </div>
 <style>
   .status-translate-toolbar {

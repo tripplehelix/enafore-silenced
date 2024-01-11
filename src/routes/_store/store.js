@@ -27,6 +27,13 @@ const persistedState = {
   disableInfiniteScroll: false,
   disableLongAriaLabels: false,
   disableNotificationBadge: false,
+  disableNotificationSound: (() => {
+    try {
+      return localStorage.getItem('store_disableNotificationBadge') === 'true'
+    } catch (e) {
+      return false
+    }
+  })(),
   disableReblogCounts: false,
   disableRelativeTimestamps: false,
   disableTapOnStatus: false,

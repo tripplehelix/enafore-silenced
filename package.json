@@ -121,7 +121,8 @@
       "requestIdleCallback",
       "self",
       "sessionStorage",
-      "Worker"
+      "Worker",
+      "Audio"
     ]
   },
   "repository": {
