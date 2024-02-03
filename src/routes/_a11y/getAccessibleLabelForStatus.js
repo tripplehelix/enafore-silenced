@@ -24,12 +24,12 @@ function getPrivacyText (visibility) {
   }
 }
 
-function getReblogText (reblog, account, omitEmojiInDisplayNames) {
+function getReblogText (reblog, account, omitEmojiInDisplayNames, originalAccountDisplayName) {
   if (!reblog) {
-    return
+    return originalAccountDisplayName
   }
   const accountDisplayName = getAccountAccessibleName(account, omitEmojiInDisplayNames)
-  return formatIntl('intl.rebloggedByAccount', { account: accountDisplayName })
+  return formatIntl('intl.rebloggedByAccount', { account: accountDisplayName, original: originalAccountDisplayName })
 }
 
 function cleanupText (text) {
@@ -58,15 +58,14 @@ export function getAccessibleLabelForStatus (originalAccount, account, plainText
 
   const values = [
     getNotificationText(notification, omitEmojiInDisplayNames),
-    originalAccountDisplayName,
+    getReblogText(reblog, account, omitEmojiInDisplayNames, originalAccountDisplayName),
     contentTextToShow,
     mediaTextToShow,
     ...mediaDescText,
     pollTextToShow,
     shortInlineFormattedDate,
     `@${originalAccount.acct}`,
-    privacyText,
-    getReblogText(reblog, account, omitEmojiInDisplayNames)
+    privacyText
   ].filter(Boolean)
 
   return values.join(', ')

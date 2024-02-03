@@ -523,7 +523,6 @@ export default {
   // Accessible status labels
   accountRebloggedYou: '{account} продвинул(-а) вашу запись',
   accountFavoritedYou: '{account} добавил(-а) в избранное вашу запись',
-  rebloggedByAccount: 'Продвинул(-а) {account}',
   contentWarningContent: 'Предупреждение о содержимом: {spoiler}',
   hasMedia: 'имеет медия',
   hasPoll: 'имеет опрос',

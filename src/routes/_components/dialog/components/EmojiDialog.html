@@ -64,10 +64,8 @@
   import { insertEmoji } from '../../../_actions/emoji.js'
   import { show } from '../helpers/showDialog.js'
   import { close } from '../helpers/closeDialog.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
   import { isDarkTheme } from '../../../_utils/isDarkTheme.js'
   import 'emoji-picker-element/picker'
-  import { registerShadowRoot, unregisterShadowRoot } from '../../../_thirdparty/a11y-dialog/a11y-dialog.js'
   import { doubleRAF } from '../../../_utils/doubleRAF.js'
   import { convertCustomEmojiToEmojiPickerFormat } from '../../../_utils/convertCustomEmojiToEmojiPickerFormat.js'
   import { supportsFocusVisible } from '../../../_utils/supportsFocusVisible.js'
@@ -76,7 +74,6 @@
 
   export default {
     async oncreate () {
-      onCreateDialog.call(this)
       const { customEmoji } = this.get()
       const { enableGrayscale, isUserTouching } = this.store.get()
       const { picker } = this.refs
@@ -90,10 +87,8 @@
         style.textContent = '.emoji { filter: grayscale(100%); }'
         picker.shadowRoot.appendChild(style)
       }
-      registerShadowRoot(picker.shadowRoot)
-      this.on('destroy', () => unregisterShadowRoot(picker.shadowRoot))
       if (!isUserTouching) { // auto focus the input on desktop
-        doubleRAF(() => { // triple rAF because a11y tries to focus as well
+        doubleRAF(() => { // triple rAF because a11y-dialog tries to focus as well
           requestAnimationFrame(() => {
             picker.shadowRoot.querySelector('input').focus()
           })

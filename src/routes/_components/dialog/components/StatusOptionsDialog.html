@@ -15,7 +15,6 @@ import { setAccountFollowed } from '../../../_actions/follow.js'
 import { doDeleteStatus } from '../../../_actions/delete.js'
 import { show } from '../helpers/showDialog.js'
 import { close } from '../helpers/closeDialog.js'
-import { oncreate } from '../helpers/onCreateDialog.js'
 import { setAccountBlocked } from '../../../_actions/block.js'
 import { setStatusPinnedOrUnpinned } from '../../../_actions/pin.js'
 import { setStatusBookmarkedOrUnbookmarked } from '../../../_actions/bookmark.js'
@@ -33,7 +32,6 @@ import { pickEmojiReaction } from '../../../_actions/react.js'
 import { quote } from '../../../_actions/quote.js'
 
 export default {
-  oncreate,
   data: () => ({
     supportsWebShare: process.browser && typeof navigator.share === 'function'
   }),

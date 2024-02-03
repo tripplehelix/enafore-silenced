@@ -567,7 +567,7 @@ export default {
   accountRebloggedYou: '{account} boosted your post',
   accountFavoritedYou: '{account} favorited your post',
   accountEdited: '{account} edited their post',
-  rebloggedByAccount: 'Boosted by {account}',
+  rebloggedByAccount: '{account} boosted {original}',
   contentWarningContent: 'Content warning: {spoiler}',
   hasMedia: 'has media',
   hasPoll: 'has poll',

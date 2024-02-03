@@ -35,7 +35,7 @@ as a bundled custom element, not as a Svelte component.
 
 ## Some third-party code is bundled
 
-For various reasons, `a11y-dialog`, `autosize`, and `timeago` are forked and bundled into the source code.
+For various reasons, `autosize`, and `timeago` are forked and bundled into the source code.
 This was either because something needed to be tweaked or fixed, or I was trimming unused code and didn't
 see much value in contributing it back, because it was too Enafore-specific.
 

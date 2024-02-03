@@ -495,7 +495,6 @@ export default {
   // Accessible status labels
   accountRebloggedYou: '{account} hat Deinen Tröt geboostet',
   accountFavoritedYou: '{account} hat Deinen Tröt favorisiert',
-  rebloggedByAccount: 'geboostet von {account}',
   contentWarningContent: 'Inhaltswarnung: {spoiler}',
   hasMedia: 'hat Medien',
   hasPoll: 'hat Umfrage',

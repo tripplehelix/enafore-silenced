@@ -9,7 +9,7 @@ import { database } from '../_database/database.js'
 import { DOMAIN_BLOCKS } from '../_static/blocks.js'
 
 const GENERIC_ERROR = `
-  Is this a valid Mastodon instance? Is a browser extension
+  Is this a valid instance? Is a browser extension
   blocking the request? Are you in private browsing mode?
   If you believe this is a problem with your instance, please send
   <a href="https://github.com/enafore/enafore/blob/main/docs/Admin-Guide.md"
@@ -73,7 +73,7 @@ export async function logInToInstance () {
     await redirectToOauth()
   } catch (err) {
     console.error(err)
-    const error = `${err.message || err.name}. ` +
+    const error = `${(err.message || err.name).replace(/\.$/, '')}. ` +
       (err.knownError ? '' : (navigator.onLine ? GENERIC_ERROR : 'Are you offline?'))
     const { instanceNameInSearch } = store.get()
     store.set({

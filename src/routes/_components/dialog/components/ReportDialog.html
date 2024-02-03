@@ -158,7 +158,6 @@
   import LoadingSpinner from '../../LoadingSpinner.html'
   import { show } from '../helpers/showDialog.js'
   import { close } from '../helpers/closeDialog.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
   import { getRecentStatusesForAccount } from '../../../_actions/getRecentStatusesForAccount.js'
   import { statusHtmlToPlainText } from '../../../_utils/statusHtmlToPlainText.ts'
   import { toast } from '../../toast/toast.js'
@@ -168,7 +167,6 @@
 
   export default {
     async oncreate () {
-      onCreateDialog.call(this)
       const { account, status, reportMap } = this.get()
       if (status) {
         reportMap[status.id] = true

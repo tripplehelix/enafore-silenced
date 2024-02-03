@@ -503,7 +503,6 @@ export default {
   // Accessible status labels
   accountRebloggedYou: '{account} a partagé votre pouet',
   accountFavoritedYou: '{account} a mis votre pouet en favori',
-  rebloggedByAccount: 'Partagé par {account}',
   contentWarningContent: 'Avertissement: {spoiler}',
   hasMedia: 'média',
   hasPoll: 'enquête',

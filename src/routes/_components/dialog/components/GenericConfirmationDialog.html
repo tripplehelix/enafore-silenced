@@ -34,12 +34,10 @@
   import { show } from '../helpers/showDialog.js'
   import { close } from '../helpers/closeDialog.js'
   import { on } from '../../../_utils/eventBus.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
 
   export default {
     oncreate () {
       on('destroyDialog', this, this.onDestroyDialog)
-      onCreateDialog.call(this)
     },
     data: () => ({
       positiveText: undefined,

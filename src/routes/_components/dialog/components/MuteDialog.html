@@ -30,12 +30,10 @@
   import GenericConfirmationDialog from './GenericConfirmationDialog.html'
   import { show } from '../helpers/showDialog.js'
   import { close } from '../helpers/closeDialog.js'
-  import { oncreate } from '../helpers/onCreateDialog.js'
   import { setAccountMuted } from '../../../_actions/mute.js'
   import { formatIntl } from '../../../_utils/formatIntl.js'
 
   export default {
-    oncreate,
     data: () => ({
       positiveText: 'intl.mute',
       title: '',

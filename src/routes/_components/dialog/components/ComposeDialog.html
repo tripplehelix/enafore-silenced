@@ -12,13 +12,11 @@
   import ComposeBox from '../../compose/ComposeBox.html'
   import { on, emit } from '../../../_utils/eventBus.js'
   import { show } from '../helpers/showDialog.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
   import { close } from '../helpers/closeDialog.js'
 
   export default {
     oncreate () {
       on('postedStatus', this, this.onPostedStatus)
-      onCreateDialog.call(this)
     },
     data: () => ({
       title: undefined,

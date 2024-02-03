@@ -68,6 +68,7 @@
   import { requestPostAnimationFrame } from '../../_utils/requestPostAnimationFrame.js'
   import { throttleTimer } from '../../_utils/throttleTimer.js'
   import { isWebKit } from '../../_utils/userAgent/isWebKit.js'
+  import { doubleRAF } from '../../_utils/doubleRAF.js'
 
   const updateComposeTextInStore = throttleTimer(scheduleIdleTask)
 
@@ -120,6 +121,7 @@
                 // point. Also, the dialog has its own initial focus behavior.
                 // Tell the dialog to focus the textarea.
                 textarea.setAttribute('autofocus', true)
+                requestAnimationFrame(() => doubleRAF(() => textarea.focus({ preventScroll: true })))
               } else {
                 requestAnimationFrame(() => textarea.focus({ preventScroll: true }))
               }

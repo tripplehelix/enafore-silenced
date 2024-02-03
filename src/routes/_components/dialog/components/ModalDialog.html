@@ -155,7 +155,7 @@
 <script>
   import Shortcut from '../../shortcut/Shortcut.html'
   import SvgIcon from '../../SvgIcon.html'
-  import { A11yDialog } from '../../../_thirdparty/a11y-dialog/a11y-dialog.js'
+  import A11yDialog from 'a11y-dialog'
   import { classname } from '../../../_utils/classname.js'
   import { on, emit } from '../../../_utils/eventBus.js'
   import {
@@ -169,8 +169,7 @@
       const { id, shouldAnimate } = this.get()
       const { reduceMotion } = store.get()
       this.onPopState = this.onPopState.bind(this)
-      const dialogElement = this.refs.node.parentElement
-      this._a11yDialog = new A11yDialog(dialogElement)
+      this._a11yDialog = new A11yDialog(this.refs.node.parentElement)
       this._a11yDialog.on('hide', async () => {
         window.removeEventListener('popstate', this.onPopState)
         const { statePopped, statePushed, id } = this.get()
@@ -209,13 +208,14 @@
         }
         document.body.classList.toggle('modal-open', false)
         this.fire('close')
-        this._a11yDialog.destroy()
         emit('destroyDialog', id)
-        requestAnimationFrame(() => document.body.removeChild(dialogElement))
       })
       on('showDialog', this, this.showDialog)
       on('closeDialog', this, this.closeDialog)
       pushShortcutScope(`modal-${id}`)
+    },
+    ondestroy () {
+      this._a11yDialog.destroy()
     },
     components: { Shortcut, SvgIcon },
     data: () => ({

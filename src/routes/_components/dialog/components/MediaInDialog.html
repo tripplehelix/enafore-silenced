@@ -9,7 +9,6 @@
     height={intrinsicHeight}
     ref:player
   />
-  <MediaControlsFix />
 {:elseif type === 'audio'}
   <div class="audio-player-container">
     <audio
@@ -20,7 +19,6 @@
       ref:player
     />
   </div>
-  <MediaControlsFix />
 {:elseif type === 'gifv'}
   <video
     class="media-fit"
@@ -107,7 +105,6 @@
 </style>
 <script>
   import { get } from '../../../_utils/lodash-lite.js'
-  import MediaControlsFix from '../../MediaControlsFix.html'
   import SvgIcon from '../../SvgIcon.html'
 
   export default {
@@ -129,7 +126,6 @@
       }
     },
     components: {
-      MediaControlsFix,
       SvgIcon
     }
   }

@@ -529,7 +529,6 @@ export default {
   accountRebloggedYou: '{account} reenvió tu toot',
   accountFavoritedYou: '{account} marcó como favorito tu toot',
   accountEdited: '{account} editó su toot',
-  rebloggedByAccount: 'reenviado por {account}',
   contentWarningContent: 'Advertencia de contenido: {spoiler}',
   hasMedia: 'tiene multimedia',
   hasPoll: 'tiene encuesta',

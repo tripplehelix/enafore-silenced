@@ -54,7 +54,7 @@
   {#if isStatusInOwnThread}
     <StatusDetails {...params} {...timestampParams} />
   {/if}
-  {#if !(isStatusInNotification || isQuote)}
+  {#if !isQuote}
     <StatusToolbar {...params} {replyShown} on:recalculateHeight on:focusArticle="focusArticle()" />
   {/if}
   {#if replyShown}
@@ -222,6 +222,11 @@
         })
       }
       scheduleIdleTask(() => addEmojiTooltips(this.refs.article))
+    },
+    onupdate ({ changed }) {
+      if (changed.translateState) {
+        this.fire('recalculateHeight')
+      }
     },
     components: {
       StatusSidebar,

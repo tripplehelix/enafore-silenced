@@ -235,7 +235,6 @@
   import Shortcut from '../../shortcut/Shortcut.html'
   import PinchZoomable from './PinchZoomable.html'
   import { show } from '../helpers/showDialog.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
   import { close } from '../helpers/closeDialog.js'
   import { debounce } from '../../../_thirdparty/lodash/timers.js'
   import { times, get } from '../../../_utils/lodash-lite.js'
@@ -254,7 +253,6 @@
 
   export default {
     oncreate () {
-      onCreateDialog.call(this)
       this.onScroll = debounce(this.onScroll.bind(this), 50, { leading: false, trailing: true })
     },
     ondestroy () {

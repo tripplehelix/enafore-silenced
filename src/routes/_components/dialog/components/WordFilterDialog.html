@@ -125,7 +125,6 @@
   import Select from '../../Select.html'
   import { show } from '../helpers/showDialog.js'
   import { close } from '../helpers/closeDialog.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
   import { store } from '../../../_store/store.js'
   import {
     WORD_FILTER_CONTEXT_ACCOUNT,
@@ -141,7 +140,6 @@
 
   export default {
     async oncreate () {
-      onCreateDialog.call(this)
       this.syncFilterToDom(this.get().filter)
       this.computeConfirmationButtonDisabled()
     },

@@ -1,4 +1,4 @@
-<div class="status-toolbar {isStatusInOwnThread ? 'status-in-own-thread' : ''}" ref:node>
+<div class="status-toolbar {isStatusInOwnThread ? 'status-in-own-thread' : ''} {isStatusInNotification ? 'status-in-notification' : '' }" ref:node>
   <IconButton className="status-toolbar-reply-button" label={replyLabel} pressedLabel="{'intl.closeReply'}"
     pressable={true} pressed={replyShown} href={replyIcon} clickListener={false} elementId={replyKey} />
   <IconButton label={reblogLabel} pressedLabel="Unboost" pressable={!reblogDisabled} pressed={reblogged}
@@ -27,6 +27,10 @@
   .status-toolbar.status-in-own-thread {
     margin-left: 63px;
     /* offset to align all toolbar items: 48px avatar + 15px margin-right */
+  }
+
+  .status-toolbar.status-in-notification {
+    opacity: 0.75;
   }
 
   @media (max-width: 767px) {

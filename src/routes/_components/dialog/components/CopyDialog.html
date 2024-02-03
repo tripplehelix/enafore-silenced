@@ -30,7 +30,6 @@
   import ModalDialog from './ModalDialog.html'
   import { show } from '../helpers/showDialog.js'
   import { close } from '../helpers/closeDialog.js'
-  import { oncreate as onCreateDialog } from '../helpers/onCreateDialog.js'
   import { toast } from '../../toast/toast.js'
   import { doubleRAF } from '../../../_utils/doubleRAF.js'
 
@@ -46,9 +45,6 @@
   }
 
   export default {
-    oncreate () {
-      onCreateDialog.call(this)
-    },
     methods: {
       show,
       close,
