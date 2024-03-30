@@ -62,7 +62,7 @@ function testSupportsSmoothScroll () {
   return supports
 }
 
-export const hasNativeSmoothScroll = process.browser && testSupportsSmoothScroll()
+export const hasNativeSmoothScroll = process.env.BROWSER && testSupportsSmoothScroll()
 
 export function smoothScroll (node, topOrLeft, horizontal, preferFast) {
   if (store.get().reduceMotion) {

@@ -61,7 +61,7 @@
         showAccountProfileOptionsDialog(account, relationship, verifyCredentials)
       },
       oncreate () {
-        if (process.browser) {
+        if (process.env.BROWSER) {
           window.__button = this
         }
       },

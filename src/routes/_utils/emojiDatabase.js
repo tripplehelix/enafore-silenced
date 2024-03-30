@@ -49,7 +49,7 @@ export async function findBySearchQuery (query) {
   return emojis.map(emoji => applySkinToneToEmoji(emoji, skinTone))
 }
 
-if (process.browser) {
+if (process.env.BROWSER) {
   lifecycle.addEventListener('statechange', event => {
     if (event.newState === 'frozen' && database) { // page is frozen, close IDB connections
       console.log('closed emoji DB')

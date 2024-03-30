@@ -2,7 +2,7 @@
 
 const callbacks = {}
 
-if (process.browser) {
+if (process.env.BROWSER) {
   window.__delegateCallbacks = callbacks
 }
 
@@ -53,7 +53,7 @@ export function registerClickDelegate (component, key, callback) {
   registerClickDelegates(component, { [key]: callback })
 }
 
-if (process.browser) {
+if (process.env.BROWSER) {
   document.addEventListener('click', onEvent)
   document.addEventListener('keydown', onEvent)
 }

@@ -104,7 +104,7 @@ function close () {
   return store._close()
 }
 
-if (process.browser) {
+if (process.env.BROWSER) {
   lifecycle.addEventListener('statechange', async event => {
     if (event.newState === 'frozen') { // page is frozen, close IDB connections
       await close()

@@ -31,7 +31,10 @@
     {/if}
 
     {#if actionText}
-      <span class="status-header-action">{actionText}</span>
+      <span class="status-header-action">{actionText}{#if targetAccount}{" "}<a
+        href="/accounts/{targetAccount.id}"
+        rel="prefetch"
+      >{'@' + targetAccount.acct}</a>{/if}</span>
     {/if}
     {#if icon === '#fa-question'}
     <a class="report-button button" target="blank" href="https://github.com/enafore/enafore/issues/new?title={encodeURIComponent(actionText)}">Report</a>
@@ -131,6 +134,7 @@
   import SvgIcon from '../SvgIcon.html'
   import { store } from '../../_store/store.js'
   import { emojifyText } from '../../_utils/emojifyText.js'
+  import { formatIntl } from '../../_utils/formatIntl.js'
 
   export default {
     components: {
@@ -143,6 +147,7 @@
       authorElementId: ({ uuid }) => `status-header-author-${uuid}`,
       avatarElementId: ({ uuid }) => `status-header-avatar-${uuid}`,
       notificationType: ({ notification }) => notification && notification.type,
+      targetAccount: ({ notification }) => notification && notification.type === 'move' && notification.target,
       icon: ({ notificationType, status, timelineType }) => {
         if (timelineType === 'pinned') {
           return '#fa-thumb-tack'
@@ -166,6 +171,8 @@
           return '#fa-flag'
         } else if (notificationType === 'pleroma:emoji_reaction' || notificationType === 'reaction' || notificationType === 'emoji_reaction') {
           return null
+        } else if (notificationType === 'move') {
+          return '#fa-arrow-right'
         }
         return '#fa-question'
       },
@@ -196,8 +203,12 @@
           return 'intl.requestedFollow'
         } else if (notificationType === 'admin.report') {
           return 'intl.reported'
+        } else if (notificationType === 'move') {
+          return 'intl.moved'
         } else if (notificationType) {
-          return `Unhandled notification type "${notificationType}"`
+          return formatIntl('intl.unhandledNotification', {
+            type: notificationType
+          })
         }
       },
       standalone: ({ notificationType, status }) => {

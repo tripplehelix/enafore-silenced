@@ -29,7 +29,7 @@ export function timelineObservers () {
   }
 
   store.observe('currentTimeline', async (currentTimeline) => {
-    if (!process.browser) {
+    if (!process.env.BROWSER) {
       return
     }
 

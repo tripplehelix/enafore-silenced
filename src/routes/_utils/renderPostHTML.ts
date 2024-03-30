@@ -1,9 +1,13 @@
 import { escapeRegExp } from './escapeRegExp.js'
-import { getEmojiRegex } from './emojiRegex.js'
+import { getEmojiRegex } from './emojiRegex.ts'
 import { DefaultTreeAdapterMap, defaultTreeAdapter, html, parseFragment, serialize } from 'parse5'
-const { NS: { HTML, SVG } } = html
+import { Mention } from './types.ts'
+const { NS: { HTML } } = html
 
-function consumeBalanced(string: string, open: string, close: string) {
+function consumeBalanced (string: string, open: string, close: string): {
+  consumed: string
+  remaining: string
+} {
   let balance = 1
   let index = 0
   while (index < string.length) {
@@ -26,48 +30,55 @@ function consumeBalanced(string: string, open: string, close: string) {
   }
 }
 
-export function renderPostHTMLToDOM({
+export function renderPostHTMLToDOM ({
   content,
   tags,
   autoplayGifs,
   emojis,
   mentionsByURL
 }: {
-  content: string,
-  tags: any[],
-  autoplayGifs: boolean,
-  emojis: Map<string, any>,
-  mentionsByURL: Map<string, any>,
-}) {
-  if (!content) {
+  content: string
+  tags: Array<{ name: string }>
+  autoplayGifs: boolean
+  emojis: Map<string, { url: string, static_url?: string, shortcode: string }>
+  mentionsByURL: Map<string, Mention>
+}): DefaultTreeAdapterMap['parentNode'] {
+  if (content === '') {
     return defaultTreeAdapter.createElement('div', HTML, [])
   }
   const dom = parseFragment(content)
   const customEmoji = [...emojis.keys()].map(e => escapeRegExp(e)).join('|')
   const unicodeEmoji = getEmojiRegex().source
   const part = new RegExp(`:(${customEmoji}):|(${unicodeEmoji})|(.)`, 'g')
-  function handleTextNode(node: DefaultTreeAdapterMap['textNode']) {
-    let newNodes = []
-    for (const [_, customEmoji, unicodeEmoji, text] of node.value.matchAll(part)) {
+  function handleTextNode (node: DefaultTreeAdapterMap['textNode']): void {
+    const newNodes = []
+    for (const [, customEmoji, unicodeEmoji, text] of node.value.matchAll(part)) {
       if (text) {
-        if (typeof newNodes[newNodes.length - 1] === 'string') {
-          newNodes[newNodes.length - 1] += text
+        const lastNode: unknown = newNodes[newNodes.length - 1]
+        if (typeof lastNode === 'string') {
+          newNodes[newNodes.length - 1] = lastNode + text
         } else {
           newNodes.push(text)
         }
       } else if (customEmoji) {
         const emoji = emojis.get(customEmoji)
-        if (!emoji) newNodes.push(`:${customEmoji}:`)
-        const urlToUse = autoplayGifs ? emoji.url : emoji.static_url
-        const shortcodeWithColons = `:${emoji.shortcode}:`
-        const ele = defaultTreeAdapter.createElement('img', HTML, [
-          { name: 'class', value: 'inline-custom-emoji' },
-          { name: 'draggable', value: 'false' },
-          { name: 'src', value: urlToUse },
-          { name: 'alt', value: shortcodeWithColons },
-          { name: 'title', value: shortcodeWithColons }
-        ])
-        newNodes.push(ele)
+        if (emoji == null) {
+          newNodes.push(`:${customEmoji}:`)
+        } else {
+          let urlToUse = emoji.url
+          if (autoplayGifs) {
+            urlToUse = emoji.static_url ?? emoji.url
+          }
+          const shortcodeWithColons = `:${emoji.shortcode}:`
+          const ele = defaultTreeAdapter.createElement('img', HTML, [
+            { name: 'class', value: 'inline-custom-emoji' },
+            { name: 'draggable', value: 'false' },
+            { name: 'src', value: urlToUse },
+            { name: 'alt', value: shortcodeWithColons },
+            { name: 'title', value: shortcodeWithColons }
+          ])
+          newNodes.push(ele)
+        }
       } else if (unicodeEmoji) {
         const ele = defaultTreeAdapter.createElement('span', HTML, [{ name: 'class', value: 'inline-emoji' }])
         defaultTreeAdapter.insertText(ele, unicodeEmoji)
@@ -78,25 +89,25 @@ export function renderPostHTMLToDOM({
     for (let text of newNodes) {
       if (typeof text === 'string') {
         let match
-        while ((match = text.match(/((?<!\$)\$\$(?!\$))|(\\\()|(\\\[)/))) {
+        while (((match = text.match(/((?<!\$)\$\$(?!\$))|(\\\()|(\\\[)/)) != null)) {
           const prev = text.slice(0, match.index)
           if (prev !== '') {
             defaultTreeAdapter.insertText(frag, prev)
           }
-          text = text.slice((match.index || 0) + match[0].length)
-          if (match[1]) {
+          text = text.slice((match.index ?? 0) + match[0].length)
+          if (match[1] !== '') {
             const consumed = text.slice(0, text.indexOf('$$'))
             const codeElement = defaultTreeAdapter.createElement('code', HTML, [{ name: 'class', value: 'to-katexify' }])
             defaultTreeAdapter.insertText(codeElement, consumed)
             defaultTreeAdapter.appendChild(frag, codeElement)
             text = text.slice(consumed.length + 2)
-          } else if (match[2]) {
+          } else if (match[2] !== '') {
             const { consumed, remaining } = consumeBalanced(text, '(', ')')
             const codeElement = defaultTreeAdapter.createElement('code', HTML, [{ name: 'class', value: 'to-katexify' }])
             defaultTreeAdapter.insertText(codeElement, consumed)
             defaultTreeAdapter.appendChild(frag, codeElement)
             text = remaining
-          } else if (match[3]) {
+          } else if (match[3] !== '') {
             const { consumed, remaining } = consumeBalanced(text, '[', ']')
             const codeElement = defaultTreeAdapter.createElement('pre', HTML, [{ name: 'class', value: 'to-katexify' }])
             defaultTreeAdapter.insertText(codeElement, consumed)
@@ -104,51 +115,59 @@ export function renderPostHTMLToDOM({
             text = remaining
           }
         }
-        if (text !== '') {
+        if (text) {
           defaultTreeAdapter.insertText(frag, text)
         }
       } else { defaultTreeAdapter.appendChild(frag, text) }
     }
     for (const child of frag.childNodes) {
-      defaultTreeAdapter.insertBefore(node.parentNode!, child, node)
+      defaultTreeAdapter.insertBefore(node.parentNode as DefaultTreeAdapterMap['parentNode'], child, node)
     }
     defaultTreeAdapter.detachNode(node)
   }
-  function handleAnchorNode(anchor: DefaultTreeAdapterMap['element']) {
-    let c = anchor.attrs.find(attr => attr.name === "class") || {name: 'class', value: ''}
-    const href = anchor.attrs.find(attr => attr.name === 'href') || {name: 'href', value: ''}
-    const classList = c.value ? c.value.split(/\s+/g) : null
-    anchor.attrs = [c, href]
-    if (tags && href && classList && classList.includes('hashtag')) {
+  function handleAnchorNode (anchor: DefaultTreeAdapterMap['element']): void {
+    let c = anchor.attrs.find(attr => attr.name === 'class')
+    if (c == null) c = { name: 'class', value: '' }
+    const href = anchor.attrs.find(attr => attr.name === 'href')
+    let rel = anchor.attrs.find(attr => attr.name === 'rel')
+    if (rel == null) rel = { name: 'rel', value: '' }
+    const classList = c.value.split(/\s+/g)
+    const relList = rel.value.split(/\s+/g)
+    rel.value = 'nofollow noopener ugc'
+    anchor.attrs = [c, rel]
+    if (href != null) {
+      anchor.attrs.push(href)
+    }
+    if ((href != null) && (classList.includes('hashtag') || relList.includes('tag'))) {
       for (const tag of tags) {
         if (href.value.toLowerCase().endsWith(`/${tag.name.toLowerCase()}`)) {
           href.value = `/tags/${tag.name}`
           c.value = 'hashtag'
+          rel.value += ' tag'
           anchor.childNodes = []
           defaultTreeAdapter.insertText(anchor, `#${tag.name}`)
           return
         }
       }
-    } else if (href && classList?.includes('mention')) {
+    } else if ((href != null) && classList.includes('mention')) {
       const mention = mentionsByURL.get(href.value)
-      if (mention) {
+      if (mention != null) {
         mention.included = true
         href.value = `/accounts/${mention.id}`
         c.value = 'mention'
-        anchor.attrs.push({ name: "title", value: `@${mention.acct}` })
+        anchor.attrs.push({ name: 'title', value: `@${mention.acct}` })
         anchor.childNodes = []
         defaultTreeAdapter.insertText(anchor, `@${mention.username}`)
         return
       }
     }
-    anchor.attrs.push({ name: "title", value: href ? href.value : "" }, { name: "target", value: "_blank" }, { name: "rel", value: "nofollow noopener" })
-    c.value = ""
+    anchor.attrs.push({ name: 'title', value: (href != null) ? href.value : '' }, { name: 'target', value: '_blank' })
+    c.value = ''
   }
-  function walkElements(node: DefaultTreeAdapterMap["parentNode"]) {
-    let s = ""
+  function walkElements (node: DefaultTreeAdapterMap['parentNode']): void {
     for (const child of node.childNodes) {
       if (defaultTreeAdapter.isElementNode(child)) {
-        if (child.tagName === "a") {
+        if (child.tagName === 'a') {
           handleAnchorNode(child)
         }
         walkElements(child)
@@ -161,6 +180,6 @@ export function renderPostHTMLToDOM({
   return dom
 }
 
-export function renderPostHTML(opts: Parameters<typeof renderPostHTMLToDOM>[0]) {
+export function renderPostHTML (opts: Parameters<typeof renderPostHTMLToDOM>[0]): string {
   return serialize(renderPostHTMLToDOM(opts))
 }

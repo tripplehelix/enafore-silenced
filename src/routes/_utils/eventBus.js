@@ -3,7 +3,7 @@ const { EventEmitter } = eventsLightPackage
 
 export const eventBus = new EventEmitter()
 
-if (process.browser) {
+if (process.env.BROWSER) {
   window.__eventBus = eventBus
 }
 

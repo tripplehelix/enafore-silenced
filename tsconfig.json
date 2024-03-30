@@ -1,12 +1,16 @@
 {
     "compilerOptions": {
         "noImplicitAny": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
         "module": "ESNext",
-        "target": "ESNext",
+        "target": "ES2020",
         "moduleResolution": "Bundler",
         "allowJs": true,
-        "outDir": "dist",
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "lib": ["ES2020", "DOM"],
+        "noEmit": true,
+        "allowImportingTsExtensions": true
     },
     "include": [
         "src/**/*.ts"

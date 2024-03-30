@@ -1,3 +1,4 @@
+// @ts-check
 import { thunk } from '../thunk.js'
 
-export const isMobile = thunk(() => process.browser && navigator.userAgent.match(/(?:iPhone|iPod|iPad|Android|KAIOS)/))
+export const isMobile = thunk(() => process.env.BROWSER && /(?:iPhone|iPod|iPad|Android|KAIOS)/.test(navigator.userAgent))

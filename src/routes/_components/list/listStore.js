@@ -11,7 +11,7 @@ const listStore = new ListStore()
 
 listStore.computeForRealm('intersectionStates', {})
 
-if (process.browser) {
+if (process.env.BROWSER) {
   window.__listStore = listStore // for debugging
 }
 

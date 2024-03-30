@@ -7,10 +7,10 @@ const SCOPES = 'read write follow push'
 export function registerApplication (instanceName, redirectUri) {
   const url = `${basename(instanceName)}/api/v1/apps`
   return post(url, {
-    client_name: process.env.UPSTREAM ? 'Enafore' : process.browser ? location.hostname : 'Enafore',
+    client_name: process.env.UPSTREAM ? 'Enafore' : process.env.BROWSER ? location.hostname : 'Enafore',
     redirect_uris: redirectUri,
     scopes: SCOPES,
-    website: process.browser ? location.origin : WEBSITE
+    website: process.env.BROWSER ? location.origin : WEBSITE
   }, null, { timeout: WRITE_TIMEOUT })
 }
 

@@ -31,18 +31,23 @@ export default {
       },
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: {
+          loader: '@sucrase/webpack-loader',
+          options: {
+            transforms: ['typescript']
+          }
+        },
         exclude: /node_modules/
       }
     ]
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.browser': true,
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.SAPPER_TIMESTAMP': process.env.SAPPER_TIMESTAMP || Date.now(),
       'process.env.LOCALE': JSON.stringify(LOCALE),
       'process.env.IS_SERVICE_WORKER': 'true',
+      'process.env.BROWSER': 'true',
       'process.env.THEME_COLORS': JSON.stringify(inlineThemeColors),
       'process.env.UPSTREAM': isUpstream
     })

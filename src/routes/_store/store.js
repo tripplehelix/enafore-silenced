@@ -8,7 +8,7 @@ import { isKaiOS } from '../_utils/userAgent/isKaiOS.js'
 const persistedState = {
   alwaysShowFocusRing: false,
   autoplayGifs: !(
-    !process.browser || matchMedia('(prefers-reduced-motion: reduce)').matches
+    !process.env.BROWSER || matchMedia('(prefers-reduced-motion: reduce)').matches
   ),
   composeData: {},
   currentInstance: null,
@@ -16,7 +16,7 @@ const persistedState = {
   currentRegisteredInstance: undefined,
   // we disable scrollbars by default on iOS
   disableCustomScrollbars:
-    process.browser && /iP(?:hone|ad|od)/.test(navigator.userAgent),
+    process.env.BROWSER && /iP(?:hone|ad|od)/.test(navigator.userAgent),
   bottomNav: false,
   centerNav: false,
   disableFollowRequestCount: false,
@@ -54,7 +54,7 @@ const persistedState = {
   pushSubscriptions: {},
   lastPings: {},
   reduceMotion:
-    !process.browser || matchMedia('(prefers-reduced-motion: reduce)').matches,
+    !process.env.BROWSER || matchMedia('(prefers-reduced-motion: reduce)').matches,
   underlineLinks: false,
   iconColors: '',
   lastContentTypes: {}
@@ -67,11 +67,11 @@ const nonPersistedState = {
   instanceInfos: {},
   instanceLists: {},
   instanceFilters: {},
-  online: !process.browser || navigator.onLine,
+  online: !process.env.BROWSER || navigator.onLine,
   pinnedStatuses: {},
   polls: {},
   pushNotificationsSupport:
-    process.browser &&
+    process.env.BROWSER &&
     'serviceWorker' in navigator &&
     'PushManager' in window &&
     'getKey' in PushSubscription.prototype,
@@ -103,6 +103,6 @@ mixins(PinaforeStore)
 computations(store)
 observers(store)
 
-if (process.browser) {
+if (process.env.BROWSER) {
   window.__store = store // for debugging
 }

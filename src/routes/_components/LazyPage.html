@@ -19,7 +19,7 @@
       doubleRAF(() => requestAnimationFrame(() => this.set({ revealed: true })))
     },
     data: () => ({
-      revealed: !process.browser || firstTime
+      revealed: !process.env.BROWSER || firstTime
     })
   }
 </script>

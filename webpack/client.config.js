@@ -75,7 +75,12 @@ export default {
       },
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: {
+          loader: '@sucrase/webpack-loader',
+          options: {
+            transforms: ['typescript']
+          }
+        },
         exclude: /node_modules/
       },
       {
@@ -123,7 +128,6 @@ export default {
     }),
     new VirtualModulesPlugin(),
     new webpack.DefinePlugin({
-      'process.browser': true,
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.INLINE_SVGS': JSON.stringify(inlineSvgs),
       'process.env.URL_REGEX': urlRegex().toString(),
@@ -133,6 +137,7 @@ export default {
         : 'undefined',
       'process.env.PINAFORE_VERSION': JSON.stringify(version),
       'process.env.IS_SERVICE_WORKER': 'false',
+      'process.env.BROWSER': 'true',
       'process.env.THEME_COLORS': 'null',
       'process.env.UPSTREAM': isUpstream
     }),

@@ -147,4 +147,4 @@ async function scheduledCleanup () {
 }
 
 // we have unit tests that test indexedDB; we don't want this thing to run forever
-export const scheduleCleanup = process.browser ? debounce(scheduledCleanup, CLEANUP_DELAY) : noop
+export const scheduleCleanup = process.env.BROWSER ? debounce(scheduledCleanup, CLEANUP_DELAY) : noop

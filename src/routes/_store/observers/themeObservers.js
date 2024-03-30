@@ -1,10 +1,10 @@
 import { switchToTheme } from '../../_utils/themeEngine.js'
 import { database } from '../../_database/database.js'
 
-const style = process.browser && document.getElementById('theGrayscaleStyle')
+const style = process.env.BROWSER && document.getElementById('theGrayscaleStyle')
 
 export function themeObservers (store) {
-  if (!process.browser) {
+  if (!process.env.BROWSER) {
     return
   }
 

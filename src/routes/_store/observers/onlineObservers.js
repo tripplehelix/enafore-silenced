@@ -8,13 +8,13 @@ let notifyCount = 0
 
 // debounce to avoid notifying for a short connection issue
 const notifyOffline = debounce(() => {
-  if (process.browser && !navigator.onLine && ++notifyCount <= NOTIFY_OFFLINE_LIMIT) {
+  if (process.env.BROWSER && !navigator.onLine && ++notifyCount <= NOTIFY_OFFLINE_LIMIT) {
     toast.say('intl.youAreOffline')
   }
 }, OFFLINE_DELAY)
 
 export function onlineObservers (store) {
-  if (!process.browser) {
+  if (!process.env.BROWSER) {
     return
   }
 

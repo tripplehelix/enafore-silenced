@@ -1,10 +1,10 @@
 export default {
   // Home page, basic <title> and <description>
   appName: 'Enafore',
-  appDescription: 'A somewhat unstable fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.',
+  appDescription: 'A fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.',
   homeDescription: `
     <p>
-      Enafore is a somewhat unstable fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.
+      Enafore is a fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.
     </p>
     <p>
       Get started by logging in to an instance:
@@ -529,6 +529,8 @@ export default {
   accountRequestedFollow: '{name} requested to follow you, {account}',
   accountReported: '{name} filed a report, {account}',
   reblogCountsHidden: 'Boost counts hidden',
+  unhandledNotification: 'Unhandled notification type {type}',
+  moved: 'moved to',
   favoriteCountsHidden: 'Favorite counts hidden',
   reactionCountsHidden: 'Reaction counts hidden',
   rebloggedTimes: `Boosted {count, plural,

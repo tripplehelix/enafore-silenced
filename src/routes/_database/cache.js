@@ -21,7 +21,7 @@ export const notificationsCache = {
   caches: {}
 }
 
-if (process.browser && process.env.NODE_ENV !== 'production') {
+if (process.env.BROWSER && process.env.NODE_ENV !== 'production') {
   (typeof self !== 'undefined' ? self : window).cacheStats = {
     statuses: statusesCache,
     accounts: accountsCache,

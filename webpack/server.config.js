@@ -42,7 +42,12 @@ export default {
       },
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: {
+          loader: '@sucrase/webpack-loader',
+          options: {
+            transforms: ['typescript']
+          }
+        },
         exclude: /node_modules/
       },
       {
@@ -74,6 +79,7 @@ export default {
       'process.env.LOCALE': JSON.stringify(LOCALE),
       'process.env.PINAFORE_VERSION': JSON.stringify(version),
       'process.env.IS_SERVICE_WORKER': 'false',
+      'process.env.BROWSER': 'false',
       'process.env.THEME_COLORS': 'null',
       'process.env.UPSTREAM': isUpstream
     })

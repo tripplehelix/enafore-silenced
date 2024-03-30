@@ -1,18 +1,14 @@
 import registerPromiseWorker from 'promise-worker/register.js'
-// @ts-ignore
 import { statusDomToPlainText } from '../../_utils/statusHtmlToPlainText.ts'
-// @ts-ignore
 import { computeHashtagBarForStatus } from './hashtagBar.ts'
-// @ts-ignore
 import { renderMfm } from './mfm.ts'
-// @ts-ignore
 import { renderPostHTMLToDOM } from '../../_utils/renderPostHTML.ts'
 import { type DefaultTreeAdapterMap, defaultTreeAdapter, html, serialize, parseFragment } from 'parse5'
 const { NS: { HTML } } = html
 
 registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCredentials }) => {
   const mfmContent = originalStatus.content_type === 'text/x.misskeymarkdown' ? originalStatus.text : (originalStatus.akkoma && originalStatus.akkoma.source && originalStatus.akkoma.source.mediaType === 'text/x.misskeymarkdown') ? originalStatus.akkoma.source.content : null
-  let dom: DefaultTreeAdapterMap["parentNode"], hashtagsInBar: string[]
+  let dom: DefaultTreeAdapterMap['parentNode'], hashtagsInBar: string[]
   const userHost = (currentVerifyCredentials && currentVerifyCredentials.fqn) ? currentVerifyCredentials.fqn.split('@')[1] : new URL(currentVerifyCredentials.url).hostname
   const emojis = new Map<string, any>()
   if (originalStatus.emojis) {
@@ -56,7 +52,7 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCreden
     const extraMentions = originalStatus.mentions.filter((mention: any) => !mention.included)
     if (extraMentions.length) {
       let firstBlock = dom
-      while (firstBlock.childNodes.length && 'tagName' in firstBlock.childNodes[0] && ['div', 'p'].includes(firstBlock.childNodes[0].tagName)) {
+      while ((firstBlock.childNodes.length > 0) && 'tagName' in firstBlock.childNodes[0]! && ['div', 'p'].includes(firstBlock.childNodes[0].tagName)) {
         firstBlock = firstBlock.childNodes[0]
       }
       while (extraMentions.length) {
@@ -79,8 +75,8 @@ registerPromiseWorker(async ({ originalStatus, autoplayGifs, currentVerifyCreden
           }
         ])
         defaultTreeAdapter.insertText(ele, '@' + mention.username)
-        defaultTreeAdapter.insertTextBefore(firstBlock, ' ', firstBlock.childNodes[0])
-        defaultTreeAdapter.insertBefore(firstBlock, ele, firstBlock.childNodes[0])
+        defaultTreeAdapter.insertTextBefore(firstBlock, ' ', firstBlock.childNodes[0]!)
+        defaultTreeAdapter.insertBefore(firstBlock, ele, firstBlock.childNodes[0]!)
       }
     }
   }

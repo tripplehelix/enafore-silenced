@@ -5,7 +5,7 @@ export async function checkStats () {
   const { currentInstance, accessToken } = store.get()
   const pingTime = Date.now()
   if (
-    process.browser &&
+    process.env.BROWSER &&
     pingTime -
       ((store.getInstanceData(currentInstance, 'lastPings') || 0) +
         Math.random() * 1000 * 60 * 60 * 12) >

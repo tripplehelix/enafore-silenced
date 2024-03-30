@@ -1,6 +1,7 @@
 export default [
   { id: 'logo', src: 'src/static/logo.svg', inline: true },
   { id: 'fa-arrow-left', src: 'src/thirdparty/font-awesome-svg-png/white/svg/arrow-left.svg' },
+  { id: 'fa-arrow-right', src: 'src/thirdparty/font-awesome-svg-png/white/svg/arrow-right.svg' },
   { id: 'fa-bell', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bell.svg', inline: true },
   { id: 'fa-bell-o', src: 'src/thirdparty/font-awesome-svg-png/white/svg/bell-o.svg' },
   { id: 'fa-users', src: 'src/thirdparty/font-awesome-svg-png/white/svg/users.svg', inline: true },

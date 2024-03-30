@@ -21,7 +21,7 @@ export async function buildInlineScript () {
     plugins: [
       replace({
         values: {
-          'process.browser': true,
+          'process.env.BROWSER': 'true',
           'process.env.THEME_COLORS': JSON.stringify(inlineThemeColors)
         },
         preventAssignment: false

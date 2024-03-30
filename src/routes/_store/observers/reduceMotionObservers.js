@@ -1,5 +1,5 @@
 export function reduceMotionObservers (store) {
-  if (!process.browser) {
+  if (!process.env.BROWSER) {
     return
   }
 

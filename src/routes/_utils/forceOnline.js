@@ -3,7 +3,7 @@ import { emit } from './eventBus.js'
 
 // Force online/offline state. Needed for integration tests.
 // It would be nice not to actually ship this in production, but *shrug*
-if (process.browser) {
+if (process.env.BROWSER) {
   const globalFetch = window.fetch
 
   window.__forceOnline = online => {

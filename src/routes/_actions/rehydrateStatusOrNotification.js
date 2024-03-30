@@ -11,7 +11,7 @@ import { emit } from '../_utils/eventBus.js'
 let worker
 export function init () {
   worker = worker || new PromiseWorker(new Worker(new URL('../_workers/processContent/index.ts', import.meta.url)))
-  if (process.browser) {
+  if (process.env.BROWSER) {
     try {
       initBlurhash()
     } catch (err) {

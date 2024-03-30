@@ -2,7 +2,7 @@ import LoadingMask from '../_components/LoadingMask.html'
 
 let loadingMask
 
-if (process.browser) {
+if (process.env.BROWSER) {
   loadingMask = new LoadingMask({
     target: document.querySelector('#loading-mask')
   })

@@ -1,7 +1,7 @@
 <div class={computedClass}
-     style={style}
+     style="{style}"
      aria-hidden="true"
-><div class="length-gauge-inner" style={computedStyle}></div></div>
+><div class="length-gauge-inner" style="{computedStyle}"></div></div>
 <style>
   .length-gauge {
     height: 2px;
@@ -29,7 +29,7 @@
   import { throttleTimer } from '../_utils/throttleTimer.js'
   import { classname } from '../_utils/classname.js'
 
-  const updateDisplayedLength = process.browser && throttleTimer(requestAnimationFrame)
+  const updateDisplayedLength = process.env.BROWSER && throttleTimer(requestAnimationFrame)
 
   export default {
     oncreate () {

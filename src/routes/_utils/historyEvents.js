@@ -12,7 +12,7 @@ function wrapper (type) {
   }
 }
 
-if (process.browser) {
+if (process.env.BROWSER) {
   history.pushState = wrapper('pushState')
   history.replaceState = wrapper('replaceState')
 }

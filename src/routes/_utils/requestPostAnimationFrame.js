@@ -1,9 +1,9 @@
 // modeled after https://github.com/andrewiggins/afterframe
 // see also https://github.com/WICG/requestPostAnimationFrame
-const channel = process.browser && new MessageChannel()
+const channel = process.env.BROWSER && new MessageChannel()
 const callbacks = []
 
-if (process.browser) {
+if (process.env.BROWSER) {
   channel.port1.onmessage = onMessage
 }
 

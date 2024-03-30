@@ -4,11 +4,11 @@ const DEBOUNCE_DELAY = 700
 
 const listeners = new Set()
 
-if (process.browser) {
+if (process.env.BROWSER) {
   window.__resizeListeners = listeners
 }
 
-if (process.browser) {
+if (process.env.BROWSER) {
   window.addEventListener('resize', debounce(() => {
     console.log('resize')
     listeners.forEach(listener => listener())

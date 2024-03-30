@@ -76,7 +76,7 @@ function stream (store, instanceName, currentInstanceInfo) {
 
 export function instanceObservers () {
   store.observe('currentInstance', async (currentInstance) => {
-    if (!process.browser) {
+    if (!process.env.BROWSER) {
       return
     }
     if (currentInstanceStream) {

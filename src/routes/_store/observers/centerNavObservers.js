@@ -1,10 +1,10 @@
 import { store } from '../store.js'
 
-const centerNavStyle = process.browser && document.getElementById('theCenterNavStyle')
+const centerNavStyle = process.env.BROWSER && document.getElementById('theCenterNavStyle')
 
 export function centerNavObservers () {
   store.observe('centerNav', centerNav => {
-    if (!process.browser) {
+    if (!process.env.BROWSER) {
       return
     }
 

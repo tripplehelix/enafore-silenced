@@ -1,5 +1,5 @@
 export function pageVisibilityObservers (store) {
-  if (!process.browser) {
+  if (!process.env.BROWSER) {
     return
   }
 

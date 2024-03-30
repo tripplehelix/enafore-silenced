@@ -32,7 +32,7 @@ export function scheduleInterval (callback, delay, runOnActive) {
     startPolling()
   }
 
-  if (process.browser) {
+  if (process.env.BROWSER) {
     startPolling()
 
     lifecycle.addEventListener('statechange', e => {

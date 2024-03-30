@@ -8,7 +8,7 @@ const { Store } = storePackage
 export class LocalStorageStore extends Store {
   constructor (state, keysToWatch) {
     super(state)
-    if (!process.browser) {
+    if (!process.env.BROWSER) {
       return
     }
     this._keysToWatch = keysToWatch
@@ -29,7 +29,7 @@ export class LocalStorageStore extends Store {
         }
       })
     })
-    if (process.browser) {
+    if (process.env.BROWSER) {
       lifecycle.addEventListener('statechange', e => {
         if (e.newState === 'passive') {
           console.log('saving LocalStorageStore...')
@@ -40,7 +40,7 @@ export class LocalStorageStore extends Store {
   }
 
   save () {
-    if (!process.browser) {
+    if (!process.env.BROWSER) {
       return
     }
     Object.keys(this._keysToSave).forEach(key => {

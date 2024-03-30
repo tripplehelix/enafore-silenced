@@ -89,7 +89,7 @@ export function closeDatabase (instanceName) {
   clearAllCaches(instanceName)
 }
 
-if (process.browser) {
+if (process.env.BROWSER) {
   lifecycle.addEventListener('statechange', event => {
     if (event.newState === 'frozen') { // page is frozen, close IDB connections
       Object.keys(openReqs).forEach(instanceName => {
