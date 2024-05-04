@@ -3,7 +3,6 @@
   <AccountProfileMovedBanner {account} />
 {/if}
 <div class={className}
-     style="background-image: url({headerImage});"
      ref:accountProfile>
   {#if !headerImageIsMissing}
     <div class="account-profile-banner">
@@ -11,6 +10,7 @@
     </div>
   {/if}
   <div class="account-profile-grid-wrapper">
+    <div style={backgroundStyle} class="account-profile-background"></div>
     <div class="account-profile-grid">
       <AccountProfileHeader {account} {relationship} {verifyCredentials} />
       <AccountProfileFollow {account} {relationship} {verifyCredentials} />
@@ -32,10 +32,6 @@
     filter: grayscale(0.8);
   }
 
-  .account-profile.header-image-is-missing {
-    background-color: #ccc;
-  }
-
   .account-profile-grid {
     display: grid;
     grid-template-areas: "avatar     name        name      name          follow"
@@ -49,20 +45,32 @@
     padding-bottom: 0;
     justify-content: center;
     border-bottom: var(--main-border-size) solid var(--main-border);
+    position: relative;
+    background-color: var(--account-profile-bg);
   }
 
-  @supports (-webkit-backdrop-filter: blur(1px) saturate(1%)) or (backdrop-filter: blur(1px) saturate(1%)) {
-    :global(.account-profile-grid-wrapper) {
-      -webkit-backdrop-filter: blur(20px) saturate(110%);
-      backdrop-filter: blur(20px) saturate(110%);
-      background-color: var(--account-profile-bg-backdrop-filter);
+  .account-profile-background {
+    display: none;
+  }
+
+  @supports (filter: blur(20px)) {
+    .account-profile-background {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(100% + 40px);
+      height: calc(100% + 40px);
+      background-position: center;
+      background-size: cover;
+      filter: blur(20px) saturate(110%);
+      margin: -20px;
     }
   }
 
-  @supports not ((-webkit-backdrop-filter: blur(1px) saturate(1%)) or (backdrop-filter: blur(1px) saturate(1%))) {
-    :global(.account-profile-grid-wrapper) {
-      background-color: var(--account-profile-bg);
-    }
+  :global(.account-profile-grid-wrapper) {
+    overflow: hidden;
+    position: relative;
   }
 
   @media (max-width: 767px) {
@@ -125,8 +133,9 @@
     },
     store: () => store,
     computed: {
-      headerImageIsMissing: ({ account }) => account.header.endsWith('missing.png'),
+      headerImageIsMissing: ({ account }) => account.header.endsWith('missing.png') || account.header.endsWith('/images/banner.png'),
       headerImage: ({ $autoplayGifs, account }) => $autoplayGifs ? account.header : account.header_static,
+      backgroundStyle: ({ headerImage, headerImageIsMissing }) => headerImageIsMissing ? '' : `background-image: url('${headerImage}');`,
       accountName: ({ account }) => (account && (account.display_name || account.username)) || '',
       moved: ({ account }) => account.moved,
       className: ({ headerImageIsMissing, $underlineLinks, moved }) => (classname(

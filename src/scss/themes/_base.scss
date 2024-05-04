@@ -75,8 +75,7 @@
   --mask-opaque-bg: #{rgba($toast-bg, 0.8)};
   --loading-bg: #{#ededed};
 
-  --account-profile-bg-backdrop-filter: #{rgba($main-bg-color, 0.85)};
-  --account-profile-bg: #{rgba($main-bg-color, 0.9)};
+  --account-profile-bg: #{rgba($main-bg-color, 0.85)};
 
   --deemphasized-text-color: #{$deemphasized-color};
   --focus-outline: #{$focus-outline};
@@ -121,7 +120,6 @@
 
   --audio-bg: #{rgba(30, 30, 30, 0.8)};
 
-  --focal-img-backdrop-filter: #{rgba($main-bg-color, 0.5)};
   --focal-img-bg: #{rgba($main-bg-color, 0.3)};
   --focal-bg: #{rgba($toast-bg, 0.8)};
   --focal-bg-drag: #{rgba($toast-bg, 0.9)};
