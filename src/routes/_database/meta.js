@@ -1,4 +1,4 @@
-import { dbPromise, getDatabase } from './databaseLifecycle.js'
+import { dbPromise, getDatabase } from './databaseLifecycle.ts'
 import { META_STORE } from './constants.js'
 import { metaCache, hasInCache, getInCache, setInCache } from './cache.js'
 

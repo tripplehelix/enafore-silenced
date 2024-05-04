@@ -25,8 +25,10 @@ async function _updateAccount (accountId, instanceName, accessToken) {
 async function _updateRelationship (accountId, instanceName, accessToken) {
   const localPromise = database.getRelationship(instanceName, accountId)
   const remotePromise = getRelationship(instanceName, accessToken, accountId).then(relationship => {
-    /* no await */ database.setRelationship(instanceName, relationship)
-    return relationship
+    if (relationship) {
+      /* no await */ database.setRelationship(instanceName, relationship)
+      return relationship
+    }
   })
   try {
     store.set({ currentAccountRelationship: (await localPromise) })

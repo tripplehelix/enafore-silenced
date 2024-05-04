@@ -1,17 +1,19 @@
-
 import { type DefaultTreeAdapterMap, defaultTreeAdapter } from 'parse5'
 
-function normalizeHashtag (hashtag: string): string {
+function normalizeHashtag(hashtag: string): string {
   return (
     hashtag !== '' && hashtag.startsWith('#') ? hashtag.slice(1) : hashtag
   ).normalize('NFKC')
 }
 
-function isNodeLinkHashtag (element: DefaultTreeAdapterMap['element']): boolean {
+function isNodeLinkHashtag(element: DefaultTreeAdapterMap['element']): boolean {
   if (element.tagName === 'a') {
-    const c = element.attrs.find(attr => attr.name === 'class')
-    const r = element.attrs.find(attr => attr.name === 'rel')
-    return (c?.value.split(/\s+/g).includes('hashtag') ?? false) || (r?.value.split(/\s+/g).includes('tag') ?? false)
+    const c = element.attrs.find((attr) => attr.name === 'class')
+    const r = element.attrs.find((attr) => attr.name === 'rel')
+    return (
+      (c?.value.split(/\s+/g).includes('hashtag') ?? false) ||
+      (r?.value.split(/\s+/g).includes('tag') ?? false)
+    )
   }
   return false
 }
@@ -22,35 +24,43 @@ function isNodeLinkHashtag (element: DefaultTreeAdapterMap['element']): boolean 
  * @param hashtags The list of hashtags
  * @returns The input hashtags, but with only 1 occurence of each (case-insensitive)
  */
-function uniqueHashtagsWithCaseHandling (hashtags: string[]): string[] {
-  const groups = hashtags.reduce<{ [_: string]: [string, ...string[]] }>((obj, tag) => {
-    const normalizedTag = tag.normalize('NFKD').toLowerCase()
-    const array = obj[normalizedTag]
-    if(array) {
-      array.push(tag)
-    } else {
-      obj[normalizedTag] = [tag]
-    }
-    return obj
-  }, {})
+function uniqueHashtagsWithCaseHandling(hashtags: string[]): string[] {
+  const groups = hashtags.reduce<{ [_: string]: [string, ...string[]] }>(
+    (obj, tag) => {
+      const normalizedTag = tag.normalize('NFKD').toLowerCase()
+      const array = obj[normalizedTag]
+      if (array) {
+        array.push(tag)
+      } else {
+        obj[normalizedTag] = [tag]
+      }
+      return obj
+    },
+    {},
+  )
 
   return Object.values(groups).map((tags) => tags[0])
 }
 
 // Create the collator once, this is much more efficient
 const collator = new Intl.Collator(undefined, {
-  sensitivity: 'base' // we use this to emulate the ASCII folding done on the server-side, hopefuly more efficiently
+  sensitivity: 'base', // we use this to emulate the ASCII folding done on the server-side, hopefuly more efficiently
 })
 
-function localeAwareInclude (collection: string[], value: string): boolean {
+function localeAwareInclude(collection: string[], value: string): boolean {
   const normalizedValue = value.normalize('NFKC')
 
-  return Boolean(collection.find(
-    (item) => collator.compare(item.normalize('NFKC'), normalizedValue) === 0
-  ))
+  return Boolean(
+    collection.find(
+      (item) => collator.compare(item.normalize('NFKC'), normalizedValue) === 0,
+    ),
+  )
 }
 
-function walkElements (node: DefaultTreeAdapterMap['parentNode'], callback: ((node: DefaultTreeAdapterMap['element']) => unknown)): void {
+function walkElements(
+  node: DefaultTreeAdapterMap['parentNode'],
+  callback: (node: DefaultTreeAdapterMap['element']) => unknown,
+): void {
   for (const child of node.childNodes) {
     if (defaultTreeAdapter.isElementNode(child)) {
       callback(child)
@@ -59,7 +69,10 @@ function walkElements (node: DefaultTreeAdapterMap['parentNode'], callback: ((no
   }
 }
 
-export function computeHashtagBarForStatus (dom: DefaultTreeAdapterMap['parentNode'], status: any): {
+export function computeHashtagBarForStatus(
+  dom: DefaultTreeAdapterMap['parentNode'],
+  status: any,
+): {
   dom: DefaultTreeAdapterMap['parentNode']
   hashtagsInBar: string[]
 } {
@@ -69,7 +82,7 @@ export function computeHashtagBarForStatus (dom: DefaultTreeAdapterMap['parentNo
     hashtagsInBar: string[]
   } = {
     dom,
-    hashtagsInBar: []
+    hashtagsInBar: [],
   }
 
   // return early if this status does not have any tags
@@ -84,7 +97,12 @@ export function computeHashtagBarForStatus (dom: DefaultTreeAdapterMap['parentNo
     if (!node) {
       return false
     }
-    if (defaultTreeAdapter.isElementNode(node) && isNodeLinkHashtag(node) && node.childNodes.length === 1 && defaultTreeAdapter.isTextNode(node.childNodes[0]!)) {
+    if (
+      defaultTreeAdapter.isElementNode(node) &&
+      isNodeLinkHashtag(node) &&
+      node.childNodes.length === 1 &&
+      defaultTreeAdapter.isTextNode(node.childNodes[0]!)
+    ) {
       const normalized = normalizeHashtag(node.childNodes[0].value)
       if (!localeAwareInclude(normalizedTagNames, normalized)) {
         // stop here, this is not a real hashtag, so consider it as text
@@ -108,7 +126,10 @@ export function computeHashtagBarForStatus (dom: DefaultTreeAdapterMap['parentNo
       if (isValidNode(lc)) {
         for (let i = parent.childNodes.length - 1; i > -1; i--) {
           const node = parent.childNodes[i]!
-          if ((defaultTreeAdapter.isElementNode(node) && node.tagName === 'br') || (defaultTreeAdapter.isTextNode(node) && node.value.includes('\n'))) {
+          if (
+            (defaultTreeAdapter.isElementNode(node) && node.tagName === 'br') ||
+            (defaultTreeAdapter.isTextNode(node) && node.value.includes('\n'))
+          ) {
             toRemove.push(node)
             break
           }
@@ -130,8 +151,11 @@ export function computeHashtagBarForStatus (dom: DefaultTreeAdapterMap['parentNo
     for (const node of toRemove) {
       defaultTreeAdapter.detachNode(node)
     }
-    if (parent !== dom && (parent.childNodes.length === 0)) {
-      defaultTreeAdapter.detachNode(parent as (DefaultTreeAdapterMap['childNode'] & DefaultTreeAdapterMap['parentNode']))
+    if (parent !== dom && parent.childNodes.length === 0) {
+      defaultTreeAdapter.detachNode(
+        parent as DefaultTreeAdapterMap['childNode'] &
+          DefaultTreeAdapterMap['parentNode'],
+      )
     }
   }
 
@@ -150,6 +174,6 @@ export function computeHashtagBarForStatus (dom: DefaultTreeAdapterMap['parentNo
 
   return {
     dom,
-    hashtagsInBar: uniqueHashtagsWithCaseHandling(hashtagsInBar)
+    hashtagsInBar: uniqueHashtagsWithCaseHandling(hashtagsInBar),
   }
 }

@@ -1,4 +1,4 @@
-import { lifecycle } from './lifecycle.js'
+import { lifecycle } from './lifecycle.ts'
 
 /**
  * Schedule a callback, similar to setInterval but disables itself when the page is not active to save battery/CPU.

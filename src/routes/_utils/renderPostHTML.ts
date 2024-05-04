@@ -1,10 +1,22 @@
 import { escapeRegExp } from './escapeRegExp.js'
 import { getEmojiRegex } from './emojiRegex.ts'
-import { DefaultTreeAdapterMap, defaultTreeAdapter, html, parseFragment, serialize } from 'parse5'
+import {
+  DefaultTreeAdapterMap,
+  defaultTreeAdapter,
+  html,
+  parseFragment,
+  serialize,
+} from 'parse5'
 import { Mention } from './types.ts'
-const { NS: { HTML } } = html
+const {
+  NS: { HTML },
+} = html
 
-function consumeBalanced (string: string, open: string, close: string): {
+function consumeBalanced(
+  string: string,
+  open: string,
+  close: string,
+): {
   consumed: string
   remaining: string
 } {
@@ -26,33 +38,35 @@ function consumeBalanced (string: string, open: string, close: string): {
   }
   return {
     consumed: string.slice(0, index),
-    remaining: string.slice(index + 2)
+    remaining: string.slice(index + 2),
   }
 }
 
-export function renderPostHTMLToDOM ({
+export function renderPostHTMLToDOM({
   content,
   tags,
   autoplayGifs,
   emojis,
-  mentionsByURL
+  mentionsByURL,
 }: {
   content: string
   tags: Array<{ name: string }>
   autoplayGifs: boolean
-  emojis: Map<string, { url: string, static_url?: string, shortcode: string }>
+  emojis: Map<string, { url: string; static_url?: string; shortcode: string }>
   mentionsByURL: Map<string, Mention>
 }): DefaultTreeAdapterMap['parentNode'] {
   if (content === '') {
     return defaultTreeAdapter.createElement('div', HTML, [])
   }
   const dom = parseFragment(content)
-  const customEmoji = [...emojis.keys()].map(e => escapeRegExp(e)).join('|')
+  const customEmoji = [...emojis.keys()].map((e) => escapeRegExp(e)).join('|')
   const unicodeEmoji = getEmojiRegex().source
   const part = new RegExp(`:(${customEmoji}):|(${unicodeEmoji})|(.)`, 'g')
-  function handleTextNode (node: DefaultTreeAdapterMap['textNode']): void {
+  function handleTextNode(node: DefaultTreeAdapterMap['textNode']): void {
     const newNodes = []
-    for (const [, customEmoji, unicodeEmoji, text] of node.value.matchAll(part)) {
+    for (const [, customEmoji, unicodeEmoji, text] of node.value.matchAll(
+      part,
+    )) {
       if (text) {
         const lastNode: unknown = newNodes[newNodes.length - 1]
         if (typeof lastNode === 'string') {
@@ -75,12 +89,14 @@ export function renderPostHTMLToDOM ({
             { name: 'draggable', value: 'false' },
             { name: 'src', value: urlToUse },
             { name: 'alt', value: shortcodeWithColons },
-            { name: 'title', value: shortcodeWithColons }
+            { name: 'title', value: shortcodeWithColons },
           ])
           newNodes.push(ele)
         }
       } else if (unicodeEmoji) {
-        const ele = defaultTreeAdapter.createElement('span', HTML, [{ name: 'class', value: 'inline-emoji' }])
+        const ele = defaultTreeAdapter.createElement('span', HTML, [
+          { name: 'class', value: 'inline-emoji' },
+        ])
         defaultTreeAdapter.insertText(ele, unicodeEmoji)
         newNodes.push(ele)
       }
@@ -89,7 +105,9 @@ export function renderPostHTMLToDOM ({
     for (let text of newNodes) {
       if (typeof text === 'string') {
         let match
-        while (((match = text.match(/((?<!\$)\$\$(?!\$))|(\\\()|(\\\[)/)) != null)) {
+        while (
+          (match = text.match(/((?<!\$)\$\$(?!\$))|(\\\()|(\\\[)/)) != null
+        ) {
           const prev = text.slice(0, match.index)
           if (prev !== '') {
             defaultTreeAdapter.insertText(frag, prev)
@@ -97,19 +115,25 @@ export function renderPostHTMLToDOM ({
           text = text.slice((match.index ?? 0) + match[0].length)
           if (match[1] !== '') {
             const consumed = text.slice(0, text.indexOf('$$'))
-            const codeElement = defaultTreeAdapter.createElement('code', HTML, [{ name: 'class', value: 'to-katexify' }])
+            const codeElement = defaultTreeAdapter.createElement('code', HTML, [
+              { name: 'class', value: 'to-katexify' },
+            ])
             defaultTreeAdapter.insertText(codeElement, consumed)
             defaultTreeAdapter.appendChild(frag, codeElement)
             text = text.slice(consumed.length + 2)
           } else if (match[2] !== '') {
             const { consumed, remaining } = consumeBalanced(text, '(', ')')
-            const codeElement = defaultTreeAdapter.createElement('code', HTML, [{ name: 'class', value: 'to-katexify' }])
+            const codeElement = defaultTreeAdapter.createElement('code', HTML, [
+              { name: 'class', value: 'to-katexify' },
+            ])
             defaultTreeAdapter.insertText(codeElement, consumed)
             defaultTreeAdapter.appendChild(frag, codeElement)
             text = remaining
           } else if (match[3] !== '') {
             const { consumed, remaining } = consumeBalanced(text, '[', ']')
-            const codeElement = defaultTreeAdapter.createElement('pre', HTML, [{ name: 'class', value: 'to-katexify' }])
+            const codeElement = defaultTreeAdapter.createElement('pre', HTML, [
+              { name: 'class', value: 'to-katexify' },
+            ])
             defaultTreeAdapter.insertText(codeElement, consumed)
             defaultTreeAdapter.appendChild(frag, codeElement)
             text = remaining
@@ -118,18 +142,24 @@ export function renderPostHTMLToDOM ({
         if (text) {
           defaultTreeAdapter.insertText(frag, text)
         }
-      } else { defaultTreeAdapter.appendChild(frag, text) }
+      } else {
+        defaultTreeAdapter.appendChild(frag, text)
+      }
     }
     for (const child of frag.childNodes) {
-      defaultTreeAdapter.insertBefore(node.parentNode as DefaultTreeAdapterMap['parentNode'], child, node)
+      defaultTreeAdapter.insertBefore(
+        node.parentNode as DefaultTreeAdapterMap['parentNode'],
+        child,
+        node,
+      )
     }
     defaultTreeAdapter.detachNode(node)
   }
-  function handleAnchorNode (anchor: DefaultTreeAdapterMap['element']): void {
-    let c = anchor.attrs.find(attr => attr.name === 'class')
+  function handleAnchorNode(anchor: DefaultTreeAdapterMap['element']): void {
+    let c = anchor.attrs.find((attr) => attr.name === 'class')
     if (c == null) c = { name: 'class', value: '' }
-    const href = anchor.attrs.find(attr => attr.name === 'href')
-    let rel = anchor.attrs.find(attr => attr.name === 'rel')
+    const href = anchor.attrs.find((attr) => attr.name === 'href')
+    let rel = anchor.attrs.find((attr) => attr.name === 'rel')
     if (rel == null) rel = { name: 'rel', value: '' }
     const classList = c.value.split(/\s+/g)
     const relList = rel.value.split(/\s+/g)
@@ -138,7 +168,10 @@ export function renderPostHTMLToDOM ({
     if (href != null) {
       anchor.attrs.push(href)
     }
-    if ((href != null) && (classList.includes('hashtag') || relList.includes('tag'))) {
+    if (
+      href != null &&
+      (classList.includes('hashtag') || relList.includes('tag'))
+    ) {
       for (const tag of tags) {
         if (href.value.toLowerCase().endsWith(`/${tag.name.toLowerCase()}`)) {
           href.value = `/tags/${tag.name}`
@@ -149,7 +182,7 @@ export function renderPostHTMLToDOM ({
           return
         }
       }
-    } else if ((href != null) && classList.includes('mention')) {
+    } else if (href != null && classList.includes('mention')) {
       const mention = mentionsByURL.get(href.value)
       if (mention != null) {
         mention.included = true
@@ -161,10 +194,13 @@ export function renderPostHTMLToDOM ({
         return
       }
     }
-    anchor.attrs.push({ name: 'title', value: (href != null) ? href.value : '' }, { name: 'target', value: '_blank' })
+    anchor.attrs.push(
+      { name: 'title', value: href != null ? href.value : '' },
+      { name: 'target', value: '_blank' },
+    )
     c.value = ''
   }
-  function walkElements (node: DefaultTreeAdapterMap['parentNode']): void {
+  function walkElements(node: DefaultTreeAdapterMap['parentNode']): void {
     for (const child of node.childNodes) {
       if (defaultTreeAdapter.isElementNode(child)) {
         if (child.tagName === 'a') {
@@ -180,6 +216,8 @@ export function renderPostHTMLToDOM ({
   return dom
 }
 
-export function renderPostHTML (opts: Parameters<typeof renderPostHTMLToDOM>[0]): string {
+export function renderPostHTML(
+  opts: Parameters<typeof renderPostHTMLToDOM>[0],
+): string {
   return serialize(renderPostHTMLToDOM(opts))
 }

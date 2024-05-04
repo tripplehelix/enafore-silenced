@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "lint": "standard && standard --plugin html 'src/routes/**/*.html' && tsc",
-    "lint-fix": "standard --fix && standard --fix --plugin html 'src/routes/**/*.html'",
+    "lint": "standard && standard --plugin html 'src/routes/**/*.html' && tsc && prettier -c 'src/**/*.ts'",
+    "lint-fix": "standard --fix && standard --fix --plugin html 'src/routes/**/*.html' && prettier -w 'src/**/*.ts'",
     "dev": "run-s build-lodash before-build serve-dev",
     "serve-dev": "run-p --race build-template-html-watch sapper-dev",
     "sapper-dev": "cross-env NODE_ENV=development PORT=4002 WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper dev",
@@ -67,6 +67,7 @@
     "page-lifecycle": "^0.1.2",
     "parse5": "^7.1.2",
     "pinch-zoom-element": "^1.1.1",
+    "prettier": "^3.2.5",
     "promise-worker": "^2.0.1",
     "requestidlecallback": "^0.3.0",
     "rollup": "^4.13.2",
@@ -124,6 +125,10 @@
       "Worker",
       "Audio"
     ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { dbPromise, getDatabase } from '../databaseLifecycle.js'
+import { dbPromise, getDatabase } from '../databaseLifecycle.ts'
 import { getInCache, hasInCache, notificationsCache, setInCache, statusesCache } from '../cache.js'
 import {
   ACCOUNTS_STORE,

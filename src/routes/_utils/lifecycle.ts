@@ -2,17 +2,29 @@
 // and plus it's not needed immediately, so lazy-load it
 import { importPageLifecycle } from './asyncModules/importPageLifecycle.js'
 
-function addEventListener (event, func) {
+type StateChangeEvent = Event & {
+  newState: string
+  oldState: string
+  originalEvent: Event
+}
+
+function addEventListener(
+  event: 'statechange',
+  func: (_: StateChangeEvent) => any,
+) {
   if (process.env.BROWSER && !process.env.IS_SERVICE_WORKER) {
-    importPageLifecycle().then(lifecycle => {
+    importPageLifecycle().then((lifecycle) => {
       lifecycle.addEventListener(event, func)
     })
   }
 }
 
-function removeEventListener (event, func) {
+function removeEventListener(
+  event: 'statechange',
+  func: (_: StateChangeEvent) => any,
+) {
   if (process.env.BROWSER && !process.env.IS_SERVICE_WORKER) {
-    importPageLifecycle().then(lifecycle => {
+    importPageLifecycle().then((lifecycle) => {
       lifecycle.removeEventListener(event, func)
     })
   }

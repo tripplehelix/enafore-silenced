@@ -37,6 +37,10 @@ export function sum (list) {
   return total
 }
 
+/**
+ * @template TResult
+ * @type {<TResult>(n: number, iteratee: (num: number) => TResult) => TResult[]}
+ */
 export function times (n, func) {
   const res = []
   for (let i = 0; i < n; i++) {

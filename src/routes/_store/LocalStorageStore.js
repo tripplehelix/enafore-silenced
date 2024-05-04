@@ -1,5 +1,5 @@
 import { safeLocalStorage as LS } from '../_utils/safeLocalStorage.js'
-import { lifecycle } from '../_utils/lifecycle.js'
+import { lifecycle } from '../_utils/lifecycle.ts'
 import { safeParse } from '../_utils/safeParse.js'
 import * as storePackage from 'svelte/store.umd.js'
 

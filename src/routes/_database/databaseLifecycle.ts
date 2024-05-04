@@ -2,13 +2,13 @@ import { DB_VERSION_CURRENT } from './constants.js'
 import { addKnownInstance, deleteKnownInstance } from './knownInstances.js'
 import { migrations } from './migrations.js'
 import { clearAllCaches } from './cache.js'
-import { lifecycle } from '../_utils/lifecycle.js'
+import { lifecycle } from '../_utils/lifecycle.ts'
 
-const openReqs = {}
-const databaseCache = {}
+const openReqs: Record<string, IDBOpenDBRequest> = {}
+const databaseCache: Record<string, IDBDatabase> = {}
 
-function createDatabase (instanceName) {
-  return new Promise((resolve, reject) => {
+function createDatabase(instanceName: string) {
+  return new Promise<IDBDatabase>((resolve, reject) => {
     const req = indexedDB.open(instanceName, DB_VERSION_CURRENT.version)
     openReqs[instanceName] = req
     req.onerror = reject
@@ -17,15 +17,17 @@ function createDatabase (instanceName) {
     }
     req.onupgradeneeded = (e) => {
       const db = req.result
-      const tx = e.currentTarget.transaction
+      const tx = req.transaction
 
-      const migrationsToDo = migrations.filter(({ version }) => e.oldVersion < version)
+      const migrationsToDo = migrations.filter(
+        ({ version }) => e.oldVersion < version,
+      )
 
-      function doNextMigration () {
+      function doNextMigration() {
         if (!migrationsToDo.length) {
           return
         }
-        const { migration } = migrationsToDo.shift()
+        const { migration } = migrationsToDo.shift()!
         migration(db, tx, doNextMigration)
       }
       doNextMigration()
@@ -34,7 +36,7 @@ function createDatabase (instanceName) {
   })
 }
 
-export async function getDatabase (instanceName) {
+export async function getDatabase(instanceName: string) {
   if (!instanceName) {
     throw new Error('instanceName is undefined in getDatabase()')
   }
@@ -42,17 +44,31 @@ export async function getDatabase (instanceName) {
     databaseCache[instanceName] = await createDatabase(instanceName)
     await addKnownInstance(instanceName)
   }
-  return databaseCache[instanceName]
+  return databaseCache[instanceName]!
 }
 
-export async function dbPromise (db, storeName, readOnlyOrReadWrite, cb) {
+type IdxOf<T extends any[]> = Exclude<keyof T, keyof any[]>
+export async function dbPromise<result, stores extends string | string[]>(
+  db: IDBDatabase,
+  storeName: stores,
+  readOnlyOrReadWrite: IDBTransactionMode,
+  cb: (
+    store: stores extends string[]
+      ? {
+          [Index in IdxOf<stores>]: IDBObjectStore
+        } & { length: stores['length'] } & Array<IDBObjectStore>
+      : IDBObjectStore,
+    cb: (_: result) => void,
+  ) => any,
+): Promise<result> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(storeName, readOnlyOrReadWrite)
-    const store = typeof storeName === 'string'
-      ? tx.objectStore(storeName)
-      : storeName.map(name => tx.objectStore(name))
-    let res
-    cb(store, (result) => {
+    const store =
+      typeof storeName === 'string'
+        ? tx.objectStore(storeName)
+        : storeName.map((name) => tx.objectStore(name))
+    let res: result
+    cb(store as any, (result) => {
       res = result
     })
 
@@ -61,8 +77,8 @@ export async function dbPromise (db, storeName, readOnlyOrReadWrite, cb) {
   })
 }
 
-export function deleteDatabase (instanceName) {
-  return new Promise((resolve, reject) => {
+export function deleteDatabase(instanceName: string) {
+  return new Promise<void>((resolve, reject) => {
     // close any open requests
     const openReq = openReqs[instanceName]
     if (openReq && openReq.result) {
@@ -74,11 +90,12 @@ export function deleteDatabase (instanceName) {
     req.onsuccess = () => resolve()
     req.onerror = () => reject(req.error)
     req.onblocked = () => console.error(`database ${instanceName} blocked`)
-  }).then(() => deleteKnownInstance(instanceName))
+  })
+    .then(() => deleteKnownInstance(instanceName))
     .then(() => clearAllCaches(instanceName))
 }
 
-export function closeDatabase (instanceName) {
+export function closeDatabase(instanceName: string) {
   // close any open requests
   const openReq = openReqs[instanceName]
   if (openReq && openReq.result) {
@@ -90,9 +107,10 @@ export function closeDatabase (instanceName) {
 }
 
 if (process.env.BROWSER) {
-  lifecycle.addEventListener('statechange', event => {
-    if (event.newState === 'frozen') { // page is frozen, close IDB connections
-      Object.keys(openReqs).forEach(instanceName => {
+  lifecycle.addEventListener('statechange', (event) => {
+    if (event.newState === 'frozen') {
+      // page is frozen, close IDB connections
+      Object.keys(openReqs).forEach((instanceName) => {
         closeDatabase(instanceName)
         console.log('closed instance DBs')
       })

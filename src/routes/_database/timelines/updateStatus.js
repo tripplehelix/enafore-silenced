@@ -1,8 +1,8 @@
-import { dbPromise, getDatabase } from '../databaseLifecycle.js'
+import { dbPromise, getDatabase } from '../databaseLifecycle.ts'
 import { getInCache, hasInCache, statusesCache } from '../cache.js'
 import { STATUSES_STORE } from '../constants.js'
 import { cacheStatus } from './cacheStatus.js'
-import { putStatus } from './insertion.js'
+import { putStatus } from './insertion.ts'
 import { cloneForStorage } from '../helpers.js'
 
 //

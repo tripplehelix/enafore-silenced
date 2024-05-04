@@ -1,8 +1,8 @@
 import { cacheStatus } from './cacheStatus.js'
-import { getDatabase, dbPromise } from '../databaseLifecycle.js'
+import { getDatabase, dbPromise } from '../databaseLifecycle.ts'
 import { PINNED_STATUSES_STORE, STATUSES_STORE, ACCOUNTS_STORE } from '../constants.js'
 import { createPinnedStatusId, createPinnedStatusKeyRange } from '../keys.js'
-import { storeStatus } from './insertion.js'
+import { storeStatus } from './insertion.ts'
 import { fetchStatus } from './fetchStatus.js'
 
 export async function insertPinnedStatuses (instanceName, accountId, statuses) {

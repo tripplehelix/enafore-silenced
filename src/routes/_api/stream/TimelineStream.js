@@ -1,5 +1,5 @@
 import { WebSocketClient } from '../../_thirdparty/websocket/websocket.js'
-import { lifecycle } from '../../_utils/lifecycle.js'
+import { lifecycle } from '../../_utils/lifecycle.ts'
 import { getStreamUrl } from './getStreamUrl.ts'
 import { EventEmitter } from 'events-light'
 import { eventBus } from '../../_utils/eventBus.js'

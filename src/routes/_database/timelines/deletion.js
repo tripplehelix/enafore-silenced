@@ -1,4 +1,4 @@
-import { dbPromise, getDatabase } from '../databaseLifecycle.js'
+import { dbPromise, getDatabase } from '../databaseLifecycle.ts'
 import {
   deleteFromCache, notificationsCache,
   statusesCache

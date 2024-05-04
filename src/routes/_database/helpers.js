@@ -1,4 +1,4 @@
-import { dbPromise, getDatabase } from './databaseLifecycle.js'
+import { dbPromise, getDatabase } from './databaseLifecycle.ts'
 import { getInCache, hasInCache, setInCache } from './cache.js'
 import {
   ACCOUNT_ID, REBLOG_ID, STATUS_ID, TIMESTAMP, USERNAME_LOWERCASE, CURRENT_TIME

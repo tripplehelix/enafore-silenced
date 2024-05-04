@@ -38,7 +38,10 @@ export async function updateStatus (instanceName, accessToken, statusId) {
 async function updateStatusAndThread (instanceName, accessToken, timelineName, statusId) {
   const [status, context] = await Promise.all([
     updateStatus_(instanceName, accessToken, statusId),
-    getStatusContext(instanceName, accessToken, statusId)
+    getStatusContext(instanceName, accessToken, statusId).catch((e) => {
+      console.warn(e)
+      return { ancestors: [], descendants: [] }
+    })
   ])
   const newStatuses = concat(context.ancestors, status, context.descendants)
   await database.insertTimelineItems(

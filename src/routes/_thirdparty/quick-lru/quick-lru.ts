@@ -2,10 +2,10 @@
 // removes some unused code
 
 export class QuickLRU<KeyType, ValueType> {
-  maxSize: number;
-  cache: Map<KeyType, ValueType>;
-  oldCache: Map<KeyType, ValueType>;
-  _size: number;
+  maxSize: number
+  cache: Map<KeyType, ValueType>
+  oldCache: Map<KeyType, ValueType>
+  _size: number
   constructor(options: { maxSize?: number } = {}) {
     if (!(options.maxSize && options.maxSize > 0)) {
       throw new TypeError('`maxSize` must be a number greater than 0')
