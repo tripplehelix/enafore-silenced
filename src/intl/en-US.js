@@ -720,6 +720,7 @@ export default {
   // Dialogs
   profileOptions: 'Profile options',
   copyLink: 'Copy link',
+  copy: 'Copy',
   emoji: 'Emoji',
   editMedia: 'Edit media',
   shortcutHelp: 'Shortcut help',

@@ -8,6 +8,7 @@
   <div class="emoji-container">
     <emoji-picker
       ref:picker
+      tabindex="0"
       locale={emojiPickerLocale}
       data-source={emojiPickerDataSource}
       class={darkMode ? 'dark' : 'light'}
@@ -66,7 +67,6 @@
   import { close } from '../helpers/closeDialog.js'
   import { isDarkTheme } from '../../../_utils/isDarkTheme.js'
   import 'emoji-picker-element/picker'
-  import { doubleRAF } from '../../../_utils/doubleRAF.js'
   import { convertCustomEmojiToEmojiPickerFormat } from '../../../_utils/convertCustomEmojiToEmojiPickerFormat.js'
   import { supportsFocusVisible } from '../../../_utils/supportsFocusVisible.js'
   import { importFocusVisible } from '../../../_utils/polyfills/asyncPolyfills.js'
@@ -87,12 +87,13 @@
         style.textContent = '.emoji { filter: grayscale(100%); }'
         picker.shadowRoot.appendChild(style)
       }
-      if (!isUserTouching) { // auto focus the input on desktop
-        doubleRAF(() => { // triple rAF because a11y-dialog tries to focus as well
-          requestAnimationFrame(() => {
-            picker.shadowRoot.querySelector('input').focus()
-          })
-        })
+      if (!isUserTouching) {
+        // auto focus the input on desktop
+        picker.setAttribute('autofocus', 'true')
+        picker.addEventListener('focus', () => {
+          picker.shadowRoot.querySelector('input').focus()
+          picker.removeAttribute('tabindex')
+        }, { once: true })
       }
       if (!supportsFocusVisible()) {
         await importFocusVisible()

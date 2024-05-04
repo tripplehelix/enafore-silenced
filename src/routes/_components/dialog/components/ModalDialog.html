@@ -166,7 +166,7 @@
 
   export default {
     oncreate () {
-      const { id, shouldAnimate } = this.get()
+      const { id } = this.get()
       const { reduceMotion } = store.get()
       this.onPopState = this.onPopState.bind(this)
       this._a11yDialog = new A11yDialog(this.refs.node.parentElement)
@@ -178,7 +178,7 @@
           history.back()
         }
         popShortcutScope(`modal-${id}`)
-        if (shouldAnimate && !reduceMotion) {
+        if (this.shouldAnimate() && !reduceMotion) {
           this.refs.node.parentElement.style.display = 'flex'
           try {
             await Promise.all([
@@ -219,8 +219,6 @@
     },
     components: { Shortcut, SvgIcon },
     data: () => ({
-      // don't animate if we're showing a modal dialog on top of another modal dialog. it looks ugly
-      shouldAnimate: !process.env.BROWSER || document.getElementsByClassName('modal-dialog').length < 2,
       fadedIn: false,
       muted: false,
       className: undefined,
@@ -229,13 +227,13 @@
       clickHeaderToClose: false
     }),
     computed: {
-      backdropClass: ({ fadedIn, shouldAnimate }) => {
+      backdropClass: ({ fadedIn }) => {
         return classname(
           'modal-dialog-backdrop',
           !fadedIn && 'hidden'
         )
       },
-      contentsClass: ({ fadedIn, muted, shouldAnimate, shrinkWidthToFit, className }) => {
+      contentsClass: ({ fadedIn, muted, shrinkWidthToFit, className }) => {
         return classname(
           'modal-dialog-contents',
           !fadedIn && 'hidden',
@@ -247,7 +245,7 @@
     },
     methods: {
       showDialog (otherId) {
-        const { id, shouldAnimate } = this.get()
+        const { id } = this.get()
         const { reduceMotion } = store.get()
         if (otherId !== id) {
           return
@@ -264,7 +262,7 @@
             this.set({ fadedIn: true })
             this.fire('show')
             emit('dialogDidRender', id)
-            if (shouldAnimate) {
+            if (this.shouldAnimate()) {
               this.refs.backdrop.animate([
                 { opacity: '0' },
                 { opacity: '1' }
@@ -317,6 +315,10 @@
           e.stopPropagation()
           this._a11yDialog.hide()
         }
+      },
+      // don't animate if we're showing a modal dialog on top of another modal dialog. it looks ugly
+      shouldAnimate () {
+        return !process.env.BROWSER || document.getElementsByClassName('modal-dialog').length < 2
       }
     }
   }

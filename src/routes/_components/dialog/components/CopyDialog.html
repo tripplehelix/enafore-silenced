@@ -10,8 +10,8 @@
     <input value={text}
            ref:input
     >
-    <button type="button" on:click="onClick()">
-      Copy
+    <button type="button" on:click="onClick()" on:pointerDown="event.preventDefault()">
+      {buttonText}
     </button>
   </form>
 </ModalDialog>
@@ -32,16 +32,19 @@
   import { close } from '../helpers/closeDialog.js'
   import { toast } from '../../toast/toast.js'
   import { doubleRAF } from '../../../_utils/doubleRAF.js'
+  import { pointerDown } from '../../../_utils/pointerEvents.js'
 
   function copyFromInput (input) {
     // workarounds for iOS, via https://stackoverflow.com/a/34046084
+    input.focus({ now: true })
+    input.select()
     const range = document.createRange()
     range.selectNodeContents(input)
-    const selection = window.getSelection()
-    selection.removeAllRanges()
-    selection.addRange(range)
-    input.setSelectionRange(0, 9999999)
-    document.execCommand('copy')
+    const sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
+    input.setSelectionRange(0, input.value.length)
+    return document.execCommand('copy')
   }
 
   export default {
@@ -50,9 +53,10 @@
       close,
       onClick () {
         const { input } = this.refs
-        copyFromInput(input)
-        toast.say('intl.copiedToClipboard')
-        this.close()
+        if (copyFromInput(input)) {
+          toast.say('intl.copiedToClipboard')
+          this.close()
+        }
       },
       onShow () {
         const { text } = this.get()
@@ -65,10 +69,14 @@
       }
     },
     data: () => ({
-      text: ''
+      text: '',
+      buttonText: 'intl.copy'
     }),
     components: {
       ModalDialog
+    },
+    events: {
+      pointerDown
     }
   }
 </script>
