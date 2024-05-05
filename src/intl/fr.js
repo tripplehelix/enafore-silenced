@@ -378,7 +378,6 @@ export default {
   reload: 'Recharger',
   // Wellness settings
   wellness: 'Bien-être',
-  wellnessSettings: 'Paramètres de bien-être',
   wellnessDescription: `Les paramètres de bien-être sont dessinées pour rédruire les effets accrochants ou d'anxiété des réseaux sociaux.
     Veuillez choisir les options qui marchent pour vous.`,
   enableAll: 'Activer tous',

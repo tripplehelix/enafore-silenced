@@ -29,8 +29,9 @@
       const { node } = this.refs
       try {
         await decodeImage(node)
+        this.fire('imgLoad')
       } catch (e) {
-        console.warn('Image decode error', node && node.src, e)
+        this.fire('imgLoadError', e)
         this.set({ error: true })
       }
     },

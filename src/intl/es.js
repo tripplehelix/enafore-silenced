@@ -391,7 +391,6 @@ export default {
   reload: 'Recargar',
   // Wellness settings
   wellness: 'Bienestar',
-  wellnessSettings: 'Opciones para el bienestar',
   wellnessDescription: `Las opciones para el bienestar están diseñadas para reducir los aspectos que inducen adicción o ansiedad en las redes sociales.
     Elige cualquier opción que vaya bien para ti.`,
   enableAll: 'Habilitar todos',

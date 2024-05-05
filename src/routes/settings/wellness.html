@@ -1,20 +1,8 @@
-<Title name="{'intl.wellnessSettings'}" settingsPage={true} />
-
-  <LazyPage {pageComponent} {params} />
-
 <script>
-  import Title from '../_components/Title.html'
-  import LazyPage from '../_components/LazyPage.html'
-  import pageComponent from '../_pages/settings/wellness.html'
-
+  import { goto } from '../../../__sapper__/client.js'
   export default {
-    components: {
-
-      Title,
-      LazyPage
-    },
-    data: () => ({
-      pageComponent
-    })
+    oncreate () {
+      goto('/settings/general#section-wellness', { replaceState: true })
+    }
   }
 </script>

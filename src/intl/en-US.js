@@ -420,7 +420,6 @@ export default {
   hideLongPosts: 'Collapse long posts without content warnings',
   // Wellness settings
   wellness: 'Wellness',
-  wellnessSettings: 'Wellness settings',
   wellnessDescription: `Wellness settings are designed to reduce the addictive or anxiety-inducing aspects of social media.
     Choose any options that work well for you.`,
   enableAll: 'Enable all',

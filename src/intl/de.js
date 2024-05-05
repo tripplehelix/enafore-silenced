@@ -376,7 +376,6 @@ export default {
   reload: 'Neu laden',
   // Wellness settings
   wellness: 'Wohlbefinden',
-  wellnessSettings: 'Einstellungen für ein gutes Wohlbefinden',
   wellnessDescription: `Die Einstellungen fürs Wohlbefinden dienen dazu, die süchtig machenden oder Angst induzierenden Aspekte von Social Media zu reduzieren.
     Nimm hier Einstellungen vor, die Dir gut tun.`,
   enableAll: 'Alle einschalten',

@@ -6,7 +6,7 @@ Enafore is available at [enafore.social](https://enafore.social).
 
 See the [user guide](https://github.com/enafore/enafore/blob/main/docs/User-Guide.md) for basic usage. See the [admin guide](https://github.com/enafore/enafore/blob/main/docs/Admin-Guide.md) if Enafore cannot connect to your instance.
 
-For updates, follow [@enafore@enafore.social](https://meta.enafore.social/@enafore).
+~~For updates, follow [@enafore@enafore.social](https://meta.enafore.social/@enafore).~~ Unfortunately, the fedi server will continue to be down indefinitely.
 
 # Testimonials
 > Literally the best Akkoma client\
