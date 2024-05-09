@@ -20,7 +20,9 @@ export async function getInstanceInfo (instanceName, accessToken) {
     const realNodeInfo = await get(nodeInfo21 || nodeInfo20, {}, { timeout: DEFAULT_TIMEOUT })
     instance.nodeInfo = realNodeInfo
   } catch (e) {
-    console.warn('got error fetching nodeInfo', e)
+    if (instance.pleroma) {
+      console.warn('failed to get nodeInfo', e)
+    }
   }
   return instance
 }

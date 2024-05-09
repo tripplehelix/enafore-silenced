@@ -7,6 +7,9 @@ export const createSearchIndexFromStatusOrNotification = statusOrNotification =>
   const originalStatus = status.reblog || status
   domParser = domParser || new DOMParser()
   const spoilerText = originalStatus.spoiler_text || ''
-  const searchContent = ([spoilerText, originalStatus.content].concat((originalStatus.poll && originalStatus.poll.options) ? originalStatus.poll.options.map(option => option.title) : [])).concat(originalStatus.media_attachments.map(att => att.description)).join('\n\n').replace(/<br\s*\/?>/g, '\n').replace(/<\/p><p>/g, '\n\n')
+  const searchContent = [spoilerText, originalStatus.content]
+    .concat((originalStatus.poll && originalStatus.poll.options) ? originalStatus.poll.options.map(option => option.title) : [])
+    .concat((originalStatus.media_attachments && originalStatus.media_attachments.length) ? originalStatus.media_attachments.map(att => att.description) : [])
+    .join('\n\n').replace(/<br\s*\/?>/g, '\n').replace(/<\/p><p>/g, '\n\n')
   return domParser.parseFromString(searchContent, 'text/html').documentElement.textContent
 }
