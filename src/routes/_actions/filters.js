@@ -5,7 +5,7 @@ import { database } from '../_database/database.js'
 import { isEqual } from '../_utils/lodash-lite.js'
 import { toast } from '../_components/toast/toast.js'
 import { formatIntl } from '../_utils/formatIntl.js'
-import { emit } from '../_utils/eventBus.js'
+import { emit } from '../_utils/eventBus.ts'
 
 async function syncFilters (instanceName, syncMethod) {
   const { loggedInInstances } = store.get()

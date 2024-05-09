@@ -1,6 +1,6 @@
 import { store } from '../_store/store.js'
 import { approveFollowRequest, rejectFollowRequest } from '../_api/requests.js'
-import { emit } from '../_utils/eventBus.js'
+import { emit } from '../_utils/eventBus.ts'
 import { toast } from '../_components/toast/toast.js'
 import { formatIntl } from '../_utils/formatIntl.js'
 

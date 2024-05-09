@@ -173,8 +173,12 @@ export function renderPostHTMLToDOM({
       (classList.includes('hashtag') || relList.includes('tag'))
     ) {
       for (const tag of tags) {
-        if (href.value.toLowerCase().endsWith(`/${tag.name.toLowerCase()}`)) {
-          href.value = `/tags/${tag.name}`
+        if (
+          decodeURIComponent(href.value)
+            .toLowerCase()
+            .endsWith(`/${tag.name.toLowerCase()}`)
+        ) {
+          href.value = `/tags/${encodeURIComponent(tag.name)}`
           c.value = 'hashtag'
           rel.value += ' tag'
           anchor.childNodes = []

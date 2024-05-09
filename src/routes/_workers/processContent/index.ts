@@ -8,7 +8,6 @@ import {
   defaultTreeAdapter,
   html,
   serialize,
-  parseFragment,
 } from 'parse5'
 const {
   NS: { HTML },

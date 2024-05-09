@@ -1,3 +1,4 @@
+import './routes/_utils/console/hook.ts'
 import * as sapper from '../__sapper__/client.js'
 import './routes/_utils/serviceWorkerClient.js'
 import './routes/_utils/historyEvents.js'
@@ -21,8 +22,6 @@ Promise.all([idbReady(), loadPolyfills()]).then(() => {
   stop('sapperStart')
   /* no await */ loadNonCriticalPolyfills()
 })
-
-console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept()

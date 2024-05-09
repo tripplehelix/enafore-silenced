@@ -4,7 +4,6 @@ import { navObservers } from './navObservers.js'
 import { pageVisibilityObservers } from './pageVisibilityObservers.js'
 import { resizeObservers } from './resizeObservers.js'
 import { setupLoggedInObservers } from './setupLoggedInObservers.js'
-import { logOutObservers } from './logOutObservers.js'
 import { touchObservers } from './touchObservers.js'
 import { themeObservers } from './themeObservers.js'
 import { focusRingObservers } from './focusRingObservers.js'
@@ -19,7 +18,6 @@ export function observers (store) {
   pageVisibilityObservers(store)
   resizeObservers(store)
   touchObservers(store)
-  logOutObservers(store)
   focusRingObservers(store)
   themeObservers(store)
   leftRightFocusObservers(store)

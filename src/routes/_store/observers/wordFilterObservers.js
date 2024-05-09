@@ -1,4 +1,4 @@
-import { on } from '../../_utils/eventBus.js'
+import { on } from '../../_utils/eventBus.ts'
 import { updateFiltersForInstance } from '../../_actions/filters.js'
 import { store } from '../store.js'
 import { isEqual } from '../../_utils/lodash-lite.js'

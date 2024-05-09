@@ -59,4 +59,4 @@ whatever store it uses. The main `store.js` is the primary one.
 
 ## There is a global event bus
 
-It's in `eventBus.js`. This is useful for some stuff that is hard to do with standard Svelte or DOM events.
+It's in `eventBus.ts`. This is useful for some stuff that is hard to do with standard Svelte or DOM events.

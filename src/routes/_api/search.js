@@ -18,7 +18,7 @@ async function doSearchV1 (instanceName, accessToken, query, resolve, limit, exc
   const resp = await doSearch('v1', instanceName, accessToken, query, resolve, limit, excludeUnreviewed, signal)
   resp.hashtags = resp.hashtags && resp.hashtags.map(tag => ({
     name: tag,
-    url: `${basename(instanceName)}/tags/${tag.toLowerCase()}`,
+    url: `${basename(instanceName)}/tags/${encodeURIComponent(tag)}`,
     history: []
   }))
   return resp

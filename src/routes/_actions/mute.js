@@ -2,7 +2,7 @@ import { store } from '../_store/store.js'
 import { muteAccount, unmuteAccount } from '../_api/mute.js'
 import { toast } from '../_components/toast/toast.js'
 import { updateLocalRelationship } from './accounts.js'
-import { emit } from '../_utils/eventBus.js'
+import { emit } from '../_utils/eventBus.ts'
 import { formatIntl } from '../_utils/formatIntl.js'
 
 export async function setAccountMuted (accountId, mute, notifications, toastOnSuccess) {

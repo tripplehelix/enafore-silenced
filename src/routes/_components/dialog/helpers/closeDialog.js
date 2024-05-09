@@ -1,4 +1,4 @@
-import { emit } from '../../../_utils/eventBus.js'
+import { emit } from '../../../_utils/eventBus.ts'
 
 export function close () {
   const { id } = this.get()

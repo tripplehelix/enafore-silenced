@@ -4,7 +4,6 @@
 
 import { /* INLINE_THEME, */DEFAULT_THEME, switchToTheme } from '../routes/_utils/themeEngine.js'
 import { basename } from '../routes/_api/utils.js'
-import { onUserIsLoggedOut } from '../routes/_actions/onUserIsLoggedOut.js'
 import { storeLite } from '../routes/_store/storeLite.js'
 import { isIOSPre12Point2 } from '../routes/_utils/userAgent/isIOSPre12Point2.js'
 
@@ -36,11 +35,6 @@ if (enableGrayscale) {
   // set the grayscale style on every img, svg, etc.
   document.getElementById('theGrayscaleStyle')
     .setAttribute('media', 'all') // enables the style
-}
-
-if (!currentInstance) {
-  // if not logged in, show all these 'hidden-from-ssr' elements
-  onUserIsLoggedOut()
 }
 
 if (disableCustomScrollbars) {

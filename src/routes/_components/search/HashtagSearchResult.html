@@ -1,4 +1,4 @@
-<SearchResult href="/tags/{hashtag.name.toLowerCase()}">
+<SearchResult href="{href}">
   {'#' + hashtag.name}
 </SearchResult>
 <style>
@@ -8,6 +8,9 @@
   export default {
     components: {
       SearchResult
+    },
+    computed: {
+      tag: ({ hashtag }) => '/tags/' + encodeURIComponent(hashtag)
     }
   }
 </script>

@@ -60,9 +60,8 @@
 <script>
   import { mediaAccept } from '../../_static/media.js'
   import { doMediaUpload } from '../../_actions/media.js'
-  if (process.env.BROWSER) {
-    require('file-drop-element')
-  }
+  import 'file-drop-element/dist/filedrop.mjs'
+  
   export default {
     oncreate () {
       this.onFileDrop = this.onFileDrop.bind(this)

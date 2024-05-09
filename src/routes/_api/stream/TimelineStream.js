@@ -1,13 +1,13 @@
 import { WebSocketClient } from '../../_thirdparty/websocket/websocket.js'
 import { lifecycle } from '../../_utils/lifecycle.ts'
 import { getStreamUrl } from './getStreamUrl.ts'
-import { EventEmitter } from 'events-light'
-import { eventBus } from '../../_utils/eventBus.js'
+import mitt from 'mitt'
+import { eventBus } from '../../_utils/eventBus.ts'
 import { safeParse } from '../../_utils/safeParse.js'
 
-export class TimelineStream extends EventEmitter {
+export class TimelineStream {
   constructor (streamingApi, accessToken, timeline) {
-    super()
+    Object.assign(this, mitt())
     this._streamingApi = streamingApi
     this._accessToken = accessToken
     this._timeline = timeline
@@ -23,10 +23,8 @@ export class TimelineStream extends EventEmitter {
     this._closed = true
     this._closeWebSocket()
     this._teardownEvents()
-    // events-light currently does not support removeAllListeners()
-    // https://github.com/patrick-steele-idem/events-light/issues/2
     for (const event of ['open', 'close', 'reconnect', 'message']) {
-      this.removeAllListeners(event)
+      this.off(event)
     }
   }
 
@@ -73,7 +71,7 @@ export class TimelineStream extends EventEmitter {
 
   _teardownEvents () {
     lifecycle.removeEventListener('statechange', this._onStateChange)
-    eventBus.removeListener('forcedOnline', this._onForcedOnlineStateChange) // only happens in tests
+    eventBus.off('forcedOnline', this._onForcedOnlineStateChange) // only happens in tests
     window.removeEventListener('online', this._onOnline)
     window.removeEventListener('offline', this._onOffline)
   }

@@ -1,5 +1,5 @@
 {#if $isUserLoggedIn}
-  <TimelinePage timeline="tag/{params.tagName}">
+  <TimelinePage timeline="tag/{encodeURIComponent(params.tagName)}">
     <DynamicPageBanner title="{'#' + params.tagName}"/>
   </TimelinePage>
 {:else}

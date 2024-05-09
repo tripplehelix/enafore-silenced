@@ -1,7 +1,7 @@
 <FocusRestoration realm={page}>
-  <SettingsNav {page} {label}/>
+  <SettingsNav {page} {label} {style} />
 
-  <div class="settings">
+  <div class="settings" style={style}>
     <FreeTextLayout>
       <slot></slot>
     </FreeTextLayout>
@@ -33,6 +33,9 @@
       FreeTextLayout,
       SettingsNav,
       FocusRestoration
-    }
+    },
+    data: () => ({
+      style: process.env.BROWSER ? '' : 'opacity: 0'
+    })
   }
 </script>

@@ -75,12 +75,15 @@ export default {
       },
       {
         test: /\.ts$/,
-        use: {
-          loader: '@sucrase/webpack-loader',
-          options: {
-            transforms: ['typescript']
+        use: [
+          !(dev || process.env.DEBUG) && '@easrng/elements/minify',
+          {
+            loader: '@sucrase/webpack-loader',
+            options: {
+              transforms: ['typescript']
+            }
           }
-        },
+        ],
         exclude: /node_modules/
       },
       {

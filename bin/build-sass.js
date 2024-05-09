@@ -35,9 +35,6 @@ async function compileThemesSass () {
     const css = await renderCss(path.join(themesScssDir, file))
     const outputFilename = 'theme-' + path.basename(file).replace(/\.scss$/, '.css')
     await writeFile(path.join(assetsDir, outputFilename), css, 'utf8')
-    if (outputFilename === 'theme-default.css') {
-      await writeFile(path.join(assetsDir, 'theme-sw.css'), css, 'utf8')
-    }
   }))
 }
 

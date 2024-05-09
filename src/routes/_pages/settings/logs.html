@@ -1,0 +1,72 @@
+<FocusRestoration realm="settings/logs">
+  <SettingsNav page="settings/logs" label="{'intl.logs'}" />
+  <easrng-console-logs></easrng-console-logs>
+</FocusRestoration>
+<style>
+:global(easrng-console-logs) {
+  font-family: monospace;
+  font-size: 1rem;
+}
+:global(easrng-console-logs *) {
+    box-sizing: border-box;
+}
+:global(easrng-console-logs .message) {
+  white-space: pre-wrap;
+  flex-shrink: 1;
+  flex-grow: 1;
+  overflow: hidden;
+}
+:global(easrng-console-logs .log) {
+  display: flex;
+  padding: 0.5rem 20px;
+  border-top: 1px solid var(--settings-list-item-border);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+:global(easrng-console-logs .icon) {
+  font-size: 0.75rem;
+  line-height: 2;
+  margin-right: 0.5rem;
+}
+:global(easrng-console-logs .log-error) {
+  background: color-mix(in srgb, Canvas, #f00 15%);
+}
+:global(easrng-console-logs .log-warn) {
+  background: color-mix(in srgb, Canvas, #fc0 15%);
+}
+:global(easrng-console-logs .logs) {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+:global(easrng-console-logs .log-table .table-wrap) {
+  border: 1px solid var(--logs-table-border);
+  box-shadow: inset 0 0 0 1px var(--logs-table-border);
+  overflow-x: auto;
+  max-width: fit-content;
+}
+:global(easrng-console-logs table) {
+    border-collapse: collapse;
+}
+:global(easrng-console-logs th, easrng-console-logs td) {
+    border: 1px solid var(--logs-table-border);
+    padding: 0.25rem;
+    text-align: left;
+}
+:global(easrng-console-logs th) {
+    font-weight: bold;
+}
+</style>
+<script>
+  import SettingsNav from '../../_components/settings/SettingsNav.html'
+  import FocusRestoration from '../../_components/FocusRestoration.html'
+  import '../../_utils/console/element.ts'
+
+  export default {
+    components: {
+      SettingsNav,
+      FocusRestoration
+    }
+  }
+</script>

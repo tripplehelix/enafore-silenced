@@ -16,13 +16,14 @@ const NOOP_MODULES = [
   'tesseract.js/src/createWorker.js.map',
   '@easrng/image-grid/index.js',
   '@easrng/sparkle/index.js',
-  'katex/dist/katex.min.css'
+  'katex/dist/katex.min.css',
+  'file-drop-element/dist/filedrop.mjs'
 ]
 
 const serverResolve = JSON.parse(JSON.stringify(resolve))
 serverResolve.alias = serverResolve.alias || {}
 NOOP_MODULES.forEach(mod => {
-  serverResolve.alias[mod] = 'lodash.noop'
+  serverResolve.alias[mod] = 'lodash-es/noop.js'
 })
 
 export default {

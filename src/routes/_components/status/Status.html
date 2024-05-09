@@ -43,7 +43,7 @@
     <StatusPoll {...params} shown={showContent} on:recalculateHeight />
   {/if}
   {#if showQuote && showContent}
-    <svelte:self status={originalQuote} isQuote={true} parentElementId={elementId} on:recalculateHeight />
+    <svelte:self status={originalQuote} isQuote={true} parentElementId={elementId} {enableShortcuts} on:recalculateHeight />
   {/if}
   {#if showHashtagsInBar}
     <StatusTags {hashtagsInBar} {isStatusInNotification} />
@@ -186,7 +186,7 @@
   import { createStatusOrNotificationUuid } from '../../_utils/createStatusOrNotificationUuid.js'
   import { addEmojiTooltips } from '../../_utils/addEmojiTooltips.js'
   import { tryToFocusElement } from '../../_utils/tryToFocusElement.js'
-  import { on } from '../../_utils/eventBus.js'
+  import { on } from '../../_utils/eventBus.ts'
   import { rehydrated } from '../../_actions/rehydrateStatusOrNotification.js'
   import { canonicalStatusUrl } from '../../_utils/canonicalStatusUrl.js'
   import '@easrng/sparkle/index.js'

@@ -1,6 +1,6 @@
 import { createDialogElement } from '../helpers/createDialogElement.js'
 import { createDialogId } from '../helpers/createDialogId.js'
-import { on } from '../../../_utils/eventBus.js'
+import { on } from '../../../_utils/eventBus.ts'
 
 export function showDialog (Dialog, data) {
   const id = createDialogId()

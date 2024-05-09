@@ -1,4 +1,4 @@
-import { emit } from '../../_utils/eventBus.js'
+import { emit } from '../../_utils/eventBus.ts'
 import { normalizePageName } from '../../_utils/normalizePageName.js'
 
 export function navObservers (store) {

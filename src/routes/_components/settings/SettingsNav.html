@@ -1,4 +1,4 @@
-<nav class="settings-nav">
+<nav class="settings-nav" style={style}>
   <ul>
     {#each navItems as navItem}
     <li>
@@ -70,6 +70,9 @@
         }
         return res
       }
-    }
+    },
+    data: () => ({
+      style: ''
+    })
   }
 </script>

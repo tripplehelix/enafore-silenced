@@ -44,9 +44,10 @@ export function createStream (api, instanceName, accessToken, timelineName, firs
     }
   }
 
-  return new TimelineStream(api, accessToken, timelineName)
-    .on('message', onMessage)
-    .on('open', onOpen)
-    .on('close', onClose)
-    .on('reconnect', onReconnect)
+  const stream = new TimelineStream(api, accessToken, timelineName)
+  stream.on('message', onMessage)
+  stream.on('open', onOpen)
+  stream.on('close', onClose)
+  stream.on('reconnect', onReconnect)
+  return stream
 }

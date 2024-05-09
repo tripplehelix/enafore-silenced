@@ -44,6 +44,7 @@
   --settings-list-item-text-hover: #{$main-text-color};
   --settings-list-item-bg-active: #{lighten($main-bg-color, 7%)};
   --settings-list-item-bg-hover: #{lighten($main-bg-color, 3%)};
+  --logs-table-border: #{lighten($border-color, 10%)};
 
   --banner-fill: #{lighten($main-theme-color, 10%)};
 

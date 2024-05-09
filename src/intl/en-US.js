@@ -388,6 +388,7 @@ export default {
   <p>
     You are running Enafore version <code class="enafore-version"></code>.
   </p>`,
+  logs: 'Logs',
   // Settings
   settings: 'Settings',
   general: 'General',

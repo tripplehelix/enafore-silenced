@@ -6,7 +6,7 @@ import {
 } from '../_utils/blurhash.js'
 import { store } from '../_store/store.js'
 import PromiseWorker from 'promise-worker'
-import { emit } from '../_utils/eventBus.js'
+import { emit } from '../_utils/eventBus.ts'
 
 let worker
 export function init () {

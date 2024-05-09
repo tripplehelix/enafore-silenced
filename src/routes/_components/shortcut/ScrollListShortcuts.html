@@ -12,7 +12,7 @@
   import { smoothScroll } from '../../_utils/smoothScroll.js'
   import { getScrollContainer } from '../../_utils/scrollContainer.js'
   import { store } from '../../_store/store.js'
-  import { emit } from '../../_utils/eventBus.js'
+  import { emit } from '../../_utils/eventBus.ts'
 
   const VISIBILITY_CHECK_DELAY_MS = 600
 
@@ -139,12 +139,14 @@
       },
       setActiveItem (key, timeStamp) {
         this.set({ activeItemChangeTime: timeStamp })
-        try {
-          keyToElement(key).focus({
-            preventScroll: true
-          })
-        } catch (err) {
-          console.warn('ignored focus error', err)
+        if (key) {
+          try {
+            keyToElement(key).focus({
+              preventScroll: true
+            })
+          } catch (err) {
+            console.warn('ignored focus error', err)
+          }
         }
       }
     }

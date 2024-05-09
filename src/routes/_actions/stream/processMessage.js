@@ -1,7 +1,7 @@
 import { mark, stop } from '../../_utils/marks.js'
 import { deleteStatus } from '../deleteStatuses.js'
 import { addStatusOrNotification } from '../addStatusOrNotification.js'
-import { emit } from '../../_utils/eventBus.js'
+import { emit } from '../../_utils/eventBus.ts'
 import { updateStatus } from '../updateStatus.js'
 
 const KNOWN_EVENTS = ['update', 'delete', 'notification', 'conversation', 'filters_changed', 'status.update']

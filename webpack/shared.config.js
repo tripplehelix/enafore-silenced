@@ -12,8 +12,8 @@ export const resolve = {
   alias: {
     // All browsers we target support Intl.PluralRules (or it's polyfilled).
     // So format-message-interpret can fall back to that. This file is pretty big (9.83kB) and it's not needed.
-    './plurals': 'lodash.noop',
-    'lookup-closest-locale': 'lodash.noop', // small, but also not needed
+    './plurals': 'lodash-es/noop.js',
+    'lookup-closest-locale': 'lodash-es/noop.js', // small, but also not needed
     'svelte/store.umd.js': 'svelte/store.js' // have to use UMD for Mocha, but in Webpack we can use the ESM version
   }
 }
