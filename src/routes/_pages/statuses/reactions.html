@@ -1,0 +1,104 @@
+<DynamicPageBanner title="{'intl.reactions'}" icon="#fa-smile" />
+<div class="reactions-page">
+  {#if loading}
+    <LoadingPage />
+  {:elseif reactions && reactions.length}
+    {#each reactions as reaction}
+      <h2 class="reaction-title">
+        {@html reaction.html} {reaction.shortcode}
+      </h2>
+      <AccountsListPage accountsFetcher={makeAccountsFetcher(reaction)}/>
+    {/each}
+  {/if}
+</div>
+<style>
+  .reactions-page {
+    position: relative;
+  }
+  .reaction-title {
+    margin: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    line-height: 2;
+    margin-bottom: -10px;
+  }
+</style>
+<script>
+  import { getReactions } from '../../_api/react.js'
+  import AccountsListPage from '../../_components/AccountsListPage.html'
+  import LoadingPage from '../../_components/LoadingPage.html'
+  import { store } from '../../_store/store.js'
+  import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
+  import { emojifyText } from '../../_utils/emojifyText.js'
+  import * as emojiDatabase from '../../_utils/emojiDatabase.js'
+  import { toast } from '../../_components/toast/toast.js'
+  import { formatIntl } from '../../_utils/formatIntl.js'
+
+  export default {
+    async oncreate () {
+      try {
+        const { currentInstance, accessToken, currentReactionApi, autoplayGifs } = this.store.get()
+        const { statusId } = this.get()
+        const shortcodeMap = {}
+        const addShortcodes = async (reactions) => {
+          await Promise.all(reactions.map(async reaction => {
+            if (reaction.url || shortcodeMap[reaction.name]) return
+            const emojiData = await emojiDatabase.findByUnicodeOrName(reaction.name)
+            if (emojiData && emojiData.shortcodes) {
+              shortcodeMap[reaction.name] = emojiData.shortcodes[0]
+            }
+          }))
+        }
+        let reactions = await getReactions(currentInstance, accessToken, statusId, currentReactionApi)
+        await addShortcodes(reactions)
+        const reactionsMap = {}
+        reactions = reactions.map(e => {
+          const shortcode = e.url ? e.name.replace(/:/g, '') : shortcodeMap[e.name]
+          const reaction = {
+            ...e,
+            shortcode,
+            html: emojifyText(
+              e.url ? ':' + shortcode + ':' : e.name,
+              e.url
+                ? [
+                    {
+                      url: e.url,
+                      static_url: e.static_url || e.url,
+                      shortcode
+                    }
+                  ]
+                : [],
+              autoplayGifs,
+              true
+            )
+          }
+          reactionsMap[reaction.name] = reaction
+          return reaction
+        })
+        this.set({
+          reactions,
+          reactionsMap
+        })
+      } catch (e) {
+        /* no await */ toast.say(formatIntl('intl.error', { error: (e.name || '') + ' ' + (e.message || '') }))
+      } finally {
+        this.set({ loading: false })
+      }
+    },
+    computed: {
+      statusId: ({ params }) => params.statusId,
+      makeAccountsFetcher: ({ reactionsMap }) => (reaction) => () => reactionsMap[reaction.name].accounts
+    },
+    store: () => store,
+    data: () => ({
+      loading: true,
+      reactions: [],
+      reactionsMap: {}
+    }),
+    components: {
+      AccountsListPage,
+      DynamicPageBanner,
+      LoadingPage
+    }
+  }
+</script>

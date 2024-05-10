@@ -37,7 +37,13 @@ export function setCustomEmoji (customEmoji) {
 
 export async function findByUnicodeOrName (unicodeOrName) {
   init()
-  return database.getEmojiByUnicodeOrName(unicodeOrName)
+  const variants = [unicodeOrName.replace(/\ufe0f$/, '')]
+  variants.push(variants[0] + '\ufe0f')
+  const results = variants.map((variant) => database.getEmojiByUnicodeOrName(variant))
+  for (const promise of results) {
+    const result = await promise
+    if (result) return result
+  }
 }
 
 export async function findBySearchQuery (query) {

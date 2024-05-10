@@ -82,6 +82,29 @@ export function instanceComputations (store) {
     })
 
   store.compute(
+    'fedibirdCapabilities',
+    ['currentInstanceInfo'],
+    (currentInstanceInfo) => {
+      if (currentInstanceInfo) {
+        if (typeof currentInstanceInfo.fedibird_capabilities === 'object') return currentInstanceInfo.fedibird_capabilities
+      } else return null
+    })
+
+  store.compute(
+    'currentReactionApi',
+    ['currentPleromaFeatures', 'fedibirdCapabilities'],
+    (currentPleromaFeatures, fedibirdCapabilities) => {
+      return {
+        customEmojiReactions: currentPleromaFeatures
+          ? currentPleromaFeatures.includes('custom_emoji_reactions')
+          : true,
+        externReactions: true,
+        isPleroma: !!currentPleromaFeatures,
+        isFedibird: !!fedibirdCapabilities
+      }
+    })
+
+  store.compute(
     'bubbleTimelineEnabled',
     ['currentInstanceInfo'],
     (currentInstanceInfo) => {

@@ -55,8 +55,8 @@ export function renderPostHTMLToDOM({
   emojis: Map<string, { url: string; static_url?: string; shortcode: string }>
   mentionsByURL: Map<string, Mention>
 }): DefaultTreeAdapterMap['parentNode'] {
-  if (content === '') {
-    return defaultTreeAdapter.createElement('div', HTML, [])
+  if (!content) {
+    return defaultTreeAdapter.createDocumentFragment()
   }
   const dom = parseFragment(content)
   const customEmoji = [...emojis.keys()].map((e) => escapeRegExp(e)).join('|')

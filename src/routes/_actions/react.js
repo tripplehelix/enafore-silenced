@@ -35,18 +35,13 @@ export async function setReacted (statusId, reacting, reaction, apiVersion) {
 }
 
 export async function pickEmojiReaction (status) {
-  const { currentInstance, accessToken, currentPleromaFeatures } = store.get()
-  const reactionApiVersion = {
-    customEmojiReactions: currentPleromaFeatures ? currentPleromaFeatures.includes('custom_emoji_reactions') : true,
-    externReactions: true,
-    isPleroma: !!currentPleromaFeatures
-  }
+  const { currentInstance, accessToken, currentReactionApi } = store.get()
   const [showEmojiDialog] = await Promise.all([
     importShowEmojiDialog(),
     updateCustomEmojiForInstance(currentInstance)
   ])
   showEmojiDialog(async pickedEmoji => {
-    const didReact = await setReacted(status.id, true, { name: pickedEmoji.name || pickedEmoji.unicode }, reactionApiVersion)
+    const didReact = await setReacted(status.id, true, { name: pickedEmoji.name || pickedEmoji.unicode }, currentReactionApi)
     if (didReact) {
       scheduleIdleTask(() => {
         updateStatus(currentInstance, accessToken, status.id)

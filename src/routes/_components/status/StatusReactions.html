@@ -66,8 +66,8 @@
     components: {},
     methods: {
       async onClick (event, reaction) {
-        const { apiVersion, originalStatusId } = this.get()
-        const { reduceMotion, currentInstance, accessToken } = this.store.get()
+        const { originalStatusId } = this.get()
+        const { currentReactionApi, reduceMotion, currentInstance, accessToken } = this.store.get()
         this.store.setStatusReacted(
           currentInstance,
           originalStatusId,
@@ -81,7 +81,7 @@
           originalStatusId,
           !reaction.me,
           reaction,
-          apiVersion
+          currentReactionApi
         )
         if (didReact) {
           scheduleIdleTask(() =>
@@ -119,15 +119,6 @@
             )
           }
         }),
-      apiVersion: ({ $currentPleromaFeatures }) => {
-        return {
-          customEmojiReactions: $currentPleromaFeatures
-            ? $currentPleromaFeatures.includes('custom_emoji_reactions')
-            : true,
-          externReactions: true,
-          isPleroma: !!$currentPleromaFeatures
-        }
-      },
       reactions: ({
         originalStatus,
         originalStatusId,

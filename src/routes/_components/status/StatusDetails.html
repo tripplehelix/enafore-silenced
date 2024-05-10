@@ -52,12 +52,22 @@
     <span>{numFavs}</span>
   </a>
   {#if hasReactions}
+  {#if reactionsLink}
+  <a class="status-favs-reblogs status-reactions"
+     rel="prefetch"
+     href="/statuses/{originalStatusId}/reactions"
+     aria-label={reactionsLabel}>
+    <SvgIcon className="status-favs-reblogs-svg" href="#fa-smile" />
+    <span>{numReactions}</span>
+  </a>
+  {:else}
   <span class="status-favs-reblogs status-reactions"
      rel="prefetch"
      aria-label={reactionsLabel}>
     <SvgIcon className="status-favs-reblogs-svg" href="#fa-smile" />
     <span>{numReactions}</span>
   </span>
+  {/if}
   {/if}
 </div>
 <style>
@@ -187,6 +197,7 @@
         }
         return (originalStatus.reactions || originalStatus.emoji_reactions || []).reduce((a, b) => a + b.count, 0)
       },
+      reactionsLink: ({ $currentReactionApi }) => $currentReactionApi.isPleroma || $currentReactionApi.isFedibird,
       displayAbsoluteFormattedCreatedDate: ({ createdAtDateTS, editedAtDateTS, $isMobileSize }) => (
         ((editedAtDateTS || $isMobileSize) ? shortAbsoluteDateFormatter : absoluteDateFormatter)().format(createdAtDateTS)
       ),

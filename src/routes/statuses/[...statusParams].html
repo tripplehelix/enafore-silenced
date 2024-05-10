@@ -8,6 +8,7 @@
   import statusPageComponent from '../_pages/statuses/index.html'
   import favoritesPageComponent from '../_pages/statuses/favorites.html'
   import reblogsPageComponent from '../_pages/statuses/reblogs.html'
+  import reactionsPageComponent from '../_pages/statuses/reactions.html'
   import Error from '../_error.html'
 
   export default {
@@ -38,7 +39,7 @@
               title: 'intl.favorites'
             }
           }
-          /* if (page === 'reactions') {
+          if (page === 'reactions') {
             return {
               component: reactionsPageComponent,
               params: {
@@ -46,7 +47,7 @@
               },
               title: 'intl.reactions'
             }
-          } */
+          }
           if (page === 'reblogs') {
             return {
               component: reblogsPageComponent,
