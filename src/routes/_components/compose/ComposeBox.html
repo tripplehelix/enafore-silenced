@@ -205,7 +205,7 @@
       const { realm, replySpoiler, replyVisibility } = this.get()
       if (realm !== 'home' && realm !== 'dialog') {
         // if this is a reply, populate the handle immediately
-        /* no await */ insertHandleForReply(realm)
+        /* no await */ insertHandleForReply(realm, realm)
       }
 
       if (replySpoiler) {

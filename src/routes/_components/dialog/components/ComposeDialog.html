@@ -5,8 +5,21 @@
   background="var(--main-bg)"
   on:show="onShow()"
 >
-  <ComposeBox {realm} autoFocus={true} dialogId={id} />
+  <div class="wrapper" on:click|capture="onClick(event)">
+    <ComposeBox {realm} autoFocus={true} dialogId={id} />
+  </div>
 </ModalDialog>
+<style>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    flex: 1;
+  }
+</style>
 <script>
   import ModalDialog from './ModalDialog.html'
   import ComposeBox from '../../compose/ComposeBox.html'
@@ -33,6 +46,11 @@
       },
       onShow () {
         emit('resizeComposeInput', this.get().realm)
+      },
+      onClick (event) {
+        if (event.target.closest('a')) {
+          this.close()
+        }
       }
     },
     components: {

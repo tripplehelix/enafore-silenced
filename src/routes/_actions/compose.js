@@ -10,7 +10,7 @@ import { uniqById } from '../_utils/lodash-lite.js'
 import { formatIntl } from '../_utils/formatIntl.js'
 import { rehydrateStatusOrNotification } from './rehydrateStatusOrNotification.js'
 
-export async function insertHandleForReply (statusId) {
+export async function insertHandleForReply (realm, statusId) {
   const { currentInstance } = store.get()
   const status = await database.getStatus(currentInstance, statusId)
   const { currentVerifyCredentials } = store.get()
@@ -19,8 +19,8 @@ export async function insertHandleForReply (statusId) {
     .filter(account => account.id !== currentVerifyCredentials.id)
   // Pleroma includes account in mentions as well, so make uniq
   accounts = uniqById(accounts)
-  if (!store.getComposeData(statusId, 'text') && accounts.length) {
-    store.setComposeData(statusId, {
+  if (!store.getComposeData(realm, 'text') && accounts.length) {
+    store.setComposeData(realm, {
       text: accounts.map(account => `@${account.acct} `).join('')
     })
   }

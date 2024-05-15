@@ -150,6 +150,7 @@ export default {
     <li><kbd>f</kbd> to favorite</li>
     <li><kbd>b</kbd> to boost</li>
     <li><kbd>r</kbd> to reply</li>
+    <li><kbd>q</kbd> to quote</li>
     <li><kbd>Escape</kbd> to close reply</li>
     <li><kbd>a</kbd> to bookmark</li>
     <li><kbd>i</kbd> to open images, video, or audio</li>

@@ -1,5 +1,6 @@
 import { importShowComposeDialog } from '../_components/dialog/asyncDialogs/importShowComposeDialog.js'
 import { store } from '../_store/store.js'
+import { insertHandleForReply } from './compose.js'
 
 export async function quote (status) {
   const dialogPromise = importShowComposeDialog()
@@ -12,6 +13,7 @@ export async function quote (status) {
     quoteId: status.id,
     quoteHandle: '@' + status.account.acct
   })
-  const showComposeDialog = await dialogPromise
+
+  const [showComposeDialog] = await Promise.all([dialogPromise, insertHandleForReply('dialog', status.id)])
   showComposeDialog()
 }
