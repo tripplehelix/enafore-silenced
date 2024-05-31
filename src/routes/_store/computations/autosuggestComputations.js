@@ -2,7 +2,7 @@ import { get } from '../../_utils/lodash-lite.js'
 import { mark, stop } from '../../_utils/marks.js'
 
 const MIN_PREFIX_LENGTHS = {
-  ':': 1,
+  ':': 2,
   '@': 3,
   '#': 3,
   '$[': 0

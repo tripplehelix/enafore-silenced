@@ -117,9 +117,9 @@ export function renderPostHTMLToDOM({
   if (!content) {
     return defaultTreeAdapter.createDocumentFragment()
   }
-  const normalizedTagNames: string[] = tags.map((tag: any) =>
-    tag.name.normalize('NFKC'),
-  )
+  const normalizedTagNames: string[] = tags
+    ? tags.map((tag: any) => tag.name.normalize('NFKC'))
+    : []
   const dom = parseFragment(content)
   const customEmoji = [...emojis.keys()].map((e) => escapeRegExp(e)).join('|')
   const unicodeEmoji = getEmojiRegex().source
