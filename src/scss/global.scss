@@ -5,6 +5,17 @@
 
 :root {
   scroll-padding-top: var(--nav-total-height);
+  --ltr: 1;
+  --rtl: 0;
+}
+
+:root[dir="rtl"] {
+  --ltr: 0;
+  --rtl: 1;
+  
+  & .rtl-flip {
+    transform: scaleX(-1);
+  }
 }
 
 body {
@@ -248,7 +259,7 @@ textarea {
 
 .external-link-with-icon .external-link-svg,
 .status-edited-svg {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   width: 15px;
   height: 15px;
   fill: var(--deemphasized-text-color);

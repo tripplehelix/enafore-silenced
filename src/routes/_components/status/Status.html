@@ -131,18 +131,19 @@
     border-radius: 6px;
   }
   .status-article {
-    padding-left: calc(10px * var(--status-depth) + var(--status-pad-h)) !important;
+    padding-inline-start: calc(10px * var(--status-depth) + var(--status-pad-h)) !important;
   }
   .status-article::before {
     content: "";
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 5px, transparent 5px, transparent 10px);
     width: calc(10px * var(--status-depth));
     height: 100%;
     z-index: -1;
     color: var(--body-bg);
+    background-position-x: calc(var(--rtl) * 5px);
   }
   .status-article.status-subtree-start {
     border-top: 4px solid var(--main-border);

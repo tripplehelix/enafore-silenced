@@ -58,7 +58,7 @@
       display: block;
       position: absolute;
       top: 0;
-      left: 0;
+      inset-inline-start: 0;
       width: calc(100% + 40px);
       height: calc(100% + 40px);
       background-position: center;
@@ -133,9 +133,9 @@
     },
     store: () => store,
     computed: {
-      headerImageIsMissing: ({ account }) => account.header.endsWith('missing.png') || account.header.endsWith('/images/banner.png'),
+      headerImageIsMissing: ({ account }) => account.header.endsWith('missing.png') || account.header.endsWith('/images/banner.png') || account.header.endsWith('/assets/default_header.png'),
       headerImage: ({ $autoplayGifs, account }) => $autoplayGifs ? account.header : account.header_static,
-      backgroundStyle: ({ headerImage, headerImageIsMissing }) => headerImageIsMissing ? '' : `background-image: url('${headerImage}');`,
+      backgroundStyle: ({ account, headerImageIsMissing }) => `background-image: url('${headerImageIsMissing ? account.avatar_static : account.header_static}');`,
       accountName: ({ account }) => (account && (account.display_name || account.username)) || '',
       moved: ({ account }) => account.moved,
       className: ({ headerImageIsMissing, $underlineLinks, moved }) => (classname(

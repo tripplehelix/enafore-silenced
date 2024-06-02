@@ -53,7 +53,7 @@
   }
 
   .status-header-avatar {
-    margin-left: 19px; /* offset for avatar, 48px - 24px - 5px */
+    margin-inline-start: 19px; /* offset for avatar, 48px - 24px - 5px */
   }
 
   :global(.status-header-svg) {
@@ -65,7 +65,7 @@
   }
 
   :global(.status-header-svg), .status-header-emoji {
-    margin-left: 20px;
+    margin-inline-start: 20px;
   }
 
   :global(.status-header.status-in-notification .status-header-svg) {
@@ -81,7 +81,7 @@
   }
 
   .status-header-author {
-    margin-left: 5px;
+    margin-inline-start: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -115,16 +115,16 @@
 
   @media (max-width: 767px) {
     :global(.status-header-svg), .status-header-emoji {
-      margin-left: 10px;
+      margin-inline-start: 10px;
     }
   }
 
   @media (max-width: 240px) {
     .status-header {
-      margin-left: 0;
+      margin-inline-start: 0;
     }
     .status-header-avatar {
-      margin-left: 0;
+      margin-inline-start: 0;
     }
   }
 </style>

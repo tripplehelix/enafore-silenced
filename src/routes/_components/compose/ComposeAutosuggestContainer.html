@@ -1,5 +1,5 @@
 <div class="compose-autosuggest {shown ? '' : 'not-shown'} {realm === 'dialog' ? 'is-dialog' : ''}"
-     style="top: {top}px; --autosuggest-input-left: {left}px;"
+     style="top: {top}px; --autosuggest-input-insetInlineStart: {insetInlineStart}px;"
 >
   <ComposeAutosuggestionList
     items={autosuggestSearchResults}
@@ -13,10 +13,10 @@
   .compose-autosuggest {
     position: absolute;
     z-index: 90;
-    --autosuggest-input-left: 0; /* overridden by "left" prop passed in */
-    --autosuggest-left-offset: 5px;
-    /* In desktop mode, the autosuggest tracks the position of the input (the "left" prop passed in). */
-    left: calc(var(--autosuggest-input-left) + var(--autosuggest-left-offset));
+    --autosuggest-input-insetInlineStart: 0; /* overridden by "insetInlineStart" prop passed in */
+    --autosuggest-insetInlineStart-offset: 5px;
+    /* In desktop mode, the autosuggest tracks the position of the input (the "insetInlineStart" prop passed in). */
+    inset-inline-start: calc(var(--autosuggest-input-insetInlineStart) + var(--autosuggest-insetInlineStart-offset));
   }
   .compose-autosuggest.not-shown {
     display: none;
@@ -34,19 +34,19 @@
   @media (max-width: 479px) {
     .compose-autosuggest {
       /* on mobile, make it fill the viewport width */
-      --autosuggest-left-offset: 10px;
-      left: var(--autosuggest-left-offset);
-      width: calc(100vw - (2 * var(--autosuggest-left-offset)));
+      --autosuggest-insetInlineStart-offset: 10px;
+      inset-inline-start: var(--autosuggest-insetInlineStart-offset);
+      width: calc(100vw - (2 * var(--autosuggest-insetInlineStart-offset)));
     }
   }
 
   /* tiny mobile size */
   @media (max-width: 240px) {
     .compose-autosuggest {
-      --autosuggest-left-offset: 5px; /* make it bigger on tiny devices */
+      --autosuggest-insetInlineStart-offset: 5px; /* make it bigger on tiny devices */
     }
     .compose-autosuggest.is-dialog {
-      --autosuggest-left-offset: 10px; /* more padding in dialogs */
+      --autosuggest-insetInlineStart-offset: 10px; /* more padding in dialogs */
     }
   }
 

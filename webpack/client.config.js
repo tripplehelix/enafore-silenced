@@ -57,7 +57,7 @@ export default {
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          dev ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
           path.join(__dirname, './csso-loader.cjs')
         ]
@@ -124,7 +124,7 @@ export default {
         }
       },
   plugins: [
-    new MiniCssExtractPlugin({
+    !dev && new MiniCssExtractPlugin({
       ignoreOrder: true,
       filename: dev ? '[fullhash]/[id].css' : '[id].[contenthash].[name].css',
       chunkFilename: dev ? '[fullhash]/[id].css' : '[id].[contenthash].[name].css'

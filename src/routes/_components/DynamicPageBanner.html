@@ -9,7 +9,7 @@
           class="dynamic-page-go-back"
           aria-label="{'intl.goBack'}"
           on:click|preventDefault="onGoBack()">
-    <SvgIcon className="dynamic-page-go-back-icon" href="#fa-arrow-left" />
+    <SvgIcon className="dynamic-page-go-back-icon rtl-flip" href="#fa-arrow-left" />
     {'intl.back'}
   </button>
 </div>
@@ -52,7 +52,7 @@
   :global(.dynamic-page-go-back-icon) {
     position: relative;
     bottom: 0.06em;
-    margin-right: 0.2em;
+    margin-inline-end: 0.2em;
     height: 0.66666666em;
     width: 0.66666666em;
     fill: currentColor;

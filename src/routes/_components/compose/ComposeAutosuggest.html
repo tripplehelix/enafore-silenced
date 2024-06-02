@@ -62,14 +62,14 @@
             parent.appendChild(this._element) // write
           }
           requestPostAnimationFrame(() => {
-            const { left, top } = this.calculateLeftAndTop()
+            const { insetInlineStart, top } = this.calculateInsetInlineStartAndTop()
             this._autosuggest = new ComposeAutosuggestContainer({
               target: this._element,
               data: {
                 realm,
                 text,
                 dialogId,
-                left,
+                insetInlineStart,
                 top
               }
             })
@@ -89,18 +89,18 @@
       doResize () {
         const { shouldBeShown } = this.get()
         if (this._autosuggest && shouldBeShown) {
-          const { left, top } = this.calculateLeftAndTop()
-          console.log('updating autosuggest position', { left, top })
-          this._autosuggest.set({ left, top })
+          const { insetInlineStart, top } = this.calculateInsetInlineStartAndTop()
+          console.log('updating autosuggest position', { insetInlineStart, top })
+          this._autosuggest.set({ insetInlineStart, top })
         }
       },
-      calculateLeftAndTop () {
+      calculateInsetInlineStartAndTop () {
         const { anchor } = this.refs
         const { realm } = this.get()
-        const { left, bottom } = anchor.getBoundingClientRect()
+        const { left, right, bottom } = anchor.getBoundingClientRect()
         const yOffset = realm === 'dialog' ? 0 : getScrollContainer().scrollTop
         return {
-          left,
+          insetInlineStart: document.documentElement.dir === 'rtl' ? window.innerWidth - right : left,
           top: bottom + yOffset
         }
       }

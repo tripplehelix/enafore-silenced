@@ -12,7 +12,12 @@
 {#if enableShortcuts}
 <Shortcut scope={shortcutScope} key="f" on:pressed="toggleFavorite(true)" />
 <Shortcut scope={shortcutScope} key="r" on:pressed="reply()" />
+{#if hasQuote}
 <Shortcut scope={shortcutScope} key="q" on:pressed="openQuoteDialog()" />
+{/if}
+{#if isUser}
+<Shortcut scope={shortcutScope} key="e" on:pressed="openEditDialog()" />
+{/if}
 <Shortcut scope={shortcutScope} key="escape" on:pressed="dismiss()" />
 <Shortcut scope={shortcutScope} key="b" on:pressed="reblog(true)" />
 <Shortcut scope={shortcutScope} key="a" on:pressed="bookmark()" />
@@ -26,8 +31,8 @@
   }
 
   .status-toolbar.status-in-own-thread {
-    margin-left: 63px;
-    /* offset to align all toolbar items: 48px avatar + 15px margin-right */
+    margin-inline-start: 63px;
+    /* offset to align all toolbar items: 48px avatar + 15px margin-inline-end */
   }
 
   .status-toolbar.status-in-notification {
@@ -36,8 +41,8 @@
 
   @media (max-width: 767px) {
     .status-toolbar.status-in-own-thread {
-      margin-left: 53px;
-      /* offset to align all toolbar items: 48px avatar + 5px margin-right */
+      margin-inline-start: 53px;
+      /* offset to align all toolbar items: 48px avatar + 5px margin-inline-end */
     }
   }
 
@@ -63,6 +68,7 @@
   import { setStatusBookmarkedOrUnbookmarked } from '../../_actions/bookmark.js'
   import { pickEmojiReaction } from '../../_actions/react.js'
   import { quote } from '../../_actions/quote.js'
+  import { edit } from '../../_actions/edit.js'
 
   export default {
     oncreate () {
@@ -169,6 +175,10 @@
       openQuoteDialog () {
         const { originalStatus } = this.get()
         quote(originalStatus)
+      },
+      openEditDialog () {
+        const { originalStatus } = this.get()
+        edit(originalStatus)
       }
     },
     data: () => ({

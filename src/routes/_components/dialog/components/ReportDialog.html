@@ -104,7 +104,7 @@
     align-items: center;
   }
   .recent-statuses input {
-    margin-right: 10px;
+    margin-inline-end: 10px;
   }
   .recent-statuses label {
     width: 0;
@@ -113,8 +113,8 @@
     overflow: hidden;
     white-space: pre-wrap;
     text-overflow: ellipsis;
-    border-left: 1px solid var(--main-border);
-    padding-left: 10px;
+    border-inline-start: 1px solid var(--main-border);
+    padding-inline-start: 10px;
   }
 
   .report-flex {
@@ -127,7 +127,7 @@
   }
 
   .report-info {
-    margin-left: 20px;
+    margin-inline-start: 20px;
   }
 
   @media (max-width: 767px) {
@@ -140,7 +140,7 @@
       flex-direction: column;
     }
     .report-info {
-      margin-left: 0;
+      margin-inline-start: 0;
     }
     textarea {
       max-height: 20vh;

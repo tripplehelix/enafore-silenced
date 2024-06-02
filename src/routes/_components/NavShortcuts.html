@@ -47,6 +47,9 @@
         showComposeDialog()
       },
       goLeftOrRight (left) {
+        if (document.documentElement.dir === 'rtl') {
+          left = !left
+        }
         let { currentPage, navPages } = this.store.get()
         currentPage = normalizePageName(currentPage)
         const idx = navPages.findIndex(_ => _.name === currentPage)

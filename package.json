@@ -78,6 +78,7 @@
     "sass": "^1.72.0",
     "standard": "^17.1.0",
     "stringz": "^2.1.0",
+    "style-loader": "^4.0.0",
     "svelte": "^2.16.1",
     "svelte-extras": "^2.0.2",
     "svelte-loader": "^2.13.6",

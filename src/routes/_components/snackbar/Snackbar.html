@@ -22,8 +22,7 @@
   .snackbar-modal {
     position: fixed;
     bottom: var(--toast-gap-bottom);
-    left: 0;
-    right: 0;
+    inset-inline: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,7 +79,7 @@
     text-transform: uppercase;
     font-weight: 500;
     background: var(--toast-bg);
-    margin-left: 5px;
+    margin-inline-start: 5px;
   }
 
   button:active {
@@ -107,7 +106,7 @@
       width: calc(100% - 20px);
     }
     button {
-      margin-left: 0;
+      margin-inline-start: 0;
       padding: 7px 10px;
     }
   }

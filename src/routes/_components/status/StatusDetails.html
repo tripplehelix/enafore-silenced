@@ -37,38 +37,40 @@
       </span>
     {/if}
   {/if}
-  <a class="status-favs-reblogs status-reblogs"
-     rel="prefetch"
-     href="/statuses/{originalStatusId}/reblogs"
-     aria-label={reblogsLabel}>
-    <SvgIcon className="status-favs-reblogs-svg" href="#fa-retweet" />
-    <span>{numReblogs}</span>
-  </a>
-  <a class="status-favs-reblogs status-favs"
-     rel="prefetch"
-     href="/statuses/{originalStatusId}/favorites"
-     aria-label={favoritesLabel}>
-    <SvgIcon className="status-favs-reblogs-svg" href="#fa-star" />
-    <span>{numFavs}</span>
-  </a>
-  {#if hasReactions}
-  {#if reactionsLink}
-  <a class="status-favs-reblogs status-reactions"
-     rel="prefetch"
-     href="/statuses/{originalStatusId}/reactions"
-     aria-label={reactionsLabel}>
-    <SvgIcon className="status-favs-reblogs-svg" href="#fa-smile" />
-    <span>{numReactions}</span>
-  </a>
-  {:else}
-  <span class="status-favs-reblogs status-reactions"
-     rel="prefetch"
-     aria-label={reactionsLabel}>
-    <SvgIcon className="status-favs-reblogs-svg" href="#fa-smile" />
-    <span>{numReactions}</span>
-  </span>
-  {/if}
-  {/if}
+  <div class="status-favs-reblogs-wrap">
+    <a class="status-favs-reblogs status-reblogs"
+      rel="prefetch"
+      href="/statuses/{originalStatusId}/reblogs"
+      aria-label={reblogsLabel}>
+      <SvgIcon className="status-favs-reblogs-svg" href="#fa-retweet" />
+      <span>{numReblogs}</span>
+    </a>
+    <a class="status-favs-reblogs status-favs"
+      rel="prefetch"
+      href="/statuses/{originalStatusId}/favorites"
+      aria-label={favoritesLabel}>
+      <SvgIcon className="status-favs-reblogs-svg" href="#fa-star" />
+      <span>{numFavs}</span>
+    </a>
+    {#if hasReactions}
+    {#if reactionsLink}
+    <a class="status-favs-reblogs status-reactions"
+      rel="prefetch"
+      href="/statuses/{originalStatusId}/reactions"
+      aria-label={reactionsLabel}>
+      <SvgIcon className="status-favs-reblogs-svg" href="#fa-smile" />
+      <span>{numReactions}</span>
+    </a>
+    {:else}
+    <span class="status-favs-reblogs status-reactions"
+      rel="prefetch"
+      aria-label={reactionsLabel}>
+      <SvgIcon className="status-favs-reblogs-svg" href="#fa-smile" />
+      <span>{numReactions}</span>
+    </span>
+    {/if}
+    {/if}
+  </div>
 </div>
 <style>
   .status-details {
@@ -77,17 +79,25 @@
     flex-wrap: wrap;
     grid-gap: 0 20px;
     align-items: center;
-    justify-content: left;
+    justify-content: start;
     margin: 0 5px 10px;
+  }
+
+  .status-favs-reblogs-wrap {
+    display: flex;
+    gap: 0 10px;
   }
 
   :global(.status-absolute-date) {
     font-size: 1.1em;
     min-width: 0;
+    display: flex;
+    gap: 0 20px;
+    flex-wrap: wrap;
   }
 
   :global(.status-edited-date) {
-    margin-left: 20px;
+    display: inline-block;
   }
 
   :global(.status-absolute-date time) {
@@ -128,7 +138,7 @@
   }
 
   .status-favs-reblogs span {
-    margin-left: 5px;
+    margin-inline-start: 5px;
   }
 
   .status-favs-reblogs,

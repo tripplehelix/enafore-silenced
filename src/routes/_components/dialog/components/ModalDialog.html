@@ -31,10 +31,7 @@
   :global(.modal-dialog) {
     position: fixed;
     z-index: 10000;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,10 +40,7 @@
   .modal-dialog-backdrop {
     position: fixed;
     z-index: 10010;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
+    inset: 0;
     background: rgba(51, 51, 51, 0.9);
   }
   .modal-dialog-contents {
