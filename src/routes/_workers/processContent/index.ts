@@ -72,6 +72,7 @@ registerPromiseWorker(
         autoplayGifs,
         emojis,
         mentionsByURL,
+        hasQuote: 'quote' in originalStatus,
       })
     }
     ;({ dom, hashtagsInBar } = computeHashtagBarForStatus(dom, originalStatus))

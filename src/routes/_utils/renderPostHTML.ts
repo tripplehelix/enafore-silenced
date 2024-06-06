@@ -107,12 +107,14 @@ export function renderPostHTMLToDOM({
   autoplayGifs,
   emojis,
   mentionsByURL,
+  hasQuote,
 }: {
   content: string
   tags: Array<{ name: string }>
   autoplayGifs: boolean
   emojis: Map<string, { url: string; static_url?: string; shortcode: string }>
   mentionsByURL: Map<string, Mention>
+  hasQuote: boolean
 }): DefaultTreeAdapterMap['parentNode'] {
   if (!content) {
     return defaultTreeAdapter.createDocumentFragment()
@@ -300,6 +302,17 @@ export function renderPostHTMLToDOM({
   function walkElements(node: DefaultTreeAdapterMap['parentNode']): void {
     for (const child of node.childNodes) {
       if (defaultTreeAdapter.isElementNode(child)) {
+        const c = child.attrs.find((attr) => attr.name === 'class')
+        if (
+          c &&
+          /(?:\s|^)(?:quote-inline|reference-link-inline)(?:\s|$)/.test(
+            c.value,
+          ) &&
+          hasQuote
+        ) {
+          defaultTreeAdapter.detachNode(child)
+          continue
+        }
         if (child.tagName === 'a') {
           handleAnchorNode(child)
         }
