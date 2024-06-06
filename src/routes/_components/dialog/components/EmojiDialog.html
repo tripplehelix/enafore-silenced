@@ -81,11 +81,13 @@
       if (emojiPickerI18n) {
         picker.i18n = emojiPickerI18n
       }
-      // break into shadow DOM to fix grayscale in Wellness grayscale mode
+      // break into shadow DOM
+      const style = document.createElement('style')
+      style.textContent = '.custom-emoji{transform:scale(1.25)}'
+      picker.shadowRoot.appendChild(style)
+      // fix grayscale in Wellness grayscale mode
       if (enableGrayscale) {
-        const style = document.createElement('style')
-        style.textContent = '.emoji { filter: grayscale(100%); }'
-        picker.shadowRoot.appendChild(style)
+        style.textContent += '.emoji{filter:grayscale(100%)}'
       }
       if (!isUserTouching) {
         // auto focus the input on desktop
