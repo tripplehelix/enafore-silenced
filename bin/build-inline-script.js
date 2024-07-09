@@ -58,7 +58,7 @@ async function buildInlineScriptAndCSP () {
     "frame-src 'none'",
     "object-src 'none'",
     "manifest-src 'self'",
-    "form-action 'self'", // we need form-action for the Web Share Target API
+    "form-action 'self' https://duckduckgo.com", // we need form-action for the Web Share Target API and MFM [search] tags
     "base-uri 'self'"
   ].join(';')
   await writeFile(path.resolve(__dirname, '../static/inline-script.js.map'),
