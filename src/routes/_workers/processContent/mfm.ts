@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-FileCopyrightText: syuilo and misskey-project
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MfmNode, parse as parseMFM } from 'mfm-js'
@@ -9,7 +9,13 @@ const {
   NS: { HTML, SVG },
 } = html
 
-declare function parseFloat(_: unknown): number
+function safeParseFloat(str: unknown): number | null {
+  if (typeof str !== 'string' || str === '') return null
+  const num = parseFloat(str)
+  if (isNaN(num)) return null
+  return num
+}
+
 declare global {
   interface RegExp {
     test(_: string | boolean): boolean
@@ -44,12 +50,15 @@ export function renderMfm({
   userHost: string
 }) {
   const defaultHost = originalStatus.account.fqn.split('@')[1]
-  const ast = parseMFM(mfmContent)
-  const validTime = (t?: unknown) => {
-    if (typeof t !== 'string') {
-      return null
-    }
-    return /^[0-9.]+s$/.test(t) ? t : null
+  const rootAst = parseMFM(mfmContent)
+  const validTime = (t: string | boolean | null | undefined) => {
+    if (t == null) return null
+    if (typeof t === 'boolean') return null
+    return t.match(/^[0-9.]+s$/) ? t : null
+  }
+  const validColor = (c: unknown): string | null => {
+    if (typeof c !== 'string') return null
+    return c.match(/^[0-9a-f]{3,6}$/i) ? c : null
   }
   const useAnim = autoplayGifs
   const simpleTagMap = {
@@ -96,35 +105,39 @@ export function renderMfm({
         case 'fn':
           {
             // TODO: CSSを文字列で組み立てていくと token.props.args.~~~ 経由でCSSインジェクションできるのでよしなにやる
-            let style
+            let style: string | undefined
             switch (token.props.name) {
               case 'tada': {
                 const speed = validTime(token.props.args.speed) ?? '1s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style =
                   'font-size: 150%;' +
                   (useAnim
-                    ? `animation: tada ${speed} linear infinite both;`
+                    ? `animation: global-tada ${speed} linear infinite both; animation-delay: ${delay};`
                     : '')
                 break
               }
               case 'jelly': {
                 const speed = validTime(token.props.args.speed) ?? '1s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style = useAnim
-                  ? `animation: mfm-rubberBand ${speed} linear infinite both;`
+                  ? `animation: mfm-rubberBand ${speed} linear infinite both; animation-delay: ${delay};`
                   : ''
                 break
               }
               case 'twitch': {
                 const speed = validTime(token.props.args.speed) ?? '0.5s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style = useAnim
-                  ? `animation: mfm-twitch ${speed} ease infinite;`
+                  ? `animation: mfm-twitch ${speed} ease infinite; animation-delay: ${delay};`
                   : ''
                 break
               }
               case 'shake': {
                 const speed = validTime(token.props.args.speed) ?? '0.5s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style = useAnim
-                  ? `animation: mfm-shake ${speed} ease infinite;`
+                  ? `animation: mfm-shake ${speed} ease infinite; animation-delay: ${delay};`
                   : ''
                 break
               }
@@ -140,32 +153,25 @@ export function renderMfm({
                     ? 'mfm-spinY'
                     : 'mfm-spin'
                 const speed = validTime(token.props.args.speed) ?? '1.5s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style = useAnim
-                  ? `animation: ${anime} ${speed} linear infinite; animation-direction: ${direction};`
+                  ? `animation: ${anime} ${speed} linear infinite; animation-direction: ${direction}; animation-delay: ${delay};`
                   : ''
                 break
               }
               case 'jump': {
                 const speed = validTime(token.props.args.speed) ?? '0.75s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style = useAnim
-                  ? `animation: mfm-jump ${speed} linear infinite;`
+                  ? `animation: mfm-jump ${speed} linear infinite; animation-delay: ${delay};`
                   : ''
                 break
               }
               case 'bounce': {
                 const speed = validTime(token.props.args.speed) ?? '0.75s'
+                const delay = validTime(token.props.args.delay) ?? '0s'
                 style = useAnim
-                  ? `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom;`
-                  : ''
-                break
-              }
-              case 'fade': {
-                const direction = token.props.args.out
-                  ? 'alternate-reverse'
-                  : 'alternate'
-                const speed = validTime(token.props.args.speed) || '1.5s'
-                style = useAnim
-                  ? `animation: mfm-fade ${speed} linear infinite;animation-direction:${direction}`
+                  ? `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom; animation-delay: ${delay};`
                   : ''
                 break
               }
@@ -226,7 +232,8 @@ export function renderMfm({
                   continue
                 }
                 const speed = validTime(token.props.args.speed) ?? '1s'
-                style = `animation: mfm-rainbow ${speed} linear infinite;`
+                const delay = validTime(token.props.args.delay) ?? '0s'
+                style = `animation: mfm-rainbow ${speed} linear infinite; animation-delay: ${delay};`
                 break
               }
               case 'sparkle': {
@@ -240,41 +247,125 @@ export function renderMfm({
                 continue
               }
               case 'rotate': {
-                const degrees = parseFloat(token.props.args.deg ?? '90')
+                const degrees = safeParseFloat(token.props.args.deg) ?? 90
                 style = `transform: rotate(${degrees}deg); transform-origin: center center;`
                 break
               }
               case 'position': {
-                const x = parseFloat(token.props.args.x ?? '0')
-                const y = parseFloat(token.props.args.y ?? '0')
+                const x = safeParseFloat(token.props.args.x) ?? 0
+                const y = safeParseFloat(token.props.args.y) ?? 0
                 style = `transform: translateX(${x}em) translateY(${y}em);`
                 break
               }
               case 'scale': {
-                const x = Math.min(parseFloat(token.props.args.x ?? '1'), 5)
-                const y = Math.min(parseFloat(token.props.args.y ?? '1'), 5)
+                const x = Math.min(safeParseFloat(token.props.args.x) ?? 1, 5)
+                const y = Math.min(safeParseFloat(token.props.args.y) ?? 1, 5)
                 style = `transform: scale(${x}, ${y});`
                 scale = scale * Math.max(x, y)
                 break
               }
               case 'fg': {
-                let color = token.props.args.color
-                if (!/^[0-9a-f]{3,6}$/i.test(color!)) {
-                  color = 'f00'
-                }
-                style = `color: #${color};`
+                let color = validColor(token.props.args.color)
+                color = color ?? 'f00'
+                style = `color: #${color}; overflow-wrap: anywhere;`
                 break
               }
               case 'bg': {
-                let color = token.props.args.color
-                if (!/^[0-9a-f]{3,6}$/i.test(color!)) {
-                  color = 'f00'
-                }
-                style = `background-color: #${color};`
+                let color = validColor(token.props.args.color)
+                color = color ?? 'f00'
+                style = `background-color: #${color}; overflow-wrap: anywhere;`
                 break
               }
+
+              case 'border': {
+                let color = validColor(token.props.args.color)
+                color = color ? `#${color}` : 'var(--main-theme-color)'
+                let b_style = token.props.args.style
+                if (
+                  typeof b_style !== 'string' ||
+                  ![
+                    'hidden',
+                    'dotted',
+                    'dashed',
+                    'solid',
+                    'double',
+                    'groove',
+                    'ridge',
+                    'inset',
+                    'outset',
+                  ].includes(b_style)
+                )
+                  b_style = 'solid'
+                const width = safeParseFloat(token.props.args.width) ?? 1
+                const radius = safeParseFloat(token.props.args.radius) ?? 0
+                style = `border: ${width}px ${b_style} ${color}; border-radius: ${radius}px;${token.props.args.noclip ? '' : ' overflow: clip;'}`
+                break
+              }
+              case 'ruby': {
+                if (token.children.length === 1) {
+                  const child = token.children[0]
+                  let text = child?.type === 'text' ? child.props.text : ''
+                  const ruby = defaultTreeAdapter.createElement(
+                    'ruby',
+                    HTML,
+                    [],
+                  )
+                  const split = text.split(' ')
+                  defaultTreeAdapter.insertText(ruby, split[0] ?? '')
+                  const rt = defaultTreeAdapter.createElement('rt', HTML, [])
+                  defaultTreeAdapter.insertText(rt, split[1] ?? '')
+                  defaultTreeAdapter.appendChild(ruby, rt)
+                  defaultTreeAdapter.appendChild(parent, ruby)
+                  continue
+                } else {
+                  const lastChild = token.children[token.children.length - 1]
+                  let text =
+                    lastChild?.type === 'text' ? lastChild.props.text : ''
+                  const ruby = defaultTreeAdapter.createElement(
+                    'ruby',
+                    HTML,
+                    [],
+                  )
+                  genEl(
+                    token.children.slice(0, token.children.length - 1),
+                    scale,
+                    ruby,
+                  )
+                  const rt = defaultTreeAdapter.createElement('rt', HTML, [])
+                  defaultTreeAdapter.insertText(rt, text.trim())
+                  defaultTreeAdapter.appendChild(ruby, rt)
+                  defaultTreeAdapter.appendChild(parent, ruby)
+                  continue
+                }
+              }
+              case 'unixtime': {
+                const child = token.children[0]
+                const unixtime = parseInt(
+                  child?.type === 'text' ? child.props.text : '',
+                )
+                const date = new Date(unixtime)
+                const ele = defaultTreeAdapter.createElement('time', HTML, [
+                  { name: 'datetime', value: date.toJSON() },
+                  { name: 'class', value: '_mfm_unixtime_' },
+                ])
+                defaultTreeAdapter.insertText(ele, date.toLocaleString())
+                defaultTreeAdapter.appendChild(parent, ele)
+                continue
+              }
+              case 'clickable': {
+                const clickEv =
+                  typeof token.props.args.ev === 'string'
+                    ? token.props.args.ev
+                    : ''
+                const ele = defaultTreeAdapter.createElement('span', HTML, [
+                  { name: 'data-mfm-clickable-ev', value: clickEv },
+                ])
+                genEl(token.children, scale, ele)
+                defaultTreeAdapter.appendChild(parent, ele)
+                continue
+              }
             }
-            if (style == null) {
+            if (style === undefined) {
               const ele = defaultTreeAdapter.createElement('span', HTML, [])
               defaultTreeAdapter.insertText(ele, `$[${token.props.name} `)
               genEl(token.children, scale, ele)
@@ -579,6 +670,6 @@ export function renderMfm({
     }
   }
   const ele = defaultTreeAdapter.createElement('div', HTML, [])
-  genEl(ast, 1, ele)
+  genEl(rootAst, 1, ele)
   return ele
 }

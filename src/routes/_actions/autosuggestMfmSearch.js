@@ -1,7 +1,7 @@
 import { store } from '../_store/store.js'
 import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
 
-const MFM_TAGS = ['tada', 'jelly', 'twitch', 'shake', 'spin', 'jump', 'bounce', 'flip', 'x2', 'x3', 'x4', 'scale', 'position', 'fg', 'bg', 'font', 'blur', 'rainbow', 'sparkle', 'rotate'].map(tag => ({ name: tag }))
+const MFM_TAGS = ['tada', 'jelly', 'twitch', 'shake', 'spin', 'jump', 'bounce', 'flip', 'x2', 'x3', 'x4', 'scale', 'position', 'fg', 'bg', 'font', 'blur', 'rainbow', 'sparkle', 'rotate', 'ruby', 'unixtime', 'border', 'clickable'].map(tag => ({ name: tag }))
 
 export function doMfmSearch (searchText) {
   let canceled = false

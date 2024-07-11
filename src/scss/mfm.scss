@@ -368,16 +368,6 @@
   }
 }
 
-@keyframes mfm-fade {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 ._mfm_search_ {
   display: grid;
   grid-template-columns: 1fr min-content;
@@ -388,4 +378,16 @@
   width: 100%;
   font-size: inherit;
   padding: 0.3em 0.6em;
+}
+
+._mfm_unixtime_ {
+  display: inline-block;
+  font-size: 90%;
+  border: solid 1px var(--very-deemphasized-text-color);
+  border-radius: 999px;
+  padding: 0 0.5em;
+}
+
+._mfm_unixtime_::before {
+  content: "🕒︎ ";
 }

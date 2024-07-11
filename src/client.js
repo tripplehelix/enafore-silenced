@@ -16,6 +16,13 @@ HTMLElement.prototype.focus = function (options = {}) {
   options.now ? fn() : queueMicrotask(fn)
 }
 
+document.body.addEventListener('click', (ev) => {
+  if (ev.target.closest('[data-mfm-clickable-ev]')) {
+    ev.stopPropagation()
+    ev.preventDefault()
+  }
+})
+
 Promise.all([idbReady(), loadPolyfills()]).then(() => {
   mark('sapperStart')
   sapper.start({ target: document.querySelector('#sapper') })
