@@ -125,7 +125,10 @@ export function renderPostHTMLToDOM({
   const dom = parseFragment(content)
   const customEmoji = [...emojis.keys()].map((e) => escapeRegExp(e)).join('|')
   const unicodeEmoji = getEmojiRegex().source
-  const part = new RegExp(`:(${customEmoji}):|(${unicodeEmoji})|(.)`, 'g')
+  const part = new RegExp(
+    `:(${customEmoji}):|(${unicodeEmoji})|([\\s\\S])`,
+    'g',
+  )
   function handleTextNode(node: DefaultTreeAdapterMap['textNode']): void {
     const newNodes = []
     for (const [, customEmoji, unicodeEmoji, text] of node.value.matchAll(
