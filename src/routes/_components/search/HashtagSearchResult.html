@@ -10,7 +10,7 @@
       SearchResult
     },
     computed: {
-      tag: ({ hashtag }) => '/tags/' + encodeURIComponent(hashtag)
+      href: ({ hashtag }) => '/tags/' + encodeURIComponent(hashtag.name)
     }
   }
 </script>

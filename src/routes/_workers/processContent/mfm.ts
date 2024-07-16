@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import { MfmNode, parse as parseMFM } from 'mfm-js'
-import { DefaultTreeAdapterMap, defaultTreeAdapter, html } from 'parse5'
+import {
+  DefaultTreeAdapterMap,
+  defaultTreeAdapter,
+  html,
+  parseFragment,
+} from 'parse5'
 import { Mention } from '../../_utils/types.ts'
 const {
   NS: { HTML, SVG },
@@ -36,20 +41,43 @@ function append(
 }
 export function renderMfm({
   mfmContent,
+  htmlContent,
   originalStatus,
   autoplayGifs,
   emojis,
-  mentionsByHandle,
-  userHost,
+  mentionsByURL,
 }: {
   mfmContent: string
+  htmlContent: string
   originalStatus: any
   autoplayGifs: boolean
   emojis: Map<string, { shortcode: string; url: string; static_url: string }>
-  mentionsByHandle: Map<string, Mention>
-  userHost: string
+  mentionsByURL: Map<string, Mention>
 }) {
-  const defaultHost = originalStatus.account.fqn.split('@')[1]
+  const mentionUrlsFromHtml: string[] = []
+  function walkElements(node: DefaultTreeAdapterMap['parentNode']): void {
+    for (const child of node.childNodes) {
+      if (defaultTreeAdapter.isElementNode(child)) {
+        if (child.tagName === 'a') {
+          const c = child.attrs.find((attr) => attr.name === 'class')
+          const h = child.attrs.find((attr) => attr.name === 'href')
+          if (c && h && /(?:\s|^)mention(?:\s|$)/.test(c.value)) {
+            defaultTreeAdapter.detachNode(child)
+            mentionUrlsFromHtml.push(h.value)
+            continue
+          }
+        }
+        walkElements(child)
+      }
+    }
+  }
+  walkElements(parseFragment(htmlContent))
+  console.log(
+    'mentionUrlsFromHtml',
+    mentionUrlsFromHtml,
+    'mentionsByURL',
+    mentionsByURL,
+  )
   const rootAst = parseMFM(mfmContent)
   const validTime = (t: string | boolean | null | undefined) => {
     if (t == null) return null
@@ -68,6 +96,7 @@ export function renderMfm({
     quote: 'blockquote',
     plain: 'span',
   }
+  let mentionsEncountered = 0
   const genEl = (
     ast: MfmNode[],
     scale: number,
@@ -457,14 +486,19 @@ export function renderMfm({
           break
         case 'mention':
           {
-            const computedFqn = `${token.props.username}@${token.props.host || defaultHost || userHost}`
-            const mention = mentionsByHandle.get(computedFqn)
-            if (mention == null) {
+            const url = mentionUrlsFromHtml[mentionsEncountered++]
+            if (!url) {
+              console.warn(
+                'more mentions in mfm than in html. parser differences?',
+              )
+            }
+            const mention = url && mentionsByURL.get(url)
+            if (!mention) {
               let fallback = '@' + token.props.username
               if (token.props.host) {
                 fallback += '@' + token.props.host
               }
-              console.warn('failed to get mention for fqn', computedFqn)
+              console.warn('failed to get mention for', fallback)
               const ele = defaultTreeAdapter.createElement('a', HTML, [
                 {
                   name: 'class',

@@ -3,6 +3,7 @@ import { statusDomToPlainText } from '../../_utils/statusHtmlToPlainText.ts'
 import { computeHashtagBarForStatus } from './hashtagBar.ts'
 import { renderMfm } from './mfm.ts'
 import { renderPostHTMLToDOM } from '../../_utils/renderPostHTML.ts'
+import type { Mention } from '../../_utils/types.ts'
 import {
   type DefaultTreeAdapterMap,
   defaultTreeAdapter,
@@ -35,35 +36,21 @@ registerPromiseWorker(
         emojis.set(emoji.shortcode, emoji)
       }
     }
-    const mentionsByHandle = new Map()
-    const mentionsByURL = new Map()
+    const mentionsByURL: Map<string, Mention> = new Map()
     if (originalStatus.mentions) {
       for (const mention of originalStatus.mentions) {
         mention.included = false
         mentionsByURL.set(mention.url, mention)
-        mentionsByHandle.set(
-          mention.acct.includes('@')
-            ? mention.acct
-            : `${mention.acct}@${userHost}`,
-          mention,
-        )
-        const domainParts = new URL(mention.url).hostname.split('.')
-        do {
-          mentionsByHandle.set(
-            `${mention.acct.split('@')[0]}@${domainParts.join('.')}`,
-            mention,
-          )
-        } while (domainParts.shift())
       }
     }
     if (mfmContent) {
       dom = renderMfm({
         mfmContent,
+        htmlContent: originalStatus.content,
         originalStatus,
         autoplayGifs,
         emojis,
-        mentionsByHandle,
-        userHost,
+        mentionsByURL,
       })
     } else {
       dom = renderPostHTMLToDOM({

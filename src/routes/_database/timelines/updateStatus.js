@@ -18,8 +18,8 @@ async function doUpdateStatus (instanceName, statusId, updateFunc) {
   }
   return dbPromise(db, STATUSES_STORE, 'readwrite', (statusesStore) => {
     statusesStore.get(statusId).onsuccess = e => {
-      const status = e.target.result
-      updateFunc(status)
+      let status = e.target.result
+      status = updateFunc(status) || status
       putStatus(statusesStore, status)
     }
   })
@@ -65,6 +65,9 @@ const PROPS_THAT_CAN_BE_EDITED = ['content', 'spoiler_text', 'sensitive', 'langu
 export async function updateStatus (instanceName, newStatus) {
   const clonedNewStatus = cloneForStorage(newStatus)
   return doUpdateStatus(instanceName, newStatus.id, status => {
+    if (!status) {
+      return newStatus
+    }
     // We can't use a simple Object.assign() to merge because a prop might have been deleted
     for (const prop of PROPS_THAT_CAN_BE_EDITED) {
       if (!(prop in clonedNewStatus)) {
