@@ -1,6 +1,10 @@
 {#if $isUserLoggedIn}
   <TimelinePage timeline="tag/{encodeURIComponent(params.tagName)}">
-    <DynamicPageBanner title="{'#' + params.tagName}"/>
+    <DynamicPageBanner title="{'#' + params.tagName}">
+      {#if tagInfo}
+        <button class="tag-follow-button" on:click="onFollowButtonClick(event)">{label}</button>
+      {/if}
+    </DynamicPageBanner>
   </TimelinePage>
 {:else}
   <HiddenFromSSR>
@@ -11,15 +15,64 @@
     </FreeTextLayout>
   </HiddenFromSSR>
 {/if}
+<style>
+  .tag-follow-button {
+    padding: 10px;
+    font-size: 1.1em;
+    min-width: max-content;
+    width: 10ch;
+    margin-top: -3rem;
+    transform: translateY(1.5rem);
+  }
+</style>
 <script>
   import TimelinePage from '../../_components/TimelinePage.html'
   import FreeTextLayout from '../../_components/FreeTextLayout.html'
   import { store } from '../../_store/store.js'
   import HiddenFromSSR from '../../_components/HiddenFromSSR.html'
   import DynamicPageBanner from '../../_components/DynamicPageBanner.html'
+  import { getTag, followTag, unfollowTag } from '../../_api/tag.ts'
+  import { toast } from '../../_components/toast/toast.js'
+  import { formatIntl } from '../../_utils/formatIntl.js'
 
   export default {
+    async oncreate () {
+      try {
+        const { currentInstance, accessToken } = this.store.get()
+        const { params: { tagName } } = this.get()
+        const tagInfo = await getTag(currentInstance, accessToken, tagName)
+        this.set({ tagInfo })
+      } catch (err) {
+        console.error(err)
+        /* no await */ toast.say(formatIntl('intl.error', { error: (err.message || '') }))
+      }
+    },
+    methods: {
+      async onFollowButtonClick (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        const { currentInstance, accessToken } = this.store.get()
+        const { params: { tagName }, following } = this.get()
+        const newFollowingValue = !following
+        this.set({ overrideLabel: newFollowingValue ? 'intl.unfollowLabel' : 'intl.followLabel' })
+        try {
+          const tagInfo = await (newFollowingValue ? followTag : unfollowTag)(currentInstance, accessToken, tagName)
+          this.set({ tagInfo })
+        } catch (e) {
+          console.error(e)
+        }
+        this.set({ overrideLabel: null })
+      }
+    },
     store: () => store,
+    computed: {
+      following: ({ tagInfo }) => tagInfo && tagInfo.following,
+      label: ({ following, overrideLabel }) => overrideLabel || following ? 'intl.unfollowLabel' : 'intl.followLabel'
+    },
+    data: () => ({
+      tagInfo: null,
+      overrideLabel: null
+    }),
     components: {
       TimelinePage,
       FreeTextLayout,

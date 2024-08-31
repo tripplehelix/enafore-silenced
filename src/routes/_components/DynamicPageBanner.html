@@ -5,6 +5,7 @@
   <SvgIcon className="dynamic-page-banner-svg" href={icon} />
   {/if}
   <h1 class="dynamic-page-title" aria-label={ariaTitle}>{title}</h1>
+  <slot></slot>
   <button type="button"
           class="dynamic-page-go-back"
           aria-label="{'intl.goBack'}"
@@ -19,22 +20,26 @@
     display: grid;
     align-items: center;
     margin: 20px 20px 20px;
-    grid-template-columns: 1fr min-content;
+    grid-template-columns: 1fr min-content min-content;
+    grid-template-areas: "title slot back";
     grid-column-gap: 10px;
   }
   .dynamic-page-banner.dynamic-page-with-icon {
-    grid-template-columns: min-content 1fr min-content;
+    grid-template-columns: min-content 1fr min-content min-content;
+    grid-template-areas: "icon title slot back";
   }
   :global(.dynamic-page-banner-svg) {
     width: 24px;
     height: 24px;
     fill: var(--body-text-color);
+    grid-area: icon;
   }
   .dynamic-page-title {
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    grid-area: title;
   }
   .dynamic-page-go-back {
     display: inline-flex;
@@ -45,6 +50,7 @@
     border: 0;
     padding: 0;
     background: none;
+    grid-area: back;
   }
   .dynamic-page-go-back:hover {
     text-decoration: underline;

@@ -60,11 +60,6 @@
         const showAccountProfileOptionsDialog = await importShowAccountProfileOptionsDialog()
         showAccountProfileOptionsDialog(account, relationship, verifyCredentials)
       },
-      oncreate () {
-        if (process.env.BROWSER) {
-          window.__button = this
-        }
-      },
       async onFollowButtonClick (e) {
         e.preventDefault()
         e.stopPropagation()

@@ -344,11 +344,6 @@ export default {
     Enafore is <a rel="noopener" target="_blank" href="https://github.com/enafore/enafore">open-source</a> software.
   </p>
 
-  <div class="donate-banner ui-settings">
-    <h2>Want to support Enafore development?</h2>
-    <a rel="noopener" target="_blank" href="https://github.com/enafore/enafore#donate" class="button primary">Donate</a>
-  </div>
-
   <h2 id="privacy-policy">Privacy Policy</h2>
 
   <p>
@@ -384,9 +379,9 @@ export default {
   <p>
     Enafore is licensed under the <a rel="noopener" target="_blank" href="https://github.com/enafore/enafore/blob/main/LICENSE">GNU Affero General Public License</a>.
   </p>
-  
+
   <h2>Version</h2>
-  
+
   <p>
     You are running Enafore version <code class="enafore-version"></code>.
   </p>`,
