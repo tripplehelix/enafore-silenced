@@ -196,7 +196,6 @@
   import { slide } from '../../_transitions/slide.js'
   import { postStatus, insertHandleForReply, setReplySpoiler, setReplyVisibility } from '../../_actions/compose.js'
   import { classname } from '../../_utils/classname.js'
-  import { POLL_EXPIRY_DEFAULT } from '../../_static/polls.js'
   import { scheduleIdleTask } from '../../_utils/scheduleIdleTask.js'
   import IconButton from '../IconButton.html'
 
@@ -319,6 +318,7 @@
           editId,
           localOnly
         } = this.get()
+        const { statusPollExpiryOptions } = this.store.get()
         const mediaIds = media.map(_ => _.data.id)
         const mediaDescriptions = media.map(_ => _.description)
         const mediaFocalPoints = media.map(_ => [_.focusX, _.focusY])
@@ -338,7 +338,7 @@
 
         // convert internal poll format to the format Mastodon's REST API uses
         const pollToPost = hasPoll && {
-          expires_in: (poll.expiry || POLL_EXPIRY_DEFAULT).toString(),
+          expires_in: (poll.expiry || statusPollExpiryOptions[0].value).toString(),
           multiple: !!poll.multiple,
           options: poll.options
         }

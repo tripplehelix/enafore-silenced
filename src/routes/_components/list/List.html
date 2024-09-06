@@ -1,11 +1,13 @@
 <div class="the-list" on:initialized>
-  {#each safeItems as item, i (item)}
+  {#each peekItems as item, i (item[1].id)}
     <ListLazyItem
       {component}
       index={i}
       {length}
       {makeProps}
-      key={item}
+      prev={item[0]}
+      data={item[1]}
+      next={item[2]}
       on:initialized="itemInitialized()"
     />
   {/each}
@@ -21,6 +23,7 @@
   import { getScrollContainer } from '../../_utils/scrollContainer.js'
   import { observe } from 'svelte-extras'
   import { mark, stop } from '../../_utils/marks.js'
+  import { peek } from '../../_utils/peek.js'
 
   function getScrollTopOffset () {
     return document.getElementById('main-nav').getBoundingClientRect().height
@@ -32,9 +35,9 @@
       this.store.setCurrentRealm(realm)
 
       if (process.env.NODE_ENV !== 'production') {
-        this.observe('safeItems', safeItems => {
-          if (new Set(safeItems).size !== safeItems.length) {
-            console.error('list of items is not unique:', safeItems)
+        this.observe('items', items => {
+          if (items && new Set(items).size !== items.length) {
+            console.error('list of items is not unique:', items)
           }
         })
       }
@@ -75,8 +78,8 @@
       initializedCount: 0
     }),
     computed: {
-      safeItems: ({ items }) => items || [],
-      length: ({ safeItems }) => safeItems.length
+      peekItems: ({ items }) => items ? peek(items) : [],
+      length: ({ peekItems }) => peekItems.length
     },
     components: {
       ListLazyItem

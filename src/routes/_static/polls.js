@@ -29,7 +29,17 @@ export const POLL_EXPIRY_OPTIONS = [
   {
     value: 604800,
     label: 'intl.sevenDays'
+  },
+  {
+    value: 1209600,
+    label: 'intl.fourteenDays'
+  },
+  {
+    value: 2592000,
+    label: 'intl.thirtyDays'
+  },
+  {
+    value: 31536000,
+    label: 'intl.oneYear'
   }
 ]
-
-export const POLL_EXPIRY_DEFAULT = 86400

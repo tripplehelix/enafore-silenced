@@ -2,7 +2,9 @@
   <ListItem
     {component}
     {props}
-    {key}
+    {prev}
+    {data}
+    {next}
     {index}
     {length}
     on:initialized
@@ -14,9 +16,9 @@
 
   export default {
     async oncreate () {
-      const { makeProps, key } = this.get()
+      const { makeProps, data } = this.get()
       if (makeProps) {
-        const props = await makeProps(key)
+        const props = await makeProps(data)
         mark('ListLazyItem set props')
         this.set({ props })
         this.fire('initialized')

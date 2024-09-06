@@ -43,8 +43,8 @@ export function createMakeProps (instanceName, timelineType, timelineValue) {
 
   // The results from IndexedDB or the worker thread can return in random order,
   // so we ensure consistent ordering based on the order this function is called in.
-  return itemId => {
-    const getStatusOrNotificationPromise = getStatusOrNotification(itemId) // start the promise ASAP
+  return itemSummary => {
+    const getStatusOrNotificationPromise = getStatusOrNotification(itemSummary.id) // start the promise ASAP
     return new Promise((resolve, reject) => {
       promiseChain = promiseChain
         .then(() => getStatusOrNotificationPromise)

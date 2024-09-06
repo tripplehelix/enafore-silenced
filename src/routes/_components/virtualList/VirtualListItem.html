@@ -6,7 +6,9 @@
               virtualProps={props}
               virtualIndex={index}
               virtualLength={$length}
-              virtualKey={key}
+              virtualSummaryPrev={prev}
+              virtualSummary={data}
+              virtualSummaryNext={next}
               on:recalculateHeight="doRecalculateHeight()"/>
 </div>
 <style>
@@ -34,17 +36,17 @@
 
   export default {
     oncreate () {
-      const { key } = this.get()
+      const { data } = this.get()
       const node = this.refs.node
       requestPostAnimationFrame(() => {
-        if (!node || !key) {
+        if (!node || !data) {
           return
         }
         mark('VirtualListItem gBCR')
         const rect = node.getBoundingClientRect()
         stop('VirtualListItem gBCR')
         // update all item heights in one batch for better perf
-        this.store.batchUpdateForRealm('itemHeights', key, rect.height)
+        this.store.batchUpdateForRealm('itemHeights', data.id, rect.height)
       })
       this.doRecalculateHeight = this.doRecalculateHeight.bind(this)
       registerResizeListener(this.doRecalculateHeight)
@@ -64,7 +66,7 @@
       shown: false
     }),
     computed: {
-      shownBeforeRaf: ({ $itemHeights, key }) => $itemHeights[key] > 0
+      shownBeforeRaf: ({ $itemHeights, data }) => $itemHeights[data.id] > 0
     },
     methods: {
       observe,
@@ -73,9 +75,9 @@
         // when clicking the "More" button on a spoiler.
         if (!this.refs.node) return
         const rect = this.refs.node.getBoundingClientRect()
-        const { key } = this.get()
+        const { data } = this.get()
         const { itemHeights } = this.store.get()
-        itemHeights[key] = rect.height
+        itemHeights[data.id] = rect.height
         this.store.setForRealm({ itemHeights })
       }
     }

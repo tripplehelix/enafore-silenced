@@ -4,60 +4,63 @@
          aria-posinset={index + 1}
          aria-setsize={length}
          aria-label={ariaLabel}
-         on:recalculateHeight
          ref:article
          on:load|capture="recalculateHeight()"
          on:error|capture="recalculateHeight()"
-         style={style}
+         {style}
 >
   {#if showHeader}
     <StatusHeader {...params} />
   {/if}
-  <StatusAuthorName {...params} />
-  <StatusAuthorHandle {...params} />
-  {#if !isStatusInOwnThread}
+  {#if !nextGrouped}
+    <StatusAuthorName {...params} />
+    <StatusAuthorHandle {...params} />
+  {/if}
+  {#if !nextGrouped && !isStatusInOwnThread}
     <StatusRelativeDate {...params} {...timestampParams} />
   {/if}
-  <StatusSidebar {...params} />
-  {#if computedSpoilerText}
+  {#if !nextGrouped}
+    <StatusSidebar {...params} />
+  {/if}
+  {#if !nextGrouped && computedSpoilerText}
     <StatusSpoiler {...params} {spoilerShown} {translateContent} {showTranslate} on:recalculateHeight />
   {/if}
-  {#if !showContent}
+  {#if !nextGrouped && !showContent}
     <StatusMentions {...params} />
   {/if}
-  {#if content && (showContent || preloadHiddenContent)}
+  {#if !nextGrouped && content && (showContent || preloadHiddenContent)}
     <StatusContent {...params} shown={showContent} {plainTextContent} {translateContent} {showTranslate} on:recalculateHeight />
   {/if}
-  {#if showTranslate}
+  {#if !nextGrouped && showTranslate}
     <StatusTranslateToolbar {translateContent} {translateState}/>
   {/if}
   <!-- Apparently it's possible for spoilered content to sometimes have embeds, but I can't figure out how.
        Don't bother optimizing this with the preloadHiddenContent. -->
-  {#if showCard && showContent}
+  {#if !nextGrouped && showCard && showContent}
     <StatusCard {...params} />
   {/if}
-  {#if showMedia }
+  {#if !nextGrouped && showMedia }
     <StatusMediaAttachments {...params} on:recalculateHeight />
   {/if}
-  {#if showPoll && (showContent || preloadHiddenContent)}
+  {#if !nextGrouped && showPoll && (showContent || preloadHiddenContent)}
     <StatusPoll {...params} shown={showContent} on:recalculateHeight />
   {/if}
-  {#if showQuote && showContent}
+  {#if !nextGrouped && showQuote && showContent}
     <svelte:self status={originalQuote} isQuote={true} parentElementId={elementId} {enableShortcuts} on:recalculateHeight />
   {/if}
-  {#if showHashtagsInBar}
+  {#if !nextGrouped && showHashtagsInBar}
     <StatusTags {hashtagsInBar} {isStatusInNotification} />
   {/if}
-  {#if hasReactions}
+  {#if !nextGrouped && hasReactions}
     <StatusReactions {...params} />
   {/if}
-  {#if isStatusInOwnThread}
+  {#if !nextGrouped && isStatusInOwnThread}
     <StatusDetails {...params} {...timestampParams} />
   {/if}
-  {#if !isQuote}
+  {#if !nextGrouped && !isQuote}
     <StatusToolbar {...params} {replyShown} on:recalculateHeight on:focusArticle="focusArticle()" />
   {/if}
-  {#if replyShown}
+  {#if !nextGrouped && replyShown}
     <StatusComposeBox {...params} on:recalculateHeight />
   {/if}
 </article>
@@ -151,6 +154,16 @@
   .status-article.status-subtree-end {
     border-bottom: 4px solid var(--main-border);
   }
+  .status-article.notification-next-grouped {
+    border-bottom: none;
+    padding-bottom: 3px;
+  }
+  .status-article.notification-prev-grouped {
+    padding-top: 3px;
+  }
+  .status-article.notification-next-grouped :global(.status-header) {
+    margin-bottom: 0;
+  }
 </style>
 <script>
   import StatusSidebar from './StatusSidebar.html'
@@ -190,10 +203,9 @@
   import { on } from '../../_utils/eventBus.ts'
   import { rehydrated } from '../../_actions/rehydrateStatusOrNotification.js'
   import { canonicalStatusUrl } from '../../_utils/canonicalStatusUrl.js'
+  import { isUserInputElement } from '../../_utils/isUserInputElement.js'
   import '@easrng/sparkle/index.js'
 
-  const INPUT_TAGS = new Set(['a', 'button', 'input', 'textarea', 'label'])
-  const isUserInputElement = node => INPUT_TAGS.has(node.localName)
   const isToolbar = node => node.classList.contains('status-toolbar')
   const isStatusArticle = node => node.classList.contains('status-article')
 
@@ -224,9 +236,12 @@
       }
       scheduleIdleTask(() => addEmojiTooltips(this.refs.article))
     },
-    onupdate ({ changed }) {
-      if (changed.translateState) {
-        this.fire('recalculateHeight')
+    onupdate ({ changed, previous, current }) {
+      if (previous && (changed.translateState || changed.nextGrouped || changed.prevGrouped)) {
+        // this sucks but otherwise svelte fucks up the list 🙃
+        setTimeout(() => {
+          this.fire('recalculateHeight')
+        })
       }
     },
     components: {
@@ -260,7 +275,10 @@
       timelineValue: null,
       index: null,
       length: null,
-      parentElementId: null
+      parentElementId: null,
+      prevSummary: undefined,
+      summary: undefined,
+      nextSummary: undefined
     }),
     store: () => store,
     methods: {
@@ -353,9 +371,8 @@
       ),
       spoilerShown: ({ $spoilersShown, uuid, $showAllSpoilers }) => (typeof $spoilersShown[uuid] === 'undefined' ? !!$showAllSpoilers : !!$spoilersShown[uuid]),
       replyShown: ({ $repliesShown, uuid }) => !!$repliesShown[uuid],
-      showCard: ({ originalStatus, isStatusInNotification, showMedia, $hideCards, showQuote }) => (
+      showCard: ({ originalStatus, showMedia, $hideCards, showQuote }) => (
         !$hideCards &&
-        !isStatusInNotification &&
         !showMedia &&
         !showQuote &&
         originalStatus.card &&
@@ -364,13 +381,12 @@
       showPoll: ({ originalStatus }) => (
         originalStatus.poll
       ),
-      showMedia: ({ originalStatus, isStatusInNotification }) => (
-        !isStatusInNotification &&
+      showMedia: ({ originalStatus }) => (
         originalStatus.media_attachments &&
         originalStatus.media_attachments.length
       ),
       originalQuote: ({ originalStatus }) => originalStatus.quote,
-      showQuote: ({ isQuote, originalQuote, isStatusInNotification }) => isQuote ? false : (originalQuote && !isStatusInNotification),
+      showQuote: ({ isQuote, originalQuote }) => isQuote ? false : originalQuote,
       mediaAttachments: ({ originalStatus }) => (
         originalStatus.media_attachments
       ),
@@ -399,21 +415,23 @@
       ariaLabel: ({
         originalAccount, account, plainTextContent, shortInlineFormattedDate, computedSpoilerText,
         showContent, reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
-        showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
-      }) => (
-        getAccessibleLabelForStatus(originalAccount, account, plainTextContent,
-          shortInlineFormattedDate, computedSpoilerText, showContent,
-          reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
-          showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
-        )
-      ),
+        showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll, nextGrouped
+      }) => nextGrouped
+        ? undefined
+        : (
+            getAccessibleLabelForStatus(originalAccount, account, plainTextContent,
+              shortInlineFormattedDate, computedSpoilerText, showContent,
+              reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
+              showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
+            )
+          ),
       showHeader: ({ notification, status, timelineType }) => (
         (notification && ['reblog', 'favourite', 'poll', 'status', 'update', 'pleroma:emoji_reaction', 'reaction', 'emoji_reaction'].includes(notification.type)) ||
         status.reblog ||
         timelineType === 'pinned'
       ),
       hasReactions: ({ isQuote, originalStatus }) => isQuote ? false : ((originalStatus.reactions || originalStatus.emoji_reactions) || []).length > 0,
-      className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote, treeMetadata }) => (classname(
+      className: ({ visibility, timelineType, isStatusInOwnThread, $underlineLinks, $disableTapOnStatus, isQuote, treeMetadata, nextGrouped, prevGrouped }) => (classname(
         'status-article',
         'shortcut-list-item',
         'focus-fix',
@@ -424,7 +442,9 @@
         !$disableTapOnStatus && !isStatusInOwnThread && 'tap-on-status',
         (treeMetadata && treeMetadata.start) && 'status-subtree-start',
         (treeMetadata && treeMetadata.end) && 'status-subtree-end',
-        isQuote && 'status-quoted'
+        isQuote && 'status-quoted',
+        nextGrouped && 'notification-next-grouped',
+        prevGrouped && 'notification-prev-grouped'
       )),
       content: ({ originalStatus }) => originalStatus.content || '',
       localOnly: ({ originalStatus }) => originalStatus.local_only || false,
@@ -440,9 +460,8 @@
         absoluteFormattedCreatedDate,
         absoluteFormattedEditedDate
       }),
-      treeMetadata: ({ statusId, $timelineItemSummaries, isQuote }) => {
-        if (isQuote || !($timelineItemSummaries && $timelineItemSummaries.byId)) return null
-        const summary = $timelineItemSummaries.byId.get(statusId)
+      treeMetadata: ({ statusId, summary, isQuote }) => {
+        if (isQuote) return null
         if (!summary) return null
         return {
           depth: summary.depth,
@@ -464,6 +483,8 @@
         if (!tc) return null
         return tc
       },
+      nextGrouped: ({ status, summary, nextSummary }) => summary && nextSummary && summary.group === nextSummary.group,
+      prevGrouped: ({ status, summary, prevSummary }) => summary && prevSummary && summary.group === prevSummary.group,
       // This params list deliberately does *not* include `spoilersShown` or `replyShown`, because these
       // change frequently and would therefore cause costly recomputes if included here.
       // The main goal here is to avoid typing by passing as many params as possible to child components.

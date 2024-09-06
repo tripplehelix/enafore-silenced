@@ -3,7 +3,7 @@ import { lifecycle } from '../_utils/lifecycle.ts'
 import { safeParse } from '../_utils/safeParse.js'
 import * as storePackage from 'svelte/store.umd.js'
 
-const { Store } = storePackage
+const { Store } = /** @type {import('svelte/store.d.ts')} */(storePackage)
 
 export class LocalStorageStore extends Store {
   constructor (state, keysToWatch) {

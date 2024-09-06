@@ -6,7 +6,7 @@
                   component={components.listItemComponent}
                   realm="{$currentInstance + '/' + timeline}"
                   {makeProps}
-                  items={itemIds}
+                  items={items}
                   showFooter={true}
                   footerComponent={LoadingFooter}
                   showHeader={$showHeader}
@@ -120,15 +120,15 @@
         timelineValue !== $firstTimelineItemId &&
         timelineValue
       ),
-      itemIds: ({ $filteredTimelineItemSummaries }) => (
-        $filteredTimelineItemSummaries && $filteredTimelineItemSummaries.map(_ => _.id)
+      items: ({ $filteredTimelineItemSummaries }) => (
+        $filteredTimelineItemSummaries
       ),
-      itemIdsToAdd: ({ $filteredTimelineItemSummariesToAdd }) => (
-        $filteredTimelineItemSummariesToAdd && $filteredTimelineItemSummariesToAdd.map(_ => _.id)
+      itemsToAdd: ({ $filteredTimelineItemSummariesToAdd }) => (
+        $filteredTimelineItemSummariesToAdd
       ),
-      headerProps: ({ itemIdsToAdd }) => {
+      headerProps: ({ itemsToAdd }) => {
         return {
-          count: itemIdsToAdd ? itemIdsToAdd.length : 0,
+          count: itemsToAdd ? itemsToAdd.length : 0,
           onClick: showMoreItemsForCurrentTimeline
         }
       },
@@ -179,12 +179,12 @@
       setupStreaming () {
         const { currentInstance, disableInfiniteScroll } = this.store.get()
         const { timeline, timelineType } = this.get()
-        const handleItemIdsToAdd = () => {
-          const { itemIdsToAdd } = this.get()
-          if (!itemIdsToAdd || !itemIdsToAdd.length) {
+        const handleItemsToAdd = () => {
+          const { itemsToAdd } = this.get()
+          if (!itemsToAdd || !itemsToAdd.length) {
             return
           }
-          mark('handleItemIdsToAdd')
+          mark('handleItemsToAdd')
           const { scrollTop } = this.get()
           const {
             shouldShowHeader,
@@ -205,15 +205,15 @@
               this.store.setForTimeline(currentInstance, timeline, { showHeader: true })
             }
           }
-          stop('handleItemIdsToAdd')
+          stop('handleItemsToAdd')
         }
-        this.observe('itemIdsToAdd', (newItemIdsToAdd, oldItemIdsToAdd) => {
-          if (!newItemIdsToAdd ||
-              !newItemIdsToAdd.length ||
-              isEqual(newItemIdsToAdd, oldItemIdsToAdd)) {
+        this.observe('itemsToAdd', (newItemsToAdd, oldItemsToAdd) => {
+          if (!newItemsToAdd ||
+              !newItemsToAdd.length ||
+              isEqual(newItemsToAdd, oldItemsToAdd)) {
             return
           }
-          scheduleIdleTask(handleItemIdsToAdd)
+          scheduleIdleTask(handleItemsToAdd)
         })
       },
       setupAsyncComponents () {

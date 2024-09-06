@@ -4,7 +4,7 @@ import { database } from '../_database/database.js'
 import { concat } from '../_utils/arrays.js'
 import { isEqual, uniqById } from '../_utils/lodash-lite.js'
 import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
-import { timelineItemToSummary } from '../_utils/timelineItemToSummary.js'
+import { timelineItemToSummary } from '../_utils/timelineItemToSummary.ts'
 
 function getExistingItemIdsSet (instanceName, timelineName) {
   const timelineItemSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries') || []

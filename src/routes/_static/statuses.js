@@ -53,3 +53,4 @@ export const LONG_POST_TEXT = 'intl.longPost'
 
 export const MAX_STATUS_CHARS = 500
 export const MAX_STATUS_MEDIA_ATTACHMENTS = 4
+export const MAX_STATUS_POLL_OPTIONS = 4

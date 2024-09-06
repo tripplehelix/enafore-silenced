@@ -15,27 +15,29 @@
     <SvgIcon className="status-header-svg" href={icon} />
   {/if}
   <div class="status-header-content">
-    {#if timelineType === 'pinned'}
-      <span class="status-header-author">
-        {'intl.pinnedStatus'}
-      </span>
-    {:elseif icon !== '#fa-question' && notificationType !== 'poll'}
-      <a id={authorElementId}
-         href="/accounts/{accountId}"
-         rel="prefetch"
-         class="status-header-author"
-         title="{'@' + account.acct}"
-      >
-        <AccountDisplayName {account} />
-      </a>
-    {/if}
+    <div class="status-header-inner">
+      {#if timelineType === 'pinned'}
+        <span class="status-header-author">
+          {'intl.pinnedStatus'}
+        </span>
+      {:elseif icon !== '#fa-question' && notificationType !== 'poll'}
+        <a id={authorElementId}
+          href="/accounts/{accountId}"
+          rel="prefetch"
+          class="status-header-author"
+          title="{'@' + account.acct}"
+        >
+          <AccountDisplayName {account} />
+        </a>
+      {/if}
 
-    {#if actionText}
-      <span class="status-header-action">{actionText}{#if targetAccount}{" "}<a
-        href="/accounts/{targetAccount.id}"
-        rel="prefetch"
-      >{'@' + targetAccount.acct}</a>{/if}</span>
-    {/if}
+      {#if actionText}
+        <span class="status-header-action">{actionText}{#if targetAccount}{" "}<a
+          href="/accounts/{targetAccount.id}"
+          rel="prefetch"
+        >{'@' + targetAccount.acct}</a>{/if}</span>
+      {/if}
+    </div>
     {#if icon === '#fa-question'}
     <a class="report-button button" target="blank" href="https://github.com/enafore/enafore/issues/new?title={encodeURIComponent(actionText)}">Report</a>
     {/if}
@@ -78,10 +80,22 @@
     min-width: 0;
     width: 0;
     align-items: center;
+    padding-inline-start: 5px;
+    min-height: 2em;
+  }
+
+  .status-header-inner {
+    flex: 1;
+  }
+
+  .status-header-content :global(.inline-custom-emoji) {
+    margin-top: -2em;
+    position: relative;
+    top: 1em;
+    display: inline-block; /* for 404s */
   }
 
   .status-header-author {
-    margin-inline-start: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -89,9 +103,6 @@
   }
 
   .status-header-action {
-    margin: 0 0.5ch;
-    flex: 1;
-    width: 0;
     white-space: pre-wrap;
   }
 

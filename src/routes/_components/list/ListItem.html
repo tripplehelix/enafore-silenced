@@ -12,12 +12,14 @@
   }
 </style>
 <div class="list-item {shown && 'shown'}"
-     id={`list-item-${key}`} >
+     id="list-item-{data.id}" >
   <svelte:component this={component}
               virtualProps={props}
               virtualIndex={index}
               virtualLength={length}
-              virtualKey={key}
+              virtualSummaryPrev={prev}
+              virtualSummary={data}
+              virtualSummaryNext={next}
   />
 </div>
 <script>

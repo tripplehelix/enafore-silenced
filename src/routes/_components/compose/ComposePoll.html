@@ -2,7 +2,7 @@
     {#each poll.options as option, i}
       <input id="poll-option-{realm}-{i}"
              type="text"
-             maxlength="50"
+             maxlength={$maxStatusPollOptionLength}
              on:change="onChange(i)"
              placeholder="{createLabel(i)}"
 
@@ -11,6 +11,7 @@
         label="{createRemoveLabel(i)}"
         href="#fa-times"
         muted={true}
+        disabled={!canRemoveOption}
         on:click="onDeleteClick(i)"
       />
     {/each}
@@ -24,7 +25,7 @@
       {'intl.multipleChoice'}
     </label>
     <Select className="poll-expiry-select"
-            options={pollExpiryOptions}
+            options={$statusPollExpiryOptions}
             defaultValue={pollExpiryDefaultValue}
             on:change="onExpiryChange(event)"
             label="{'intl.pollDuration'}"
@@ -35,7 +36,7 @@
     label="Add choice"
     href="#fa-plus"
     muted={true}
-    disabled={poll.options.length === 4}
+    disabled={!canAddOption}
     on:click="onAddClick()"
   />
   {#each poll.options as option, i}
@@ -79,7 +80,6 @@
   import Select from '../Select.html'
   import { store } from '../../_store/store.js'
   import { scheduleIdleTask } from '../../_utils/scheduleIdleTask.js'
-  import { POLL_EXPIRY_DEFAULT, POLL_EXPIRY_OPTIONS } from '../../_static/polls.js'
   import { formatIntl } from '../../_utils/formatIntl.js'
 
   function flushPollOptionsToDom (poll, realm) {
@@ -92,15 +92,19 @@
   export default {
     oncreate () {
       const { realm } = this.get()
+      const { statusPollExpiryOptions } = this.store.get()
       const poll = this.store.getComposeData(realm, 'poll')
       flushPollOptionsToDom(poll, realm)
       document.getElementById(`poll-option-multiple-${realm}`).checked = !!poll.multiple
-      this.set({ pollExpiryDefaultValue: poll.expiry || POLL_EXPIRY_DEFAULT })
+      this.set({ pollExpiryDefaultValue: poll.expiry || statusPollExpiryOptions[0] })
     },
     data: () => ({
-      pollExpiryOptions: POLL_EXPIRY_OPTIONS,
-      pollExpiryDefaultValue: POLL_EXPIRY_DEFAULT
+      pollExpiryDefaultValue: undefined
     }),
+    computed: {
+      canAddOption: ({ poll, $maxStatusPollOptions }) => poll.options.length <= $maxStatusPollOptions,
+      canRemoveOption: ({ poll }) => poll.options.length > 2
+    },
     store: () => store,
     helpers: {
       createLabel (i) {

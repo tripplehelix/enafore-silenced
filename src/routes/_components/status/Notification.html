@@ -1,6 +1,7 @@
 {#if status}
   <Status {index} {length} {timelineType} {timelineValue} {focusSelector}
           {status} {notification} {enableShortcuts} on:recalculateHeight
+          {prevSummary} {summary} {nextSummary}
   />
 {:else}
   <article id={elementId}
@@ -9,6 +10,8 @@
            aria-posinset={index + 1}
            aria-setsize={length}
            aria-label={ariaLabel}
+           on:load|capture="recalculateHeight()"
+           on:error|capture="recalculateHeight()"
   >
     <StatusHeader {notification} {notificationId} {status} {statusId} {timelineType}
                   {account} {accountId} {uuid} isStatusInNotification="true" />
@@ -99,6 +102,9 @@
       async mentionAuthor () {
         const { account } = this.get()
         await composeNewStatusMentioning(account)
+      },
+      recalculateHeight () {
+        this.fire('recalculateHeight')
       }
     }
   }

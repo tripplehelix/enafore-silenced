@@ -9,10 +9,10 @@ import { database } from '../_database/database.js'
 import { getStatus, getStatusContext } from '../_api/statuses.js'
 import { emit } from '../_utils/eventBus.ts'
 import { TIMELINE_BATCH_SIZE } from '../_static/timelines.js'
-import { timelineItemToSummary } from '../_utils/timelineItemToSummary.js'
+import { timelineItemToSummary } from '../_utils/timelineItemToSummary.ts'
 import { addStatusesOrNotifications } from './addStatusOrNotification.js'
 import { scheduleIdleTask } from '../_utils/scheduleIdleTask.js'
-import { sortItemSummariesForThread } from '../_utils/sortItemSummariesForThread.js'
+import { sortItemSummariesForThread, sortItemSummariesForNotificationBatch } from '../_utils/sortItemSummaries.ts'
 import { rehydrateStatusOrNotification } from './rehydrateStatusOrNotification.js'
 import li from 'li'
 
@@ -106,11 +106,15 @@ async function addPagedTimelineItems (instanceName, timelineName, items) {
 }
 
 export async function addPagedTimelineItemSummaries (instanceName, timelineName, newSummaries) {
+  const [type, statusId] = timelineName.split('/')
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
+
+  if (type === 'notifications') {
+    newSummaries = sortItemSummariesForNotificationBatch(newSummaries)
+  }
 
   let mergedSummaries = uniqById(concat(oldSummaries || [], newSummaries))
 
-  const [type, statusId] = timelineName.split('/')
   if (type === 'status') {
     mergedSummaries = sortItemSummariesForThread(mergedSummaries, statusId)
   }
@@ -167,12 +171,16 @@ async function addTimelineItems (instanceName, timelineName, items, stale) {
 }
 
 export async function addTimelineItemSummaries (instanceName, timelineName, newSummaries, newStale) {
+  const [type, statusId] = timelineName.split('/')
   const oldSummaries = store.getForTimeline(instanceName, timelineName, 'timelineItemSummaries')
   const oldStale = store.getForTimeline(instanceName, timelineName, 'timelineItemSummariesAreStale')
 
+  if (type === 'notifications') {
+    newSummaries = sortItemSummariesForNotificationBatch(newSummaries)
+  }
+
   let mergedSummaries = uniqById(mergeArrays(oldSummaries || [], newSummaries, compareTimelineItemSummaries))
 
-  const [type, statusId] = timelineName.split('/')
   if (type === 'status') {
     mergedSummaries = sortItemSummariesForThread(mergedSummaries, statusId)
   }

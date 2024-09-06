@@ -55,8 +55,8 @@ virtualListStore.compute('rawVisibleItems',
     const len = items.length
     let i = -1
     while (++i < len) {
-      const key = items[i]
-      const height = itemHeights[key] || 0
+      const data = items[i]
+      const height = itemHeights[data.id] || 0
       const currentOffset = totalOffset
       totalOffset += height
       const isAboveViewport = (currentOffset < effectiveScrollTop)
@@ -69,11 +69,14 @@ virtualListStore.compute('rawVisibleItems',
           break // below the area we want to render
         }
       }
-      visibleItems.push({
+      const item = {
         offset: currentOffset,
-        key,
+        prev: items[i - 1],
+        data,
+        next: items[i + 1],
         index: i
-      })
+      }
+      visibleItems.push(item)
     }
     stop('compute visibleItems')
     return visibleItems
@@ -91,7 +94,7 @@ virtualListStore.compute('heightWithoutFooter',
     let i = -1
     const len = items.length
     while (++i < len) {
-      sum += itemHeights[items[i]] || 0
+      sum += itemHeights[items[i].id] || 0
     }
     return sum
   })
@@ -111,7 +114,7 @@ virtualListStore.compute('allVisibleItemsHaveHeight',
       return false
     }
     for (const visibleItem of visibleItems) {
-      if (!itemHeights[visibleItem.key]) {
+      if (!itemHeights[visibleItem.data.id]) {
         return false
       }
     }

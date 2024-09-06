@@ -44,7 +44,7 @@ export function wordFilterObservers () {
     console.log('unexpiredInstanceFilterRegexes changed, recomputing filterContexts')
     mark('update timeline item summary filter contexts')
     // Whenever the filters change, we need to re-compute the filterContexts on the TimelineSummaries.
-    // This is a bit of an odd design, but we do it for perf. See timelineItemToSummary.js for details.
+    // This is a bit of an odd design, but we do it for perf. See timelineItemToSummary.ts for details.
     let {
       timelineData_timelineItemSummaries: timelineItemSummaries,
       timelineData_timelineItemSummariesToAdd: timelineItemSummariesToAdd

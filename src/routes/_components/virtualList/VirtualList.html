@@ -1,14 +1,16 @@
 <VirtualListContainer {realm} on:initialized on:noNeedToScroll >
   <div class="virtual-list"
-       style={`height: ${$height}px;`}
+       style="height: {$height}px"
        ref:node >
     <VirtualListHeader component={headerComponent} virtualProps={headerProps} shown={$showHeader}/>
     {#if $visibleItems}
-      {#each $visibleItems as visibleItem (visibleItem.key)}
+      {#each $visibleItems as visibleItem (visibleItem.data.id)}
         <VirtualListLazyItem {component}
                              offset={visibleItem.offset}
                              {makeProps}
-                             key={visibleItem.key}
+                             prev={visibleItem.prev}
+                             data={visibleItem.data}
+                             next={visibleItem.next}
                              index={visibleItem.index}
         />
       {/each}
@@ -114,8 +116,7 @@
         return $scrollHeight - $scrollTop - $offsetHeight
       },
       scrollTop: ({ $scrollTop }) => $scrollTop,
-      allVisibleItemsHaveHeight: ({ $allVisibleItemsHaveHeight }) => $allVisibleItemsHaveHeight,
-      visibleItemKeys: ({ $visibleItems }) => ($visibleItems || []).map(_ => _.key)
+      allVisibleItemsHaveHeight: ({ $allVisibleItemsHaveHeight }) => $allVisibleItemsHaveHeight
     },
     methods: {
       observe,
