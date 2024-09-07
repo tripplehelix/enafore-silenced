@@ -47,8 +47,7 @@ export function translateStatus (
             '\n\n</span>',
           tags: status.tags,
           autoplayGifs,
-          emojis,
-          mentionsByURL: new Map()
+          emojis
         })
         : '') + status.content,
       to,

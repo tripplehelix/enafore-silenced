@@ -15,7 +15,6 @@ export function emojifyText (
     content: text,
     tags: [],
     autoplayGifs,
-    emojis: emojisMap,
-    mentionsByURL: new Map()
+    emojis: emojisMap
   })
 }

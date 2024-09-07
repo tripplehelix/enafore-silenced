@@ -101,21 +101,23 @@ function consumeBalanced(
   }
 }
 
+const empty = new Map()
+
 export function renderPostHTMLToDOM({
   content,
   tags,
   autoplayGifs,
   emojis,
-  mentionsByURL,
-  mentionsByAcct,
+  mentionsByURL = empty,
+  mentionsByAcct = empty,
   hasQuote,
 }: {
   content: string
   tags: Array<{ name: string }>
   autoplayGifs: boolean
   emojis: Map<string, { url: string; static_url?: string; shortcode: string }>
-  mentionsByURL: Map<string, Mention>
-  mentionsByAcct: Map<string, Mention>
+  mentionsByURL?: Map<string, Mention>
+  mentionsByAcct?: Map<string, Mention>
   hasQuote: boolean
 }): DefaultTreeAdapterMap['parentNode'] {
   if (!content) {
