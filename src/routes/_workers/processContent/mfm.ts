@@ -42,17 +42,17 @@ function append(
 export function renderMfm({
   mfmContent,
   htmlContent,
-  originalStatus,
   autoplayGifs,
   emojis,
   mentionsByURL,
+  mentionsByAcct,
 }: {
   mfmContent: string
   htmlContent: string
-  originalStatus: any
   autoplayGifs: boolean
   emojis: Map<string, { shortcode: string; url: string; static_url: string }>
   mentionsByURL: Map<string, Mention>
+  mentionsByAcct: Map<string, Mention>
 }) {
   const mentionUrlsFromHtml: string[] = []
   function walkElements(node: DefaultTreeAdapterMap['parentNode']): void {
@@ -492,13 +492,15 @@ export function renderMfm({
                 'more mentions in mfm than in html. parser differences?',
               )
             }
-            const mention = url && mentionsByURL.get(url)
+            let acct = token.props.username
+            if (token.props.host) {
+              acct += '@' + token.props.host
+            }
+            const mention =
+              (url && mentionsByURL.get(url)) ||
+              mentionsByAcct.get(token.props.username)
             if (!mention) {
-              let fallback = '@' + token.props.username
-              if (token.props.host) {
-                fallback += '@' + token.props.host
-              }
-              console.warn('failed to get mention for', fallback)
+              console.warn('failed to get mention for', '@' + acct)
               const ele = defaultTreeAdapter.createElement('a', HTML, [
                 {
                   name: 'class',
@@ -506,11 +508,11 @@ export function renderMfm({
                 },
                 {
                   name: 'href',
-                  value: '/search?q=' + encodeURIComponent(fallback),
+                  value: '/search?q=' + encodeURIComponent('@' + acct),
                 },
                 {
                   name: 'title',
-                  value: fallback,
+                  value: '@' + acct,
                 },
               ])
               defaultTreeAdapter.insertText(ele, '@' + token.props.username)

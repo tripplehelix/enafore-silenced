@@ -37,20 +37,22 @@ registerPromiseWorker(
       }
     }
     const mentionsByURL: Map<string, Mention> = new Map()
+    const mentionsByAcct: Map<string, Mention> = new Map()
     if (originalStatus.mentions) {
-      for (const mention of originalStatus.mentions) {
+      for (const mention of originalStatus.mentions as Mention[]) {
         mention.included = false
         mentionsByURL.set(mention.url, mention)
+        mentionsByAcct.set(mention.acct, mention)
       }
     }
     if (mfmContent) {
       dom = renderMfm({
         mfmContent,
         htmlContent: originalStatus.content,
-        originalStatus,
         autoplayGifs,
         emojis,
         mentionsByURL,
+        mentionsByAcct,
       })
     } else {
       dom = renderPostHTMLToDOM({
@@ -59,6 +61,7 @@ registerPromiseWorker(
         autoplayGifs,
         emojis,
         mentionsByURL,
+        mentionsByAcct,
         hasQuote: 'quote' in originalStatus,
       })
     }

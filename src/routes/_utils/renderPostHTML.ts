@@ -107,6 +107,7 @@ export function renderPostHTMLToDOM({
   autoplayGifs,
   emojis,
   mentionsByURL,
+  mentionsByAcct,
   hasQuote,
 }: {
   content: string
@@ -114,6 +115,7 @@ export function renderPostHTMLToDOM({
   autoplayGifs: boolean
   emojis: Map<string, { url: string; static_url?: string; shortcode: string }>
   mentionsByURL: Map<string, Mention>
+  mentionsByAcct: Map<string, Mention>
   hasQuote: boolean
 }): DefaultTreeAdapterMap['parentNode'] {
   if (!content) {
@@ -283,7 +285,9 @@ export function renderPostHTMLToDOM({
       )
       return
     } else if (href != null && classList.includes('mention')) {
-      const mention = mentionsByURL.get(href.value)
+      const mention =
+        mentionsByURL.get(href.value) ||
+        mentionsByAcct.get(textContent(anchor).join('').replace(/^@/, ''))
       if (mention != null) {
         mention.included = true
         href.value = `/accounts/${mention.id}`
