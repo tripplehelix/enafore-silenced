@@ -93,7 +93,6 @@
     grid-template-columns: min-content minmax(0, max-content) 1fr min-content;
     grid-template-rows: repeat(8, max-content);
     --status-current-background: var(--main-bg);
-    background-color: var(--status-current-background);
   }
 
   .status-article.tap-on-status {
@@ -106,6 +105,7 @@
 
   .status-article.status-direct {
     --status-current-background: var(--status-direct-background);
+    background-color: var(--status-current-background);
   }
 
   .status-article.status-in-own-thread {
@@ -143,11 +143,10 @@
     position: absolute;
     top: 0;
     inset-inline-start: 0;
-    background-image: repeating-linear-gradient(90deg, currentColor 0, currentColor 5px, transparent 5px, transparent 10px);
+    background-image: repeating-linear-gradient(90deg, var(--quote-border) 0, var(--quote-border) 5px, transparent 5px, transparent 10px);
     width: calc(10px * var(--status-depth));
     height: 100%;
     z-index: -1;
-    color: var(--quote-border);
     background-position-x: calc(var(--rtl) * 5px);
   }
   .status-article.status-subtree-start {
