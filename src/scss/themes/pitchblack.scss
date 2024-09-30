@@ -41,4 +41,6 @@ $compose-background: darken($main-theme-color, 12%);
   --action-button-fill-color-pressed-active: #{lighten($main-theme-color, 80%)};
 
   --svg-fill: #{lighten($main-theme-color, 50%)};
+
+  --quote-border: #{$border-color};
 }

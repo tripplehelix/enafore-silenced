@@ -1,5 +1,6 @@
 import { getWithHeaders, paramsString, DEFAULT_TIMEOUT } from '../_utils/ajax.js'
 import { auth, basename } from './utils.js'
+import { notMentions } from '../_static/notifications.ts'
 
 function getTimelineUrlPath (timeline) {
   switch (timeline) {
@@ -68,7 +69,7 @@ export async function getTimeline (instanceName, accessToken, timeline, maxId, s
   }
 
   if (timeline === 'notifications/mentions') {
-    params.exclude_types = ['follow', 'favourite', 'reblog', 'poll', 'admin.sign_up', 'update', 'follow_request', 'admin.report', 'reaction', 'pleroma:emoji_reaction', 'emoji_reaction', 'move', 'status_reference']
+    params.exclude_types = notMentions
   }
 
   url += '?' + paramsString(params)

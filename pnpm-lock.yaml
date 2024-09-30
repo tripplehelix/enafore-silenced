@@ -84,11 +84,11 @@ importers:
         specifier: ^3.0.11
         version: 3.0.11
       emoji-picker-element:
-        specifier: ^1.21.2
-        version: 1.21.2
+        specifier: ^1.22.8
+        version: 1.22.8
       emoji-picker-element-data:
-        specifier: ^1.6.0
-        version: 1.6.0
+        specifier: ^1.6.1
+        version: 1.6.1
       emojibase-regex:
         specifier: ^15.3.0
         version: 15.3.0
@@ -1045,11 +1045,11 @@ packages:
   electron-to-chromium@1.4.656:
     resolution: {integrity: sha512-9AQB5eFTHyR3Gvt2t/NwR0le2jBSUNwCnMbUCejFWHD+so4tH40/dRLgoE+jxlPeWS43XJewyvCv+I8LPMl49Q==}
 
-  emoji-picker-element-data@1.6.0:
-    resolution: {integrity: sha512-ktd7aW5yP8CDmdY4VDo7u1fWDfoSIunVNLBqCCK6wo0E2nxMaPlXG5CzXezCc1LhZIUWisF6OwHhveUCsmzJYQ==}
+  emoji-picker-element-data@1.6.1:
+    resolution: {integrity: sha512-VYXjjqWYy12/uUA3q5X6Di0zROXp8TGwPiikXkhs97n3d3q3OaRV2sxGtUUColoSMPp5lfASZB9E4W+yN40qUg==}
 
-  emoji-picker-element@1.21.2:
-    resolution: {integrity: sha512-DgeQdxHN/5vbUrmiDmGD7PZ2I6f5NOd1h8F2BV3oBbKl21dLbVetl9r5Q7859pgh8eksBmZDThHtjON6nXJwdQ==}
+  emoji-picker-element@1.22.8:
+    resolution: {integrity: sha512-EFgRjrlIcdA1ilyMH/f9KjB0Pi/vynrojNgMDZfU1Jv2YLrhdLJWx6xCehizPyxm4/NUuB8DfFvIT4v+1njjPQ==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -3531,9 +3531,9 @@ snapshots:
 
   electron-to-chromium@1.4.656: {}
 
-  emoji-picker-element-data@1.6.0: {}
+  emoji-picker-element-data@1.6.1: {}
 
-  emoji-picker-element@1.21.2: {}
+  emoji-picker-element@1.22.8: {}
 
   emoji-regex@8.0.0: {}
 

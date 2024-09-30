@@ -549,6 +549,7 @@ export default {
   rebloggedYou: 'boosted your post',
   favoritedYou: 'favorited your post',
   reacted: 'reacted with an emoji',
+  reactedWith: 'reacted with',
   followedYou: 'followed you',
   edited: 'edited their post',
   requestedFollow: 'requested to follow you',
@@ -599,6 +600,7 @@ export default {
   themeMastodon: 'Mastodon',
   themePitchBlack: 'Pitch Black',
   themeDarkGrayscale: 'Dark Grayscale',
+  themeCohostLight: 'Cohost Light',
   // Polls
   voteOnPoll: 'Vote on poll',
   pollChoices: 'Poll choices',

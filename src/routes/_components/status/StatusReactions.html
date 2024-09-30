@@ -1,27 +1,44 @@
-<div class="status-reactions">
-  {#each processedReactions as reaction}
-  <button
-    class="status-reaction not-same-pressed {reaction.me?'pressed':''}"
-    on:click="onClick(event, reaction)"
-  >
-    {@html reaction.html}
-    {#if !$disableFavCounts}<span class="status-reaction-count">{reaction.count}</span>{/if}
-  </button>
-  {/each}
+<div class="status-reactions-wrap">
+  <div class="status-reactions">
+    {#each processedReactions as reaction}
+    <button
+      class="status-reaction not-same-pressed {reaction.me?'pressed':''}"
+      on:click="onClick(event, reaction)"
+    >
+      {@html reaction.html} {#if !$disableFavCounts}<span
+        class="status-reaction-count"
+        >{reaction.count}</span
+      >{/if}
+    </button>
+    {/each}
+  </div>
 </div>
 <style>
+  .status-reactions-wrap {
+    margin-top: -10px;
+    grid-area: reactions;
+    position: relative;
+  }
+
+  .status-reactions-wrap::before {
+    background: linear-gradient(to right, var(--status-current-background), transparent 5px, transparent calc(100% - 5px), var(--status-current-background));
+    content: "";
+    inset: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
   .status-reactions {
     display: flex;
-    grid-template-rows: repeat(10001fr);
-    margin: 0 5px 10px;
+    padding: 10px 5px;
     grid-gap: 7px;
-    grid-area: reactions;
     overflow-x: auto;
   }
 
   .status-reaction {
     border-radius: 4px;
-    background: var(--action-button-fill-color);
+    --status-reaction-background: var(--action-button-fill-color);
+    background-color: var(--status-reaction-background);
     padding: 0.25rem 0.5rem;
     border: 0;
     color: var(--button-primary-text);
@@ -32,24 +49,26 @@
   }
 
   .status-reaction:hover {
-    background: var(--action-button-fill-color-hover);
+    --status-reaction-background: var(--action-button-fill-color-hover);
   }
 
   .status-reaction.not-pressable:active,
   .status-reaction.same-pressed:active {
-    background: var(--action-button-fill-color-active);
+    --status-reaction-background: var(--action-button-fill-color-active);
   }
 
   .status-reaction.pressed.not-same-pressed {
-    background: var(--action-button-fill-color-pressed);
+    --status-reaction-background: var(--action-button-fill-color-pressed);
   }
 
   .status-reaction.pressed.not-same-pressed:hover {
-    background: var(--action-button-fill-color-pressed-hover);
+    --status-reaction-background: var(--action-button-fill-color-pressed-hover);
   }
 
   .status-reaction.pressed.not-same-pressed:active {
-    background: var(--action-button-fill-color-pressed-active);
+    --status-reaction-background: var(
+      --action-button-fill-color-pressed-active
+    );
   }
 </style>
 <script>
@@ -60,14 +79,19 @@
   import { setReacted } from '../../_actions/react.js'
   import { updateStatus } from '../../_actions/timeline.js'
   import { REACT_ANIMATION } from '../../_static/animations.js'
-  
+
   export default {
     store: () => store,
     components: {},
     methods: {
       async onClick (event, reaction) {
         const { originalStatusId } = this.get()
-        const { currentReactionApi, reduceMotion, currentInstance, accessToken } = this.store.get()
+        const {
+          currentReactionApi,
+          reduceMotion,
+          currentInstance,
+          accessToken
+        } = this.store.get()
         this.store.setStatusReacted(
           currentInstance,
           originalStatusId,
@@ -99,7 +123,7 @@
     },
     computed: {
       processedReactions: ({ reactions, $autoplayGifs }) =>
-        reactions.map(e => {
+        reactions.map((e) => {
           const shortcode = e.url && e.name.replace(/:/g, '')
           return {
             ...e,
@@ -126,16 +150,23 @@
       }) => {
         const realReactions =
           originalStatus.reactions || originalStatus.emoji_reactions
-        const modifiedReactions = $currentStatusModifications ? $currentStatusModifications.reactions || {} : {}
-        return realReactions.map(e => ({
+        const modifiedReactions = $currentStatusModifications
+          ? $currentStatusModifications.reactions || {}
+          : {}
+        return realReactions.map((e) => ({
           ...e,
           me:
             originalStatusId + '-' + e.name in modifiedReactions
               ? modifiedReactions[originalStatusId + '-' + e.name]
               : e.me,
-          count: e.count + ((originalStatusId + '-' + e.name in modifiedReactions) && (modifiedReactions[originalStatusId + '-' + e.name] !== e.me)
-            ? (modifiedReactions[originalStatusId + '-' + e.name] ? 1 : -1)
-            : 0)
+          count:
+            e.count +
+            (originalStatusId + '-' + e.name in modifiedReactions &&
+            modifiedReactions[originalStatusId + '-' + e.name] !== e.me
+              ? modifiedReactions[originalStatusId + '-' + e.name]
+                ? 1
+                : -1
+              : 0)
         }))
       }
     }

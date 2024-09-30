@@ -104,11 +104,15 @@ export function sortItemSummariesForNotificationBatch(
   mark('sortItemSummariesForNotificationBatch')
   const obj: Record<string, TimelineSummary[]> = {}
   for (const summary of summaries) {
-    /* if (summary.statusId) {
+    if (
+      summary.statusId &&
+      summary.type !== 'mention' &&
+      summary.type !== 'status'
+    ) {
       const key = 's' + summary.statusId
       summary.group = key
       ;(obj[key] = obj[key] || []).push(summary)
-    } else */ {
+    } else {
       const key = 'n' + summary.id
       summary.group = key
       obj[key] = [summary]

@@ -372,7 +372,7 @@ export function renderMfm({
                 const unixtime = parseInt(
                   child?.type === 'text' ? child.props.text : '',
                 )
-                const date = new Date(unixtime)
+                const date = new Date(unixtime * 1000)
                 const ele = defaultTreeAdapter.createElement('time', HTML, [
                   { name: 'datetime', value: date.toJSON() },
                   { name: 'class', value: '_mfm_unixtime_' },

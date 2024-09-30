@@ -1,7 +1,7 @@
 {#if status}
   <Status {index} {length} {timelineType} {timelineValue} {focusSelector}
           {status} {notification} {enableShortcuts} on:recalculateHeight
-          {prevSummary} {summary} {nextSummary}
+          {prevSummary} {summary} {nextSummary} {notificationInfo}
   />
 {:else}
   <article id={elementId}
@@ -14,7 +14,8 @@
            on:error|capture="recalculateHeight()"
   >
     <StatusHeader {notification} {notificationId} {status} {statusId} {timelineType}
-                  {account} {accountId} {uuid} isStatusInNotification="true" />
+                  {account} {accountId} {uuid} isStatusInNotification="true"
+                  {notificationInfo} />
     {#if enableShortcuts}
       <Shortcut scope={shortcutScope} key="p" on:pressed="openAuthorProfile()" />
       <Shortcut scope={shortcutScope} key="m" on:pressed="mentionAuthor()" />
@@ -45,7 +46,7 @@
   import { composeNewStatusMentioning } from '../../_actions/mention.js'
   import { classname } from '../../_utils/classname.js'
   import { createStatusOrNotificationUuid } from '../../_utils/createStatusOrNotificationUuid.js'
-  import { formatIntl } from '../../_utils/formatIntl.js'
+  import { notificationInfos, unhandled } from '../../_static/notifications.ts'
 
   export default {
     components: {
@@ -69,30 +70,42 @@
       ),
       elementId: ({ uuid }) => uuid,
       shortcutScope: ({ elementId }) => elementId,
-      ariaLabel: ({ status, account, $omitEmojiInDisplayNames, notificationType }) => {
-        if (status) {
+      ariaLabel: ({ status, notificationInfo }) => {
+        if (status || !notificationInfo) {
           return undefined // aria-label not needed if there's a status
         }
-        const params = {
-          name: getAccountAccessibleName(account, $omitEmojiInDisplayNames),
-          account: `@${account.acct}`
-        }
-        if (notificationType === 'admin.sign_up') {
-          return formatIntl('intl.accountSignedUp', params)
-        } else if (notificationType === 'follow_request') {
-          return formatIntl('intl.accountRequestedFollow', params)
-        } else if (notificationType === 'admin.report') {
-          return formatIntl('intl.accountReported', params)
-        } else if (notificationType === 'follow') {
-          return formatIntl('intl.accountFollowedYou', params)
-        }
+        return notificationInfo.ariaLabel
       },
       className: ({ $underlineLinks }) => (classname(
         'notification-article',
         'shortcut-list-item',
         'focus-fix',
         $underlineLinks && 'underline-links'
-      ))
+      )),
+      notificationInfo: ({
+        status,
+        $currentVerifyCredentials,
+        notification,
+        $autoplayGifs,
+        account,
+        $omitEmojiInDisplayNames
+      }) => {
+        if (!notification) return null
+        const fn = notificationInfos[notification.type]
+        const arg = {
+          status,
+          $currentVerifyCredentials,
+          notification,
+          $autoplayGifs,
+          name: getAccountAccessibleName(account, $omitEmojiInDisplayNames),
+          account: `@${account.acct}`
+        }
+        if (fn) {
+          return fn(arg)
+        } else {
+          return unhandled(arg)
+        }
+      }
     },
     methods: {
       openAuthorProfile () {

@@ -2,20 +2,6 @@ import { getAccountAccessibleName } from './getAccountAccessibleName.js'
 import { POST_PRIVACY_OPTIONS } from '../_static/statuses.js'
 import { formatIntl } from '../_utils/formatIntl.js'
 
-function getNotificationText (notification, omitEmojiInDisplayNames) {
-  if (!notification) {
-    return
-  }
-  const notificationAccountDisplayName = getAccountAccessibleName(notification.account, omitEmojiInDisplayNames)
-  if (notification.type === 'reblog') {
-    return formatIntl('intl.accountRebloggedYou', { account: notificationAccountDisplayName })
-  } else if (notification.type === 'favourite') {
-    return formatIntl('intl.accountFavoritedYou', { account: notificationAccountDisplayName })
-  } else if (notification.type === 'update') {
-    return formatIntl('intl.accountEdited', { account: notificationAccountDisplayName })
-  }
-}
-
 function getPrivacyText (visibility) {
   for (const option of POST_PRIVACY_OPTIONS) {
     if (option.key === visibility) {
@@ -38,7 +24,7 @@ function cleanupText (text) {
 
 export function getAccessibleLabelForStatus (originalAccount, account, plainTextContent,
   shortInlineFormattedDate, spoilerText, showContent,
-  reblog, notification, visibility, omitEmojiInDisplayNames,
+  reblog, notificationInfo, visibility, omitEmojiInDisplayNames,
   disableLongAriaLabels, showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll) {
   const originalAccountDisplayName = getAccountAccessibleName(originalAccount, omitEmojiInDisplayNames)
   const contentTextToShow = (showContent || !spoilerText)
@@ -57,7 +43,7 @@ export function getAccessibleLabelForStatus (originalAccount, account, plainText
   }
 
   const values = [
-    getNotificationText(notification, omitEmojiInDisplayNames),
+    notificationInfo && notificationInfo.ariaLabel,
     getReblogText(reblog, account, omitEmojiInDisplayNames, originalAccountDisplayName),
     contentTextToShow,
     mediaTextToShow,

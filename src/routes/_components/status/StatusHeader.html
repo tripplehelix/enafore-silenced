@@ -1,45 +1,53 @@
-<div class="status-header {isStatusInNotification ? 'status-in-notification' : ''} {standalone ? 'header-is-standalone' : ''}">
+<div
+  class="status-header {isStatusInNotification ? 'status-in-notification' : ''} {standalone ? 'header-is-standalone' : ''}"
+>
   <div class="status-header-avatar {avatarHidden}">
-    <a id={avatarElementId}
-       href="/accounts/{accountId}"
-       rel="prefetch"
-       aria-hidden="true"
-       tabindex="-1"
+    <a
+      id="{avatarElementId}"
+      href="/accounts/{accountId}"
+      rel="prefetch"
+      aria-hidden="true"
+      tabindex="-1"
     >
-      <Avatar {account} size="extra-small"/>
+      <Avatar {account} size="extra-small" />
     </a>
   </div>
   {#if emojiReaction}
-    <div class="status-header-emoji">{@html emojiReaction}</div>
+  <div class="status-header-emoji">{@html emojiReaction}</div>
   {:else}
-    <SvgIcon className="status-header-svg" href={icon} />
+  <SvgIcon className="status-header-svg" href="{icon}" />
   {/if}
   <div class="status-header-content">
     <div class="status-header-inner">
       {#if timelineType === 'pinned'}
-        <span class="status-header-author">
-          {'intl.pinnedStatus'}
-        </span>
-      {:elseif icon !== '#fa-question' && notificationType !== 'poll'}
-        <a id={authorElementId}
-          href="/accounts/{accountId}"
-          rel="prefetch"
-          class="status-header-author"
-          title="{'@' + account.acct}"
-        >
-          <AccountDisplayName {account} />
-        </a>
-      {/if}
-
-      {#if actionText}
-        <span class="status-header-action">{actionText}{#if targetAccount}{" "}<a
+      <span class="status-header-author"> {'intl.pinnedStatus'} </span>
+      {:elseif !avatarHidden}
+      <a
+        id="{authorElementId}"
+        href="/accounts/{accountId}"
+        rel="prefetch"
+        class="status-header-author"
+        title="{'@' + account.acct}"
+      >
+        <AccountDisplayName {account} />
+      </a>
+      {/if} {#if actionText}
+      <span class="status-header-action"
+        >{actionText}{#if targetAccount}{" "}<a
           href="/accounts/{targetAccount.id}"
           rel="prefetch"
-        >{'@' + targetAccount.acct}</a>{/if}</span>
+          >{'@' + targetAccount.acct}</a
+        >{/if}</span
+      >
       {/if}
     </div>
     {#if icon === '#fa-question'}
-    <a class="report-button button" target="blank" href="https://github.com/enafore/enafore/issues/new?title={encodeURIComponent(actionText)}">Report</a>
+    <a
+      class="report-button button"
+      target="blank"
+      href="https://github.com/enafore/enafore/issues/new?title={encodeURIComponent(actionText)}"
+      >Report</a
+    >
     {/if}
   </div>
 </div>
@@ -66,7 +74,8 @@
     font-size: 13px;
   }
 
-  :global(.status-header-svg), .status-header-emoji {
+  :global(.status-header-svg),
+  .status-header-emoji {
     margin-inline-start: 20px;
   }
 
@@ -125,7 +134,8 @@
   }
 
   @media (max-width: 767px) {
-    :global(.status-header-svg), .status-header-emoji {
+    :global(.status-header-svg),
+    .status-header-emoji {
       margin-inline-start: 10px;
     }
   }
@@ -144,8 +154,6 @@
   import AccountDisplayName from '../profile/AccountDisplayName.html'
   import SvgIcon from '../SvgIcon.html'
   import { store } from '../../_store/store.js'
-  import { emojifyText } from '../../_utils/emojifyText.js'
-  import { formatIntl } from '../../_utils/formatIntl.js'
 
   export default {
     components: {
@@ -157,112 +165,47 @@
     computed: {
       authorElementId: ({ uuid }) => `status-header-author-${uuid}`,
       avatarElementId: ({ uuid }) => `status-header-avatar-${uuid}`,
-      notificationType: ({ notification }) => notification && notification.type,
-      targetAccount: ({ notification }) => notification && notification.type === 'move' && notification.target,
-      icon: ({ notificationType, status, timelineType }) => {
+      targetAccount: ({ notificationInfo }) =>
+        notificationInfo && notificationInfo.move && notificationInfo.target,
+      icon: ({ notificationInfo, timelineType, status }) => {
         if (timelineType === 'pinned') {
           return '#fa-thumb-tack'
-        } else if ((notificationType === 'reblog') || (status && status.reblog)) {
+        } else if (status && status.reblog) {
           return '#fa-retweet'
-        } else if (notificationType === 'favourite') {
-          return '#fa-star'
-        } else if (notificationType === 'follow') {
-          return '#fa-user-plus'
-        } else if (notificationType === 'poll') {
-          return '#fa-bar-chart'
-        } else if (notificationType === 'status') {
-          return '#fa-comment'
-        } else if (notificationType === 'admin.sign_up') {
-          return '#fa-user-plus'
-        } else if (notificationType === 'update') {
-          return '#fa-pencil'
-        } else if (notificationType === 'follow_request') {
-          return '#fa-hourglass'
-        } else if (notificationType === 'admin.report') {
-          return '#fa-flag'
-        } else if (notificationType === 'pleroma:emoji_reaction' || notificationType === 'reaction' || notificationType === 'emoji_reaction') {
+        } else if (notificationInfo) {
+          return notificationInfo.icon
+        } else {
           return null
-        } else if (notificationType === 'move') {
-          return '#fa-arrow-right'
         }
-        return '#fa-question'
       },
-      actionText: ({ notificationType, status, $currentVerifyCredentials, icon }) => {
-        if (notificationType === 'reblog') {
-          return 'intl.rebloggedYou'
-        } else if (notificationType === 'favourite') {
-          return 'intl.favoritedYou'
-        } else if (notificationType === 'pleroma:emoji_reaction' || notificationType === 'reaction' || notificationType === 'emoji_reaction') {
-          return 'intl.reacted'
-        } else if (notificationType === 'admin.sign_up') {
-          return 'intl.signedUp'
-        } else if (notificationType === 'follow') {
-          return 'intl.followedYou'
-        } else if (notificationType === 'status') {
-          return 'intl.posted'
-        } else if (notificationType === 'poll') {
-          if ($currentVerifyCredentials && status && $currentVerifyCredentials.id === status.account.id) {
-            return 'intl.pollYouCreatedEnded'
-          } else {
-            return 'intl.pollYouVotedEnded'
-          }
-        } else if (status && status.reblog) {
+      actionText: ({ notificationInfo, status }) => {
+        if (status && status.reblog) {
           return 'intl.reblogged'
-        } else if (notificationType === 'update') {
-          return 'intl.edited'
-        } else if (notificationType === 'follow_request') {
-          return 'intl.requestedFollow'
-        } else if (notificationType === 'admin.report') {
-          return 'intl.reported'
-        } else if (notificationType === 'move') {
-          return 'intl.moved'
-        } else if (notificationType) {
-          return formatIntl('intl.unhandledNotification', {
-            type: notificationType
-          })
+        } else if (notificationInfo) {
+          return notificationInfo.actionText
         }
       },
-      standalone: ({ notificationType, status }) => {
-        if (notificationType === 'reblog') {
+      standalone: ({ notificationInfo, status }) => {
+        if (status && status.reblog) {
           return false
-        } else if (notificationType === 'favourite') {
-          return false
-        } else if (notificationType === 'pleroma:emoji_reaction' || notificationType === 'reaction' || notificationType === 'emoji_reaction') {
-          return false
-        } else if (notificationType === 'admin.sign_up') {
+        } else if (notificationInfo) {
+          return notificationInfo.standalone
+        } else {
           return true
-        } else if (notificationType === 'follow') {
-          return true
-        } else if (notificationType === 'status') {
-          return false
-        } else if (notificationType === 'poll') {
-          return false
-        } else if (status && status.reblog) {
-          return false
-        } else if (notificationType === 'update') {
-          return false
-        } else if (notificationType === 'follow_request') {
-          return true
-        } else if (notificationType === 'admin.report') {
-          return false
-        }
-        return true
-      },
-      emojiReaction: ({ notification, $autoplayGifs }) => {
-        if (notification && (notification.type === 'pleroma:emoji_reaction' || notification.type === 'reaction' || notification.type === 'emoji_reaction') && (notification.emoji || notification.emoji_reaction)) {
-          const shortcode = notification.emoji_reaction ? notification.emoji_reaction.name : (notification.emoji_url && notification.emoji.replace(/:/g, ''))
-          const customEmoji = (notification.emoji_reaction ? notification.emoji_reaction.url : notification.emoji_url)
-          return emojifyText(customEmoji ? ':' + shortcode + ':' : (notification.emoji_reaction ? notification.emoji_reaction.name : notification.emoji),
-            customEmoji
-              ? [{
-                  url: notification.emoji_reaction ? notification.emoji_reaction.url : notification.emoji_url,
-                  static_url: notification.emoji_reaction ? notification.emoji_reaction.static_url : notification.emoji_url,
-                  shortcode
-                }]
-              : [], $autoplayGifs, true)
         }
       },
-      avatarHidden: ({ timelineType, notificationType, icon }) => icon === '#fa-question' || timelineType === 'pinned' || notificationType === 'poll' ? 'hidden' : ''
-    }
+      emojiReaction: ({ notificationInfo }) => {
+        if (notificationInfo && notificationInfo.reaction) { return notificationInfo.html }
+      },
+      avatarHidden: ({ timelineType, notificationInfo, icon }) =>
+        icon === '#fa-question' ||
+        timelineType === 'pinned' ||
+        (notificationInfo && notificationInfo.poll)
+          ? 'hidden'
+          : ''
+    },
+    data: () => ({
+      notificationInfo: null
+    })
   }
 </script>

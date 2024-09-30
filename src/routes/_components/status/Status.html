@@ -10,7 +10,7 @@
          {style}
 >
   {#if showHeader}
-    <StatusHeader {...params} />
+    <StatusHeader {...params} {notificationInfo} />
   {/if}
   {#if !nextGrouped}
     <StatusAuthorName {...params} />
@@ -92,6 +92,8 @@
         "compose compose      compose       compose";
     grid-template-columns: min-content minmax(0, max-content) 1fr min-content;
     grid-template-rows: repeat(8, max-content);
+    --status-current-background: var(--main-bg);
+    background-color: var(--status-current-background);
   }
 
   .status-article.tap-on-status {
@@ -103,7 +105,7 @@
   }
 
   .status-article.status-direct {
-    background-color: var(--status-direct-background);
+    --status-current-background: var(--status-direct-background);
   }
 
   .status-article.status-in-own-thread {
@@ -145,7 +147,7 @@
     width: calc(10px * var(--status-depth));
     height: 100%;
     z-index: -1;
-    color: var(--body-bg);
+    color: var(--quote-border);
     background-position-x: calc(var(--rtl) * 5px);
   }
   .status-article.status-subtree-start {
@@ -278,7 +280,8 @@
       parentElementId: null,
       prevSummary: undefined,
       summary: undefined,
-      nextSummary: undefined
+      nextSummary: undefined,
+      notificationInfo: null
     }),
     store: () => store,
     methods: {
@@ -415,13 +418,15 @@
       ariaLabel: ({
         originalAccount, account, plainTextContent, shortInlineFormattedDate, computedSpoilerText,
         showContent, reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
-        showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll, nextGrouped
+        showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll, nextGrouped, notificationInfo
       }) => nextGrouped
-        ? undefined
+        ? notificationInfo
+          ? notificationInfo.ariaLabel
+          : undefined
         : (
             getAccessibleLabelForStatus(originalAccount, account, plainTextContent,
               shortInlineFormattedDate, computedSpoilerText, showContent,
-              reblog, notification, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
+              reblog, notificationInfo, visibility, $omitEmojiInDisplayNames, $disableLongAriaLabels,
               showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
             )
           ),

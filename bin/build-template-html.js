@@ -82,7 +82,7 @@ function doWatch () {
     chokidar.watch(partial.watch).on('change', debounce(path => {
       console.log(`Detected change in ${path}...`)
       delete partial.result
-      buildAll()
+      buildAll().catch(console.error)
     }), DEBOUNCE)
   })
 }

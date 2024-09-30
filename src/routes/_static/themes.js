@@ -112,6 +112,12 @@ const themes = [
     label: 'intl.themeDarkGrayscale',
     dark: true,
     color: '#666'
+  },
+  {
+    name: 'cohost_light',
+    label: 'intl.themeCohostLight',
+    dark: false,
+    color: '#83254F'
   }
 ]
 

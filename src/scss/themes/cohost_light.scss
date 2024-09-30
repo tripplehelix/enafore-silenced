@@ -1,0 +1,104 @@
+/*
+  --color-notWhite: 255 249 242;
+  --color-notBlack: 25 25 25;
+  --color-cherry: 131 37 79;
+  --color-strawberry: 229 107 111;
+  --color-mango: 255 171 92;
+  --color-longan: 255 216 168;
+  --color-text: var(--color-notWhite);
+  --color-bg-text: var(--color-notBlack);
+  --color-foreground-100: 253 206 224;
+  --color-foreground-200: 238 173 199;
+  --color-foreground-300: 211 116 155;
+  --color-foreground-400: 174 68 115;
+  --color-foreground-500: 131 37 79;
+  --color-foreground-600: 103 26 61;
+  --color-foreground-700: 81 17 46;
+  --color-foreground-800: 59 9 32;
+  --color-foreground: var(--color-cherry);
+  --color-secondary-200: 244 187 187;
+  --color-secondary-300: 238 153 155;
+  --color-secondary-400: 229 107 111;
+  --color-secondary-600: 164 42 47;
+  --color-secondary-700: 123 27 31;
+  --color-secondary: var(--color-strawberry);
+  --color-tertiary: var(--color-longan);
+  --color-tertiary-200: 255 229 196;
+  --color-tertiary-300: 255 216 168;
+  --color-tertiary-400: 255 202 122;
+  --color-tertiary-500: 183 133 61;
+  --color-tertiary-600: 183 133 61;
+  --color-tertiary-700: 132 94 38;
+  --color-accent: var(--color-mango);
+  --color-background: var(--color-notWhite);
+  --color-sidebar-bg: var(--color-notWhite);
+  --color-sidebar-text: var(--color-notBlack);
+  --color-sidebar-accent: var(--color-cherry);
+  --color-compose-button: var(--color-foreground);
+  --color-compose-button-400: var(--color-foreground-400);
+  --color-compose-button-600: var(--color-foreground-600);
+*/
+$main-theme-color: rgb(131 37 79);
+$body-bg-color: rgb(255 249 242);
+$anchor-color: $main-theme-color;
+$main-text-color: rgb(25 25 25);
+$border-color: rgb(191 186 181);
+$main-bg-color: white;
+$secondary-text-color: rgb(255 249 242);
+$toast-border: #fafafa;
+$toast-bg: rgb(255 216 168);
+$focus-outline: lighten($main-theme-color, 30%);
+$compose-background: lighten($main-theme-color, 32%);
+$green: rgb(49 157 53);
+$scrollbar-face: rgb(229 107 111) !default;
+$scrollbar-track: rgb(255 216 168) !default;
+
+
+@import "_base.scss";
+@import "_light_scrollbars.scss";
+
+:root {
+  --nav-indicator-bg-active: rgb(255 171 92);
+  --blurhash-sensitive-text-color: #{$main-text-color};
+  --mask-bg: #{$toast-bg};
+  --mask-opaque-bg: #{rgba($main-theme-color, 0.8)};
+  --action-button-fill-color: #{lighten($main-text-color, 15%)};
+  --action-button-fill-color-hover: #{lighten($main-text-color, 28%)};
+  --action-button-fill-color-active: #{lighten($main-text-color, 23%)};
+  --action-button-fill-color-pressed: #{$main-theme-color};
+  --action-button-fill-color-pressed-hover: #{lighten($main-theme-color, 20%)};
+  --action-button-fill-color-pressed-active: #{lighten($main-theme-color, 12%)};
+  --nav-a-selected-bg: #{mix($main-theme-color, rgb(229 107 111), 90%)};
+  --nav-a-selected-bg-hover: #{mix($main-theme-color, rgb(229 107 111), 85%)};
+  --nav-a-bg-hover: #{mix($main-theme-color, rgb(229 107 111), 92%)};
+  --toast-text: var(--body-text);
+  --quote-border: #{lighten($border-color, 10%)};
+}
+
+.nav-link-badge {
+  color: var(--body-text-color) !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent url('data:image/svg+xml,<svg viewBox="-2 -2 29 22" xmlns="http://www.w3.org/2000/svg"><path style="fill:rgb(255 171 92);stroke:rgb(131 37 79);stroke-width:4;paint-order:stroke fill" d="M14.923 17.087c-2.254.666-4.388.967-6.402.905-2.014-.062-3.742-.532-5.183-1.409-1.442-.877-2.436-2.217-2.982-4.022-.549-1.814-.463-3.476.257-4.985.719-1.51 1.905-2.832 3.557-3.965C5.823 2.478 7.776 1.578 10.03.913c2.243-.663 4.369-.965 6.376-.906 2.007.059 3.733.523 5.178 1.394 1.446.87 2.441 2.207 2.987 4.011.546 1.804.457 3.464-.266 4.981-.724 1.516-1.908 2.845-3.551 3.987-1.644 1.143-3.588 2.045-5.831 2.707Z"></path></svg>') no-repeat center / contain !important;
+  margin: -1px !important;
+  padding-bottom: 1px !important;
+}
+
+.icon-button[id^=reblog-] {
+  --action-button-fill-color-pressed: #{$green};
+  --action-button-fill-color-pressed-hover: #{lighten($green, 20%)};
+  --action-button-fill-color-pressed-active: #{lighten($green, 12%)};
+}
+
+.main-nav-link.selected, .main-nav-link:hover {
+  --nav-svg-fill: rgb(255 171 92);
+  --nav-svg-fill-hover: #{lighten(rgb(255 171 92), 5%)};
+  --nav-text-color: #{lighten(rgb(255 171 92), 4%)};
+  --nav-text-color-hover: #{lighten(rgb(255 171 92), 9%)};
+}
+
+.status-reaction:not(.pressed) {
+  background: transparent !important;
+  color: var(--status-reaction-background) !important;
+  box-shadow: 0 0 0 2px inset var(--status-reaction-background) !important;
+}
