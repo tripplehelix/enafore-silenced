@@ -369,7 +369,7 @@
       ),
       isStatusInNotification: ({ originalStatusId, notification }) => (
         notification && notification.status &&
-          notification.type !== 'mention' && notification.status.id === originalStatusId
+          notification.type !== 'mention' && notification.type !== 'status' && notification.status.id === originalStatusId
       ),
       spoilerShown: ({ $spoilersShown, uuid, $showAllSpoilers }) => (typeof $spoilersShown[uuid] === 'undefined' ? !!$showAllSpoilers : !!$spoilersShown[uuid]),
       replyShown: ({ $repliesShown, uuid }) => !!$repliesShown[uuid],
@@ -430,7 +430,7 @@
             )
           ),
       showHeader: ({ notification, status, timelineType }) => (
-        (notification && ['reblog', 'favourite', 'poll', 'status', 'update', 'pleroma:emoji_reaction', 'reaction', 'emoji_reaction'].includes(notification.type)) ||
+        (notification && notification.type !== 'mention' && notification.type !== 'status') ||
         status.reblog ||
         timelineType === 'pinned'
       ),
