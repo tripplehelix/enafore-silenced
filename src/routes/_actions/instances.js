@@ -102,7 +102,7 @@ export async function logOutOfInstance (instanceName, message) {
   const { enableGrayscale } = store.get()
   switchToTheme(instanceThemes[newInstance], enableGrayscale)
   /* no await */ database.clearDatabaseForInstance(instanceName)
-  goto('/settings/instances')
+  goto(process.env.SINGLE_INSTANCE ? '/' : '/settings/instances')
 }
 
 function setStoreVerifyCredentials (instanceName, thisVerifyCredentials) {

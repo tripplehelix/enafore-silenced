@@ -16,6 +16,12 @@ Then run:
 
     PORT=4002 node server.js
 
+### Single-Instance Mode
+
+To build Enafore as a frontend for one instance, set the SINGLE_INSTANCE environment variable.
+
+    SINGLE_INSTANCE=your.domain.tld pnpm build
+
 ### Exporting
 
 Enafore is a static site. When you run `pnpm build`, static files will be

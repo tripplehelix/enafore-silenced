@@ -5,7 +5,8 @@ export default {
   homeDescription: `
     <p>
       Enafore is a fediverse client with better support for Akkoma, glitch-soc, and Iceshrimp instances.
-    </p>
+    </p>`,
+  homeMultiInstance: `
     <p>
       Get started by logging in to an instance:
     </p>`,
@@ -28,6 +29,7 @@ export default {
   close: 'Close',
   error: 'Error: {error}',
   errorShort: 'Error:',
+  account: 'Account',
   // Relative timestamps
   justNow: 'just now',
   // Navigation, page titles
@@ -101,6 +103,7 @@ export default {
   notificationMentionsNotLoggedIn: 'Your notification mentions will appear here when logged in.',
   statusNotLoggedIn: 'A thread will appear here when logged in.',
   tagNotLoggedIn: 'A hashtag timeline will appear here when logged in.',
+  accountNotLoggedIn: 'Account settings will appear here when logged in.',
   // Notification subpages
   filters: 'Filters',
   all: 'All',
@@ -440,6 +443,7 @@ export default {
   // This is a link: "You can filter or disable notifications in the _instance settings_"
   filterNotificationsPre: 'You can filter or disable notifications in the',
   filterNotificationsText: 'instance settings',
+  filterNotificationsTextSingle: 'account settings',
   filterNotificationsPost: '',
   // Custom tooltips, like "Disable _infinite scroll_", where you can click _infinite scroll_
   // to see a description. It's hard to properly internationalize, so we just break up the strings.

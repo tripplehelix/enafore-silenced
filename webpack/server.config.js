@@ -82,7 +82,8 @@ export default {
       'process.env.IS_SERVICE_WORKER': 'false',
       'process.env.BROWSER': 'false',
       'process.env.THEME_COLORS': 'null',
-      'process.env.UPSTREAM': isUpstream
+      'process.env.UPSTREAM': isUpstream,
+      'process.env.SINGLE_INSTANCE': JSON.stringify(process.env.SINGLE_INSTANCE)
     })
   ]
 }

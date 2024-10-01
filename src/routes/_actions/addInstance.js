@@ -6,7 +6,6 @@ import { store } from '../_store/store.js'
 import { updateVerifyCredentialsForInstance } from './instances.js'
 import { updateCustomEmojiForInstance } from './emoji.js'
 import { database } from '../_database/database.js'
-import { DOMAIN_BLOCKS } from '../_static/blocks.js'
 
 const GENERIC_ERROR = `
   Is this a valid instance? Is a browser extension
@@ -30,10 +29,6 @@ async function redirectToOauth () {
   instanceNameInSearch = instanceNameInSearch.replace(/^https?:\/\//, '').replace(/\/+$/, '').toLowerCase()
   if (Object.keys(loggedInInstances).includes(instanceNameInSearch)) {
     throw createKnownError(`You've already logged in to ${instanceNameInSearch}`)
-  }
-  const instanceHostname = new URL(`http://${instanceNameInSearch}`).hostname
-  if (DOMAIN_BLOCKS.some(domain => new RegExp(`(?:\\.|^)${domain}$`, 'i').test(instanceHostname))) {
-    throw createKnownError('This service is blocked')
   }
   const redirectUri = getRedirectUri()
   const registrationPromise = registerApplication(instanceNameInSearch, redirectUri)

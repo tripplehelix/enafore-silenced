@@ -1,7 +1,7 @@
 <SettingsLayout page='settings/instances/add' label={pageLabel}>
   <h1 id="add-an-instance-h1">{pageLabel}</h1>
 
-  <div class="add-new-instance">
+  <div class="{singleInstance ? '' : 'add-new-instance'}">
     <form on:submit='onSubmitInstance(event)' aria-labelledby="add-an-instance-h1">
 
       {#if !hasIndexedDB || !hasLocalStorage}
@@ -10,7 +10,7 @@
         </div>
       {/if}
 
-      {#if $logInToInstanceError && $logInToInstanceErrorForText === $instanceNameInSearch}
+      {#if $logInToInstanceError && $logInToInstanceErrorForText === instance}
         <div class="form-error form-error-user-error" role="alert">
           {'intl.errorShort'} {@html $logInToInstanceError}
         </div>
@@ -22,18 +22,20 @@
         </div>
       </noscript>
 
-      <label for="instanceInput">{'intl.instanceColon'}</label>
-      <input type="text" inputmode="url" autocapitalize="none" spellcheck="false" id="instanceInput"
-             bind:value='$instanceNameInSearch' placeholder="{'intl.enterInstanceName'}" required
-      >
+      {#if !singleInstance}
+        <label for="instanceInput">{'intl.instanceColon'}</label>
+        <input type="text" inputmode="url" autocapitalize="none" spellcheck="false" id="instanceInput"
+              bind:value='$instanceNameInSearch' placeholder="{'intl.enterInstanceName'}" required
+        >
+      {/if}
       <button class="primary" type="submit" id="submitButton"
-              disabled={!$instanceNameInSearch || $logInToInstanceLoading}>
+              disabled={singleInstance ? $isUserLoggedIn : !instance || $logInToInstanceLoading}>
         {'intl.logIn'}
       </button>
     </form>
   </div>
 
-  {#if !$isUserLoggedIn}
+  {#if !singleInstance && !$isUserLoggedIn}
     <p>
       {'intl.getAnInstancePre'}
       <Tooltip
@@ -107,15 +109,20 @@
     store: () => store,
     data: () => ({
       hasIndexedDB: true,
-      hasLocalStorage: true
+      hasLocalStorage: true,
+      singleInstance: process.env.SINGLE_INSTANCE
     }),
     computed: {
-      pageLabel: ({ $isUserLoggedIn }) => $isUserLoggedIn ? 'intl.addInstance' : 'intl.logIn'
+      pageLabel: ({ $isUserLoggedIn }) => $isUserLoggedIn ? 'intl.addInstance' : 'intl.logIn',
+      instance: ({ $instanceNameInSearch }) => process.env.SINGLE_INSTANCE || $instanceNameInSearch
     },
     methods: {
       onSubmitInstance (event) {
         event.preventDefault()
         event.stopPropagation()
+        if (process.env.SINGLE_INSTANCE) {
+          this.store.set({ instanceNameInSearch: process.env.SINGLE_INSTANCE })
+        }
         logInToInstance()
       }
     }

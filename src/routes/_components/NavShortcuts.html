@@ -6,7 +6,7 @@
 <Shortcut key="g n" on:pressed="goto('/notifications')"/>
 <Shortcut key="g c" on:pressed="goto('/community')"/>
 <Shortcut key="g d" on:pressed="goto('/direct')"/>
-<Shortcut key="g i" on:pressed="goto('/settings/instances')"/>
+<Shortcut key="g i" on:pressed="goto(singleInstance ? '/settings/account' : '/settings/instances')"/>
 <Shortcut key="s|/" on:pressed="goToSearch()"/>
 <Shortcut key="h|?" on:pressed="showShortcutHelpDialog()"/>
 <Shortcut key="c|7" on:pressed="showComposeDialog()"/>
@@ -62,6 +62,9 @@
           goto(navPages[idx + 1].href)
         }
       }
-    }
+    },
+    data: () => ({
+      singleInstance: process.env.SINGLE_INSTANCE
+    })
   }
 </script>

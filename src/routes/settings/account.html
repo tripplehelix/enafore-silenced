@@ -1,0 +1,31 @@
+<Title name="{'intl.account'}" settingsPage={true} />
+
+{#if singleInstance}
+<LazyPage {pageComponent} params={{
+  instanceName: singleInstance
+}} />
+{:else}
+  <Error params={{
+    status: 404,
+    message: 'Not found'
+  }} />
+{/if}
+
+<script>
+  import Title from '../_components/Title.html'
+  import LazyPage from '../_components/LazyPage.html'
+  import pageComponent from '../_pages/settings/instances/[instanceName].html'
+  import Error from '../_error.html'
+
+  export default {
+    components: {
+      Title,
+      LazyPage,
+      Error
+    },
+    data: () => ({
+      pageComponent,
+      singleInstance: process.env.SINGLE_INSTANCE
+    })
+  }
+</script>

@@ -7,9 +7,16 @@
       </div>
       <div>
         {@html 'intl.homeDescription'}
-        <p style="text-align: right;">
-          <a class="button primary" rel="prefetch" href="/settings/instances/add">{'intl.logIn'}</a>
-        </p>
+        {#if singleInstance}
+          <p style="text-align: right;">
+            <button class="button primary" on:click="logIn()">{'intl.logIn'}</button>
+          </p>
+        {:else}
+          {@html 'intl.homeMultiInstance'}
+          <p style="text-align: right;">
+            <a class="button primary" rel="prefetch" href="/settings/instances/add">{'intl.logIn'}</a>
+          </p>
+        {/if}
       </div>
   </FreeTextLayout>
 </HiddenFromSSR>
@@ -54,6 +61,7 @@
   import FreeTextLayout from './FreeTextLayout.html'
   import HiddenFromSSR from './HiddenFromSSR.html'
   import SvgIcon from './SvgIcon.html'
+  import { logInToInstance } from '../_actions/addInstance.js'
 
   export default {
     components: {
@@ -63,7 +71,14 @@
     },
     data: () => {
       return {
-        appName: process.env.UPSTREAM ? 'Enafore' : process.env.BROWSER ? location.hostname : ''
+        appName: process.env.UPSTREAM ? 'Enafore' : process.env.BROWSER ? location.hostname : '',
+        singleInstance: process.env.SINGLE_INSTANCE
+      }
+    },
+    methods: {
+      logIn () {
+        this.store.set({ instanceNameInSearch: process.env.SINGLE_INSTANCE })
+        logInToInstance()
       }
     }
   }

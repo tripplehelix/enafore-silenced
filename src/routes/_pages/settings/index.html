@@ -6,7 +6,11 @@
       <SettingsListButton href="/settings/general" label="{'intl.general'}"/>
     </SettingsListRow>
     <SettingsListRow>
-      <SettingsListButton href="/settings/instances" label="{'intl.instances'}"/>
+      {#if singleInstance}
+        <SettingsListButton href="/settings/account" label="{'intl.account'}"/>
+      {:else}
+        <SettingsListButton href="/settings/instances" label="{'intl.instances'}"/>
+      {/if}
     </SettingsListRow>
     <SettingsListRow>
       <SettingsListButton href="/settings/hotkeys" label="{'intl.hotkeys'}"/>
@@ -46,6 +50,9 @@
         }
         document.location.reload(true)
       }
-    }
+    },
+    data: () => ({
+      singleInstance: process.env.SINGLE_INSTANCE
+    })
   }
 </script>
