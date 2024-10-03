@@ -429,8 +429,8 @@
               showMedia, sensitive, sensitiveShown, mediaAttachments, showPoll
             )
           ),
-      showHeader: ({ notification, status, timelineType }) => (
-        (notification && notification.type !== 'mention' && notification.type !== 'status') ||
+      showHeader: ({ notificationInfo, status, timelineType }) => (
+        notificationInfo ||
         status.reblog ||
         timelineType === 'pinned'
       ),

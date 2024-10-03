@@ -91,7 +91,6 @@
         $omitEmojiInDisplayNames
       }) => {
         if (!notification) return null
-        const fn = notificationInfos[notification.type]
         const arg = {
           status,
           $currentVerifyCredentials,
@@ -100,10 +99,12 @@
           name: getAccountAccessibleName(account, $omitEmojiInDisplayNames),
           account: `@${account.acct}`
         }
+        if (!(notification.type in notificationInfos)) {
+          return unhandled(arg)
+        }
+        const fn = notificationInfos[notification.type]
         if (fn) {
           return fn(arg)
-        } else {
-          return unhandled(arg)
         }
       }
     },
