@@ -86,6 +86,7 @@ export default {
       'process.env.INLINE_SVGS': JSON.stringify(inlineSvgs),
       'process.env.LOCALE': JSON.stringify(LOCALE),
       ENAFORE_VERSION: JSON.stringify(version),
+      ENAFORE_ENV: JSON.stringify(mode),
       ENAFORE_IS_SERVICE_WORKER: 'false',
       ENAFORE_IS_BROWSER: 'false',
       'process.env.THEME_COLORS': 'null',
