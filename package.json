@@ -5,11 +5,11 @@
     "lint-fix": "standard --fix && standard --fix --plugin html 'src/routes/**/*.html' && prettier -w 'src/**/*.ts'",
     "dev": "run-s build-lodash before-build serve-dev",
     "serve-dev": "run-p --race build-template-html-watch sapper-dev",
-    "sapper-dev": "cross-env NODE_ENV=development PORT=4002 WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper dev",
+    "sapper-dev": "NODE_ENV=development PORT=4002 WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper dev",
     "before-build": "run-p build-template-html build-assets build-webpack-config",
-    "build": "cross-env NODE_ENV=production run-s build-steps",
+    "build": "NODE_ENV=production run-s build-steps",
     "build-steps": "run-s build-lodash before-build sapper-export",
-    "sapper-build": "cross-env WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper build",
+    "sapper-build": "WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper build",
     "start": "node server.js",
     "build-and-start": "run-s build start",
     "build-template-html": "node ./bin/build-template-html.js",
@@ -17,7 +17,7 @@
     "build-assets": "node ./bin/build-assets.js",
     "build-lodash": "esbuild ./src/routes/_thirdparty/lodash/timers.src.js --bundle --format=esm --outfile=./src/routes/_thirdparty/lodash/timers.js",
     "build-webpack-config": "node ./webpack/esbuild.config.js",
-    "sapper-export": "cross-env PORT=22939 WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper export"
+    "sapper-export": "PORT=22939 WEBPACK_CONFIG_FILE=webpack/webpack.config.cjs SERVER_FILE_EXT=cjs node ./node_modules/sapper/sapper export"
   },
   "dependencies": {
     "@ampproject/remapping": "^2.3.0",
@@ -33,7 +33,6 @@
     "chokidar": "^4.0.3",
     "circular-dependency-plugin": "^5.2.2",
     "country-flag-emoji-polyfill": "^0.1.8",
-    "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "csso": "^5.0.5",
     "dompurify": "^3.2.4",
