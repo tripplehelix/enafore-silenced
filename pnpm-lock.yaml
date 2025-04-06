@@ -47,9 +47,6 @@ importers:
       country-flag-emoji-polyfill:
         specifier: ^0.1.8
         version: 0.1.8
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
       css-loader:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.98.0(esbuild@0.25.1))
@@ -943,11 +940,6 @@ packages:
 
   country-flag-emoji-polyfill@0.1.8:
     resolution: {integrity: sha512-Mbah52sADS3gshUYhK5142gtUuJpHYOXlXtLFI3Ly4RqgkmPMvhX9kMZSTqDM8P7UqtSW99eHKFphhQSGXA3Cg==}
-
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
-    hasBin: true
 
   cross-spawn@6.0.6:
     resolution: {integrity: sha512-VqCUuhcd1iB+dsv8gxPttb5iZh/D0iubSP21g36KXdEuf6I5JiioesUVjpCdHV9MZRUfVFlvwtIUyPfxo5trtw==}
@@ -3446,10 +3438,6 @@ snapshots:
   cookie@0.7.1: {}
 
   country-flag-emoji-polyfill@0.1.8: {}
-
-  cross-env@7.0.3:
-    dependencies:
-      cross-spawn: 7.0.6
 
   cross-spawn@6.0.6:
     dependencies:
